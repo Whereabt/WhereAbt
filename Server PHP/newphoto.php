@@ -7,7 +7,7 @@
     
     //Step1 - Connect to the DB using the connection info stored in login.php
     
-    require_once 'login.php';
+    require_once 'database_info.php';
    
     $db_server = mysql_connect($hostname, $username, $password);
     
