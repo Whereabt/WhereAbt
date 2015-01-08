@@ -2,7 +2,6 @@
 <?php
     
     //This page inserts new photo information from the client into the database
-    //echo "This page accepts query string parameters Latitude, Longitude for user's current location<br /><br />";
     
     
     //Step 1 - Connect and query the DB using the connection info stored in login.php
@@ -20,12 +19,6 @@
     if (!$result) die("Database access failed: " . mysql_error());
 
     $rows = mysql_num_rows($result);
-    
-    
-    //Step 2 - For debugging, we'll show the latitude and longitude
-    
-    //echo 'Latitude in URL= ' . $_GET['Latitude'] . '<br />';
-    //echo 'Longitude in URL= ' .$_GET['Longitude'] . '<br /><br />';
     
     
     //Step 2 - We'll need the distance function to calculate distance between the user and each entry
@@ -47,36 +40,16 @@
             }
         }
         
-        /* these are examples of how to use the distance function
-         
-        echo distance(32.9697, -96.80322, 29.46786, -98.53506, "M") . " Miles<br>";
-        echo distance(32.9697, -96.80322, 29.46786, -98.53506, "K") . " Kilometers<br>";
-        echo distance(32.9697, -96.80322, 29.46786, -98.53506, "N") . " Nautical Miles<br><br><br>";
-         
-        */
-    
+   
     
     //Step 3 - write out the data & calculate distance from user
     
-    //echo 'Feed data ========= <br /><br />';
-    
-    //BUGBUG: This can be done more efficiently, see PHP guide, example 10-6
+   
+    //BUGBUG: FOR loop can be done more efficiently, see PHP guide, example 10-6
     for ($j = 0; $j < $rows; ++$j)
     {
 
-        /* re-enable only for debugging
-         
-        echo 'Feed entry# ' . $j . '<br />';
-        echo 'UserID: ' . mysql_result($result,$j,'UserID') . '<br />';
-        echo 'Latitude: ' . mysql_result($result,$j,'Latitude') . '<br />';
-        echo 'Longitude: ' . mysql_result($result,$j,'Longitude') . '<br />';
-        echo 'PhotoURL: ' . mysql_result($result,$j,'PhotoURL') . '<br />';
-        echo 'Miles away: ' . 
-            distance(mysql_result($result,$j,'Latitude'), 
-                     mysql_result($result,$j,'Longitude'),
-                     $_GET['Latitude'], $_GET['Longitude'], "M"). '<br /><br />';
-        */
-         
+        //Each row of the database is read one at a time into innerarray
         $innerarray =
             array('UserID' => mysql_result($result,$j,'UserID') ,
                   'Latitude' => mysql_result($result,$j,'Latitude'),
@@ -87,26 +60,13 @@
                                           $_GET['Latitude'],
                                           $_GET['Longitude'], "M"));
         
-        //echo json_encode($innerarray). '<br /><br />';
-        
+        //Add each row of the for loop to the outer array
         $outerarray[] = $innerarray;
         
-        /* re-enable only for debugging
-         
-        foreach ($outerarray as $foo)
-        {
-            foreach ($foo as $bar)
-            {
-                echo $bar. '<br /><br />';
-            }
-        }
-        
-        echo '<br /><br />';
-         */
     }
-    
-    echo json_encode($outerarray).'<br /><br />';
 
-  
+    //<pre> </pre> tags allow the browser to treat as plain text vs. HTML to pretty print the JSON
+    echo  "<pre>".json_encode($outerarray, JSON_PRETTY_PRINT)."</pre>";
+    
     mysql_close($db_server);
 ?>
