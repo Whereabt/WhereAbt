@@ -1,8 +1,7 @@
-
 <?php
     
     //This page inserts new photo information from the client into the database
-    
+    header("Content-Type: text/plain");
     
     //Step 1 - Connect and query the DB using the connection info stored in login.php
     require_once 'database_info.php';
@@ -51,22 +50,24 @@
 
         //Each row of the database is read one at a time into innerarray
         $innerarray =
-            array('UserID' => mysql_result($result,$j,'UserID') ,
-                  'Latitude' => mysql_result($result,$j,'Latitude'),
-                  'Longitude' => mysql_result($result,$j,'Longitude'),
-                  'PhotoURL' => mysql_result($result,$j,'PhotoURL'),
-                  'MilesAway' => distance(mysql_result($result,$j,'Latitude'),
+            array('MilesAway' => distance(mysql_result($result,$j,'Latitude'),
                                           mysql_result($result,$j,'Longitude'),
                                           $_GET['Latitude'],
-                                          $_GET['Longitude'], "M"));
+                                          $_GET['Longitude'], "M"),
+                  'UserID' => mysql_result($result,$j,'UserID') ,
+                  'Latitude' => mysql_result($result,$j,'Latitude'),
+                  'Longitude' => mysql_result($result,$j,'Longitude'),
+                  'PhotoURL' => mysql_result($result,$j,'PhotoURL'));
         
         //Add each row of the for loop to the outer array
         $outerarray[] = $innerarray;
         
     }
 
-    //<pre> </pre> tags allow the browser to treat as plain text vs. HTML to pretty print the JSON
-    echo  "<pre>".json_encode($outerarray, JSON_PRETTY_PRINT)."</pre>";
+    //Sort will apply to the 'MilesAway' value since that one is the first in each sub-array
+    sort($outerarray);
+    
+    echo  json_encode($outerarray, JSON_PRETTY_PRINT);
     
     mysql_close($db_server);
 ?>
