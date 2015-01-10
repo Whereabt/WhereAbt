@@ -47,17 +47,17 @@
     //BUGBUG: FOR loop can be done more efficiently, see PHP guide, example 10-6
     for ($j = 0; $j < $rows; ++$j)
     {
-
+        
         //Each row of the database is read one at a time into innerarray
         $innerarray =
-            array('MilesAway' => distance(mysql_result($result,$j,'Latitude'),
-                                          mysql_result($result,$j,'Longitude'),
-                                          $_GET['Latitude'],
-                                          $_GET['Longitude'], "M"),
-                  'UserID' => mysql_result($result,$j,'UserID') ,
-                  'Latitude' => mysql_result($result,$j,'Latitude'),
-                  'Longitude' => mysql_result($result,$j,'Longitude'),
-                  'PhotoURL' => mysql_result($result,$j,'PhotoURL'));
+        array('MilesAway' => distance(mysql_result($result,$j,'Latitude'),
+                                      mysql_result($result,$j,'Longitude'),
+                                      $_GET['Latitude'],
+                                      $_GET['Longitude'], "M"),
+              'UserID' => mysql_result($result,$j,'UserID') ,
+              'Latitude' => mysql_result($result,$j,'Latitude'),
+              'Longitude' => mysql_result($result,$j,'Longitude'),
+              'PhotoURL' => mysql_result($result,$j,'PhotoURL'));
         
         //Add each row of the for loop to the outer array
         $outerarray[] = $innerarray;
@@ -67,7 +67,10 @@
     //Sort will apply to the 'MilesAway' value since that one is the first in each sub-array
     sort($outerarray);
     
-    echo  json_encode($outerarray, JSON_PRETTY_PRINT);
+    //Use stripslashes to avoid backslashes in URLs like 'http:\/\/foo.com\/'
+    
+    echo  stripslashes(json_encode($outerarray, JSON_PRETTY_PRINT));
+
     
     mysql_close($db_server);
 ?>
