@@ -11,7 +11,8 @@
 @interface WelcomeViewController : UIViewController
 
 
-//create outlet property for Get Started" button
+//create outlet property for "Get Started" button
 @property (weak, nonatomic) IBOutlet UIButton *GetStarted;
+- (IBAction)LoadPhotoView:(id)sender; //action method for "Get Started" button
 
 @end
