@@ -16,18 +16,14 @@
 		012997081A38FA9800C89D09 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 012997071A38FA9800C89D09 /* WelcomeViewController.m */; };
 		01D47DFF1A45D00600A45013 /* PhotosAccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */; };
 		01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E091A560BCD00A45013 /* StreamViewController.m */; };
-		01D47E101A57084100A45013 /* StreamItem1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01D47E0C1A57084100A45013 /* StreamItem1.jpg */; };
-		01D47E111A57084100A45013 /* StreamItem2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01D47E0D1A57084100A45013 /* StreamItem2.jpg */; };
-		01D47E121A57084100A45013 /* StreamItem3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01D47E0E1A57084100A45013 /* StreamItem3.jpg */; };
-		01D47E131A57084100A45013 /* StreamItem4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01D47E0F1A57084100A45013 /* StreamItem4.jpg */; };
 		01D47E161A583B9D00A45013 /* ImageDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E151A583B9D00A45013 /* ImageDataObject.m */; };
-		2D3C6EF21A5FC7070076A373 /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2D3C6EF11A5FC7070076A373 /* PhotoView.jpg */; };
-		2D6A0E091A587AFE00EDD980 /* Welcome 380x449 copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2D6A0E081A587AFE00EDD980 /* Welcome 380x449 copy.jpg */; };
 		2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */; };
 		2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E421A5C5B4100EDD980 /* Foundation.framework */; };
 		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; };
 		2D6A0E4C1A5CB84E00EDD980 /* fakeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A0E4B1A5CB84E00EDD980 /* fakeTableViewController.m */; };
 		2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */; };
+		B9FCFAB91A6331E800AFB63D /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */; };
+		B9FCFABA1A6331E800AFB63D /* Welcome 380x449 copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,14 +54,8 @@
 		01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosAccessViewController.m; sourceTree = "<group>"; };
 		01D47E081A560BCD00A45013 /* StreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamViewController.h; path = ../StreamViewController.h; sourceTree = "<group>"; };
 		01D47E091A560BCD00A45013 /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamViewController.m; path = ../StreamViewController.m; sourceTree = "<group>"; };
-		01D47E0C1A57084100A45013 /* StreamItem1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = StreamItem1.jpg; sourceTree = "<group>"; };
-		01D47E0D1A57084100A45013 /* StreamItem2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = StreamItem2.jpg; sourceTree = "<group>"; };
-		01D47E0E1A57084100A45013 /* StreamItem3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = StreamItem3.jpg; sourceTree = "<group>"; };
-		01D47E0F1A57084100A45013 /* StreamItem4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = StreamItem4.jpg; sourceTree = "<group>"; };
 		01D47E141A583B9D00A45013 /* ImageDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDataObject.h; sourceTree = "<group>"; };
 		01D47E151A583B9D00A45013 /* ImageDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDataObject.m; sourceTree = "<group>"; };
-		2D3C6EF11A5FC7070076A373 /* PhotoView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = PhotoView.jpg; path = ../../../../PhotoView.jpg; sourceTree = "<group>"; };
-		2D6A0E081A587AFE00EDD980 /* Welcome 380x449 copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Welcome 380x449 copy.jpg"; path = "../../../../../Downloads/Welcome 380x449 copy.jpg"; sourceTree = "<group>"; };
 		2D6A0E0D1A59D4CC00EDD980 /* StreamDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamDelegate.h; sourceTree = "<group>"; };
 		2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2D6A0E421A5C5B4100EDD980 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -74,6 +64,8 @@
 		2D6A0E4B1A5CB84E00EDD980 /* fakeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fakeTableViewController.m; sourceTree = "<group>"; };
 		2D6A0E4D1A5F75CE00EDD980 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
+		B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PhotoView.jpg; sourceTree = "<group>"; };
+		B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Welcome 380x449 copy.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,7 +130,7 @@
 				01D47E141A583B9D00A45013 /* ImageDataObject.h */,
 				01D47E151A583B9D00A45013 /* ImageDataObject.m */,
 				012996E81A354E5300C89D09 /* Images.xcassets */,
-				01D47E0B1A57084100A45013 /* StreamItems */,
+				B9FCFAB61A6331E800AFB63D /* UIImages */,
 				012996EA1A354E5300C89D09 /* LaunchScreen.xib */,
 				012996D81A354E5300C89D09 /* Supporting Files */,
 			);
@@ -171,18 +163,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		01D47E0B1A57084100A45013 /* StreamItems */ = {
+		B9FCFAB61A6331E800AFB63D /* UIImages */ = {
 			isa = PBXGroup;
 			children = (
-				01D47E0C1A57084100A45013 /* StreamItem1.jpg */,
-				01D47E0D1A57084100A45013 /* StreamItem2.jpg */,
-				01D47E0E1A57084100A45013 /* StreamItem3.jpg */,
-				01D47E0F1A57084100A45013 /* StreamItem4.jpg */,
-				2D3C6EF11A5FC7070076A373 /* PhotoView.jpg */,
-				2D6A0E081A587AFE00EDD980 /* Welcome 380x449 copy.jpg */,
+				B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */,
+				B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */,
 			);
-			name = StreamItems;
-			path = Images.xcassets/StreamItems;
+			name = UIImages;
+			path = ../../../UIImages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,15 +253,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01D47E121A57084100A45013 /* StreamItem3.jpg in Resources */,
 				012996E71A354E5300C89D09 /* Main.storyboard in Resources */,
-				2D3C6EF21A5FC7070076A373 /* PhotoView.jpg in Resources */,
-				2D6A0E091A587AFE00EDD980 /* Welcome 380x449 copy.jpg in Resources */,
-				01D47E111A57084100A45013 /* StreamItem2.jpg in Resources */,
+				B9FCFABA1A6331E800AFB63D /* Welcome 380x449 copy.jpg in Resources */,
 				012996EC1A354E5300C89D09 /* LaunchScreen.xib in Resources */,
-				01D47E131A57084100A45013 /* StreamItem4.jpg in Resources */,
 				012996E91A354E5300C89D09 /* Images.xcassets in Resources */,
-				01D47E101A57084100A45013 /* StreamItem1.jpg in Resources */,
+				B9FCFAB91A6331E800AFB63D /* PhotoView.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
