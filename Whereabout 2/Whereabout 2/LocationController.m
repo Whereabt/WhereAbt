@@ -15,7 +15,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedController = [[self alloc] init];
-        //[sharedController updateUserLocation];
+        [sharedController updateUserLocation];
     });
     return sharedController;
 }
@@ -25,7 +25,7 @@
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
 
-        _currentLocation = [[CLLocation alloc] initWithLatitude:45 longitude:12];
+        //_currentLocation = [[CLLocation alloc] initWithLatitude:45 longitude:12];
         //_currentLocation = [[CLLocation alloc]initWithLatitude:41.694 longitude:-83.6];
     }
   return self;
@@ -35,6 +35,9 @@
 
 - (void)updateUserLocation{
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    //resumes location update when device moves at least 100 meters horizontally
+    self.locationManager.distanceFilter = 100;
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         [self.locationManager requestWhenInUseAuthorization];
     }
@@ -47,28 +50,17 @@
     }
 }
 
-- (CLLocation*)getCurrentLocation{
-    [self updateUserLocation];
-    if (_currentLocation != nil) {
-        NSLog(@"%@", _currentLocation);
-    }
-    return _currentLocation;
-}
-
 
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     NSLog(@"didFailWithError: %@", error);
-    /*UIAlertView *errorAlert = [[UIAlertView alloc]initWithTitle:@"Error Occurred" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [errorAlert show];
-     */
+    
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     _currentLocation = [locations lastObject];
-    NSLog(@"Your Latitude: %f Your Longitude: %f", _currentLocation.coordinate.latitude, _currentLocation.coordinate.latitude);
-    [self.locationManager stopUpdatingLocation];
+    NSLog(@"Your Latitude: %f Your Longitude: %f", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude);
 }
 
 @end

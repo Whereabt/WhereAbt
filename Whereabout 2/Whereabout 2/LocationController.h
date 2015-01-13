@@ -16,6 +16,6 @@
 
 + (instancetype)sharedController;
 - (void)updateUserLocation;
-- (CLLocation*)getCurrentLocation;
+- (instancetype)init;
 
 @end

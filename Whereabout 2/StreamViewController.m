@@ -7,7 +7,7 @@
 //
 
 #import "StreamViewController.h"
-#import "ImageDataObject.h"
+#import "StreamLogic.h"
 #import "StreamDelegate.h"
 #import "LocationController.h"
 #import <CoreLocation/CoreLocation.h>
@@ -20,7 +20,9 @@ static NSString *const distanceFrom = @"MilesAway";
 
 @interface StreamViewController ()
 {
-    NSMutableArray *itemCollection;
+    //NSMutableArray *itemCollection;
+    NSMutableArray *StreamItems;
+   // StreamLogic *logicManager;
 }
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -33,8 +35,10 @@ static NSString *const distanceFrom = @"MilesAway";
 - (void)viewDidLoad {
     
     //get location
-    [self requestFeedWithClientLocation: [LocationController sharedController].currentLocation];
-    
+   // [self requestFeedWithClientLocation: [LocationController sharedController].currentLocation];
+   
+    StreamItems = [logicManager getStreamLogicFromLocation:[LocationController sharedController].currentLocation];
+    [self.tableView reloadData];
     
     [super viewDidLoad];
     
@@ -50,7 +54,7 @@ static NSString *const distanceFrom = @"MilesAway";
     // Dispose of any resources that can be recreated.
 }
 
-
+/*
 -(void)requestFeedWithClientLocation:(CLLocation*)location
 {
     NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f", location.coordinate.latitude, location.coordinate.longitude];
@@ -77,10 +81,6 @@ static NSString *const distanceFrom = @"MilesAway";
      [dataRequestTask resume];
 }
 
-- (IBAction)pinSelected:(id)sender{
-}
-
-
 - (void)imageFromURLString:(NSString *)urlString atIndex: (NSInteger)index
 {
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -103,7 +103,7 @@ static NSString *const distanceFrom = @"MilesAway";
     [photoRequestTask resume];
 }
 
-
+*/
                                   
 #pragma mark - Table view data source
 
@@ -115,15 +115,16 @@ static NSString *const distanceFrom = @"MilesAway";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [itemCollection count];
+    return [StreamItems count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Configure the cell...
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"User ID" forIndexPath:indexPath];
     
-    NSString *milesFrom = itemCollection[indexPath.row][distanceFrom];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance: %@", itemCollection[indexPath.row][userIdIndex], milesFrom];
-    cell.imageView.image = itemCollection[indexPath.row][photoIndex];
+    //setting UI
+    NSString *milesFrom = StreamItems[indexPath.row][distanceFrom];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance Away: %@", StreamItems[indexPath.row][userIdIndex], milesFrom];
+    cell.imageView.image = StreamItems[indexPath.row][photoIndex];
 
     return cell;
 }

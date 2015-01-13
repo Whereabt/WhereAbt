@@ -104,7 +104,7 @@
         NSLog(@"the name of the image file is: %@", imageFileName);
         NSString *fakeFileName = @"Fake2.jpg";
         
-        self.authToken = @"EwCAAq1DBAAUGCCXc8wU/zFu9QnLdZXy+YnElFkAAWM1SSVIt7UdBVAMfU0EfiGsQbuHerPh0S8sVWE48WZLeOO9wvVKY4w7Tp8Ul3IA8ledn//cBhTjXUIo1PHHDp4/xj7ECXK6VeE+nrKUU663cgMQkSnt+jiinGW1x5uwjLp6QS+YfX/1iAmByNSwCRgdku0HQ+d+2cmfJ98HiouWd4n8CzY9t7XORm3tBsjRTJqWY2ponS29dMFd8Ys/Sl8Dk1sZxESRpJHz/OK6OnYLx6krNir12svfSbJuebeHWTmycfAgEzQ+jefUx+i5h7ZEylnYi8kLyW8RjkZt6AyOS1NOgSZS7sqcbK/YprwgtDJ3F2JbAOKp3dDmWS4EUm0DZgAACK+JnvJtq2COUAHtfWQVuYHppFJkFI3JvJTleOWiz+agoCTl/0tQ6VE6CcXsa5JzX73ptAxG/Qrz5rWpVm0F98MhMcVFKVYv7o1wJd9QKGT8/znLjS3c4d4ArOG5MtzdpAvMaYBjqLeWY38mI5w3ZXK4JK9Kr/HOFWCKwIw2z/hJqWo5X91nNwGDCEsjfzgiwJRyKtmyxd4TeFYmQPMcADISKW8CNfXiSu0BPSVKLiitNmtmEVJEs5UiqxTSexzoMy+AhlJqRz5rAdxxf65cDplY7EszK5VxhXMfRNFSNuDsw35jkj1zpbKkyORAmKTd82Fz4aQ0rsllqiejnLmkxzyeFcU/9KN0K9jMvLM+HmYULoo2ELNM8Rroe+cfVBpgJXa4vF/6+zYE20Hm9dXCpsuPSNMML9Feq/ngh17KzSoW07RJAnXQSdB9Z59AkUeM3UXQingUpWUlUTBiAQ==";
+        self.authToken = @"EwB4Aq1DBAAUGCCXc8wU/zFu9QnLdZXy+YnElFkAAfiF0eLPejswqqYjhcTWXnbLKUxRJV8VgbSNOVoD5l9dCYmwHNrT/nR7UECXvuzyElxjKr9CGUya35RNj4KgSdTTac1jWbSF0UiM6KNMNlnT4SYlGuVdLDzbkq0WgnvpRiiwhxss/ktHUL6Az6+HBnoa4ZGi0qdM+VmdOmuFgIwf609VUHzT0qeZjP0dZ4k96rI1X8O2IynZayxpqusGMIwGhjyTCbAUgIMqGUJlmyCH2VMdHn1ZJT9zX/0fD1Ac3qEL8T8qpZqtN2x+OEy1KllbNEKPye/i04ghFU2KDZJrC0S7afRbWYsyl1rbkc4I+DM4KMHOBO36EU2EEtkLQjwDZgAACOSKGhy+arFuSAFpxd4Kmrt4zjOHzuLr2kTavMY8TaVUgg4ei5Lawho7cFmgf+STnFqrvJP6Vc//YVjYnCulFbQdLurEXLQTDRvatzeQmzVtAu3EE11S6vPHSuvUh8bemmL3dbT5uPdOd5prpJVvOWobZQ/KURN+HppjtSVAAC3RccR75XB/Gt1T035pHuuLB5eQMXdW8qWOmrtvBfpIzq3+VYZbOQ5x+kyI7+0+cQ/AP+/RVTLX1O4WK4o2SW3YCAkrlG9if13j+QrmN0X3ggtJaKpNiVxFZ86WbYDBTda6krsx1kv+moVsRCTqXs/6WmygFY0U/PBfGWFowCLbTW8FTE9n+Iub0RphoR/QacPaRk+tf3XzJZsszXbg7kRLjriaeWLe2jCvw2rzjjJROWUweoHwQO+FGron6f+M45+9SM64PsHImocWkZQTskvtyTPIYgE=";
         
         [self constructTaskWithImageName:fakeFileName andData: dataFromImage];
         //method call for http request
@@ -147,7 +147,7 @@
 
 
 - (void)PUTonNewPhotophpWithImageURL:(NSString *)ODimageUrl{
-    NSString *userID = @"NicolasIsaza";
+    NSString *userID = @"Nicolas Isaza";
     
     //get location
     LocationController *locationController = [LocationController sharedController];

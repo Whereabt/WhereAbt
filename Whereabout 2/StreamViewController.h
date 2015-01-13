@@ -24,11 +24,11 @@
 @property (assign) id longitude;
 @property (strong) id photoURL;
 @property (strong) id milesAway;
+
 @property (weak,nonatomic) id<StreamDelegate> delegate;
 
-- (void)imageFromURLString:(NSString *)urlString atIndex: (NSInteger)index;
-- (IBAction)pinSelected:(id)sender;
-- (void)requestFeedWithClientLocation:(CLLocation*)location;
+//- (void)imageFromURLString:(NSString *)urlString atIndex: (NSInteger)index;
+//- (void)requestFeedWithClientLocation:(CLLocation*)location;
 
 
 
