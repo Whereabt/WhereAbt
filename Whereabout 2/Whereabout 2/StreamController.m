@@ -1,4 +1,4 @@
-//
+ //
 //  StreamLogic.m
 //  Whereabout 2
 //
@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Nicolas Isaza. All rights reserved.
 //
 
-#import "StreamLogic.h"
+#import "StreamController.h"
 #import "LocationController.h"
 #import "StreamViewController.h"
 
@@ -15,42 +15,48 @@ static NSString *const photoURLIndex = @"PhotoURL";
 static NSString *const photoIndex = @"Photo";
 static NSString *const distanceFrom = @"MilesAway";
 
-@implementation StreamLogic
+typedef void(^requestFeedCompletion)(BOOL);
+
+@implementation StreamController
 {
-    StreamLogic *logicManager;
+    NSMutableArray *globalItemCollection;
 }
 
-+ (NSMutableArray*)getStreamLogicFromLocation:(CLLocation*)thisLocation WithObject:(StreamLogic*)
-{
-    
-}
 
-- (void)requestFeedWithClientLocation:(CLLocation*)location
+- (void)requestFeedWithClientLocation:(CLLocation*)location WithCompletion: (void (^)(void))callBackBlock /*WithCompletionHandler:(void(^)(NSMutableArray *streamCollection))handler*/
 {
     NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f", location.coordinate.latitude, location.coordinate.longitude];
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
     NSURLSession *session = [NSURLSession sharedSession];
-    
     NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
                                                    completionHandler:^(NSData *data,
                                                                        NSURLResponse *response,
                                                                        NSError *error){
                                                        NSError *jsonError = nil;
                                                        NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
-                                                       logicManager.itemCollection = [immutable mutableCopy];
-                                                       NSLog(@"%@", logicManager.itemCollection);
-                                                       for (NSDictionary *photoItem in logicManager.itemCollection) {
+                                                     NSMutableArray *itemCollection = [immutable mutableCopy];
+                                                       NSLog(@"%@", itemCollection);
+                                                       for (NSDictionary *photoItem in itemCollection) {
                                                            NSString *photoURL = photoItem[photoURLIndex];
-                                                           NSInteger photoItemIndex = [logicManager.itemCollection indexOfObject:photoItem];
-                                                           [self imageFromURLString:photoURL atIndex:photoItemIndex];
+                                                           NSInteger photoItemIndex = [itemCollection indexOfObject:photoItem];
+                                                           [self imageFromURLString:photoURL atIndex:photoItemIndex OfArray: itemCollection];
+                                                           
+                                                           //set global ViewController var
+                                                           StreamViewController *valueSetter = [[StreamViewController alloc]init];
+                                                           [valueSetter setValueForStreamItemsWithValue: itemCollection];
+                                                           callBackBlock();
                                                        }
                                                    }
                                              ];
     [dataRequestTask resume];
+    
+ 
+    //completionHandler;
 }
 
-- (void)imageFromURLString:(NSString *)urlString atIndex:(NSInteger)index
+
+- (void)imageFromURLString:(NSString *)urlString atIndex:(NSInteger)index OfArray:(NSArray*)jsonArray
 {
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLSession *session = [NSURLSession sharedSession];
@@ -61,7 +67,7 @@ static NSString *const distanceFrom = @"MilesAway";
                                                         if (error == nil) {
                                                             UIImage *returnedImage = [UIImage imageWithData:data];
                                                             if (returnedImage != nil) {
-                                                                 NSMutableDictionary *newDict = logicManager.itemCollection[index];
+                                                                 NSMutableDictionary *newDict = jsonArray[index];
                                                                 [newDict setObject:returnedImage forKey:photoIndex];
                                                             }
                                                         }

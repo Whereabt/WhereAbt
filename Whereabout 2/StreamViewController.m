@@ -7,7 +7,7 @@
 //
 
 #import "StreamViewController.h"
-#import "StreamLogic.h"
+#import "StreamController.h"
 #import "StreamDelegate.h"
 #import "LocationController.h"
 #import <CoreLocation/CoreLocation.h>
@@ -33,14 +33,12 @@ static NSString *const distanceFrom = @"MilesAway";
 
 
 - (void)viewDidLoad {
-    
-    //get location
-   // [self requestFeedWithClientLocation: [LocationController sharedController].currentLocation];
-   
-    StreamItems = [logicManager getStreamLogicFromLocation:[LocationController sharedController].currentLocation];
-    [self.tableView reloadData];
-    
-    [super viewDidLoad];
+    //create object to deal with network requests
+    StreamController *networkRequester = [[StreamController alloc]init];
+    [networkRequester requestFeedWithClientLocation:[LocationController sharedController].currentLocation WithCompletion:^{
+        [super viewDidLoad];
+        [self.tableView reloadData];
+    }];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -48,6 +46,26 @@ static NSString *const distanceFrom = @"MilesAway";
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+
+/*- (void)performRequestWithCompletion: (void (^)(void))callBackBlock{
+    //create object to deal with network requests
+    StreamController *networkRequester = [[StreamController alloc]init];
+    
+    //get location
+    [networkRequester requestFeedWithClientLocation:[LocationController sharedController].currentLocation];
+    callBackBlock();
+}*/
+
+- (void)setValueForStreamItemsWithValue:(NSMutableArray *)array{
+    StreamItems = array;
+}
+
+/*
+- (void) reloadTableView{
+    [self.tableView reloadData];
+}
+*/
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

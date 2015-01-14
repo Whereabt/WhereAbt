@@ -21,7 +21,7 @@
 		2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E421A5C5B4100EDD980 /* Foundation.framework */; };
 		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; };
 		2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */; };
-		B938DCB01A641E560073D91F /* StreamLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCAF1A641E560073D91F /* StreamLogic.m */; };
+		B938DCB01A641E560073D91F /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCAF1A641E560073D91F /* StreamController.m */; };
 		B9FCFAB91A6331E800AFB63D /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */; };
 		B9FCFABA1A6331E800AFB63D /* Welcome 380x449 copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */; };
 /* End PBXBuildFile section */
@@ -62,8 +62,8 @@
 		2D6A0E441A5C5B5800EDD980 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2D6A0E4D1A5F75CE00EDD980 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
-		B938DCAE1A641E560073D91F /* StreamLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamLogic.h; sourceTree = "<group>"; };
-		B938DCAF1A641E560073D91F /* StreamLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamLogic.m; sourceTree = "<group>"; };
+		B938DCAE1A641E560073D91F /* StreamController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamController.h; sourceTree = "<group>"; };
+		B938DCAF1A641E560073D91F /* StreamController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamController.m; sourceTree = "<group>"; };
 		B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PhotoView.jpg; sourceTree = "<group>"; };
 		B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Welcome 380x449 copy.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,8 +122,8 @@
 				01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */,
 				01D47E081A560BCD00A45013 /* StreamViewController.h */,
 				01D47E091A560BCD00A45013 /* StreamViewController.m */,
-				B938DCAE1A641E560073D91F /* StreamLogic.h */,
-				B938DCAF1A641E560073D91F /* StreamLogic.m */,
+				B938DCAE1A641E560073D91F /* StreamController.h */,
+				B938DCAF1A641E560073D91F /* StreamController.m */,
 				2D6A0E4D1A5F75CE00EDD980 /* LocationController.h */,
 				2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */,
 				2D6A0E0D1A59D4CC00EDD980 /* StreamDelegate.h */,
@@ -281,7 +281,7 @@
 				2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */,
 				01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */,
 				012996DB1A354E5300C89D09 /* main.m in Sources */,
-				B938DCB01A641E560073D91F /* StreamLogic.m in Sources */,
+				B938DCB01A641E560073D91F /* StreamController.m in Sources */,
 				01D47DFF1A45D00600A45013 /* PhotosAccessViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

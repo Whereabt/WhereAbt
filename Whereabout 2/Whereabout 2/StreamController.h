@@ -6,17 +6,16 @@
 //  Copyright (c) 2015 Nicolas Isaza. All rights reserved.
 //
 
+
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface StreamLogic : NSObject
+@interface StreamController : NSObject
 
 @property (strong, nonatomic) NSData *imageData;
 @property (strong, nonatomic) NSMutableDictionary *indexDict;
-@property (strong, nonatomic) NSMutableArray *itemCollection;
 
-+ (NSMutableArray*)getStreamLogicFromLocation:(CLLocation*)thisLocation;
-- (void)imageFromURLString:(NSString *)urlString atIndex: (NSInteger)index;
-- (void)requestFeedWithClientLocation:(CLLocation*)location;
+- (void)imageFromURLString:(NSString *)urlString atIndex:(NSInteger)index OfArray:(NSArray*)jsonArray;
+- (void)requestFeedWithClientLocation:(CLLocation*)location WithCompletion: (void (^)(void))callBackBlock /*WithCompletionHandler:(void(^)(NSMutableArray *streamCollection))handler*/;
 
 @end
