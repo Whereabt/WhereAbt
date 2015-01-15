@@ -21,15 +21,14 @@
 @property (strong, nonatomic) NSString* uploadURL;
 @property (strong, nonatomic) NSString* authToken;
 @property (assign) BOOL sourceTypeCamera;
+@property (strong, nonatomic) NSString *metaLong;
+@property (strong, nonatomic) NSString *metaLat;
+@property (strong, nonatomic) NSString *PUTUrlString;
 
 @end
 
 @implementation PhotosAccessViewController
-{
-    NSString *PUTurlString;
-    NSNumber *photoLatitude;
-    NSNumber *photoLongitude;
-}
+
 
 - (void)viewDidLoad {
     self.uploadURL = @"https://api.onedrive.com/v1.0/drive/root:/Whereabt/%@:/content";
@@ -93,34 +92,29 @@
     
     //determining image source
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-        self.sourceTypeCamera = YES;
-        NSURL *assetURL = info [@"UIImagePickerControllerReferenceURL"];
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-            NSDictionary *metadata = asset.defaultRepresentation.metadata;
-            if (metadata) {
-                photoLongitude = metadata[@"{GPS}"][@"Longitude"];
-                photoLatitude = metadata[@"{GPS}"][@"Latitude"];
-            }
-        }failureBlock:^(NSError *error) {
-            //user denied access
-            NSLog(@"Unable to access image location: %@", error);
-        }];
+        _sourceTypeCamera = YES;
+        
+         //get location
+         LocationController *locationController = [LocationController sharedController];
+        _metaLong = [NSString stringWithFormat: @"%f", locationController.currentLocation.coordinate.longitude];
+        _metaLat = [NSString stringWithFormat: @"%f", locationController.currentLocation.coordinate.latitude];
+        NSLog(@"Client longitude: %@ latitude: %@", _metaLong, _metaLat);
     }
          
-    else{
-        self.sourceTypeCamera = NO;
+    else if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary){
+        _sourceTypeCamera = NO;
         NSURL *assetURL = info [@"UIImagePickerControllerReferenceURL"];
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
             NSDictionary *metadata = asset.defaultRepresentation.metadata;
             if (metadata) {
-                photoLongitude = metadata[@"{GPS}"][@"Longitude"];
-                photoLatitude = metadata[@"{GPS}"][@"Latitude"];
+               CLLocation *imageLocation = metadata[ALAssetPropertyLocation];
+                _metaLong = [NSString stringWithFormat:@"%f", imageLocation.coordinate.longitude];
+                _metaLat = [NSString stringWithFormat:@"%f", imageLocation.coordinate.latitude];
             }
         }failureBlock:^(NSError *error) {
             //user denied access
-            NSLog(@"Unable to access image location: %@", error);
+            NSLog(@"Unable to access image metadata: %@", error);
         }];
         
     }
@@ -147,7 +141,7 @@
         NSLog(@"the name of the image file is: %@", imageFileName);
         NSString *fakeFileName = @"Fake2.jpg";
         
-        self.authToken = @"EwB4Aq1DBAAUGCCXc8wU/zFu9QnLdZXy+YnElFkAAfiF0eLPejswqqYjhcTWXnbLKUxRJV8VgbSNOVoD5l9dCYmwHNrT/nR7UECXvuzyElxjKr9CGUya35RNj4KgSdTTac1jWbSF0UiM6KNMNlnT4SYlGuVdLDzbkq0WgnvpRiiwhxss/ktHUL6Az6+HBnoa4ZGi0qdM+VmdOmuFgIwf609VUHzT0qeZjP0dZ4k96rI1X8O2IynZayxpqusGMIwGhjyTCbAUgIMqGUJlmyCH2VMdHn1ZJT9zX/0fD1Ac3qEL8T8qpZqtN2x+OEy1KllbNEKPye/i04ghFU2KDZJrC0S7afRbWYsyl1rbkc4I+DM4KMHOBO36EU2EEtkLQjwDZgAACOSKGhy+arFuSAFpxd4Kmrt4zjOHzuLr2kTavMY8TaVUgg4ei5Lawho7cFmgf+STnFqrvJP6Vc//YVjYnCulFbQdLurEXLQTDRvatzeQmzVtAu3EE11S6vPHSuvUh8bemmL3dbT5uPdOd5prpJVvOWobZQ/KURN+HppjtSVAAC3RccR75XB/Gt1T035pHuuLB5eQMXdW8qWOmrtvBfpIzq3+VYZbOQ5x+kyI7+0+cQ/AP+/RVTLX1O4WK4o2SW3YCAkrlG9if13j+QrmN0X3ggtJaKpNiVxFZ86WbYDBTda6krsx1kv+moVsRCTqXs/6WmygFY0U/PBfGWFowCLbTW8FTE9n+Iub0RphoR/QacPaRk+tf3XzJZsszXbg7kRLjriaeWLe2jCvw2rzjjJROWUweoHwQO+FGron6f+M45+9SM64PsHImocWkZQTskvtyTPIYgE=";
+        self.authToken = @"EwCAAq1DBAAUGCCXc8wU/zFu9QnLdZXy+YnElFkAAZVdbu98AUcgW6UabKE4LZT05zRPjaHElJONTbwn1fMIXfKXnOzkok1uwKRnYHoB6QtFcPlC6nL7dM6DCvLwLYP5G2Jo0jKkMcfnArHK5ch/hBwMNCcvcm4YRaviSo08EmK7pIsXtxHh188sPsBdQAE1HGiBuhXBBtssoi/1IIbTWTJr4W+QY9AUO5l6RNKuwS/kU0r5VPk0wLTeQ7XeHiFFq+7A+0m/5oFKV5HjFTCaRMtpMUcsneumm2o+CvbY64mhLL67DNDYSf7pY/9Nb9q5Im1zRN3387GAcl/L6BZmHoWWo+a8oCmExhe/78WPD7i3RgED7wW8m63keaZU0aoDZgAACNUKzP1oK9g7UAECJbiFtubjKNpT7wsPA1gRLQhkYd8YD7aKlww984965eBlXRh/0sReDCtPPAK+eQtKCxVIhe/AIcYdWhxeLb8HWvYUjB+fsJml/McDmaGyvNqxMNLezwM0Qfd+wxZ8dW589w7RvwTevHyCM+ouvBwyta8ozDYuZ1zTvsrpNxkQ1vy3v5gt1cleG11RsEkV77TwMT6zq8TSl6ICOCzWz8dUsNa3KAsFAJmpsgkKgMqxbTrmcRK6e8J7gFBfpqt0dELWzbAgbItL02kgUKoiiE19O+vmPYP07OQbicalVnNku00TdVf1RxDWIzsxhgx14yC17bHUAGi5swBoktwcQJWSGwZXAigdon9JlQNo9bF1xAkxEoCESBTe8RzDSLaTO8MQIN1T+djE8fTwo+t38SVRiDFVt3+xd5RQeK1RBJVUCr4SoA80EUOGgptyfW73Gc9iAQ==";
         
         [self constructTaskWithImageName:fakeFileName andData: dataFromImage];
         //method call for http request
@@ -156,7 +150,7 @@
     }
     
     //handling video taken;
-    else{
+    else if (CFStringCompare((CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo){
         NSURL *movieURL = [info objectForKey:UIImagePickerControllerMediaURL];
             //movieURL will be passed as parameter to server
     }
@@ -190,19 +184,17 @@
 
 
 - (void)PUTonNewPhotophpWithImageURL:(NSString *)ODimageUrl{
-    NSString *userID = @"Nicolas Isaza";
+    NSString *userID = @"Lucas";
     
     if (self.sourceTypeCamera == YES) {
-        //get location
-        LocationController *locationController = [LocationController sharedController];
-        CLLocation *thisLocation = locationController.currentLocation;
-        PUTurlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto.php?UserID=%@&Latitude=%f&Longitude=%f&PhotoURL=%@", userID, thisLocation.coordinate.latitude, thisLocation.coordinate.longitude, ODimageUrl];
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto.php?UserID=%@&Latitude=%@&Longitude=%@&PhotoURL=%@", userID, _metaLat, _metaLong, ODimageUrl];
+        NSLog(@"%@", _PUTUrlString);
     }
     else{
         //do something
     }
     
-    NSURL *url = [[NSURL alloc]initWithString:PUTurlString];
+    NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];
     NSLog(@"%@", url);
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
