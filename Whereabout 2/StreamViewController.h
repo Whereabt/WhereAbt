@@ -34,8 +34,5 @@ typedef void (^RequestCompletionBlock)(BOOL finished);
 //- (void)imageFromURLString:(NSString *)urlString atIndex: (NSInteger)index;
 //- (void)requestFeedWithClientLocation:(CLLocation*)location;
 
-- (void)setValueForStreamItemsWithValue:(NSMutableArray *)array;
-- (void)reloadTableView;
-- (void)performRequestWithCompletion:(void (^)(void))callBackBlock;
 
 @end
