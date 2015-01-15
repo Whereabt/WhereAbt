@@ -19,12 +19,9 @@ static NSString *const distanceFrom = @"MilesAway";
 
 
 @interface StreamViewController ()
-{
-    //NSMutableArray *itemCollection;
-    NSMutableArray *StreamItems;
-   // StreamLogic *logicManager;
-}
 
+
+@property (strong, nonatomic) NSMutableArray *streamItems;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
@@ -35,9 +32,17 @@ static NSString *const distanceFrom = @"MilesAway";
 - (void)viewDidLoad {
     //create object to deal with network requests
     StreamController *networkRequester = [[StreamController alloc]init];
-    [networkRequester requestFeedWithClientLocation:[LocationController sharedController].currentLocation WithCompletion:^{
+    [networkRequester getFeedWithCompletion:^(NSMutableArray *items, NSError *error) {
+        if (!error) {
+            self.streamItems = items;
+            [self.tableView reloadData];
+        }
+        
+        else{
+            NSLog(@"Error getting streamItems: %@", error);
+        }
+        
         [super viewDidLoad];
-        [self.tableView reloadData];
     }];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -57,9 +62,6 @@ static NSString *const distanceFrom = @"MilesAway";
     callBackBlock();
 }*/
 
-- (void)setValueForStreamItemsWithValue:(NSMutableArray *)array{
-    StreamItems = array;
-}
 
 /*
 - (void) reloadTableView{
@@ -133,16 +135,16 @@ static NSString *const distanceFrom = @"MilesAway";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [StreamItems count];
+    return [self.streamItems count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Configure the cell...
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"User ID" forIndexPath:indexPath];
     
     //setting UI
-    NSString *milesFrom = StreamItems[indexPath.row][distanceFrom];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance Away: %@", StreamItems[indexPath.row][userIdIndex], milesFrom];
-    cell.imageView.image = StreamItems[indexPath.row][photoIndex];
+    NSString *milesFrom = self.streamItems[indexPath.row][distanceFrom];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][userIdIndex], milesFrom];
+    cell.imageView.image = self.streamItems[indexPath.row][photoIndex];
 
     return cell;
 }
