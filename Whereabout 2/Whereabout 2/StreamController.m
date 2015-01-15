@@ -22,9 +22,11 @@ typedef void(^requestFeedCompletion)(BOOL);
     NSMutableArray *globalItemCollection;
 }
 
-
-- (void)requestFeedWithClientLocation:(CLLocation*)location WithCompletion: (void (^)(void))callBackBlock /*WithCompletionHandler:(void(^)(NSMutableArray *streamCollection))handler*/
-{
+- (void)getFeedWithCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
+    //get location
+    CLLocation *location = [LocationController sharedController].currentLocation;
+    
+    //make request
     NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f", location.coordinate.latitude, location.coordinate.longitude];
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
@@ -35,24 +37,20 @@ typedef void(^requestFeedCompletion)(BOOL);
                                                                        NSError *error){
                                                        NSError *jsonError = nil;
                                                        NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
-                                                     NSMutableArray *itemCollection = [immutable mutableCopy];
+                                                       NSMutableArray *itemCollection = [immutable mutableCopy];
                                                        NSLog(@"%@", itemCollection);
                                                        for (NSDictionary *photoItem in itemCollection) {
                                                            NSString *photoURL = photoItem[photoURLIndex];
                                                            NSInteger photoItemIndex = [itemCollection indexOfObject:photoItem];
                                                            [self imageFromURLString:photoURL atIndex:photoItemIndex OfArray: itemCollection];
                                                            
-                                                           //set global ViewController var
-                                                           StreamViewController *valueSetter = [[StreamViewController alloc]init];
-                                                           [valueSetter setValueForStreamItemsWithValue: itemCollection];
-                                                           callBackBlock();
+                                                           //when requests are done, call completion handler (callBack block) with request-created parameters
+                                                           callBack(itemCollection, error);
                                                        }
                                                    }
                                              ];
     [dataRequestTask resume];
-    
- 
-    //completionHandler;
+
 }
 
 
