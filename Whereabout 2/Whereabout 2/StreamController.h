@@ -16,6 +16,6 @@
 @property (strong, nonatomic) NSMutableDictionary *indexDict;
 
 - (void)imageFromURLString:(NSString *)urlString atIndex:(NSInteger)index OfArray:(NSArray*)jsonArray;
-- (void)requestFeedWithClientLocation:(CLLocation*)location WithCompletion: (void (^)(void))callBackBlock /*WithCompletionHandler:(void(^)(NSMutableArray *streamCollection))handler*/;
+- (void)getFeedWithCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack;
 
 @end
