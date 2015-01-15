@@ -15,12 +15,8 @@ static NSString *const photoURLIndex = @"PhotoURL";
 static NSString *const photoIndex = @"Photo";
 static NSString *const distanceFrom = @"MilesAway";
 
-typedef void(^requestFeedCompletion)(BOOL);
-
 @implementation StreamController
-{
-    NSMutableArray *globalItemCollection;
-}
+
 
 - (void)getFeedWithCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
     //get location

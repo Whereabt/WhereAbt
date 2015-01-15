@@ -9,8 +9,6 @@
 #import "StreamViewController.h"
 #import "StreamController.h"
 #import "StreamDelegate.h"
-#import "LocationController.h"
-#import <CoreLocation/CoreLocation.h>
 
 static NSString *const userIdIndex = @"UserID";
 static NSString *const photoURLIndex = @"PhotoURL";
@@ -22,7 +20,6 @@ static NSString *const distanceFrom = @"MilesAway";
 
 
 @property (strong, nonatomic) NSMutableArray *streamItems;
-@property (strong, nonatomic) CLLocationManager *locationManager;
 
 @end
 
@@ -53,77 +50,11 @@ static NSString *const distanceFrom = @"MilesAway";
 }
 
 
-/*- (void)performRequestWithCompletion: (void (^)(void))callBackBlock{
-    //create object to deal with network requests
-    StreamController *networkRequester = [[StreamController alloc]init];
-    
-    //get location
-    [networkRequester requestFeedWithClientLocation:[LocationController sharedController].currentLocation];
-    callBackBlock();
-}*/
-
-
-/*
-- (void) reloadTableView{
-    [self.tableView reloadData];
-}
-*/
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
--(void)requestFeedWithClientLocation:(CLLocation*)location
-{
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f", location.coordinate.latitude, location.coordinate.longitude];
-    NSURL *url = [[NSURL alloc]initWithString:urlAsString];
-    NSLog(@"%@", urlAsString);
-    NSURLSession *session = [NSURLSession sharedSession];
-   
-    NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
-            completionHandler:^(NSData *data,
-                                NSURLResponse *response,
-                                NSError *error){
-                NSError *jsonError = nil;
-                NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
-                itemCollection = [immutable mutableCopy];
-                NSLog(@"%@", itemCollection);
-                for (NSDictionary *photoItem in itemCollection) {
-                    NSString *photoURL = photoItem[photoURLIndex];
-                    NSInteger photoItemIndex = [itemCollection indexOfObject:photoItem];
-                   [self imageFromURLString:photoURL atIndex:photoItemIndex];
-                }
-                [self.tableView reloadData];
-            }
-       ];
-     [dataRequestTask resume];
-}
-
-- (void)imageFromURLString:(NSString *)urlString atIndex: (NSInteger)index
-{
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *photoRequestTask = [session dataTaskWithURL: url
-            completionHandler: ^(NSData *data,
-                                NSURLResponse *response,
-                                NSError *error) {
-                if (error == nil) {
-                    NSMutableDictionary *newDict = itemCollection[index];
-                    UIImage *returnedImage = [UIImage imageWithData:data];
-                    if (returnedImage != nil) {
-                        [newDict setObject:returnedImage forKey:photoIndex];
-                        [self.tableView reloadData];
-                    }
-                }
-            }
-      ];
-    
-    [photoRequestTask resume];
-}
-
-*/
                                   
 #pragma mark - Table view data source
 
