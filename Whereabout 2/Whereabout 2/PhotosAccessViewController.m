@@ -10,6 +10,9 @@
 #import "StreamViewController.h"
 #import "LocationController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <ImageIO/CGImageSource.h>
+#import <ImageIO/CGImageProperties.h>
 #import <CoreLocation/CoreLocation.h>
 
 //static NSString *const fakeFileName = @"Fake2.jpg";
@@ -17,10 +20,16 @@
 @interface PhotosAccessViewController ()
 @property (strong, nonatomic) NSString* uploadURL;
 @property (strong, nonatomic) NSString* authToken;
+@property (assign) BOOL sourceTypeCamera;
 
 @end
 
 @implementation PhotosAccessViewController
+{
+    NSString *PUTurlString;
+    NSNumber *photoLatitude;
+    NSNumber *photoLongitude;
+}
 
 - (void)viewDidLoad {
     self.uploadURL = @"https://api.onedrive.com/v1.0/drive/root:/Whereabt/%@:/content";
@@ -82,6 +91,40 @@
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     UIImage *originalImage, *editedImage, *imageToSave;
     
+    //determining image source
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        self.sourceTypeCamera = YES;
+        NSURL *assetURL = info [@"UIImagePickerControllerReferenceURL"];
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+            NSDictionary *metadata = asset.defaultRepresentation.metadata;
+            if (metadata) {
+                photoLongitude = metadata[@"{GPS}"][@"Longitude"];
+                photoLatitude = metadata[@"{GPS}"][@"Latitude"];
+            }
+        }failureBlock:^(NSError *error) {
+            //user denied access
+            NSLog(@"Unable to access image location: %@", error);
+        }];
+    }
+         
+    else{
+        self.sourceTypeCamera = NO;
+        NSURL *assetURL = info [@"UIImagePickerControllerReferenceURL"];
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+            NSDictionary *metadata = asset.defaultRepresentation.metadata;
+            if (metadata) {
+                photoLongitude = metadata[@"{GPS}"][@"Longitude"];
+                photoLatitude = metadata[@"{GPS}"][@"Latitude"];
+            }
+        }failureBlock:^(NSError *error) {
+            //user denied access
+            NSLog(@"Unable to access image location: %@", error);
+        }];
+        
+    }
+    
     //handling image taken
     if (CFStringCompare((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
         editedImage = (UIImage *) [info objectForKey:
@@ -98,7 +141,7 @@
         
         //convert image to data
         NSData *dataFromImage = UIImagePNGRepresentation(imageToSave);
-      
+        
         NSURL *imageFileURL = [info objectForKey:imageToSave];
         NSString *imageFileName = [imageFileURL lastPathComponent];
         NSLog(@"the name of the image file is: %@", imageFileName);
@@ -149,12 +192,17 @@
 - (void)PUTonNewPhotophpWithImageURL:(NSString *)ODimageUrl{
     NSString *userID = @"Nicolas Isaza";
     
-    //get location
-    LocationController *locationController = [LocationController sharedController];
-   CLLocation *thisLocation = locationController.currentLocation;
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto.php?UserID=%@&Latitude=%f&Longitude=%f&PhotoURL=%@", userID, thisLocation.coordinate.latitude, thisLocation.coordinate.longitude, ODimageUrl];
+    if (self.sourceTypeCamera == YES) {
+        //get location
+        LocationController *locationController = [LocationController sharedController];
+        CLLocation *thisLocation = locationController.currentLocation;
+        PUTurlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto.php?UserID=%@&Latitude=%f&Longitude=%f&PhotoURL=%@", userID, thisLocation.coordinate.latitude, thisLocation.coordinate.longitude, ODimageUrl];
+    }
+    else{
+        //do something
+    }
     
-    NSURL *url = [[NSURL alloc]initWithString:urlAsString];
+    NSURL *url = [[NSURL alloc]initWithString:PUTurlString];
     NSLog(@"%@", url);
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url

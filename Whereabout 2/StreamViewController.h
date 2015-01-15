@@ -15,22 +15,13 @@
 
 @end
 
+
+typedef void (^RequestCompletionBlock)(BOOL finished);
+
+
 @interface StreamViewController : UITableViewController <CLLocationManagerDelegate>
 
-
-//property declarations for query string parameters
-@property (strong) NSString* userID;
-@property (assign) id latitude;
-@property (assign) id longitude;
-@property (strong) id photoURL;
-@property (strong) id milesAway;
-
 @property (weak,nonatomic) id<StreamDelegate> delegate;
-
-//- (void)imageFromURLString:(NSString *)urlString atIndex: (NSInteger)index;
-//- (void)requestFeedWithClientLocation:(CLLocation*)location;
-
-
 
 
 @end

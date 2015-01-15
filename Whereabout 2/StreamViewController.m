@@ -7,10 +7,8 @@
 //
 
 #import "StreamViewController.h"
-#import "StreamLogic.h"
+#import "StreamController.h"
 #import "StreamDelegate.h"
-#import "LocationController.h"
-#import <CoreLocation/CoreLocation.h>
 
 static NSString *const userIdIndex = @"UserID";
 static NSString *const photoURLIndex = @"PhotoURL";
@@ -19,13 +17,9 @@ static NSString *const distanceFrom = @"MilesAway";
 
 
 @interface StreamViewController ()
-{
-    //NSMutableArray *itemCollection;
-    NSMutableArray *StreamItems;
-   // StreamLogic *logicManager;
-}
 
-@property (strong, nonatomic) CLLocationManager *locationManager;
+
+@property (strong, nonatomic) NSMutableArray *streamItems;
 
 @end
 
@@ -33,14 +27,20 @@ static NSString *const distanceFrom = @"MilesAway";
 
 
 - (void)viewDidLoad {
-    
-    //get location
-   // [self requestFeedWithClientLocation: [LocationController sharedController].currentLocation];
-   
-    StreamItems = [logicManager getStreamLogicFromLocation:[LocationController sharedController].currentLocation];
-    [self.tableView reloadData];
-    
-    [super viewDidLoad];
+    //create object to deal with network requests
+    StreamController *networkRequester = [[StreamController alloc]init];
+    [networkRequester getFeedWithCompletion:^(NSMutableArray *items, NSError *error) {
+        if (!error) {
+            self.streamItems = items;
+            [self.tableView reloadData];
+        }
+        
+        else{
+            NSLog(@"Error getting streamItems: %@", error);
+        }
+        
+        [super viewDidLoad];
+    }];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -49,61 +49,12 @@ static NSString *const distanceFrom = @"MilesAway";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
--(void)requestFeedWithClientLocation:(CLLocation*)location
-{
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f", location.coordinate.latitude, location.coordinate.longitude];
-    NSURL *url = [[NSURL alloc]initWithString:urlAsString];
-    NSLog(@"%@", urlAsString);
-    NSURLSession *session = [NSURLSession sharedSession];
-   
-    NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
-            completionHandler:^(NSData *data,
-                                NSURLResponse *response,
-                                NSError *error){
-                NSError *jsonError = nil;
-                NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
-                itemCollection = [immutable mutableCopy];
-                NSLog(@"%@", itemCollection);
-                for (NSDictionary *photoItem in itemCollection) {
-                    NSString *photoURL = photoItem[photoURLIndex];
-                    NSInteger photoItemIndex = [itemCollection indexOfObject:photoItem];
-                   [self imageFromURLString:photoURL atIndex:photoItemIndex];
-                }
-                [self.tableView reloadData];
-            }
-       ];
-     [dataRequestTask resume];
-}
-
-- (void)imageFromURLString:(NSString *)urlString atIndex: (NSInteger)index
-{
-    NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *photoRequestTask = [session dataTaskWithURL: url
-            completionHandler: ^(NSData *data,
-                                NSURLResponse *response,
-                                NSError *error) {
-                if (error == nil) {
-                    NSMutableDictionary *newDict = itemCollection[index];
-                    UIImage *returnedImage = [UIImage imageWithData:data];
-                    if (returnedImage != nil) {
-                        [newDict setObject:returnedImage forKey:photoIndex];
-                        [self.tableView reloadData];
-                    }
-                }
-            }
-      ];
-    
-    [photoRequestTask resume];
-}
-
-*/
                                   
 #pragma mark - Table view data source
 
@@ -115,16 +66,16 @@ static NSString *const distanceFrom = @"MilesAway";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [StreamItems count];
+    return [self.streamItems count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Configure the cell...
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"User ID" forIndexPath:indexPath];
     
     //setting UI
-    NSString *milesFrom = StreamItems[indexPath.row][distanceFrom];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance Away: %@", StreamItems[indexPath.row][userIdIndex], milesFrom];
-    cell.imageView.image = StreamItems[indexPath.row][photoIndex];
+    NSString *milesFrom = self.streamItems[indexPath.row][distanceFrom];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][userIdIndex], milesFrom];
+    cell.imageView.image = self.streamItems[indexPath.row][photoIndex];
 
     return cell;
 }
