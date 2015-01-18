@@ -32,7 +32,7 @@
 
 - (void)viewDidLoad {
     self.uploadURL = @"https://api.onedrive.com/v1.0/drive/root:/Whereabt/%@:/content";
-   // [LocationController sharedController];
+   [LocationController sharedController];
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -92,16 +92,17 @@
     UIImage *originalImage, *editedImage, *imageToSave;
   */
     
-    self.authToken = @"EwCAAq1DBAAUGCCXc8wU/zFu9QnLdZXy+YnElFkAAaafL5SimgLm2AQihd4tHzrpa2hZGlTrgtK8x6hU1zSiR/DUjV7B+CRl1MXZt9IEALNfMWHgK/xYQb/0auYSHAuffE+FM6YbYuxNReNS+oDtzSqDHXp1tgyRcFebueeD3fH4V2gSr0INkDy5v2ipESe8aNCB411zDfe3OJCGCSeLvxyQsGZLsb6EjDxrfF5VVE7ltA6MTVps7c2zqoZidRyn31ICNvZy9AHpv8EnbsK8MZ+ISmzbfkSrtAFKYoCmG1po+3NHTaTc768c+oIzT9Fi2/+tHVxdkoUlC7+mBXnuJG911eDo1V/4F33TEJ9X9NE8mJhKis8liEDh+OAFNkIDZgAACBk7HkEB3FLfUAEjXbQhOY4/5vnw+8ojIUrYnbHARNymQ+7ZviCkZZkCStwCF2LYUrx/2UXdkEqO2OoOAnunQcEGC0mteQcAYN7NYNAuunMF3cMEpczM2yXSLiCEPpIx+hbrOEYQ/FCrzEiZ3m/B7E6TodzL0d7c9zFSnNKyhNVcYNe29pIyrxX8mfWI/wcrY1U/yPEjY4VLpKAUeeWyp4PQnaoAha0SY72OhIHgya8v2DLmS8W0MvhUYXMbOj7pQUNCRcA3dVQ8RXCTKR8VEBDgzDT4NJ5bZV0RJofYBrxuMZX462PyOa4cbJ1HKEfJvrl+g7ocEVM3mRaSVCTMhyIOr0u4OVADVbVjxR+bHfAQr+2gO1ZhQOclIOFsJFcnQ1Zg/JbY71UTkUGA1LSqkNTpxfQ3Ot+5WtgeQxtqQie87TQAGQoXB3ulvuqc5ee9taNVAJmcudar5QxiAQ==";
+    self.authToken = @"EwCAAq1DBAAUGCCXc8wU/zFu9QnLdZXy+YnElFkAARyIK3AUsqfTSeGngay5oeGRsyxHDWxrzsiKmYS4gEqDgSTvN+9H6iUYDM63Odfd5m/wXnejZsbL3nCemOIZOZkLPX6qwytTFpluufXwZApS8TJjMChZPWJuWmfDDwmqcH/4jbdFh2xzahMDEiJ+sygqWmQOHPZtH+tdH8rrmx7DF6Xoz8b9LEXHss7Zxqp7n6s1kOwYS5xWjgujs3youNkkuohVTd0Ek7mtwpr6vMq1tyJCbx90ckHxtiT+mVDpCN2rFfnJYp5iWuzarXKlwoeIFjDbdXvx0N6ZP7pVvhFagolrzT0BTzOxbUd0xrkqBhq/RYFMwjRI+Tp12lbdu1IDZgAACJ3vc7bSPmGBUAHovZiGRbkUmv0Ugpbfag7ArRuJiWZpWhyB4UJ0Eksvp5ouyXv/bdSSkAFtSk5pwjskvYcCFMocP2moVLXMnNAOIwAkZ26NJE3YH0TkgYtdkIkrbhMpHhgRfwRY9v4fAeFK70l9fBnL9U+dtLZ89UnmchThw2JrzdnHluUPqYqsyDpBiqlPMqxXzcD7uJwofneupsckfqPrTj+B/uue01m3174jVq2zwV17vppwtnyNBvi/mQxb+5zmd6wMcLCBITByJPCZhoy87IfXcZfZenaEKn6vtxKmgr5I23U4YO6Px3oV8MEvtL6d6p7U8afggLGt1MxbsUElETZCYNNK28h1CXaMjlelH9RQ4ocnIAloZIcwd0QlI+ueBHDF5NyjPJwtq6skR/9fbkaLlFVzDK2vp+QzZ7LgY5bLWvJdDvliah/7i62ZyUEjo0JGtuHSuFpiAQ==";
   
     //determining image source
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         _sourceTypeCamera = YES;
         
          //get location
-         LocationController *locationController = [LocationController sharedController];
-        _metaLong = [NSString stringWithFormat: @"%f", locationController.currentLocation.coordinate.longitude];
-        _metaLat = [NSString stringWithFormat: @"%f", locationController.currentLocation.coordinate.latitude];
+        LocationController *locationController = [[LocationController alloc]init];
+    
+        _metaLong = [NSString stringWithFormat: @"%f", locationController.locationManager.location.coordinate.longitude];
+        _metaLat = [NSString stringWithFormat: @"%f", locationController.locationManager.location.coordinate.latitude];
         NSLog(@"Client longitude: %@ latitude: %@", _metaLong, _metaLat);
         
         //handling image taken
@@ -140,7 +141,6 @@
             UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We currently don't support video uploads" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [noMovieSupport show];
         }
-        
         
     }
 
@@ -193,7 +193,7 @@
                 //handling video taken;
                 else {
                     //movieURL will be passed as parameter to server
-                    UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"Currently we don't allow videos to be uploaded" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We currently don't allow videos to be uploaded" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     [noMovieSupport show];
                 }
 
@@ -271,14 +271,10 @@
 
 - (void)PUTonNewPhotophpWithImageURL:(NSString *)ODimageUrl{
     NSString *userID = @"Lucas";
+    if (_metaLong != nil) {
     
-    if (self.sourceTypeCamera == YES) {
         _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto.php?UserID=%@&Latitude=%@&Longitude=%@&PhotoURL=%@", userID, _metaLat, _metaLong, ODimageUrl];
         NSLog(@"%@", _PUTUrlString);
-    }
-    else{
-        //do something
-    }
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];
     NSLog(@"%@", url);
@@ -287,10 +283,21 @@
                                                    completionHandler:^(NSData *data,
                                                                        NSURLResponse *response,
                                                                        NSError *error){
+                                                       if (error) {
+                                                           NSLog(@"Error: %@",error);
+                                                       }
+                                                       else{
+                                                           NSLog(@"PUT to newPhoto.php completed");
+                                                       }
 
                                                        
                 }];
     [dataRequestTask resume];
+    }
+    else{
+        UIAlertView *PhotoLocationAlert = [[UIAlertView alloc]initWithTitle:@"Oops!" message:@"We were unable to find the photo's location, please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [PhotoLocationAlert show];
+    }
 }
 
 

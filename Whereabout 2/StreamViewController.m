@@ -27,6 +27,8 @@ static NSString *const distanceFrom = @"MilesAway";
 
 
 - (void)viewDidLoad {
+     [super viewDidLoad];
+    
     //create object to deal with network requests
     StreamController *networkRequester = [[StreamController alloc]init];
     [networkRequester getFeedWithCompletion:^(NSMutableArray *items, NSError *error) {
@@ -39,7 +41,6 @@ static NSString *const distanceFrom = @"MilesAway";
             NSLog(@"Error getting streamItems: %@", error);
         }
         
-        [super viewDidLoad];
     }];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -75,7 +76,9 @@ static NSString *const distanceFrom = @"MilesAway";
     //setting UI
     NSString *milesFrom = self.streamItems[indexPath.row][distanceFrom];
     cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][userIdIndex], milesFrom];
-    cell.imageView.image = self.streamItems[indexPath.row][photoIndex];
+    UIImage *photo = [[UIImage alloc]init];
+    photo = self.streamItems[indexPath.row][photoIndex];
+    cell.imageView.image = photo;
 
     return cell;
 }

@@ -20,10 +20,11 @@ static NSString *const distanceFrom = @"MilesAway";
 
 - (void)getFeedWithCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
     //get location
-    CLLocation *location = [LocationController sharedController].currentLocation;
+    //CLLocation *location = [LocationController sharedController].currentLocation;
+    LocationController *locationController = [[LocationController alloc]init];
     
     //make request
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f", location.coordinate.latitude, location.coordinate.longitude];
+    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude];
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
     NSURLSession *session = [NSURLSession sharedSession];
@@ -46,7 +47,6 @@ static NSString *const distanceFrom = @"MilesAway";
                                                    }
                                              ];
     [dataRequestTask resume];
-
 }
 
 

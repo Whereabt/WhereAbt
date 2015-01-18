@@ -25,8 +25,6 @@
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
 
-        //_currentLocation = [[CLLocation alloc] initWithLatitude:45 longitude:12];
-        //_currentLocation = [[CLLocation alloc]initWithLatitude:41.694 longitude:-83.6];
     }
   return self;
 }
