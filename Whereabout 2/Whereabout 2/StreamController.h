@@ -13,7 +13,7 @@
 
 @interface StreamController : NSObject
 
-
+@property (nonatomic, retain) NSMutableArray *itemCollection;
 @property (strong, nonatomic) NSData *imageData;
 @property (strong, nonatomic) NSMutableDictionary *indexDict;
 

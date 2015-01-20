@@ -13,6 +13,8 @@
 
 //create outlet property for "Get Started" button
 @property (weak, nonatomic) IBOutlet UIButton *GetStarted;
+@property (weak, nonatomic) IBOutlet UIWebView *ODWebView;
 - (IBAction)LoadPhotoView:(id)sender; //action method for "Get Started" button
+- (IBAction)LoginSignUp:(id)sender;
 
 @end

@@ -27,7 +27,7 @@ static NSString *const distanceFrom = @"MilesAway";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.collectionView registerClass: [UICollectionViewCell class]forCellWithReuseIdentifier:@"Cell"];
+    [self.collectionView registerClass: [CellViewController class]forCellWithReuseIdentifier:@"Cell"];
     
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc]init];
     [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
@@ -85,15 +85,13 @@ static NSString *const distanceFrom = @"MilesAway";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-   CellViewController *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    static NSString *identifier = @"Cell";
+    CellViewController *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
   
    // NSString *milesFrom = self.streamItems[indexPath.row][distanceFrom];
     //cell. = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][userIdIndex], milesFrom];
    
-    UIImage *photo = [[UIImage alloc]init];
-    photo = self.streamItems[indexPath.row][photoIndex];
-    
-   cell.cellImage.image = photo;
+    cell.imageOfCell.image = self.streamItems[indexPath.row][photoIndex];
    
     return cell;
 }

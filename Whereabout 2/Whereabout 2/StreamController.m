@@ -34,15 +34,15 @@ static NSString *const distanceFrom = @"MilesAway";
                                                                        NSError *error){
                                                        NSError *jsonError = nil;
                                                        NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
-                                                       NSMutableArray *itemCollection = [immutable mutableCopy];
-                                                       NSLog(@"%@", itemCollection);
-                                                       for (NSDictionary *photoItem in itemCollection) {
+                                                       _itemCollection = [immutable mutableCopy];
+                                                       NSLog(@"%@", _itemCollection);
+                                                       for (NSDictionary *photoItem in _itemCollection) {
                                                            NSString *photoURL = photoItem[photoURLIndex];
-                                                           NSInteger photoItemIndex = [itemCollection indexOfObject:photoItem];
-                                                           [self imageFromURLString:photoURL atIndex:photoItemIndex OfArray: itemCollection];
+                                                           NSInteger photoItemIndex = [_itemCollection indexOfObject:photoItem];
+                                                           [self imageFromURLString:photoURL atIndex:photoItemIndex OfArray:_itemCollection];
                                                            
                                                            //when requests are done, call completion handler (callBack block) with request-created parameters
-                                                           callBack(itemCollection, error);
+                                                           callBack(_itemCollection, error);
                                                        }
                                                    }
                                              ];
@@ -63,6 +63,8 @@ static NSString *const distanceFrom = @"MilesAway";
                                                             if (returnedImage != nil) {
                                                                  NSMutableDictionary *newDict = jsonArray[index];
                                                                 [newDict setObject:returnedImage forKey:photoIndex];
+                                                                [_itemCollection replaceObjectAtIndex:index withObject:newDict];
+
                                                             }
                                                         }
                                                     }

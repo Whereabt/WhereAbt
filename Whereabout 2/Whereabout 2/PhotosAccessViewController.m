@@ -92,7 +92,7 @@
     UIImage *originalImage, *editedImage, *imageToSave;
   */
     
-    self.authToken = @"EwCAAq1DBAAUGCCXc8wU/zFu9QnLdZXy+YnElFkAARyIK3AUsqfTSeGngay5oeGRsyxHDWxrzsiKmYS4gEqDgSTvN+9H6iUYDM63Odfd5m/wXnejZsbL3nCemOIZOZkLPX6qwytTFpluufXwZApS8TJjMChZPWJuWmfDDwmqcH/4jbdFh2xzahMDEiJ+sygqWmQOHPZtH+tdH8rrmx7DF6Xoz8b9LEXHss7Zxqp7n6s1kOwYS5xWjgujs3youNkkuohVTd0Ek7mtwpr6vMq1tyJCbx90ckHxtiT+mVDpCN2rFfnJYp5iWuzarXKlwoeIFjDbdXvx0N6ZP7pVvhFagolrzT0BTzOxbUd0xrkqBhq/RYFMwjRI+Tp12lbdu1IDZgAACJ3vc7bSPmGBUAHovZiGRbkUmv0Ugpbfag7ArRuJiWZpWhyB4UJ0Eksvp5ouyXv/bdSSkAFtSk5pwjskvYcCFMocP2moVLXMnNAOIwAkZ26NJE3YH0TkgYtdkIkrbhMpHhgRfwRY9v4fAeFK70l9fBnL9U+dtLZ89UnmchThw2JrzdnHluUPqYqsyDpBiqlPMqxXzcD7uJwofneupsckfqPrTj+B/uue01m3174jVq2zwV17vppwtnyNBvi/mQxb+5zmd6wMcLCBITByJPCZhoy87IfXcZfZenaEKn6vtxKmgr5I23U4YO6Px3oV8MEvtL6d6p7U8afggLGt1MxbsUElETZCYNNK28h1CXaMjlelH9RQ4ocnIAloZIcwd0QlI+ueBHDF5NyjPJwtq6skR/9fbkaLlFVzDK2vp+QzZ7LgY5bLWvJdDvliah/7i62ZyUEjo0JGtuHSuFpiAQ==";
+    self.authToken = @"EwBwAq1DBAAUGCCXc8wU/zFu9QnLdZXy%2bYnElFkAAeKuWRh2Dh0CHu2aTDQpw36iUa17swWyhpEBB29nlEXY3DzTxpDXO2V3uUvZsDxRWJ0/t7Zj4F0i1gkI%2bfdiIaYHbD96fzYXoUBGf6MVKK1lIZOZMvPm43ZvTJ9FA9xk3aqsavyJpzM%2bfeYixXlSTuQcaCfYwl9xt1DGrW94lBSmQr9Mgj3bPPzgDvf6tmlphS7Vujg9qouYn4JF4beDsv9p0T3%2bJU%2bN5w6N4RLnuIAEfsXE/ZmDha51L5U%2bCeP7jQKofg9uduU9/x6689nR4g2rbCDuegPUStELwq7sDpvrbYiHVNZLxr7zbsVvWQo/5G2aL2TVIYinQ/Tj9lq0O0EDZgAACLY0oBDZHXRdQAGwJDVB7/2Rw8UavB6DrXxN6b20BpqbxPQOgHWFZ8uC%2bk7zzBPV7GUhrGcYK4%2batzpyFUr96RWCRMhVwra60i8UKpsJ/c92GCMgk8gPapOMb0lRLAtCp7FH4FeEj7/l0ydHdFoYF3rJLtZMXLaSJACVVxtsVytFcz6BneHksRbbGBmXJrjR427wJ6sIf34jVyc9u3unNGJomjAO2jLp3PxqtJhk533C6sHsSm1gzB3V46szJP7pnKQbJPlffQbh4FgrTfQccyHFnSyJDRC83E5FKc7i%2bTd7ygF4MPhFfIsNTQS27Axt5QO0JXDBvPQ6oyM7gv/QjMkngNRoCSFjj1QoReUreKU/pVOftlgcfrVtQ3yLfO7TGV/ZNHAiIRKBjylf8hF%2bPxgQGLMhIHJtcf6l88xufEhHqhUxSoykwAYPEFoB&authentication_token=eyJhbGciOiJIUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJ2ZXIiOjEsImlzcyI6InVybjp3aW5kb3dzOmxpdmVpZCIsImV4cCI6MTQyMTcyMTQ2MCwidWlkIjoiOTI1ODVlZjU1NTdjNzkwOGFiOWEyYmMyMjE3M2EwNmYiLCJhdWQiOiJuNDYub3JnIiwidXJuOm1pY3Jvc29mdDphcHB1cmkiOiJhcHBpZDovLzAwMDAwMDAwNEMxMzQ5NkUiLCJ1cm46bWljcm9zb2Z0OmFwcGlkIjoiMDAwMDAwMDA0QzEzNDk2RSJ9.7dpcoJ47TIH6XoczvfurbO-QkXbeh60cw9mUl-hoWvM&token_type=bearer&expires_in=3600&scope=wl.skydrive_update&user_id=92585ef5557c7908ab9a2bc22173a06f";
   
     //determining image source
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
@@ -155,55 +155,91 @@
             if (metadata) {
                 
                 //getting GPS dictionary from metadata and then getting lat and lon. Eventually add "TimeStamp" and "DateStamp" as keys like lat. and lon.
-                _metaLat = [[metadata objectForKey: @"{GPS}"] objectForKey:@"Latitude"];
-                _metaLong = [[metadata objectForKey:@"{GPS}"] objectForKey:@"Longitude"];
-                //handling image taken
-                NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+                NSNumber *latitude = [[metadata objectForKey: @"{GPS}"] objectForKey:@"Latitude"];
+                NSNumber *longitude = [[metadata objectForKey:@"{GPS}"] objectForKey:@"Longitude"];
+                NSConstantString *latRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LatitudeRef"];
+                NSConstantString *lonRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LongitudeRef"];
                 
-                //declaring images
-                UIImage *originalImage, *editedImage, *imageToSave;
                 
-                //making sure only photos are uploaded, currently no videos
-                if (CFStringCompare((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-                    editedImage = (UIImage *) [info objectForKey: UIImagePickerControllerEditedImage];
-                    originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
+                if ([latRef isEqualToString:@"S"] == YES) {
+                    _metaLat = [NSString stringWithFormat:@"-%@", latitude];
+                }
+                else //([latRef compare:@"N"] == YES)
+                {
+                    _metaLat = [NSString stringWithFormat:@"%@", latitude];
+                }
+                
+                
+                if ([lonRef isEqualToString: @"W"] == YES) {
+                    _metaLong = [NSString stringWithFormat:@"-%@", longitude];
+                }
+                else //if([lonRef compare:@"E"] == YES)
+                {
+                    _metaLong = [NSString stringWithFormat:@"%@", longitude];
+                }
+                
+                if ([_metaLong isEqualToString:@"(null)"] == YES || [_metaLat isEqualToString:@"(null)"] == YES) {
+                    UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry!" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    [metaAlert show];
+                }
+                
+                else{
+            
+                
+                    //handling image taken
+                    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+                
+                    //declaring images
+                    UIImage *originalImage, *editedImage, *imageToSave;
+                
+                    //making sure only photos are uploaded, currently no videos
+                    if (CFStringCompare((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+                        editedImage = (UIImage *) [info objectForKey: UIImagePickerControllerEditedImage];
+                        originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
                     
-                    if (editedImage) {
-                        imageToSave = editedImage;
+                        if (editedImage) {
+                                imageToSave = editedImage;
+                            }
+                        else {
+                                imageToSave = originalImage;
+                        }
+                                //convert image to data
+                                NSData *dataFromImage = UIImagePNGRepresentation(imageToSave);
+                    
+                                //NSURL *imageFileURL = [info objectForKey:imageToSave];
+                                NSURL *imageFileURL = [info objectForKey:UIImagePickerControllerReferenceURL];
+                                NSString *imageFileName = [imageFileURL lastPathComponent];
+                                NSLog(@"the name of the image file is: %@", imageFileName);
+                                NSString *fakeFileName = @"Fake2.jpg";
+                    
+                                [self constructTaskWithImageName:fakeFileName andData: dataFromImage];
+                                //method call for http request
+                                //[self PUTImageToOD:imageFileName imageWithData:dataFromImage];
+                    
                     }
+                    
                     else {
-                        imageToSave = originalImage;
-                    }
-                    
-                    //convert image to data
-                    NSData *dataFromImage = UIImagePNGRepresentation(imageToSave);
-                    
-                    //NSURL *imageFileURL = [info objectForKey:imageToSave];
-                    NSURL *imageFileURL = [info objectForKey:UIImagePickerControllerReferenceURL];
-                    NSString *imageFileName = [imageFileURL lastPathComponent];
-                    NSLog(@"the name of the image file is: %@", imageFileName);
-                    NSString *fakeFileName = @"Fake2.jpg";
-                    
-                    [self constructTaskWithImageName:fakeFileName andData: dataFromImage];
-                    //method call for http request
-                    //[self PUTImageToOD:imageFileName imageWithData:dataFromImage];
-                    
-                }
-                
-                //handling video taken;
-                else {
-                    //movieURL will be passed as parameter to server
-                    UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We currently don't allow videos to be uploaded" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                    [noMovieSupport show];
-                }
+                        //movieURL will be passed as parameter to server
+                        UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We currently don't allow videos to be uploaded" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                        [noMovieSupport show];
 
+                    }
                 
+                }
             }
-        }failureBlock:^(NSError *error) {
-            //user denied access
+            //no metadata found
+        else{
+                UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [metaAlert show];
+            }
+        } failureBlock:^(NSError *error) {
+            
+            //metadata is nil
             NSLog(@"Unable to access image metadata: %@", error);
+            UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [metaAlert show];
         }];
-        
+ 
     }
   
    /*

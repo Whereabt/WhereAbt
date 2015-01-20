@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface CellViewController : UICollectionViewCell
-@property (strong, nonatomic) IBOutlet UIImageView *cellImage;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageOfCell;
+
 
 @end
