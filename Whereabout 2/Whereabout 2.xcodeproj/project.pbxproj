@@ -24,6 +24,8 @@
 		B938DCB01A641E560073D91F /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCAF1A641E560073D91F /* StreamController.m */; };
 		B938DCB31A68BF000073D91F /* StreamCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */; };
 		B938DCB61A6AF2EE0073D91F /* CellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB51A6AF2EE0073D91F /* CellViewController.m */; };
+		B938DCB91A6F4F2C0073D91F /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB81A6F4F2C0073D91F /* ProfileController.m */; };
+		B938DCBC1A6F59000073D91F /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCBB1A6F59000073D91F /* ProfileViewController.m */; };
 		B9FCFAB91A6331E800AFB63D /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */; };
 		B9FCFABA1A6331E800AFB63D /* Welcome 380x449 copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */; };
 /* End PBXBuildFile section */
@@ -70,6 +72,10 @@
 		B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamCollectionViewController.m; sourceTree = "<group>"; };
 		B938DCB41A6AF2EE0073D91F /* CellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellViewController.h; sourceTree = "<group>"; };
 		B938DCB51A6AF2EE0073D91F /* CellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellViewController.m; sourceTree = "<group>"; };
+		B938DCB71A6F4F2C0073D91F /* ProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileController.h; sourceTree = "<group>"; };
+		B938DCB81A6F4F2C0073D91F /* ProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileController.m; sourceTree = "<group>"; };
+		B938DCBA1A6F59000073D91F /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		B938DCBB1A6F59000073D91F /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PhotoView.jpg; sourceTree = "<group>"; };
 		B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Welcome 380x449 copy.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +128,10 @@
 				012996DC1A354E5300C89D09 /* AppDelegate.h */,
 				012996DD1A354E5300C89D09 /* AppDelegate.m */,
 				012996E51A354E5300C89D09 /* Main.storyboard */,
+				B938DCB71A6F4F2C0073D91F /* ProfileController.h */,
+				B938DCB81A6F4F2C0073D91F /* ProfileController.m */,
+				B938DCBA1A6F59000073D91F /* ProfileViewController.h */,
+				B938DCBB1A6F59000073D91F /* ProfileViewController.m */,
 				012997061A38FA9800C89D09 /* WelcomeViewController.h */,
 				012997071A38FA9800C89D09 /* WelcomeViewController.m */,
 				01D47DFD1A45D00600A45013 /* PhotosAccessViewController.h */,
@@ -293,8 +303,10 @@
 				2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */,
 				01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */,
 				012996DB1A354E5300C89D09 /* main.m in Sources */,
+				B938DCB91A6F4F2C0073D91F /* ProfileController.m in Sources */,
 				B938DCB01A641E560073D91F /* StreamController.m in Sources */,
 				B938DCB61A6AF2EE0073D91F /* CellViewController.m in Sources */,
+				B938DCBC1A6F59000073D91F /* ProfileViewController.m in Sources */,
 				01D47DFF1A45D00600A45013 /* PhotosAccessViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

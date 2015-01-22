@@ -7,6 +7,7 @@
 //
 
 #import "PhotosAccessViewController.h"
+#import "WelcomeViewController.h"
 #import "StreamViewController.h"
 #import "LocationController.h"
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -19,16 +20,21 @@
 
 @interface PhotosAccessViewController ()
 @property (strong, nonatomic) NSString* uploadURL;
-@property (strong, nonatomic) NSString* authToken;
 @property (assign) BOOL sourceTypeCamera;
 @property (strong, nonatomic) NSString *metaLong;
 @property (strong, nonatomic) NSString *metaLat;
 @property (strong, nonatomic) NSString *PUTUrlString;
 
+
+
 @end
 
 @implementation PhotosAccessViewController
 
+{
+    WelcomeViewController *welcomeManager;
+    NSString *uniqueFileName;
+}
 
 - (void)viewDidLoad {
     self.uploadURL = @"https://api.onedrive.com/v1.0/drive/root:/Whereabt/%@:/content";
@@ -90,10 +96,11 @@
   /*
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     UIImage *originalImage, *editedImage, *imageToSave;
+  
+    
+    self.authToken = @"EwBwAq1DBAAUGCCXc8wU/zFu9QnLdZXy%2bYnElFkAAeKuWRh2Dh0CHu2aTDQpw36iUa17swWyhpEBB29nlEXY3DzTxpDXO2V3uUvZsDxRWJ0/t7Zj4F0i1gkI%2bfdiIaYHbD96fzYXoUBGf6MVKK1lIZOZMvPm43ZvTJ9FA9xk3aqsavyJpzM%2bfeYixXlSTuQcaCfYwl9xt1DGrW94lBSmQr9Mgj3bPPzgDvf6tmlphS7Vujg9qouYn4JF4beDsv9p0T3%2bJU%2bN5w6N4RLnuIAEfsXE/ZmDha51L5U%2bCeP7jQKofg9uduU9/x6689nR4g2rbCDuegPUStELwq7sDpvrbYiHVNZLxr7zbsVvWQo/5G2aL2TVIYinQ/Tj9lq0O0EDZgAACLY0oBDZHXRdQAGwJDVB7/2Rw8UavB6DrXxN6b20BpqbxPQOgHWFZ8uC%2bk7zzBPV7GUhrGcYK4%2batzpyFUr96RWCRMhVwra60i8UKpsJ/c92GCMgk8gPapOMb0lRLAtCp7FH4FeEj7/l0ydHdFoYF3rJLtZMXLaSJACVVxtsVytFcz6BneHksRbbGBmXJrjR427wJ6sIf34jVyc9u3unNGJomjAO2jLp3PxqtJhk533C6sHsSm1gzB3V46szJP7pnKQbJPlffQbh4FgrTfQccyHFnSyJDRC83E5FKc7i%2bTd7ygF4MPhFfIsNTQS27Axt5QO0JXDBvPQ6oyM7gv/QjMkngNRoCSFjj1QoReUreKU/pVOftlgcfrVtQ3yLfO7TGV/ZNHAiIRKBjylf8hF%2bPxgQGLMhIHJtcf6l88xufEhHqhUxSoykwAYPEFoB&authentication_token=eyJhbGciOiJIUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJ2ZXIiOjEsImlzcyI6InVybjp3aW5kb3dzOmxpdmVpZCIsImV4cCI6MTQyMTcyMTQ2MCwidWlkIjoiOTI1ODVlZjU1NTdjNzkwOGFiOWEyYmMyMjE3M2EwNmYiLCJhdWQiOiJuNDYub3JnIiwidXJuOm1pY3Jvc29mdDphcHB1cmkiOiJhcHBpZDovLzAwMDAwMDAwNEMxMzQ5NkUiLCJ1cm46bWljcm9zb2Z0OmFwcGlkIjoiMDAwMDAwMDA0QzEzNDk2RSJ9.7dpcoJ47TIH6XoczvfurbO-QkXbeh60cw9mUl-hoWvM";
   */
     
-    self.authToken = @"EwBwAq1DBAAUGCCXc8wU/zFu9QnLdZXy%2bYnElFkAAeKuWRh2Dh0CHu2aTDQpw36iUa17swWyhpEBB29nlEXY3DzTxpDXO2V3uUvZsDxRWJ0/t7Zj4F0i1gkI%2bfdiIaYHbD96fzYXoUBGf6MVKK1lIZOZMvPm43ZvTJ9FA9xk3aqsavyJpzM%2bfeYixXlSTuQcaCfYwl9xt1DGrW94lBSmQr9Mgj3bPPzgDvf6tmlphS7Vujg9qouYn4JF4beDsv9p0T3%2bJU%2bN5w6N4RLnuIAEfsXE/ZmDha51L5U%2bCeP7jQKofg9uduU9/x6689nR4g2rbCDuegPUStELwq7sDpvrbYiHVNZLxr7zbsVvWQo/5G2aL2TVIYinQ/Tj9lq0O0EDZgAACLY0oBDZHXRdQAGwJDVB7/2Rw8UavB6DrXxN6b20BpqbxPQOgHWFZ8uC%2bk7zzBPV7GUhrGcYK4%2batzpyFUr96RWCRMhVwra60i8UKpsJ/c92GCMgk8gPapOMb0lRLAtCp7FH4FeEj7/l0ydHdFoYF3rJLtZMXLaSJACVVxtsVytFcz6BneHksRbbGBmXJrjR427wJ6sIf34jVyc9u3unNGJomjAO2jLp3PxqtJhk533C6sHsSm1gzB3V46szJP7pnKQbJPlffQbh4FgrTfQccyHFnSyJDRC83E5FKc7i%2bTd7ygF4MPhFfIsNTQS27Axt5QO0JXDBvPQ6oyM7gv/QjMkngNRoCSFjj1QoReUreKU/pVOftlgcfrVtQ3yLfO7TGV/ZNHAiIRKBjylf8hF%2bPxgQGLMhIHJtcf6l88xufEhHqhUxSoykwAYPEFoB&authentication_token=eyJhbGciOiJIUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJ2ZXIiOjEsImlzcyI6InVybjp3aW5kb3dzOmxpdmVpZCIsImV4cCI6MTQyMTcyMTQ2MCwidWlkIjoiOTI1ODVlZjU1NTdjNzkwOGFiOWEyYmMyMjE3M2EwNmYiLCJhdWQiOiJuNDYub3JnIiwidXJuOm1pY3Jvc29mdDphcHB1cmkiOiJhcHBpZDovLzAwMDAwMDAwNEMxMzQ5NkUiLCJ1cm46bWljcm9zb2Z0OmFwcGlkIjoiMDAwMDAwMDA0QzEzNDk2RSJ9.7dpcoJ47TIH6XoczvfurbO-QkXbeh60cw9mUl-hoWvM&token_type=bearer&expires_in=3600&scope=wl.skydrive_update&user_id=92585ef5557c7908ab9a2bc22173a06f";
-  
     //determining image source
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         _sourceTypeCamera = YES;
@@ -128,10 +135,13 @@
             NSURL *imageFileURL = [info objectForKey:imageToSave];
             NSString *imageFileName = [imageFileURL lastPathComponent];
             NSLog(@"the name of the image file is: %@", imageFileName);
-            NSString *fakeFileName = @"Fake2.jpg";
+            
+            //set unique file name
+            NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
+            uniqueFileName = [NSString stringWithFormat:@"%@.jpg", processedName];
             
             //make request to server
-            [self constructTaskWithImageName:fakeFileName andData: dataFromImage];
+            [self constructTaskWithImageName:uniqueFileName andData: dataFromImage];
             
         }
         
@@ -179,7 +189,7 @@
                 }
                 
                 if ([_metaLong isEqualToString:@"(null)"] == YES || [_metaLat isEqualToString:@"(null)"] == YES) {
-                    UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry!" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     [metaAlert show];
                 }
                 
@@ -210,9 +220,12 @@
                                 NSURL *imageFileURL = [info objectForKey:UIImagePickerControllerReferenceURL];
                                 NSString *imageFileName = [imageFileURL lastPathComponent];
                                 NSLog(@"the name of the image file is: %@", imageFileName);
-                                NSString *fakeFileName = @"Fake2.jpg";
+                        
+                                //unique file name so as to not replace it with future photo upload
+                                NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
+                        uniqueFileName = [NSString stringWithFormat:@"%@.jpg", processedName];
                     
-                                [self constructTaskWithImageName:fakeFileName andData: dataFromImage];
+                                [self constructTaskWithImageName:uniqueFileName andData: dataFromImage];
                                 //method call for http request
                                 //[self PUTImageToOD:imageFileName imageWithData:dataFromImage];
                     
@@ -292,24 +305,83 @@
     NSURL *url = [NSURL URLWithString:stringURL];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
     [request setHTTPMethod:@"PUT"];
-    [request addValue:[NSString stringWithFormat:@"Bearer %@", self.authToken]forHTTPHeaderField: @"Authorization"];
+    
+    //referencing auth singleton
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
+    NSLog(@"UPLOAD_TOKEN: %@", [WelcomeViewController sharedController].authToken);
     NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request fromData:data completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error){
             if (error == nil){
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-               NSString *publicImage = httpResponse.allHeaderFields[@"Location"];
+                NSString *publicImage = httpResponse.allHeaderFields[@"Location"];
                 
-                [self PUTonNewPhotophpWithImageURL:publicImage];
+                //[self PUTonNewPhotophpWithImageURL:publicImage];
+                
+                [self getThumbnailURLfromStoredImageFile:name andCompletion:^(NSString *thumbnailAccess) {
+                    if (thumbnailAccess != nil) {
+                        NSLog(@"%@", thumbnailAccess);
+                        [self PUTonNewPhotophpWithImageURL:thumbnailAccess];
+                    }
+                    else{
+                        NSLog(@"Failed to get a thumbnail URL");
+                    }
+                }];
+                
             }
     }];
     [uploadTask resume];
+    
+}
+
+
+- (void)getThumbnailURLfromStoredImageFile:(NSString *)fileName andCompletion: (void (^)(NSString *thumbnailAccess))callBack{
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/drive/root:/Whereabt/%@:/thumbnails/0/320x320_Crop/content", fileName];
+    
+    NSURL *url = [NSURL URLWithString:stringURL];
+    /*
+     NSMutableURLRequest *thumbnailRequest = [[NSMutableURLRequest alloc]initWithURL:url];
+     [thumbnailRequest setHTTPMethod:@"GET"];
+     
+     //referencing auth singleton
+     [thumbnailRequest addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
+     */
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField:@"Authorization"];
+    NSHTTPURLResponse *thumbnailResponse = nil;
+    NSError *error = [[NSError alloc] init];
+    NSData *thumbnailData = [NSURLConnection sendSynchronousRequest:request returningResponse:&thumbnailResponse error:&error];
+    
+    if (thumbnailResponse != 200) {
+        NSLog(@"Error getting %@, HTTP status code %li", url, (long)[thumbnailResponse statusCode]);
+    }
+    else{
+       NSString *givenResponse = [[NSString alloc]initWithData:thumbnailData encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", givenResponse);
+    }
+    
+    /*
+    NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        NSLog(@"Response: %@", response);
+    }];
+    
+    NSURLSessionDataTask *thumbnailTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSError *jsonError = nil;
+        NSDictionary *thumbnailDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+        NSString *urlToThumbnail = [thumbnailDict objectForKey:@"url"];
+        callBack(urlToThumbnail);
+    }];
+    [thumbnailTask resume];
+     */
 }
 
 
 - (void)PUTonNewPhotophpWithImageURL:(NSString *)ODimageUrl{
-    NSString *userID = @"Lucas";
-    if (_metaLong != nil) {
+    if (_metaLong != nil & _metaLat != nil) {
     
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto.php?UserID=%@&Latitude=%@&Longitude=%@&PhotoURL=%@", userID, _metaLat, _metaLong, ODimageUrl];
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto.php?UserID=%@&Latitude=%@&Longitude=%@&PhotoURL=%@", [WelcomeViewController sharedController].userID, _metaLat, _metaLong, ODimageUrl];
         NSLog(@"%@", _PUTUrlString);
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];
@@ -320,7 +392,7 @@
                                                                        NSURLResponse *response,
                                                                        NSError *error){
                                                        if (error) {
-                                                           NSLog(@"Error: %@",error);
+                                                           NSLog(@"Error: %@", error);
                                                        }
                                                        else{
                                                            NSLog(@"PUT to newPhoto.php completed");

@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WelcomeViewController : UIViewController
-
+@interface WelcomeViewController : UIViewController <UIWebViewDelegate>
 
 //create outlet property for "Get Started" button
 @property (weak, nonatomic) IBOutlet UIButton *GetStarted;
-@property (weak, nonatomic) IBOutlet UIWebView *ODWebView;
+@property (strong, nonatomic) NSString *authToken;
+@property (strong, nonatomic) NSString *userID;
+@property (strong, nonatomic) NSString *userName;
+
+
 - (IBAction)LoadPhotoView:(id)sender; //action method for "Get Started" button
 - (IBAction)LoginSignUp:(id)sender;
++ (instancetype)sharedController;
 
 @end
