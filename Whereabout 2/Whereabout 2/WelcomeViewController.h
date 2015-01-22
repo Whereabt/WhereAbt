@@ -15,10 +15,12 @@
 @property (strong, nonatomic) NSString *authToken;
 @property (strong, nonatomic) NSString *userID;
 @property (strong, nonatomic) NSString *userName;
+@property (strong, nonatomic) NSString *authCode;
+@property (strong, nonatomic) NSString *refreshToken;
 
 
-- (IBAction)LoadPhotoView:(id)sender; //action method for "Get Started" button
 - (IBAction)LoginSignUp:(id)sender;
 + (instancetype)sharedController;
+- (void)refreshAuthToken;
 
 @end

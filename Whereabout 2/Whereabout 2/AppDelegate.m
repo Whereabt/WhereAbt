@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LocationController.h"
+#import "WelcomeViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,6 +19,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    
+    WelcomeViewController *welcomeController = [[WelcomeViewController alloc] init];
+    
+    //timer fires every 55 minutes
+    NSTimer *authTokenRefreshTimer = [NSTimer scheduledTimerWithTimeInterval:3300 target:welcomeController selector:@selector(refreshAuthToken) userInfo:nil repeats:YES];
+   [authTokenRefreshTimer fire];
     
     return YES;
 }

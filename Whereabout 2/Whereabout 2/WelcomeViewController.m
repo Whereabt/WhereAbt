@@ -19,7 +19,60 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if ([WelcomeViewController sharedController].authCode != nil) {
+        //get a fresh token from the auth code
+        [self setAuthTokenRefreshTokenAndProfileNamesFromCode: [WelcomeViewController sharedController].authCode];
+        [self performSegueWithIdentifier:@"segueToTab" sender:self];
+    }
+    
+    else{
+        //do nothing?
+    }
     // Do any additional setup after loading the view.
+}
+
+- (void)refreshAuthToken{
+    NSString *urlAsString = [NSString stringWithFormat:@"https://login.live.com/oauth20_token.srf?client_id=000000004C13496E&client_secret=tBdSMDxUm5h0HWSdtCtsU1ImTAfrqYxt&redirect_uri=https://n46.org/whereabt/redirect.html&grant_type=refresh_token&refresh_token=%@", [WelcomeViewController sharedController].refreshToken];
+    
+    NSURL *url = [[NSURL alloc]initWithString:urlAsString];
+    NSLog(@"%@", urlAsString);
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
+                                                   completionHandler:^(NSData *data,
+                                                                       NSURLResponse *response, NSError *error){
+                                                       NSError *jsonError = nil;
+                                                       NSDictionary *immutable =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                                                       
+                                                       [WelcomeViewController sharedController].authToken = immutable[@"access_token"];
+                                                       [WelcomeViewController sharedController].refreshToken = immutable[@"refresh_token"];
+                                                   }];
+    [dataRequestTask resume];
+}
+
+- (void)setAuthTokenRefreshTokenAndProfileNamesFromCode:(NSString *)authCode{
+    NSString *urlAsString = [NSString stringWithFormat:@"https://login.live.com/oauth20_token.srf?client_id=000000004C13496E&client_secret=tBdSMDxUm5h0HWSdtCtsU1ImTAfrqYxt&redirect_uri=https://n46.org/whereabt/redirect.html&code=%@&grant_type=authorization_code", authCode];
+    
+    NSURL *url = [[NSURL alloc]initWithString:urlAsString];
+    NSLog(@"%@", urlAsString);
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
+                                                   completionHandler:^(NSData *data,
+                                                                       NSURLResponse *response, NSError *error){
+                                                       NSError *jsonError = nil;
+                                                       NSDictionary *immutable =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                                                       
+                                                       [WelcomeViewController sharedController].authToken = immutable[@"access_token"];
+                                                       [WelcomeViewController sharedController].refreshToken = immutable[@"refresh_token"];
+                                                       
+                                                       //get other properties from user
+                                                       ProfileController *profileManager = [[ProfileController alloc]init];
+                                                       [profileManager requestProfileItemsWithCompletion:^(NSDictionary *profileItems, NSError *error) {
+                                                           [WelcomeViewController sharedController].userName = profileItems[@"name"];
+                                                           [WelcomeViewController sharedController].userID = profileItems[@"id"];
+                                                            }];
+                                           }];
+    [dataRequestTask resume];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,16 +89,6 @@
     return sharedController;
 }
 
-/*
-- (instancetype)init{
-    if (self = [super init]) {
-        _authToken = [[NSString alloc]init];
-        
-    }
-    return self;
-}
-*/
-
 
 #pragma mark - Navigation
 
@@ -57,17 +100,15 @@
     // Pass the selected object to the new view controller.
 }
 
-- (IBAction)LoadPhotoView:(id)sender {
-}
 
 - (IBAction)LoginSignUp:(id)sender {
+    //make user log in to get him an auth code
     UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
     webView.delegate = self;
     NSString *urlAsString = @"https://login.live.com/oauth20_authorize.srf?client_id=000000004C13496E&scope=wl.skydrive_update&response_type=code&redirect_uri=https://n46.org/whereabt/redirect.html";
     NSURL *authURL = [[NSURL alloc]initWithString:urlAsString];
     NSURLRequest *loginRequest = [NSURLRequest requestWithURL:authURL];
     [webView loadRequest:loginRequest];
-
     [self.view addSubview:webView];
 }
 
@@ -78,25 +119,16 @@
     
     if ([urlParts[0] isEqual: @"https://n46.org/whereabt/redirect.html"] == YES)
     {
-        NSString *code = urlParts[1];
-        NSLog(@"%@", code);
-        
-        NSArray *tokenAndMore = [urlParts[1] componentsSeparatedByString:@"&authentication_token="];
-      [WelcomeViewController sharedController].authToken = tokenAndMore[0];
-        
-        NSLog(@"TOKEN:%@", tokenAndMore[0]);
-        ProfileController *profileManager = [[ProfileController alloc]init];
-        [profileManager requestProfileItemsWithCompletion:^(NSDictionary *profileItems, NSError *error) {
-            [WelcomeViewController sharedController].userName = profileItems[@"name"];
-            [WelcomeViewController sharedController].userID = profileItems[@"id"];
-        }];
-
+        [WelcomeViewController sharedController].authCode = urlParts[1];
+        NSLog(@"%@", [WelcomeViewController sharedController].authCode);
+        [self setAuthTokenRefreshTokenAndProfileNamesFromCode:[WelcomeViewController sharedController].authCode];
         [webView removeFromSuperview];
+        [self performSegueWithIdentifier:@"segueToTab" sender:self];
     }
     
     else{
         //do something when OD API returns invalid url
-        NSLog(@"Token was not inside of this query string");
+        NSLog(@"Redirect url invalid");
     }
  
    

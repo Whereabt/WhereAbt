@@ -25,8 +25,6 @@
 @property (strong, nonatomic) NSString *metaLat;
 @property (strong, nonatomic) NSString *PUTUrlString;
 
-
-
 @end
 
 @implementation PhotosAccessViewController
