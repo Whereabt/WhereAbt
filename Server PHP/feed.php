@@ -43,26 +43,36 @@
     
     //Step 3 - write out the data & calculate distance from user
     
+    //Set a default radius
+    $Radius="25";
+    
+    //Check if Radius was set in the query string, if so, override the default with the query value
+    if ($_GET['Radius']) $Radius=$_GET['Radius'];
    
     //BUGBUG: FOR loop can be done more efficiently, see PHP guide, example 10-6
     for ($j = 0; $j < $rows; ++$j)
     {
         
-        //Each row of the database is read one at a time into innerarray
-        $innerarray =
-        array('MilesAway' => distance(mysql_result($result,$j,'Latitude'),
-                                      mysql_result($result,$j,'Longitude'),
-                                      $_GET['Latitude'],
-                                      $_GET['Longitude'], "M"),
-              'UserID' => mysql_result($result,$j,'UserID') ,
-              'UserName' => mysql_result($result,$j,'UserName') ,
-              'Latitude' => mysql_result($result,$j,'Latitude'),
-              'Longitude' => mysql_result($result,$j,'Longitude'),
-              'PhotoURL' => mysql_result($result,$j,'PhotoURL'),
-              'ThumbnailURL' => mysql_result($result,$j,'ThumbnailURL'));
-        
-        //Add each row of the for loop to the outer array
-        $outerarray[] = $innerarray;
+        $MilesAway = distance(mysql_result($result,$j,'Latitude'),
+                              mysql_result($result,$j,'Longitude'),
+                              $_GET['Latitude'],
+                              $_GET['Longitude'], "M");
+
+        if ($MilesAway < $Radius){
+            //Each row of the database is read one at a time into innerarray
+            $innerarray =
+            array('MilesAway' => $MilesAway,
+                  'UserID' => mysql_result($result,$j,'UserID') ,
+                  'UserName' => mysql_result($result,$j,'UserName') ,
+                  'Latitude' => mysql_result($result,$j,'Latitude'),
+                  'Longitude' => mysql_result($result,$j,'Longitude'),
+                  'PhotoURL' => mysql_result($result,$j,'PhotoURL'),
+                  'ThumbnailURL' => mysql_result($result,$j,'ThumbnailURL'));
+            
+            //Add each row of the for loop to the outer array
+            $outerarray[] = $innerarray;
+    
+        }  
         
     }
 
