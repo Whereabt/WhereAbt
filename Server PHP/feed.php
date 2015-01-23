@@ -55,9 +55,11 @@
                                       $_GET['Latitude'],
                                       $_GET['Longitude'], "M"),
               'UserID' => mysql_result($result,$j,'UserID') ,
+              'UserName' => mysql_result($result,$j,'UserName') ,
               'Latitude' => mysql_result($result,$j,'Latitude'),
               'Longitude' => mysql_result($result,$j,'Longitude'),
-              'PhotoURL' => mysql_result($result,$j,'PhotoURL'));
+              'PhotoURL' => mysql_result($result,$j,'PhotoURL'),
+              'ThumbnailURL' => mysql_result($result,$j,'ThumbnailURL'));
         
         //Add each row of the for loop to the outer array
         $outerarray[] = $innerarray;
