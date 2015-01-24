@@ -10,11 +10,13 @@
 #import "LocationController.h"
 #import "StreamViewController.h"
 
+/*
 static NSString *const userIdIndex = @"UserID";
 static NSString *const photoURLIndex = @"PhotoURL";
 static NSString *const photoIndex = @"Photo";
 static NSString *const distanceFrom = @"MilesAway";
-
+*/
+ 
 @implementation StreamController
 
 
@@ -23,8 +25,11 @@ static NSString *const distanceFrom = @"MilesAway";
     //CLLocation *location = [LocationController sharedController].currentLocation;
     LocationController *locationController = [[LocationController alloc]init];
     
+    
     //make request
     NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude];
+    //eventually, include radius in last parameter 'Radius='
+    
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
     NSURLSession *session = [NSURLSession sharedSession];
@@ -37,9 +42,12 @@ static NSString *const distanceFrom = @"MilesAway";
                                                        _itemCollection = [immutable mutableCopy];
                                                        NSLog(@"%@", _itemCollection);
                                                        for (NSDictionary *photoItem in _itemCollection) {
-                                                           NSString *photoURL = photoItem[photoURLIndex];
+                                                           NSString *thumbPhotoURL = photoItem[@"ThumbnailURL"];
+                                                           NSString *largPhotoURL = photoItem[@"PhotoURL"];
                                                            NSInteger photoItemIndex = [_itemCollection indexOfObject:photoItem];
-                                                           [self imageFromURLString:photoURL atIndex:photoItemIndex OfArray:_itemCollection];
+                                                           [self imageFromURLString:thumbPhotoURL atIndex:photoItemIndex OfArray:_itemCollection isThumbnail:YES];
+                                                           [self imageFromURLString:largPhotoURL atIndex:photoItemIndex OfArray:_itemCollection isThumbnail:NO];
+                                                          // [self imageFromURLString:photoURL atIndex:photoItemIndex OfArray:_itemCollection];
                                                            
                                                            //when requests are done, call completion handler (callBack block) with request-created parameters
                                                            callBack(_itemCollection, error);
@@ -50,7 +58,7 @@ static NSString *const distanceFrom = @"MilesAway";
 }
 
 
-- (void)imageFromURLString:(NSString *)urlString atIndex:(NSInteger)index OfArray:(NSArray*)jsonArray
+- (void)imageFromURLString:(NSString *)urlString atIndex:(NSInteger)index OfArray:(NSArray*)jsonArray isThumbnail:(BOOL) isThumbnail
 {
     NSURL *url = [[NSURL alloc] initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSURLSession *session = [NSURLSession sharedSession];
@@ -62,7 +70,13 @@ static NSString *const distanceFrom = @"MilesAway";
                                                             UIImage *returnedImage = [UIImage imageWithData:data];
                                                             if (returnedImage != nil) {
                                                                  NSMutableDictionary *newDict = jsonArray[index];
-                                                                [newDict setObject:returnedImage forKey:photoIndex];
+                                                                if (isThumbnail == YES) {
+                                                                    [newDict setObject:returnedImage forKey:@"ThumbnailPhoto"];
+                                                                }
+                                                                else{
+                                                                    [newDict setObject:returnedImage forKey:@"LargePhoto"];
+                                                                }
+                                                                
                                                                 [_itemCollection replaceObjectAtIndex:index withObject:newDict];
 
                                                             }

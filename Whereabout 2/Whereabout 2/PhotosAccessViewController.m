@@ -35,7 +35,7 @@
 }
 
 - (void)viewDidLoad {
-    self.uploadURL = @"https://api.onedrive.com/v1.0/drive/root:/Whereabt/%@:/content";
+    self.uploadURL = @"https://api.onedrive.com/v1.0/drive/root:/Public/%@:/content";
    [LocationController sharedController];
     
     [super viewDidLoad];
@@ -314,10 +314,10 @@
                 
                 //[self PUTonNewPhotophpWithImageURL:publicImage];
                 
-                [self getThumbnailURLfromStoredImageFile:name andCompletion:^(NSString *thumbnailAccess) {
-                    if (thumbnailAccess != nil) {
-                        NSLog(@"%@", thumbnailAccess);
-                        [self PUTonNewPhotophpWithImageURL:thumbnailAccess];
+                [self getThumbnailURLfromStoredImageFile:name andCompletion:^(NSString *thumbnail, NSString *large) {
+                    if (thumbnail != nil & large != nil) {
+                        NSLog(@"The thumbnail URL: %@ ---- The large URL: %@", thumbnail, large);
+                        [self PUTonNewPhotophpWithImageURLsLarge:large andSmall:thumbnail];
                     }
                     else{
                         NSLog(@"Failed to get a thumbnail URL");
@@ -331,11 +331,10 @@
 }
 
 
-- (void)getThumbnailURLfromStoredImageFile:(NSString *)fileName andCompletion: (void (^)(NSString *thumbnailAccess))callBack{
+- (void)getThumbnailURLfromStoredImageFile:(NSString *)fileName andCompletion: (void (^)(NSString *thumbnail, NSString *large))callBack{
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/drive/root:/Whereabt/%@:/thumbnails/0/320x320_Crop/content", fileName];
-    
+    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/Public/%@:/thumbnails", fileName];
     NSURL *url = [NSURL URLWithString:stringURL];
     /*
      NSMutableURLRequest *thumbnailRequest = [[NSMutableURLRequest alloc]initWithURL:url];
@@ -348,18 +347,59 @@
     [request setHTTPMethod:@"GET"];
     
     [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField:@"Authorization"];
-    NSHTTPURLResponse *thumbnailResponse = nil;
-    NSError *error = [[NSError alloc] init];
-    NSData *thumbnailData = [NSURLConnection sendSynchronousRequest:request returningResponse:&thumbnailResponse error:&error];
+    NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+        NSData *jsonData = [NSData dataWithContentsOfURL:location];
+        NSError *jsonError = nil;
+        NSArray *responseDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&jsonError];
+        
+        NSLog(@"Dictionary from response: %@", responseDict);
+        
+        //pass small and large size images
+        /*
+        NSDictionary *bothDict = [responseDict objectAtIndex:1];
+        NSLog(@"%@", bothDict);
+        NSArray *bothArray = bothDict[@"value"];
+        NSArray *bothArrayTwo = bothArray[0];
+        NSDictionary *largeDictOne = bothArrayTwo[0];
+        NSArray *largeArrayOne = largeDictOne[@"large"];
+        NSDictionary *largeDictTwo = largeArrayOne[0];
+        
+        NSDictionary *smallDictOne = bothArray[0];
+        NSArray *smallArrayOne = smallDictOne[@"small"];
+        NSDictionary *smallDictTwo = smallArrayOne[0];
+         */
+        
+        NSString *stringResponse = [NSString stringWithFormat:@"%@", responseDict];
+        NSString *withoutEnter = [stringResponse stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        NSString *withoutSpaces = [withoutEnter stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSString *fixedStringREsponse = [withoutSpaces stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+        NSLog(@"%@", fixedStringREsponse);
+        NSArray *largeAll = [fixedStringREsponse componentsSeparatedByString:@";large="];
+        NSLog(@"%@", largeAll);
+        NSString *largeAllString = largeAll[1];
+        NSArray *largeItemsMore = [largeAllString componentsSeparatedByString:@";medium="];
+        NSString *largeItemString = largeItemsMore[0];
+        NSArray *beforeUrl = [largeItemString componentsSeparatedByString:@";url="];
+        NSString *stringAfterUrl = beforeUrl[1];
+        NSArray *urlMore = [stringAfterUrl componentsSeparatedByString:@";width="];
+        NSString *largeImageUrl = urlMore[0];
+        
+        NSArray *mediumSmall = [fixedStringREsponse componentsSeparatedByString:@"};medium="];
+        NSString *mediumSmallString = mediumSmall[1];
+        
+        NSArray *smallOnly = [fixedStringREsponse componentsSeparatedByString:@"};small="];
+        NSString *smallOnlyString = smallOnly[1];
+        NSArray *beforeSmallUrl = [smallOnlyString componentsSeparatedByString:@";url="];
+        NSString *stringAfterSmallUrl = beforeSmallUrl[1];
+        NSArray *SmallUrlMore = [stringAfterSmallUrl componentsSeparatedByString:@";width"];
+        NSString *smallImageUrl = SmallUrlMore[0];
+        
+        
+        
+        callBack(smallImageUrl, largeImageUrl);
+    }];
     
-    if (thumbnailResponse != 200) {
-        NSLog(@"Error getting %@, HTTP status code %li", url, (long)[thumbnailResponse statusCode]);
-    }
-    else{
-       NSString *givenResponse = [[NSString alloc]initWithData:thumbnailData encoding:NSUTF8StringEncoding];
-        NSLog(@"%@", givenResponse);
-    }
-    
+    [downloadTask resume];
     /*
     NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         NSLog(@"Response: %@", response);
@@ -376,11 +416,11 @@
 }
 
 
-- (void)PUTonNewPhotophpWithImageURL:(NSString *)ODimageUrl{
+- (void)PUTonNewPhotophpWithImageURLsLarge:(NSString *)largeImage andSmall:(NSString *) smallImage{
     if (_metaLong != nil & _metaLat != nil) {
-    
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto.php?UserID=%@&Latitude=%@&Longitude=%@&PhotoURL=%@", [WelcomeViewController sharedController].userID, _metaLat, _metaLong, ODimageUrl];
-        NSLog(@"%@", _PUTUrlString);
+        
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto.php?UserID=%@&UserName=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, _metaLat, _metaLong, largeImage, smallImage];
+        NSLog(@"PUT URL String: %@", _PUTUrlString);
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];
     NSLog(@"%@", url);
@@ -395,7 +435,6 @@
                                                        else{
                                                            NSLog(@"PUT to newPhoto.php completed");
                                                        }
-
                                                        
                 }];
     [dataRequestTask resume];

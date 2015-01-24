@@ -33,6 +33,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark CollectionView Datasource and Delegate MEthods
+/*
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+*/
+ 
 /*
 #pragma mark - Navigation
 

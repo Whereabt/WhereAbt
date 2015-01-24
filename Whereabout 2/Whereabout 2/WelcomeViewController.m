@@ -10,25 +10,32 @@
 #import "PhotosAccessViewController.h"
 #import "LocationController.h"
 #import "ProfileController.h"
+#import "KeychainItemWrapper.h"
+
 
 @interface WelcomeViewController ()
 
 @end
 
 @implementation WelcomeViewController
+{
+    KeychainItemWrapper *keychain;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if ([WelcomeViewController sharedController].authCode != nil) {
+   /* keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"Login" accessGroup:nil];
+    if (![[keychain objectForKey:(__bridge id)(kSecValueData)]  isEqual: @""]) {
         //get a fresh token from the auth code
-        [self setAuthTokenRefreshTokenAndProfileNamesFromCode: [WelcomeViewController sharedController].authCode];
+        [self setAuthTokenRefreshTokenAndProfileNamesFromCode:[keychain objectForKey:(__bridge id)(kSecValueData)]];
         [self performSegueWithIdentifier:@"segueToTab" sender:self];
     }
     
     else{
-        //do nothing?
+        NSLog(@"User did not have a stored code in his keychain.");
     }
     // Do any additional setup after loading the view.
+    */
 }
 
 - (void)refreshAuthToken{
@@ -63,11 +70,11 @@
                                                        
                                                        [WelcomeViewController sharedController].authToken = immutable[@"access_token"];
                                                        [WelcomeViewController sharedController].refreshToken = immutable[@"refresh_token"];
-                                                       
+                                                       NSLog(@"RefreshTOKEN: %@", [WelcomeViewController sharedController].refreshToken);
                                                        //get other properties from user
                                                        ProfileController *profileManager = [[ProfileController alloc]init];
                                                        [profileManager requestProfileItemsWithCompletion:^(NSDictionary *profileItems, NSError *error) {
-                                                           [WelcomeViewController sharedController].userName = profileItems[@"name"];
+                                                           [WelcomeViewController sharedController].userName = [profileItems[@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
                                                            [WelcomeViewController sharedController].userID = profileItems[@"id"];
                                                             }];
                                            }];
@@ -119,8 +126,16 @@
     
     if ([urlParts[0] isEqual: @"https://n46.org/whereabt/redirect.html"] == YES)
     {
+        
         [WelcomeViewController sharedController].authCode = urlParts[1];
-        NSLog(@"%@", [WelcomeViewController sharedController].authCode);
+        /*
+        KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"Login" accessGroup:nil];
+         */
+        
+        [keychain setObject:[WelcomeViewController sharedController].authCode forKey:(__bridge id)(kSecValueData)];
+        [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+
+        NSLog(@"The 'Value Data' code of the user: %@", [keychain objectForKey:(__bridge id)(kSecValueData)]);
         [self setAuthTokenRefreshTokenAndProfileNamesFromCode:[WelcomeViewController sharedController].authCode];
         [webView removeFromSuperview];
         [self performSegueWithIdentifier:@"segueToTab" sender:self];

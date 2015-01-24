@@ -27,14 +27,15 @@ static NSString *const distanceFrom = @"MilesAway";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.collectionView registerClass: [CellViewController class]forCellWithReuseIdentifier:@"Cell"];
-    
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    [self.collectionView registerClass: [CellViewController class]forCellWithReuseIdentifier:@"MyCell"];
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc]init];
     [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
     [self.collectionView setCollectionViewLayout:flow];
     
     //create object to deal with network requests
-    StreamController *networkRequester = [[StreamController alloc]init];
+   StreamController *networkRequester = [[StreamController alloc]init];
     [networkRequester getFeedWithCompletion:^(NSMutableArray *items, NSError *error) {
         if (!error) {
             self.streamItems = items;
@@ -45,7 +46,6 @@ static NSString *const distanceFrom = @"MilesAway";
             NSLog(@"Error getting streamItems: %@", error);
         }
     }];
-    
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -85,15 +85,18 @@ static NSString *const distanceFrom = @"MilesAway";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *identifier = @"Cell";
+    static NSString *identifier = @"MyCell";
     CellViewController *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
   
    // NSString *milesFrom = self.streamItems[indexPath.row][distanceFrom];
     //cell. = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][userIdIndex], milesFrom];
-   
-    cell.imageOfCell.image = self.streamItems[indexPath.row][photoIndex];
-   
-    return cell;
+    
+       UIImage *imageReturned = [[UIImage alloc]initWithCIImage: self.streamItems[indexPath.row][@"ThumbnailPhoto"]];
+    cell.imageOfCell.image = imageReturned;
+    [cell.imageOfCell sizeToFit];
+    
+return cell;
+
 }
 
 

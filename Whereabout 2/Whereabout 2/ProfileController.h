@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ProfileController : NSObject
+@interface ProfileController : NSObject 
 
 - (void)requestProfileItemsWithCompletion: (void (^)(NSDictionary *profileItems, NSError *error))callBack;
 

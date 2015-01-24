@@ -9,12 +9,15 @@
 #import "StreamViewController.h"
 #import "StreamController.h"
 #import "StreamDelegate.h"
+#import "EnlargedCellViewController.h"
+#import "EnlargeViewController.h"
 
+/*
 static NSString *const userIdIndex = @"UserID";
 static NSString *const photoURLIndex = @"PhotoURL";
 static NSString *const photoIndex = @"Photo";
 static NSString *const distanceFrom = @"MilesAway";
-
+*/
 
 @interface StreamViewController ()
 
@@ -69,18 +72,43 @@ static NSString *const distanceFrom = @"MilesAway";
     // Return the number of rows in the section.
     return [self.streamItems count];
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Configure the cell...
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"User ID" forIndexPath:indexPath];
     
     //setting UI
-    NSString *milesFrom = self.streamItems[indexPath.row][distanceFrom];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][userIdIndex], milesFrom];
+    NSString *milesFrom = self.streamItems[indexPath.row][@"MilesAway"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][@"UserName"], milesFrom];
     UIImage *photo = [[UIImage alloc]init];
-    photo = self.streamItems[indexPath.row][photoIndex];
+    photo = self.streamItems[indexPath.row][@"ThumbnailPhoto"];
     cell.imageView.image = photo;
-
+    
     return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+   // UIViewController *SelectedCellViewController = [[UIViewController alloc]initWithNibName:@"Enlarged View" bundle:nil];
+   // [self presentViewController:SelectedCellViewController animated:YES completion:nil];
+    
+    UIImage *enlargedPhoto = self.streamItems[indexPath.row][@"LargePhoto"];
+    UIImageView *enlargeView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
+   
+    enlargeView.image = enlargedPhoto;
+    [self.view addSubview:enlargeView];
+    
+    //EnlargedCellViewController *enlargedCellManager = [[EnlargedCellViewController alloc]init];
+    
+    
+    /*
+    [enlargedCellManager setImageForEnlargedImageUsingImage:enlargedPhoto];
+    [enlargedCellManager setTextForUsernameLabel:self.streamItems[indexPath.row][@"UserName"]];
+     */
+    
+    //enlargedCellManager.enlargedName.text = self.streamItems[indexPath.row][@"UserName"];
+   // enlargedCellManager.enlargedImage.image = enlargedPhoto;
+    //[self performSegueWithIdentifier:@"segueToEnlarge" sender:self];
 }
 
 
