@@ -20,14 +20,15 @@ static NSString *const distanceFrom = @"MilesAway";
 @implementation StreamController
 
 
-- (void)getFeedWithCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
+- (void)getFeedWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
     //get location
     //CLLocation *location = [LocationController sharedController].currentLocation;
     LocationController *locationController = [[LocationController alloc]init];
     
+    double theRadius = radius*5;
     
     //make request
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude];
+    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, theRadius];
     //eventually, include radius in last parameter 'Radius='
     
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];

@@ -36,7 +36,9 @@ static NSString *const distanceFrom = @"MilesAway";
     
     //create object to deal with network requests
    StreamController *networkRequester = [[StreamController alloc]init];
-    [networkRequester getFeedWithCompletion:^(NSMutableArray *items, NSError *error) {
+    
+    //ADD Slider and change radius parameter to its value
+    [networkRequester getFeedWithRadius:15 andCompletion:^(NSMutableArray *items, NSError *error) {
         if (!error) {
             self.streamItems = items;
             [self.collectionView reloadData];
@@ -80,7 +82,7 @@ static NSString *const distanceFrom = @"MilesAway";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return [_streamItems count];
+    return _streamItems.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -91,7 +93,8 @@ static NSString *const distanceFrom = @"MilesAway";
    // NSString *milesFrom = self.streamItems[indexPath.row][distanceFrom];
     //cell. = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][userIdIndex], milesFrom];
     
-       UIImage *imageReturned = [[UIImage alloc]initWithCIImage: self.streamItems[indexPath.row][@"ThumbnailPhoto"]];
+    //UIImage *imageReturned = [[UIImage alloc]initWithCIImage:self.streamItems[indexPath.row][@"ThumbnailPhoto"]];
+    UIImage *imageReturned = [UIImage imageNamed: self.streamItems[indexPath.row][@"ThumbnailPhoto"]];
     cell.imageOfCell.image = imageReturned;
     [cell.imageOfCell sizeToFit];
     

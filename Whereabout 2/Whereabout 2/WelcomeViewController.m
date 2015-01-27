@@ -24,7 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   /* keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"Login" accessGroup:nil];
+   keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"Login" accessGroup:nil];
     if (![[keychain objectForKey:(__bridge id)(kSecValueData)]  isEqual: @""]) {
         //get a fresh token from the auth code
         [self setAuthTokenRefreshTokenAndProfileNamesFromCode:[keychain objectForKey:(__bridge id)(kSecValueData)]];
@@ -35,7 +35,7 @@
         NSLog(@"User did not have a stored code in his keychain.");
     }
     // Do any additional setup after loading the view.
-    */
+
 }
 
 - (void)refreshAuthToken{

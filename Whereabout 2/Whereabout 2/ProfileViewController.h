@@ -8,16 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>;
+@interface ProfileViewController : UIViewController //<UICollectionViewDataSource, UICollectionViewDelegate>;
 
 @property (weak, nonatomic) IBOutlet UILabel *NameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage;
 @property (weak, nonatomic) IBOutlet UILabel *LastNameLabel;
-
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView;
-
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

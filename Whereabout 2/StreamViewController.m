@@ -9,7 +9,6 @@
 #import "StreamViewController.h"
 #import "StreamController.h"
 #import "StreamDelegate.h"
-#import "EnlargedCellViewController.h"
 #import "EnlargeViewController.h"
 
 /*
@@ -33,8 +32,10 @@ static NSString *const distanceFrom = @"MilesAway";
      [super viewDidLoad];
     
     //create object to deal with network requests
+    self.radiusSlider.continuous = NO;
+    
     StreamController *networkRequester = [[StreamController alloc]init];
-    [networkRequester getFeedWithCompletion:^(NSMutableArray *items, NSError *error) {
+    [networkRequester getFeedWithRadius:self.radiusSlider.value andCompletion:^(NSMutableArray *items, NSError *error) {
         if (!error) {
             self.streamItems = items;
             [self.tableView reloadData];
@@ -43,14 +44,28 @@ static NSString *const distanceFrom = @"MilesAway";
         else{
             NSLog(@"Error getting streamItems: %@", error);
         }
-        
     }];
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (IBAction)userChangedRadius:(id)sender {
+    StreamController *networkRequester = [[StreamController alloc]init];
+    [networkRequester getFeedWithRadius:self.radiusSlider.value andCompletion:^(NSMutableArray *items, NSError *error) {
+        if (!error) {
+            self.streamItems = items;
+            [self.tableView reloadData];
+        }
+        
+        else{
+            NSLog(@"Error getting streamItems: %@", error);
+        }
+    }];
 }
 
 
@@ -78,16 +93,32 @@ static NSString *const distanceFrom = @"MilesAway";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"User ID" forIndexPath:indexPath];
     
     //setting UI
-    NSString *milesFrom = self.streamItems[indexPath.row][@"MilesAway"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][@"UserName"], milesFrom];
+    //NSString *milesFrom = self.streamItems[indexPath.row][@"MilesAway"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", self.streamItems[indexPath.row][@"UserName"]];
     UIImage *photo = [[UIImage alloc]init];
     photo = self.streamItems[indexPath.row][@"ThumbnailPhoto"];
     cell.imageView.image = photo;
     
+    /*
+    UIButton * b = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f , cell.imageView.frame.size.width, cell.imageView.frame.size.height)];
+    b.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [b addTarget:self action:@selector(changeSize:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.imageView addSubview:b];
+    */
+     
     return cell;
 }
 
 
+-(IBAction)changeSize:(UIButton *)sender
+{
+    UIImageView * imageView = (UIImageView *)[sender superview];
+    imageView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    // larger frame goes here^
+}
+
+
+/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    // UIViewController *SelectedCellViewController = [[UIViewController alloc]initWithNibName:@"Enlarged View" bundle:nil];
    // [self presentViewController:SelectedCellViewController animated:YES completion:nil];
@@ -101,15 +132,17 @@ static NSString *const distanceFrom = @"MilesAway";
     //EnlargedCellViewController *enlargedCellManager = [[EnlargedCellViewController alloc]init];
     
     
-    /*
+    
     [enlargedCellManager setImageForEnlargedImageUsingImage:enlargedPhoto];
     [enlargedCellManager setTextForUsernameLabel:self.streamItems[indexPath.row][@"UserName"]];
-     */
+    
     
     //enlargedCellManager.enlargedName.text = self.streamItems[indexPath.row][@"UserName"];
    // enlargedCellManager.enlargedImage.image = enlargedPhoto;
     //[self performSegueWithIdentifier:@"segueToEnlarge" sender:self];
 }
+*/
+
 
 
 /*
@@ -156,5 +189,5 @@ static NSString *const distanceFrom = @"MilesAway";
 }
 */
      
-     
+
 @end

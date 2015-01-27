@@ -18,7 +18,34 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+   
+    /*
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    UITabBar *tabBar = tabBarController.tabBar;
+    UITabBarItem *tabBarItem1 = [tabBar.items objectAtIndex:0];
+    UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:1];
+    UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:2];
+    UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
+    UITabBarItem *tabBarItem5 = [tabBar.items objectAtIndex:4];
     
+    
+    tabBarItem1.title = @"Upload";
+    tabBarItem2.title = @"Stream";
+    tabBarItem3.title = @"Stream 2";
+    tabBarItem4.title = @"Profile";
+    tabBarItem5.title = @"Settings";
+    
+    //images
+    tabBarItem1.image = [UIImage imageNamed:@"icon-Upload GRAY 50x50.png"];
+    tabBarItem1.selectedImage = [UIImage imageNamed:@"icon-Upload 50x50.png"];
+    tabBarItem2.image = [UIImage imageNamed:@"icon-Feed GRAY 50x50.png"];
+    tabBarItem2.selectedImage = [UIImage imageNamed:@"icon-Feed 50x50.png"];
+    tabBarItem4.image = [UIImage imageNamed:@"icon-Profile GRAY 50x50.png"];
+    tabBarItem4.selectedImage = [UIImage imageNamed:@"icon-Profile 50x50.png"];
+    tabBarItem5.image = [UIImage imageNamed:@"icon-Settings GRAY 50x50.png"];
+    tabBarItem5.selectedImage = [UIImage imageNamed:@"icon-Settings 50x50.png"];
+                            
+     */
     
     WelcomeViewController *welcomeController = [[WelcomeViewController alloc] init];
     

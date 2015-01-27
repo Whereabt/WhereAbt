@@ -18,8 +18,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 
 //establishing action methods for the two bar button items
-- (IBAction)useCamera:(id)sender;
-- (IBAction)useCameraRoll:(id)sender;
 
+- (IBAction)fromCamera:(id)sender;
+- (IBAction)fromCameraRoll:(id)sender;
 
 @end

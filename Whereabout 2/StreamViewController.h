@@ -23,5 +23,8 @@ typedef void (^RequestCompletionBlock)(BOOL finished);
 
 @property (weak,nonatomic) id<StreamDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UISlider *radiusSlider;
+- (IBAction)userChangedRadius:(id)sender;
+
 
 @end

@@ -46,7 +46,7 @@
 
 
 //implementing UseCameraRoll action method
-- (IBAction)useCameraRoll:(id)sender {
+- (IBAction)fromCameraRoll:(id)sender {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
         imagePicker.delegate = self;
@@ -63,8 +63,10 @@
     }
 }
 
+
+
 //implementing useCamera action method
-- (IBAction)useCamera:(id)sender {
+- (IBAction)fromCamera:(id)sender {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES) {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
         imagePicker.delegate = self;

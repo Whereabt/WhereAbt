@@ -22,7 +22,7 @@
     // Do any additional setup after loading the view.
 
        NSString *nameString = [WelcomeViewController sharedController].userName;
-    NSArray *firstLastName = [nameString componentsSeparatedByString:@" "];
+    NSArray *firstLastName = [nameString componentsSeparatedByString:@"_"];
     
     self.NameLabel.text = firstLastName[0];
     self.LastNameLabel.text = firstLastName[1];
