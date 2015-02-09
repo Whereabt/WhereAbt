@@ -11,6 +11,7 @@
 #import "LocationController.h"
 #import "ProfileController.h"
 #import "KeychainItemWrapper.h"
+#import <Security/Security.h>
 
 
 @interface WelcomeViewController ()
@@ -18,23 +19,37 @@
 @end
 
 @implementation WelcomeViewController
-{
-    KeychainItemWrapper *keychain;
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"Login" accessGroup:nil];
-    if (![[keychain objectForKey:(__bridge id)(kSecValueData)]  isEqual: @""]) {
-        //get a fresh token from the auth code
-        [self setAuthTokenRefreshTokenAndProfileNamesFromCode:[keychain objectForKey:(__bridge id)(kSecValueData)]];
+    
+    // Do any additional setup after loading the view.
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"Login" accessGroup:nil];
+    
+    NSLog(@"KEYCHAIN value data key at app launch: %@", [keychain objectForKey:(__bridge id)(kSecValueData)]);
+    
+    if ([[keychain objectForKey:(__bridge id)(kSecValueData)] isEqual: @""] == NO) {
+        
+        //refresh the access token
+        [WelcomeViewController sharedController].refreshToken = [keychain objectForKey:(__bridge id)(kSecValueData)];
+        
+        NSLog(@"Refresh token property value before refresh called: %@", [WelcomeViewController sharedController].refreshToken);
+        
+        [self refreshAuthToken];
+        //[self setAuthTokenRefreshTokenAndProfileNamesFromCode:[keychain objectForKey:(__bridge id)(kSecValueData)]];
         [self performSegueWithIdentifier:@"segueToTab" sender:self];
     }
     
+    
     else{
-        NSLog(@"User did not have a stored code in his keychain.");
+        NSLog(@"User did not have a stored refresh token in his keychain.");
     }
-    // Do any additional setup after loading the view.
 
 }
 
@@ -52,6 +67,26 @@
                                                        
                                                        [WelcomeViewController sharedController].authToken = immutable[@"access_token"];
                                                        [WelcomeViewController sharedController].refreshToken = immutable[@"refresh_token"];
+                                                      
+                                                       //store refresh token
+                                                       KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
+                                                       if (![[WelcomeViewController sharedController].refreshToken  isEqual: @""]) {
+                                                           
+                                                           [keychain setObject: [WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
+                                                       }
+                                                       
+                                                       else {
+                                                           NSLog(@"Cannot store the refresh token in keychain if it has not yet been found");
+                                                       }
+
+                                                       ProfileController *profileManager = [[ProfileController alloc]init];
+                                                       
+                                                       [profileManager requestProfileItemsWithCompletion:^(NSDictionary *profileItems, NSError *error) {
+                                                           
+                                                           [WelcomeViewController sharedController].userName = [profileItems[@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                                                           [WelcomeViewController sharedController].userID = profileItems[@"id"];
+                                                       }];
+
                                                    }];
     [dataRequestTask resume];
 }
@@ -68,15 +103,31 @@
                                                        NSError *jsonError = nil;
                                                        NSDictionary *immutable =[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
                                                        
+                                                 if (jsonError == nil) {
                                                        [WelcomeViewController sharedController].authToken = immutable[@"access_token"];
                                                        [WelcomeViewController sharedController].refreshToken = immutable[@"refresh_token"];
                                                        NSLog(@"RefreshTOKEN: %@", [WelcomeViewController sharedController].refreshToken);
+                                                      
+                                                       KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
+                                                       
+                                                       [keychain setObject: [WelcomeViewController sharedController].refreshToken forKey:(__bridge id)(kSecValueData)];
+                                                       
                                                        //get other properties from user
                                                        ProfileController *profileManager = [[ProfileController alloc]init];
+                                                       
                                                        [profileManager requestProfileItemsWithCompletion:^(NSDictionary *profileItems, NSError *error) {
+                                                           
                                                            [WelcomeViewController sharedController].userName = [profileItems[@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
                                                            [WelcomeViewController sharedController].userID = profileItems[@"id"];
-                                                            }];
+                                                        }];
+                                                    }
+                                                    
+                                                    else {
+                                                           NSLog(@"Error getting tokens from the auth code, the error code: %@", jsonError);
+                                                        UIAlertView *authAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered an error while trying to log you in. This could be due to your network connection; please try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                                                        
+                                                        [authAlert show];
+                                                    }
                                            }];
     [dataRequestTask resume];
 
@@ -119,6 +170,7 @@
     [self.view addSubview:webView];
 }
 
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     NSLog(@"Url: %@", request.URL.absoluteString);
@@ -126,17 +178,33 @@
     
     if ([urlParts[0] isEqual: @"https://n46.org/whereabt/redirect.html"] == YES)
     {
-        
+        //NSMutableDictionary *keychainItem = [NSMutableDictionary dictionary];
         [WelcomeViewController sharedController].authCode = urlParts[1];
-        /*
-        KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"Login" accessGroup:nil];
-         */
+      
         
-        [keychain setObject:[WelcomeViewController sharedController].authCode forKey:(__bridge id)(kSecValueData)];
-        [keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
-
-        NSLog(@"The 'Value Data' code of the user: %@", [keychain objectForKey:(__bridge id)(kSecValueData)]);
         [self setAuthTokenRefreshTokenAndProfileNamesFromCode:[WelcomeViewController sharedController].authCode];
+        
+        KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
+        
+        [keychain setObject:[WelcomeViewController sharedController].userName forKey:(__bridge id)kSecAttrAccount];
+        
+        [keychain setObject:(__bridge id)kSecAttrAccessibleWhenUnlocked forKey:(__bridge id)kSecAttrAccessible];
+     
+        
+        //store refresh token
+        if (![[WelcomeViewController sharedController].refreshToken  isEqual: @""]) {
+            
+            [keychain setObject: [WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
+            
+            //OSStatus sts = SecItemAdd((__bridge CFDictionaryRef)keychainItem, NULL);
+            //NSLog(@"Error code: %d", (int)sts);
+        }
+        
+        else {
+            NSLog(@"Cannot store the refresh token in keychain if it has not yet been found");
+        }
+        
+        NSLog(@"The 'Value Data' code of the user: %@", [keychain objectForKey:(__bridge id)(kSecValueData)]);
         [webView removeFromSuperview];
         [self performSegueWithIdentifier:@"segueToTab" sender:self];
     }

@@ -14,4 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage;
 @property (weak, nonatomic) IBOutlet UILabel *LastNameLabel;
 
+- (IBAction)LogoutButtonPressed:(id)sender;
+
 @end

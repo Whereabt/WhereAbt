@@ -51,7 +51,7 @@
     
     //timer fires every 55 minutes
     NSTimer *authTokenRefreshTimer = [NSTimer scheduledTimerWithTimeInterval:3300 target:welcomeController selector:@selector(refreshAuthToken) userInfo:nil repeats:YES];
-   [authTokenRefreshTimer fire];
+  // [authTokenRefreshTimer fire];
     
     return YES;
 }

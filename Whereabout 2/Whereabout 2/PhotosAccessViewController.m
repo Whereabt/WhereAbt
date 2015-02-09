@@ -446,27 +446,6 @@
         [PhotoLocationAlert show];
     }
 }
-
-
-/*
-- (void)uploadToNewPhotoPHPWithUserID:(NSString *)userID Latitude:(NSInteger)lat Longitude:(NSInteger)lon Photo:(NSURL*)photoURL TimeStamp:(NSDate*)photoTime{
-    NSString *urlString = [[NSString alloc]init];
-    urlString = @"https://n46.org/whereabt/newphoto.php?UserID=%f&Latitude=%f&Longitude=%f&PhotoURL=%f",userID,lat,lon,photoURL,photoTime;
-    NSURL *newPhotoURL = [[NSURL alloc]initWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    //setting up url request
-    NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithURL: newPhotoURL
-            completionHandler: ^(NSData *data,
-                                 NSURLResponse *response,
-                                 NSError *error) {
-                if (error == nil) {
-                    NSLog(@"Data returned from newPhoto.php request: %@", data);
-                    
-                }
-              }]resume];
-    
-}
-*/
  
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

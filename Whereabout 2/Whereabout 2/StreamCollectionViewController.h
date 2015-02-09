@@ -9,16 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@protocol StreamDelegate <NSObject>
-- (void)recievedLocalStreamJSON:(NSData *)objectNotation;
-- (void)gettingLocalStreamFailedWithError:(NSError *)error;
-
-@end
-
-typedef void (^RequestCompletionBlock)(BOOL finished);
-
 @interface StreamCollectionViewController : UICollectionViewController
-@property (weak,nonatomic) id<StreamDelegate> delegate;
 
 
 

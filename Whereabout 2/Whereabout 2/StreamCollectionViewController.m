@@ -8,8 +8,10 @@
 
 #import "StreamCollectionViewController.h"
 #import "StreamController.h"
-#import "StreamDelegate.h"
 #import "CellViewController.h"
+#import "DetailStreamViewController.h"
+
+NSString *kCellID = @"cellID";
 
 static NSString *const userIdIndex = @"UserID";
 static NSString *const photoURLIndex = @"PhotoURL";
@@ -29,7 +31,7 @@ static NSString *const distanceFrom = @"MilesAway";
     [super viewDidLoad];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    [self.collectionView registerClass: [CellViewController class]forCellWithReuseIdentifier:@"MyCell"];
+    [self.collectionView registerClass: [CellViewController class]forCellWithReuseIdentifier:kCellID];
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc]init];
     [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
     [self.collectionView setCollectionViewLayout:flow];
@@ -38,7 +40,7 @@ static NSString *const distanceFrom = @"MilesAway";
    StreamController *networkRequester = [[StreamController alloc]init];
     
     //ADD Slider and change radius parameter to its value
-    [networkRequester getFeedWithRadius:15 andCompletion:^(NSMutableArray *items, NSError *error) {
+    [networkRequester getFeedWithRadius:1 andCompletion:^(NSMutableArray *items, NSError *error) {
         if (!error) {
             self.streamItems = items;
             [self.collectionView reloadData];
@@ -85,21 +87,25 @@ static NSString *const distanceFrom = @"MilesAway";
     return _streamItems.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+   CellViewController *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
     
-    static NSString *identifier = @"MyCell";
-    CellViewController *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    if (cell == nil) {
+        cell = [[CellViewController alloc]init];
+    }
   
    // NSString *milesFrom = self.streamItems[indexPath.row][distanceFrom];
     //cell. = [NSString stringWithFormat:@"%@, Distance Away: %@", self.streamItems[indexPath.row][userIdIndex], milesFrom];
     
     //UIImage *imageReturned = [[UIImage alloc]initWithCIImage:self.streamItems[indexPath.row][@"ThumbnailPhoto"]];
-    UIImage *imageReturned = [UIImage imageNamed: self.streamItems[indexPath.row][@"ThumbnailPhoto"]];
+   
+    UIImage *imageReturned = self.streamItems[indexPath.row][@"ThumbnailPhoto"];
+    
     cell.imageOfCell.image = imageReturned;
     [cell.imageOfCell sizeToFit];
     
-return cell;
-
+    return cell;
 }
 
 

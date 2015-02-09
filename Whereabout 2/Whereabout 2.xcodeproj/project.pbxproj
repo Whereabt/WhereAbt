@@ -53,6 +53,8 @@
 		B938DCFC1A75B6F10073D91F /* Blue Camera Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCF81A75B6F10073D91F /* Blue Camera Button.png */; };
 		B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCF91A75B6F10073D91F /* Blue Camera Roll Button.png */; };
 		B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCFA1A75B6F10073D91F /* Orange Camera Roll Button.png */; };
+		B9BC132D1A7D90D700659591 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9BC132C1A7D90D700659591 /* Security.framework */; };
+		B9BC13361A8843A700659591 /* DetailStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BC13351A8843A700659591 /* DetailStreamViewController.m */; };
 		B9FCFAB91A6331E800AFB63D /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */; };
 		B9FCFABA1A6331E800AFB63D /* Welcome 380x449 copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */; };
 /* End PBXBuildFile section */
@@ -87,7 +89,6 @@
 		01D47E091A560BCD00A45013 /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamViewController.m; path = ../StreamViewController.m; sourceTree = "<group>"; };
 		01D47E141A583B9D00A45013 /* ImageDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDataObject.h; sourceTree = "<group>"; };
 		01D47E151A583B9D00A45013 /* ImageDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDataObject.m; sourceTree = "<group>"; };
-		2D6A0E0D1A59D4CC00EDD980 /* StreamDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamDelegate.h; sourceTree = "<group>"; };
 		2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2D6A0E421A5C5B4100EDD980 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2D6A0E441A5C5B5800EDD980 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -132,6 +133,9 @@
 		B938DCF81A75B6F10073D91F /* Blue Camera Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blue Camera Button.png"; sourceTree = "<group>"; };
 		B938DCF91A75B6F10073D91F /* Blue Camera Roll Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blue Camera Roll Button.png"; sourceTree = "<group>"; };
 		B938DCFA1A75B6F10073D91F /* Orange Camera Roll Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Orange Camera Roll Button.png"; sourceTree = "<group>"; };
+		B9BC132C1A7D90D700659591 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B9BC13341A8843A700659591 /* DetailStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailStreamViewController.h; sourceTree = "<group>"; };
+		B9BC13351A8843A700659591 /* DetailStreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailStreamViewController.m; sourceTree = "<group>"; };
 		B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PhotoView.jpg; sourceTree = "<group>"; };
 		B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Welcome 380x449 copy.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9BC132D1A7D90D700659591 /* Security.framework in Frameworks */,
 				2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */,
 				2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */,
 				2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */,
@@ -160,6 +165,7 @@
 		012996CC1A354E5300C89D09 = {
 			isa = PBXGroup;
 			children = (
+				B9BC132C1A7D90D700659591 /* Security.framework */,
 				2D6A0E441A5C5B5800EDD980 /* UIKit.framework */,
 				2D6A0E421A5C5B4100EDD980 /* Foundation.framework */,
 				2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */,
@@ -196,6 +202,8 @@
 				012997071A38FA9800C89D09 /* WelcomeViewController.m */,
 				01D47DFD1A45D00600A45013 /* PhotosAccessViewController.h */,
 				01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */,
+				B9BC13341A8843A700659591 /* DetailStreamViewController.h */,
+				B9BC13351A8843A700659591 /* DetailStreamViewController.m */,
 				B938DCB41A6AF2EE0073D91F /* CellViewController.h */,
 				B938DCB51A6AF2EE0073D91F /* CellViewController.m */,
 				B938DCB11A68BF000073D91F /* StreamCollectionViewController.h */,
@@ -206,7 +214,6 @@
 				B938DCAF1A641E560073D91F /* StreamController.m */,
 				2D6A0E4D1A5F75CE00EDD980 /* LocationController.h */,
 				2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */,
-				2D6A0E0D1A59D4CC00EDD980 /* StreamDelegate.h */,
 				01D47E141A583B9D00A45013 /* ImageDataObject.h */,
 				01D47E151A583B9D00A45013 /* ImageDataObject.m */,
 				012996E81A354E5300C89D09 /* Images.xcassets */,
@@ -457,6 +464,7 @@
 				B938DCB91A6F4F2C0073D91F /* ProfileController.m in Sources */,
 				B938DCB01A641E560073D91F /* StreamController.m in Sources */,
 				B938DCC61A73EE0B0073D91F /* EnlargeViewController.m in Sources */,
+				B9BC13361A8843A700659591 /* DetailStreamViewController.m in Sources */,
 				B938DCB61A6AF2EE0073D91F /* CellViewController.m in Sources */,
 				B938DCBC1A6F59000073D91F /* ProfileViewController.m in Sources */,
 				01D47DFF1A45D00600A45013 /* PhotosAccessViewController.m in Sources */,

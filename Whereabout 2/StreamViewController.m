@@ -8,7 +8,6 @@
 
 #import "StreamViewController.h"
 #import "StreamController.h"
-#import "StreamDelegate.h"
 #import "EnlargeViewController.h"
 
 /*

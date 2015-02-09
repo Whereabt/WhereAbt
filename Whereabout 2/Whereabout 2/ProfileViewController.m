@@ -9,6 +9,8 @@
 #import "ProfileViewController.h"
 #import "ProfileController.h"
 #import "WelcomeViewController.h"
+#import "KeychainItemWrapper.h"
+#import <Security/Security.h>
 
 @interface ProfileViewController ()
 
@@ -21,7 +23,7 @@
     
     // Do any additional setup after loading the view.
 
-       NSString *nameString = [WelcomeViewController sharedController].userName;
+    NSString *nameString = [WelcomeViewController sharedController].userName;
     NSArray *firstLastName = [nameString componentsSeparatedByString:@"_"];
     
     self.NameLabel.text = firstLastName[0];
@@ -31,6 +33,15 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)LogoutButtonPressed:(id)sender {
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
+   
+    //set nil for the refresh token, user will have to log back in
+    [WelcomeViewController sharedController].refreshToken = @"";
+    
+    [keychain setObject:[WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
 }
 
 #pragma mark CollectionView Datasource and Delegate MEthods
