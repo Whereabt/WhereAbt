@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CellViewController : UICollectionViewCell
+@interface StreamCollectionViewCell : UICollectionViewCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageOfCell;
 

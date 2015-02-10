@@ -8,7 +8,7 @@
 
 #import "StreamCollectionViewController.h"
 #import "StreamController.h"
-#import "CellViewController.h"
+#import "StreamCollectionViewCell.h"
 #import "DetailStreamViewController.h"
 
 NSString *kCellID = @"cellID";
@@ -31,7 +31,7 @@ static NSString *const distanceFrom = @"MilesAway";
     [super viewDidLoad];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    [self.collectionView registerClass: [CellViewController class]forCellWithReuseIdentifier:kCellID];
+    [self.collectionView registerClass: [StreamCollectionViewCell class]forCellWithReuseIdentifier:kCellID];
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc]init];
     [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
     [self.collectionView setCollectionViewLayout:flow];
@@ -48,6 +48,8 @@ static NSString *const distanceFrom = @"MilesAway";
         
         else{
             NSLog(@"Error getting streamItems: %@", error);
+            UIAlertView *streamFailAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"Sorry, we were unable to retrieve nearby photos from the server. Make sure that your phone is connected to the internet." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];
+            [streamFailAlert show];
         }
     }];
     // Uncomment the following line to preserve selection between presentations
@@ -84,15 +86,15 @@ static NSString *const distanceFrom = @"MilesAway";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return _streamItems.count;
+    return self.streamItems.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-   CellViewController *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
+   StreamCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
     
     if (cell == nil) {
-        cell = [[CellViewController alloc]init];
+        cell = [[StreamCollectionViewCell alloc]init];
     }
   
    // NSString *milesFrom = self.streamItems[indexPath.row][distanceFrom];
