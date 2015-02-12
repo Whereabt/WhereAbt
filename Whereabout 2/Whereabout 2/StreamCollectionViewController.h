@@ -7,10 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+
+@protocol StreamDelegate <NSObject>
+- (void)recievedLocalStreamJSON:(NSData *)objectNotation;
+- (void)gettingLocalStreamFailedWithError:(NSError *)error;
+
+@end
 
 
-@interface StreamCollectionViewController : UICollectionViewController
+typedef void (^RequestCompletionBlock)(BOOL finished);
 
+@interface StreamCollectionViewController : UICollectionViewController <CLLocationManagerDelegate>
+
+@property (weak,nonatomic) id<StreamDelegate> delegate;
 
 
 @end

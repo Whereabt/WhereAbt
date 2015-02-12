@@ -34,7 +34,7 @@
     
     NSLog(@"KEYCHAIN value data key at app launch: %@", [keychain objectForKey:(__bridge id)(kSecValueData)]);
     
-    if ([[keychain objectForKey:(__bridge id)(kSecValueData)] isEqual: @""] == NO) {
+    if ([[keychain objectForKey:(__bridge id)(kSecValueData)] length] > 1) {
         
         //refresh the access token
         [WelcomeViewController sharedController].refreshToken = [keychain objectForKey:(__bridge id)(kSecValueData)];

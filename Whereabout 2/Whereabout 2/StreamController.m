@@ -51,8 +51,9 @@ static NSString *const distanceFrom = @"MilesAway";
                                                           // [self imageFromURLString:photoURL atIndex:photoItemIndex OfArray:_itemCollection];
                                                            
                                                            //when requests are done, call completion handler (callBack block) with request-created parameters
-                                                           callBack(_itemCollection, error);
+                                                           //callBack(_itemCollection, error);
                                                        }
+                                                       callBack(_itemCollection, error);
                                                    }
                                              ];
     [dataRequestTask resume];

@@ -107,6 +107,11 @@ static NSString *const distanceFrom = @"MilesAway";
     cell.imageOfCell.image = imageReturned;
     [cell.imageOfCell sizeToFit];
     
+    cell.labelOfCell.textColor = [UIColor blueColor];
+    NSLog(@"Label text: %@", self.streamItems[indexPath.row][@"UserName"]);
+    cell.labelOfCell.text = self.streamItems[indexPath.row][@"UserName"];
+    
+    
     return cell;
 }
 

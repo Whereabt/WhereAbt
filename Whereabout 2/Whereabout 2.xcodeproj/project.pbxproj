@@ -55,8 +55,8 @@
 		B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCFA1A75B6F10073D91F /* Orange Camera Roll Button.png */; };
 		B9BC132D1A7D90D700659591 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9BC132C1A7D90D700659591 /* Security.framework */; };
 		B9BC13361A8843A700659591 /* DetailStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BC13351A8843A700659591 /* DetailStreamViewController.m */; };
-		B9FCFAB91A6331E800AFB63D /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */; };
-		B9FCFABA1A6331E800AFB63D /* Welcome 380x449 copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */; };
+		B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9BC13371A8B10D100659591 /* PhotoView.jpg */; };
+		B9BC133A1A8B10E100659591 /* Welcome 380x449 copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9BC13391A8B10E100659591 /* Welcome 380x449 copy.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,8 +136,8 @@
 		B9BC132C1A7D90D700659591 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B9BC13341A8843A700659591 /* DetailStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailStreamViewController.h; sourceTree = "<group>"; };
 		B9BC13351A8843A700659591 /* DetailStreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailStreamViewController.m; sourceTree = "<group>"; };
-		B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = PhotoView.jpg; sourceTree = "<group>"; };
-		B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Welcome 380x449 copy.jpg"; sourceTree = "<group>"; };
+		B9BC13371A8B10D100659591 /* PhotoView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = PhotoView.jpg; path = UIImages/PhotoView.jpg; sourceTree = SOURCE_ROOT; };
+		B9BC13391A8B10E100659591 /* Welcome 380x449 copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Welcome 380x449 copy.jpg"; path = "UIImages/Welcome 380x449 copy.jpg"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,8 +317,8 @@
 				B938DCF61A75B6F10073D91F /* PNG Files UI Buttons */,
 				B938DCED1A757BCB0073D91F /* PNG Photo access Images */,
 				B938DCCA1A757BBB0073D91F /* PNG Icons */,
-				B9FCFAB71A6331E800AFB63D /* PhotoView.jpg */,
-				B9FCFAB81A6331E800AFB63D /* Welcome 380x449 copy.jpg */,
+				B9BC13371A8B10D100659591 /* PhotoView.jpg */,
+				B9BC13391A8B10E100659591 /* Welcome 380x449 copy.jpg */,
 				B938DCC81A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png */,
 			);
 			name = UIImages;
@@ -408,6 +408,7 @@
 			files = (
 				B938DCDD1A757BBC0073D91F /* icon-Upload 50x50.png in Resources */,
 				B938DCC91A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png in Resources */,
+				B9BC133A1A8B10E100659591 /* Welcome 380x449 copy.jpg in Resources */,
 				B938DCDE1A757BBC0073D91F /* icon-Feed 50x50.png in Resources */,
 				B938DCEC1A757BBC0073D91F /*  icon-Settings GRAY 50x50.png in Resources */,
 				B938DCF21A757BCB0073D91F /* Photo access Image 250x250 REV.png in Resources */,
@@ -417,7 +418,6 @@
 				B938DCE41A757BBC0073D91F /* icon-Feed 75x75.png in Resources */,
 				B938DCE61A757BBC0073D91F /* icon-Upload GRAY 50x50.png in Resources */,
 				012996E71A354E5300C89D09 /* Main.storyboard in Resources */,
-				B9FCFABA1A6331E800AFB63D /* Welcome 380x449 copy.jpg in Resources */,
 				B938DCE91A757BBC0073D91F /* icon-Settings GRAY 75x75.png in Resources */,
 				B938DCE71A757BBC0073D91F /* icon-Feed GRAY 75x75.png in Resources */,
 				B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */,
@@ -433,8 +433,8 @@
 				B938DCE21A757BBC0073D91F /* icon-Settings 75x75.png in Resources */,
 				B938DCEB1A757BBC0073D91F /* icon-Profile GRAY 50x50.png in Resources */,
 				012996E91A354E5300C89D09 /* Images.xcassets in Resources */,
+				B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */,
 				B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */,
-				B9FCFAB91A6331E800AFB63D /* PhotoView.jpg in Resources */,
 				B938DCF41A757BCB0073D91F /* Photo access Image 350x350 REV.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
