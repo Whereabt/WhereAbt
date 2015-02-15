@@ -18,7 +18,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-   
+    
+    
     /*
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
     UITabBar *tabBar = tabBarController.tabBar;
@@ -51,7 +52,7 @@
     
     //timer fires every 55 minutes
     NSTimer *authTokenRefreshTimer = [NSTimer scheduledTimerWithTimeInterval:3300 target:welcomeController selector:@selector(refreshAuthToken) userInfo:nil repeats:YES];
-  // [authTokenRefreshTimer fire];
+    [authTokenRefreshTimer fire];
     
     return YES;
 }

@@ -53,6 +53,7 @@
 		B938DCFC1A75B6F10073D91F /* Blue Camera Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCF81A75B6F10073D91F /* Blue Camera Button.png */; };
 		B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCF91A75B6F10073D91F /* Blue Camera Roll Button.png */; };
 		B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCFA1A75B6F10073D91F /* Orange Camera Roll Button.png */; };
+		B98B88861A900E4D00309EA7 /* TabBarAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */; };
 		B9BC132D1A7D90D700659591 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9BC132C1A7D90D700659591 /* Security.framework */; };
 		B9BC13361A8843A700659591 /* DetailStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BC13351A8843A700659591 /* DetailStreamViewController.m */; };
 		B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9BC13371A8B10D100659591 /* PhotoView.jpg */; };
@@ -133,6 +134,8 @@
 		B938DCF81A75B6F10073D91F /* Blue Camera Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blue Camera Button.png"; sourceTree = "<group>"; };
 		B938DCF91A75B6F10073D91F /* Blue Camera Roll Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Blue Camera Roll Button.png"; sourceTree = "<group>"; };
 		B938DCFA1A75B6F10073D91F /* Orange Camera Roll Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Orange Camera Roll Button.png"; sourceTree = "<group>"; };
+		B98B88841A900E4D00309EA7 /* TabBarAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarAppViewController.h; sourceTree = "<group>"; };
+		B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarAppViewController.m; sourceTree = "<group>"; };
 		B9BC132C1A7D90D700659591 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B9BC13341A8843A700659591 /* DetailStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailStreamViewController.h; sourceTree = "<group>"; };
 		B9BC13351A8843A700659591 /* DetailStreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailStreamViewController.m; sourceTree = "<group>"; };
@@ -190,6 +193,8 @@
 				012996DC1A354E5300C89D09 /* AppDelegate.h */,
 				012996DD1A354E5300C89D09 /* AppDelegate.m */,
 				012996E51A354E5300C89D09 /* Main.storyboard */,
+				B98B88841A900E4D00309EA7 /* TabBarAppViewController.h */,
+				B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */,
 				B938DCC31A73EE0B0073D91F /* EnlargeViewController.h */,
 				B938DCC41A73EE0B0073D91F /* EnlargeViewController.m */,
 				B938DCBD1A71F8140073D91F /* KeychainItemWrapper.h */,
@@ -453,6 +458,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B98B88861A900E4D00309EA7 /* TabBarAppViewController.m in Sources */,
 				01D47E161A583B9D00A45013 /* ImageDataObject.m in Sources */,
 				B938DCBF1A71F8140073D91F /* KeychainItemWrapper.m in Sources */,
 				012997081A38FA9800C89D09 /* WelcomeViewController.m in Sources */,

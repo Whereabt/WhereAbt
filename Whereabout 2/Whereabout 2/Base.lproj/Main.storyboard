@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="az3-do-Sfs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="az3-do-Sfs">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -88,7 +88,7 @@
                             <constraint firstItem="iZQ-ki-1dH" firstAttribute="top" secondItem="4lQ-6R-uJH" secondAttribute="top" id="ykR-yl-lPB"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="iMn-Dh-8fy"/>
+                    <tabBarItem key="tabBarItem" systemItem="contacts" id="iMn-Dh-8fy"/>
                     <toolbarItems>
                         <barButtonItem width="92" style="plain" systemItem="fixedSpace" id="BbD-6P-E8H"/>
                         <barButtonItem width="88" style="plain" systemItem="fixedSpace" id="Z1o-wW-xFC"/>
@@ -142,7 +142,7 @@
                             <outlet property="delegate" destination="KSJ-Z5-4od" id="hV5-rM-uLY"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" systemItem="mostViewed" id="m04-0a-EiO"/>
+                    <tabBarItem key="tabBarItem" systemItem="contacts" id="m04-0a-EiO"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -161,6 +161,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="If8-72-QiG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="U9x-1R-1MD">
                             <size key="itemSize" width="95" height="125"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -207,7 +208,7 @@
                             <outlet property="delegate" destination="lhz-Nm-jKS" id="B65-8B-ntN"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="d8V-O5-3R0"/>
+                    <tabBarItem key="tabBarItem" systemItem="contacts" id="d8V-O5-3R0"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aze-71-8Uw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -311,10 +312,10 @@
             </objects>
             <point key="canvasLocation" x="-367" y="-55"/>
         </scene>
-        <!--Tab Bar View Controller-->
+        <!--Tab Bar App View Controller-->
         <scene sceneID="1fp-6a-v1l">
             <objects>
-                <tabBarController id="C1P-Vl-X9Q" customClass="TabBarViewController" sceneMemberID="viewController">
+                <tabBarController id="C1P-Vl-X9Q" customClass="TabBarAppViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="yWq-uc-rPb"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
