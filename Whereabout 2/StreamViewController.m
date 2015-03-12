@@ -54,7 +54,7 @@ static NSString *const distanceFrom = @"MilesAway";
 }
 
 - (IBAction)userChangedRadius:(id)sender {
-    StreamController *networkRequester = [[StreamController alloc]init];
+    StreamController *networkRequester = [[StreamController alloc] init];
     [networkRequester getFeedWithRadius:self.radiusSlider.value andCompletion:^(NSMutableArray *items, NSError *error) {
         if (!error) {
             self.streamItems = items;
