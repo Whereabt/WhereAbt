@@ -29,22 +29,6 @@
 		B938DCBF1A71F8140073D91F /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCBE1A71F8140073D91F /* KeychainItemWrapper.m */; };
 		B938DCC61A73EE0B0073D91F /* EnlargeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCC41A73EE0B0073D91F /* EnlargeViewController.m */; };
 		B938DCC91A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCC81A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png */; };
-		B938DCDD1A757BBC0073D91F /* icon-Upload 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCCC1A757BBB0073D91F /* icon-Upload 50x50.png */; };
-		B938DCDE1A757BBC0073D91F /* icon-Feed 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCCD1A757BBB0073D91F /* icon-Feed 50x50.png */; };
-		B938DCDF1A757BBC0073D91F /* icon-Profile 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCCE1A757BBB0073D91F /* icon-Profile 50x50.png */; };
-		B938DCE01A757BBC0073D91F /* icon-Settings 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCCF1A757BBB0073D91F /* icon-Settings 50x50.png */; };
-		B938DCE11A757BBC0073D91F /* icon-Profile 75x75.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCD01A757BBB0073D91F /* icon-Profile 75x75.png */; };
-		B938DCE21A757BBC0073D91F /* icon-Settings 75x75.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCD11A757BBB0073D91F /* icon-Settings 75x75.png */; };
-		B938DCE31A757BBC0073D91F /* icon-Upload 75x75.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCD21A757BBB0073D91F /* icon-Upload 75x75.png */; };
-		B938DCE41A757BBC0073D91F /* icon-Feed 75x75.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCD31A757BBB0073D91F /* icon-Feed 75x75.png */; };
-		B938DCE51A757BBC0073D91F /* icon feed GRAY 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCD51A757BBC0073D91F /* icon feed GRAY 50x50.png */; };
-		B938DCE61A757BBC0073D91F /* icon-Upload GRAY 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCD61A757BBC0073D91F /* icon-Upload GRAY 50x50.png */; };
-		B938DCE71A757BBC0073D91F /* icon-Feed GRAY 75x75.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCD71A757BBC0073D91F /* icon-Feed GRAY 75x75.png */; };
-		B938DCE81A757BBC0073D91F /* icon-Profile GRAY 75x75.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCD81A757BBC0073D91F /* icon-Profile GRAY 75x75.png */; };
-		B938DCE91A757BBC0073D91F /* icon-Settings GRAY 75x75.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCD91A757BBC0073D91F /* icon-Settings GRAY 75x75.png */; };
-		B938DCEA1A757BBC0073D91F /* icon-Upload GRAY 75x75.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCDA1A757BBC0073D91F /* icon-Upload GRAY 75x75.png */; };
-		B938DCEB1A757BBC0073D91F /* icon-Profile GRAY 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCDB1A757BBC0073D91F /* icon-Profile GRAY 50x50.png */; };
-		B938DCEC1A757BBC0073D91F /*  icon-Settings GRAY 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCDC1A757BBC0073D91F /*  icon-Settings GRAY 50x50.png */; };
 		B938DCF21A757BCB0073D91F /* Photo access Image 250x250 REV.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCEE1A757BCB0073D91F /* Photo access Image 250x250 REV.png */; };
 		B938DCF31A757BCB0073D91F /* Photo access Image 250x250.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCEF1A757BCB0073D91F /* Photo access Image 250x250.png */; };
 		B938DCF41A757BCB0073D91F /* Photo access Image 350x350 REV.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCF01A757BCB0073D91F /* Photo access Image 350x350 REV.png */; };
@@ -58,6 +42,16 @@
 		B9BC13361A8843A700659591 /* DetailStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BC13351A8843A700659591 /* DetailStreamViewController.m */; };
 		B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9BC13371A8B10D100659591 /* PhotoView.jpg */; };
 		B9BC133A1A8B10E100659591 /* Welcome 380x449 copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9BC13391A8B10E100659591 /* Welcome 380x449 copy.jpg */; };
+		B9EBBCA81A917D2D008FA719 /* ProfileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9EBBCA71A917D2D008FA719 /* ProfileCollectionViewController.m */; };
+		B9EBBCAB1A918622008FA719 /* StreamUpperSuppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9EBBCAA1A918622008FA719 /* StreamUpperSuppViewController.m */; };
+		B9EBBCBA1AA56123008FA719 /* icon-Profile-SELECTED 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB11AA56123008FA719 /* icon-Profile-SELECTED 50x50.png */; };
+		B9EBBCBB1AA56123008FA719 /* icon-Upload-SELECTED 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB21AA56123008FA719 /* icon-Upload-SELECTED 50x50.png */; };
+		B9EBBCBC1AA56123008FA719 /* icon-Feed-SELECTED 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB31AA56123008FA719 /* icon-Feed-SELECTED 50x50.png */; };
+		B9EBBCBD1AA56123008FA719 /* icon-Settings-SELECTED 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB41AA56123008FA719 /* icon-Settings-SELECTED 50x50.png */; };
+		B9EBBCBE1AA56123008FA719 /* icon-Feed GRAY 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB61AA56123008FA719 /* icon-Feed GRAY 50x50.png */; };
+		B9EBBCBF1AA56123008FA719 /* icon-Upload GRAY 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB71AA56123008FA719 /* icon-Upload GRAY 50x50.png */; };
+		B9EBBCC01AA56123008FA719 /* icon-Profile GRAY 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB81AA56123008FA719 /* icon-Profile GRAY 50x50.png */; };
+		B9EBBCC11AA56123008FA719 /* icon-Settings GRAY 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB91AA56123008FA719 /* icon-Settings GRAY 50x50.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,22 +104,6 @@
 		B938DCC31A73EE0B0073D91F /* EnlargeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnlargeViewController.h; sourceTree = "<group>"; };
 		B938DCC41A73EE0B0073D91F /* EnlargeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnlargeViewController.m; sourceTree = "<group>"; };
 		B938DCC81A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iphone 6 plus-App icon 1024x1024 REV.png"; path = "PNG Files APP LOGO/iphone 6 plus-App icon 1024x1024 REV.png"; sourceTree = SOURCE_ROOT; };
-		B938DCCC1A757BBB0073D91F /* icon-Upload 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Upload 50x50.png"; sourceTree = "<group>"; };
-		B938DCCD1A757BBB0073D91F /* icon-Feed 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Feed 50x50.png"; sourceTree = "<group>"; };
-		B938DCCE1A757BBB0073D91F /* icon-Profile 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Profile 50x50.png"; sourceTree = "<group>"; };
-		B938DCCF1A757BBB0073D91F /* icon-Settings 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Settings 50x50.png"; sourceTree = "<group>"; };
-		B938DCD01A757BBB0073D91F /* icon-Profile 75x75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Profile 75x75.png"; sourceTree = "<group>"; };
-		B938DCD11A757BBB0073D91F /* icon-Settings 75x75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Settings 75x75.png"; sourceTree = "<group>"; };
-		B938DCD21A757BBB0073D91F /* icon-Upload 75x75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Upload 75x75.png"; sourceTree = "<group>"; };
-		B938DCD31A757BBB0073D91F /* icon-Feed 75x75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Feed 75x75.png"; sourceTree = "<group>"; };
-		B938DCD51A757BBC0073D91F /* icon feed GRAY 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon feed GRAY 50x50.png"; sourceTree = "<group>"; };
-		B938DCD61A757BBC0073D91F /* icon-Upload GRAY 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Upload GRAY 50x50.png"; sourceTree = "<group>"; };
-		B938DCD71A757BBC0073D91F /* icon-Feed GRAY 75x75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Feed GRAY 75x75.png"; sourceTree = "<group>"; };
-		B938DCD81A757BBC0073D91F /* icon-Profile GRAY 75x75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Profile GRAY 75x75.png"; sourceTree = "<group>"; };
-		B938DCD91A757BBC0073D91F /* icon-Settings GRAY 75x75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Settings GRAY 75x75.png"; sourceTree = "<group>"; };
-		B938DCDA1A757BBC0073D91F /* icon-Upload GRAY 75x75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Upload GRAY 75x75.png"; sourceTree = "<group>"; };
-		B938DCDB1A757BBC0073D91F /* icon-Profile GRAY 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Profile GRAY 50x50.png"; sourceTree = "<group>"; };
-		B938DCDC1A757BBC0073D91F /*  icon-Settings GRAY 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = " icon-Settings GRAY 50x50.png"; sourceTree = "<group>"; };
 		B938DCEE1A757BCB0073D91F /* Photo access Image 250x250 REV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photo access Image 250x250 REV.png"; sourceTree = "<group>"; };
 		B938DCEF1A757BCB0073D91F /* Photo access Image 250x250.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photo access Image 250x250.png"; sourceTree = "<group>"; };
 		B938DCF01A757BCB0073D91F /* Photo access Image 350x350 REV.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Photo access Image 350x350 REV.png"; sourceTree = "<group>"; };
@@ -141,6 +119,18 @@
 		B9BC13351A8843A700659591 /* DetailStreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailStreamViewController.m; sourceTree = "<group>"; };
 		B9BC13371A8B10D100659591 /* PhotoView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = PhotoView.jpg; path = UIImages/PhotoView.jpg; sourceTree = SOURCE_ROOT; };
 		B9BC13391A8B10E100659591 /* Welcome 380x449 copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Welcome 380x449 copy.jpg"; path = "UIImages/Welcome 380x449 copy.jpg"; sourceTree = SOURCE_ROOT; };
+		B9EBBCA61A917D2D008FA719 /* ProfileCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCollectionViewController.h; sourceTree = "<group>"; };
+		B9EBBCA71A917D2D008FA719 /* ProfileCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCollectionViewController.m; sourceTree = "<group>"; };
+		B9EBBCA91A918622008FA719 /* StreamUpperSuppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamUpperSuppViewController.h; sourceTree = "<group>"; };
+		B9EBBCAA1A918622008FA719 /* StreamUpperSuppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamUpperSuppViewController.m; sourceTree = "<group>"; };
+		B9EBBCB11AA56123008FA719 /* icon-Profile-SELECTED 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Profile-SELECTED 50x50.png"; sourceTree = "<group>"; };
+		B9EBBCB21AA56123008FA719 /* icon-Upload-SELECTED 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Upload-SELECTED 50x50.png"; sourceTree = "<group>"; };
+		B9EBBCB31AA56123008FA719 /* icon-Feed-SELECTED 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Feed-SELECTED 50x50.png"; sourceTree = "<group>"; };
+		B9EBBCB41AA56123008FA719 /* icon-Settings-SELECTED 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Settings-SELECTED 50x50.png"; sourceTree = "<group>"; };
+		B9EBBCB61AA56123008FA719 /* icon-Feed GRAY 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Feed GRAY 50x50.png"; sourceTree = "<group>"; };
+		B9EBBCB71AA56123008FA719 /* icon-Upload GRAY 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Upload GRAY 50x50.png"; sourceTree = "<group>"; };
+		B9EBBCB81AA56123008FA719 /* icon-Profile GRAY 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Profile GRAY 50x50.png"; sourceTree = "<group>"; };
+		B9EBBCB91AA56123008FA719 /* icon-Settings GRAY 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-Settings GRAY 50x50.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +193,8 @@
 				B938DCB81A6F4F2C0073D91F /* ProfileController.m */,
 				B938DCBA1A6F59000073D91F /* ProfileViewController.h */,
 				B938DCBB1A6F59000073D91F /* ProfileViewController.m */,
+				B9EBBCA61A917D2D008FA719 /* ProfileCollectionViewController.h */,
+				B9EBBCA71A917D2D008FA719 /* ProfileCollectionViewController.m */,
 				012997061A38FA9800C89D09 /* WelcomeViewController.h */,
 				012997071A38FA9800C89D09 /* WelcomeViewController.m */,
 				01D47DFD1A45D00600A45013 /* PhotosAccessViewController.h */,
@@ -213,6 +205,8 @@
 				B938DCB51A6AF2EE0073D91F /* StreamCollectionViewCell.m */,
 				B938DCB11A68BF000073D91F /* StreamCollectionViewController.h */,
 				B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */,
+				B9EBBCA91A918622008FA719 /* StreamUpperSuppViewController.h */,
+				B9EBBCAA1A918622008FA719 /* StreamUpperSuppViewController.m */,
 				01D47E081A560BCD00A45013 /* StreamViewController.h */,
 				01D47E091A560BCD00A45013 /* StreamViewController.m */,
 				B938DCAE1A641E560073D91F /* StreamController.h */,
@@ -255,45 +249,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B938DCCA1A757BBB0073D91F /* PNG Icons */ = {
-			isa = PBXGroup;
-			children = (
-				B938DCCB1A757BBB0073D91F /* PNG Blue Icons */,
-				B938DCD41A757BBC0073D91F /* PNG Gray Icons */,
-			);
-			path = "PNG Icons";
-			sourceTree = SOURCE_ROOT;
-		};
-		B938DCCB1A757BBB0073D91F /* PNG Blue Icons */ = {
-			isa = PBXGroup;
-			children = (
-				B938DCCC1A757BBB0073D91F /* icon-Upload 50x50.png */,
-				B938DCD21A757BBB0073D91F /* icon-Upload 75x75.png */,
-				B938DCCD1A757BBB0073D91F /* icon-Feed 50x50.png */,
-				B938DCD31A757BBB0073D91F /* icon-Feed 75x75.png */,
-				B938DCCE1A757BBB0073D91F /* icon-Profile 50x50.png */,
-				B938DCD01A757BBB0073D91F /* icon-Profile 75x75.png */,
-				B938DCCF1A757BBB0073D91F /* icon-Settings 50x50.png */,
-				B938DCD11A757BBB0073D91F /* icon-Settings 75x75.png */,
-			);
-			path = "PNG Blue Icons";
-			sourceTree = "<group>";
-		};
-		B938DCD41A757BBC0073D91F /* PNG Gray Icons */ = {
-			isa = PBXGroup;
-			children = (
-				B938DCD51A757BBC0073D91F /* icon feed GRAY 50x50.png */,
-				B938DCD71A757BBC0073D91F /* icon-Feed GRAY 75x75.png */,
-				B938DCD61A757BBC0073D91F /* icon-Upload GRAY 50x50.png */,
-				B938DCDA1A757BBC0073D91F /* icon-Upload GRAY 75x75.png */,
-				B938DCDB1A757BBC0073D91F /* icon-Profile GRAY 50x50.png */,
-				B938DCD81A757BBC0073D91F /* icon-Profile GRAY 75x75.png */,
-				B938DCDC1A757BBC0073D91F /*  icon-Settings GRAY 50x50.png */,
-				B938DCD91A757BBC0073D91F /* icon-Settings GRAY 75x75.png */,
-			);
-			path = "PNG Gray Icons";
-			sourceTree = "<group>";
-		};
 		B938DCED1A757BCB0073D91F /* PNG Photo access Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,12 +271,43 @@
 			path = "PNG Files UI Buttons";
 			sourceTree = SOURCE_ROOT;
 		};
+		B9EBBCAF1AA56123008FA719 /* PNG Icons */ = {
+			isa = PBXGroup;
+			children = (
+				B9EBBCB01AA56123008FA719 /* PNG Blue Icons */,
+				B9EBBCB51AA56123008FA719 /* PNG Gray Icons */,
+			);
+			path = "PNG Icons";
+			sourceTree = SOURCE_ROOT;
+		};
+		B9EBBCB01AA56123008FA719 /* PNG Blue Icons */ = {
+			isa = PBXGroup;
+			children = (
+				B9EBBCB11AA56123008FA719 /* icon-Profile-SELECTED 50x50.png */,
+				B9EBBCB21AA56123008FA719 /* icon-Upload-SELECTED 50x50.png */,
+				B9EBBCB31AA56123008FA719 /* icon-Feed-SELECTED 50x50.png */,
+				B9EBBCB41AA56123008FA719 /* icon-Settings-SELECTED 50x50.png */,
+			);
+			path = "PNG Blue Icons";
+			sourceTree = "<group>";
+		};
+		B9EBBCB51AA56123008FA719 /* PNG Gray Icons */ = {
+			isa = PBXGroup;
+			children = (
+				B9EBBCB61AA56123008FA719 /* icon-Feed GRAY 50x50.png */,
+				B9EBBCB71AA56123008FA719 /* icon-Upload GRAY 50x50.png */,
+				B9EBBCB81AA56123008FA719 /* icon-Profile GRAY 50x50.png */,
+				B9EBBCB91AA56123008FA719 /* icon-Settings GRAY 50x50.png */,
+			);
+			path = "PNG Gray Icons";
+			sourceTree = "<group>";
+		};
 		B9FCFAB61A6331E800AFB63D /* UIImages */ = {
 			isa = PBXGroup;
 			children = (
+				B9EBBCAF1AA56123008FA719 /* PNG Icons */,
 				B938DCF61A75B6F10073D91F /* PNG Files UI Buttons */,
 				B938DCED1A757BCB0073D91F /* PNG Photo access Images */,
-				B938DCCA1A757BBB0073D91F /* PNG Icons */,
 				B9BC13371A8B10D100659591 /* PhotoView.jpg */,
 				B9BC13391A8B10E100659591 /* Welcome 380x449 copy.jpg */,
 				B938DCC81A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png */,
@@ -411,36 +397,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B938DCDD1A757BBC0073D91F /* icon-Upload 50x50.png in Resources */,
 				B938DCC91A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png in Resources */,
+				B9EBBCC01AA56123008FA719 /* icon-Profile GRAY 50x50.png in Resources */,
+				B9EBBCBF1AA56123008FA719 /* icon-Upload GRAY 50x50.png in Resources */,
 				B9BC133A1A8B10E100659591 /* Welcome 380x449 copy.jpg in Resources */,
-				B938DCDE1A757BBC0073D91F /* icon-Feed 50x50.png in Resources */,
-				B938DCEC1A757BBC0073D91F /*  icon-Settings GRAY 50x50.png in Resources */,
 				B938DCF21A757BCB0073D91F /* Photo access Image 250x250 REV.png in Resources */,
-				B938DCEA1A757BBC0073D91F /* icon-Upload GRAY 75x75.png in Resources */,
 				B938DCF31A757BCB0073D91F /* Photo access Image 250x250.png in Resources */,
-				B938DCE81A757BBC0073D91F /* icon-Profile GRAY 75x75.png in Resources */,
-				B938DCE41A757BBC0073D91F /* icon-Feed 75x75.png in Resources */,
-				B938DCE61A757BBC0073D91F /* icon-Upload GRAY 50x50.png in Resources */,
+				B9EBBCC11AA56123008FA719 /* icon-Settings GRAY 50x50.png in Resources */,
+				B9EBBCBC1AA56123008FA719 /* icon-Feed-SELECTED 50x50.png in Resources */,
+				B9EBBCBA1AA56123008FA719 /* icon-Profile-SELECTED 50x50.png in Resources */,
 				012996E71A354E5300C89D09 /* Main.storyboard in Resources */,
-				B938DCE91A757BBC0073D91F /* icon-Settings GRAY 75x75.png in Resources */,
-				B938DCE71A757BBC0073D91F /* icon-Feed GRAY 75x75.png in Resources */,
 				B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */,
-				B938DCE51A757BBC0073D91F /* icon feed GRAY 50x50.png in Resources */,
 				B938DCFB1A75B6F10073D91F /* Orange Camera Button.png in Resources */,
-				B938DCE11A757BBC0073D91F /* icon-Profile 75x75.png in Resources */,
+				B9EBBCBD1AA56123008FA719 /* icon-Settings-SELECTED 50x50.png in Resources */,
 				012996EC1A354E5300C89D09 /* LaunchScreen.xib in Resources */,
-				B938DCE01A757BBC0073D91F /* icon-Settings 50x50.png in Resources */,
 				B938DCFC1A75B6F10073D91F /* Blue Camera Button.png in Resources */,
-				B938DCE31A757BBC0073D91F /* icon-Upload 75x75.png in Resources */,
-				B938DCDF1A757BBC0073D91F /* icon-Profile 50x50.png in Resources */,
 				B938DCF51A757BCB0073D91F /* Photo access Image 350x350.png in Resources */,
-				B938DCE21A757BBC0073D91F /* icon-Settings 75x75.png in Resources */,
-				B938DCEB1A757BBC0073D91F /* icon-Profile GRAY 50x50.png in Resources */,
 				012996E91A354E5300C89D09 /* Images.xcassets in Resources */,
 				B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */,
 				B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */,
+				B9EBBCBB1AA56123008FA719 /* icon-Upload-SELECTED 50x50.png in Resources */,
 				B938DCF41A757BCB0073D91F /* Photo access Image 350x350 REV.png in Resources */,
+				B9EBBCBE1AA56123008FA719 /* icon-Feed GRAY 50x50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +443,8 @@
 				012996DE1A354E5300C89D09 /* AppDelegate.m in Sources */,
 				B938DCB31A68BF000073D91F /* StreamCollectionViewController.m in Sources */,
 				2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */,
+				B9EBBCAB1A918622008FA719 /* StreamUpperSuppViewController.m in Sources */,
+				B9EBBCA81A917D2D008FA719 /* ProfileCollectionViewController.m in Sources */,
 				01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */,
 				012996DB1A354E5300C89D09 /* main.m in Sources */,
 				B938DCB91A6F4F2C0073D91F /* ProfileController.m in Sources */,

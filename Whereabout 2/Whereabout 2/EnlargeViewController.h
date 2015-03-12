@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface EnlargeViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIImageView *enlargedViewImage;
 
-- (void)setImageForEnlargedImageUsingImage:(UIImage*) photo;
+
+@property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *coordinateLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *enlargedPhoto;
+
+- (void)setUpTheEnlargedViewWithUsername:(NSString *)name locationCoordinates:(NSString *)coordinatePair andPhoto:(UIImage *)photo;
+
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
 @end

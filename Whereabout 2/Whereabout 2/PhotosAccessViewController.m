@@ -51,7 +51,9 @@
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
         imagePicker.delegate = self;
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+        
+        //default mediaType propoerty value is only type images so no need to specify
+        //imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
         imagePicker.allowsEditing = YES;
         [self presentViewController:imagePicker animated:YES completion:nil];
         _newMedia = NO;
@@ -72,8 +74,9 @@
         imagePicker.delegate = self;
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
-        //maybe decide to temporarily only allow images, not images and videos
-        imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+        //default mediaType propoerty value is only type images so no need to specify
+        //imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+        
         imagePicker.showsCameraControls = YES;
         imagePicker.allowsEditing = YES;
         [self presentViewController:imagePicker animated:YES completion:nil];
@@ -319,6 +322,8 @@
                 [self getThumbnailURLfromStoredImageFile:name andCompletion:^(NSString *thumbnail, NSString *large) {
                     if (thumbnail != nil & large != nil) {
                         NSLog(@"The thumbnail URL: %@ ---- The large URL: %@", thumbnail, large);
+                        
+                        //using fullsize for 'large image', substitute 'large'  for 'publicImage' to change to large thumbnail
                         [self PUTonNewPhotophpWithImageURLsLarge:large andSmall:thumbnail];
                     }
                     else{
@@ -345,7 +350,7 @@
      //referencing auth singleton
      [thumbnailRequest addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
      */
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
     
     [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField:@"Authorization"];
@@ -432,7 +437,7 @@
                                                                        NSURLResponse *response,
                                                                        NSError *error){
                                                        if (error) {
-                                                           NSLog(@"Error: %@", error);
+                                                           NSLog(@"ERROR: %@", error);
                                                        }
                                                        else{
                                                            NSLog(@"PUT to newPhoto.php completed");
@@ -442,7 +447,7 @@
     [dataRequestTask resume];
     }
     else{
-        UIAlertView *PhotoLocationAlert = [[UIAlertView alloc]initWithTitle:@"Oops!" message:@"We were unable to find the photo's location, please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView *PhotoLocationAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We were unable to find the photo's location, please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [PhotoLocationAlert show];
     }
 }
