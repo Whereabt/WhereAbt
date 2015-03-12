@@ -22,5 +22,7 @@ typedef void (^RequestCompletionBlock)(BOOL finished);
 
 @property (weak,nonatomic) id<StreamDelegate> delegate;
 
+- (void)updateCollectionViewWithSliderValueChange:(NSInteger) value;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *StreamActivity;
 
 @end

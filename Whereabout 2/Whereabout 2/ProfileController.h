@@ -10,6 +10,10 @@
 
 @interface ProfileController : NSObject 
 
-- (void)requestProfileItemsWithCompletion: (void (^)(NSDictionary *profileItems, NSError *error))callBack;
+@property (nonatomic, retain) NSMutableArray *itemCollection;
+@property (strong, nonatomic) NSData *imageData;
+@property (strong, nonatomic) NSMutableDictionary *indexDict;
+
+- (void)requestProfileItemsWithCompletion: (void (^)(NSArray *Items, NSError *error))callBack;
 
 @end

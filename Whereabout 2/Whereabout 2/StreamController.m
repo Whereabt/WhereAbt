@@ -24,11 +24,10 @@ static NSString *const distanceFrom = @"MilesAway";
     //get location
     //CLLocation *location = [LocationController sharedController].currentLocation;
     LocationController *locationController = [[LocationController alloc]init];
-    
-    double theRadius = radius*5;
+
     
     //make request
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, theRadius];
+    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
     //eventually, include radius in last parameter 'Radius='
     
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];
@@ -82,6 +81,9 @@ static NSString *const distanceFrom = @"MilesAway";
                                                                 [_itemCollection replaceObjectAtIndex:index withObject:newDict];
 
                                                             }
+                                                        }
+                                                        else {
+                                                            NSLog(@"Error occurred while downloading image, add something here to alert user");
                                                         }
                                                     }
                                               ];
