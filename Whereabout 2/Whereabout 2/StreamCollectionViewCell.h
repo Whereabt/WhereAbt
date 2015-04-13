@@ -10,7 +10,7 @@
 
 @interface StreamCollectionViewCell : UICollectionViewCell
 
-@property (strong, nonatomic) IBOutlet UIImageView *imageOfCell;
-@property (strong, nonatomic) IBOutlet UILabel *labelOfCell;
+@property (strong, nonatomic) IBOutlet UIImageView *majorImage;
+
 
 @end

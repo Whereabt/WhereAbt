@@ -10,4 +10,8 @@
 
 @interface ProfileCollectionViewController : UICollectionViewController
 
+- (IBAction)LogOutButtonPressed:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *userProfileActivityIndicator;
+
 @end

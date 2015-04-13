@@ -12,9 +12,29 @@
 
 @implementation ProfileController
 
-- (void)requestProfileItemsWithCompletion: (void (^)(NSArray *Items, NSError *error))callBack{
+- (void)getProfilePropertiesWithCompletion: (void (^)(NSDictionary *profileProperties, NSError *error))callBack{
+        NSString *urlAsString = [NSString stringWithFormat:@"https://apis.live.net/v5.0/me?access_token=%@",[WelcomeViewController sharedController].authToken];
+        NSURL *url = [[NSURL alloc]initWithString:urlAsString];
+    
+       //create request
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                NSError *jsonError = nil;
+                NSMutableDictionary *profileDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                NSLog(@"JSON object with profile properties: %@", profileDict);
+            
+                callBack(profileDict, error);
+            
+                }];
+    
+    [dataRequestTask resume];
+    
+}
+
+
+- (void)requestProfileItemsFromUser:(NSString *) Id WithCompletion: (void (^)(NSMutableArray *Items, NSError *error))callBack{
     LocationController *locationController = [[LocationController alloc] init];
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/userprofile.php?Latitude=%f&Longitude=%f&Radius=%d&UserID=%@", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, 10000, [WelcomeViewController sharedController].userID];
+    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/userprofile.php?Latitude=%f&Longitude=%f&Radius=%d&UserID=%@", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, 10000, Id];
     NSLog(@"URL to get profile items: %@", urlAsString);
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];
     
@@ -22,10 +42,27 @@
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSError *jsonError = nil;
-        NSArray *profileDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-        NSLog(@"JSON object with profile properties: %@", profileDict);
-        callBack(profileDict, error);
+        NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
         
+        if (!error) {
+            error = jsonError;
+        }
+        
+        else {
+            //don't need to do anything because the session data task error (if there is one) because it will automatically be passed to completion handler
+        }
+        self.itemCollection = [immutable mutableCopy];
+        NSLog(@"JSON object of profileItems: %@", _itemCollection);
+        for (NSDictionary *photoDict in self.itemCollection) {
+            NSString *thumbPhotoURL = photoDict[@"ThumbnailURL"];
+            NSString *largPhotoURL = photoDict[@"PhotoURL"];
+            NSInteger photoItemIndex = [_itemCollection indexOfObject:photoDict];
+            [self imageFromURLString:thumbPhotoURL atIndex:photoItemIndex OfArray:_itemCollection isThumbnail:YES];
+            [self imageFromURLString:largPhotoURL atIndex:photoItemIndex OfArray:_itemCollection isThumbnail:NO];
+            //NSArray *copy = [[NSArray alloc] init];
+            //copy =[_itemCollection mutableCopy];
+        }
+        callBack(_itemCollection, error);
         }
     ];
 [dataRequestTask resume];

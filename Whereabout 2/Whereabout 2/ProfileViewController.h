@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileViewController : UIViewController //<UICollectionViewDataSource, UICollectionViewDelegate>;
+@interface ProfileViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *NameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage;

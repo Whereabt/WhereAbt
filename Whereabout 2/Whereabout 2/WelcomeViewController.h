@@ -21,6 +21,6 @@
 
 - (IBAction)LoginSignUp:(id)sender;
 + (instancetype)sharedController;
-- (void)refreshAuthToken;
+- (void)refreshAuthTokenWithCompletion:(void (^)(void)) callback;
 
 @end

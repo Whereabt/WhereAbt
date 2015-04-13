@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import "LocationController.h"
 #import "WelcomeViewController.h"
+#import "KeychainItemWrapper.h"
+#import "InitialViewController.h"
 
 @interface AppDelegate ()
 
@@ -48,11 +50,17 @@
                             
      */
     
+    NSLog(@"launch options: %@", launchOptions);
+    
     WelcomeViewController *welcomeController = [[WelcomeViewController alloc] init];
     
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    [self.window setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"Initial VC"]];
+    
     //timer fires every 55 minutes
-    NSTimer *authTokenRefreshTimer = [NSTimer scheduledTimerWithTimeInterval:3300 target:welcomeController selector:@selector(refreshAuthToken) userInfo:nil repeats:YES];
-    [authTokenRefreshTimer fire];
+    //NSTimer *authTokenRefreshTimer = [NSTimer scheduledTimerWithTimeInterval:3300 target:welcomeController selector:@selector(refreshAuthTokenWithCompletion:) userInfo:nil repeats:YES];
+    //[authTokenRefreshTimer fire];
     
     return YES;
 }

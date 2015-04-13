@@ -27,17 +27,17 @@
     //customizing tab bar items for the three views
     UIImage *uploadNormalImage = [UIImage imageNamed:@"icon-Upload GRAY 50x50.png"];
     UIImage *uploadSelectedImage = [UIImage imageNamed:@"icon-Upload-SELECTED 50x50.png"];
-    UITabBarItem *uploadTabBarItem = [[UITabBarItem alloc] initWithTitle:@"Upload" image:uploadNormalImage selectedImage:uploadSelectedImage];
+    UITabBarItem *uploadTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:uploadNormalImage selectedImage:uploadSelectedImage];
     [self.viewControllers[0] setTabBarItem:uploadTabBarItem];
     
     UIImage *streamNormalImage = [UIImage imageNamed:@"icon-Feed GRAY 50x50.png"];
     UIImage *streamSelectedImage = [UIImage imageNamed:@"icon-Feed-SELECTED 50x50.png"];
-    UITabBarItem *streamTabBarItem = [[UITabBarItem alloc] initWithTitle:@"Stream" image:streamNormalImage selectedImage:streamSelectedImage];
-    [self.viewControllers[3] setTabBarItem:streamTabBarItem];
+    UITabBarItem *streamTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:streamNormalImage selectedImage:streamSelectedImage];
+    [self.viewControllers[1] setTabBarItem:streamTabBarItem];
     
     UIImage *profileNormalImage = [UIImage imageNamed:@"icon-Profile GRAY 50x50.png"];
     UIImage *profileSelectedImage = [UIImage imageNamed:@"icon-Profile-SELECTED 50x50.png"];
-    UITabBarItem *profileTabBarItem = [[UITabBarItem alloc] initWithTitle:@"Profile" image:profileNormalImage selectedImage:profileSelectedImage];
+    UITabBarItem *profileTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:profileNormalImage selectedImage:profileSelectedImage];
     [self.viewControllers[2] setTabBarItem:profileTabBarItem];
 }
 

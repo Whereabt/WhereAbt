@@ -11,11 +11,5 @@
 
 @implementation StreamUpperSuppViewController
 
-- (IBAction)sliderDidMove:(id)sender {
-    StreamCollectionViewController *CollectionViewDelegate = [[StreamCollectionViewController alloc] init];
-    
-    //update the collection view
-    [CollectionViewDelegate updateCollectionViewWithSliderValueChange: self.sliderForRadius.value];
-}
 
 @end

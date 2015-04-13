@@ -14,6 +14,8 @@
 @property (strong, nonatomic) NSData *imageData;
 @property (strong, nonatomic) NSMutableDictionary *indexDict;
 
-- (void)requestProfileItemsWithCompletion: (void (^)(NSArray *Items, NSError *error))callBack;
+- (void)requestProfileItemsFromUser:(NSString *) Id WithCompletion: (void (^)(NSMutableArray *Items, NSError *error))callBack;
+
+- (void)getProfilePropertiesWithCompletion: (void (^)(NSDictionary *profileProperties, NSError *error))callBack;
 
 @end

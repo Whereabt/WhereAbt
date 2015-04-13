@@ -19,7 +19,7 @@
 		01D47E161A583B9D00A45013 /* ImageDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E151A583B9D00A45013 /* ImageDataObject.m */; };
 		2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */; };
 		2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E421A5C5B4100EDD980 /* Foundation.framework */; };
-		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; };
+		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */; };
 		B938DCB01A641E560073D91F /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCAF1A641E560073D91F /* StreamController.m */; };
 		B938DCB31A68BF000073D91F /* StreamCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */; };
@@ -38,10 +38,21 @@
 		B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCF91A75B6F10073D91F /* Blue Camera Roll Button.png */; };
 		B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCFA1A75B6F10073D91F /* Orange Camera Roll Button.png */; };
 		B98B88861A900E4D00309EA7 /* TabBarAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */; };
-		B9BC132D1A7D90D700659591 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9BC132C1A7D90D700659591 /* Security.framework */; };
+		B9A9EDA31ABF69B1000ECE24 /* ProfileCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDA21ABF69B1000ECE24 /* ProfileCVCell.m */; };
+		B9A9EDA61ABF9223000ECE24 /* ProfileViewHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDA51ABF9223000ECE24 /* ProfileViewHeaderView.m */; };
+		B9A9EDA91AC22322000ECE24 /* ProfileEnlargedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDA81AC22322000ECE24 /* ProfileEnlargedViewController.m */; };
+		B9A9EDB01AC36CAD000ECE24 /* StreamPROCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDAF1AC36CAD000ECE24 /* StreamPROCollectionViewController.m */; };
+		B9A9EDB31AC376B4000ECE24 /* StreamPROCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDB21AC376B4000ECE24 /* StreamPROCollectionHeaderView.m */; };
+		B9A9EDB61AC37B1A000ECE24 /* StreamPROEnlargedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDB51AC37B1A000ECE24 /* StreamPROEnlargedViewController.m */; };
+		B9A9EDB91AC380D2000ECE24 /* StreamPROCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDB81AC380D2000ECE24 /* StreamPROCollectionViewCell.m */; };
 		B9BC13361A8843A700659591 /* DetailStreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9BC13351A8843A700659591 /* DetailStreamViewController.m */; };
 		B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9BC13371A8B10D100659591 /* PhotoView.jpg */; };
 		B9BC133A1A8B10E100659591 /* Welcome 380x449 copy.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9BC13391A8B10E100659591 /* Welcome 380x449 copy.jpg */; };
+		B9E7093B1AC888C10054DE2C /* StreamEnlarge&SaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E7093A1AC888C10054DE2C /* StreamEnlarge&SaveViewController.m */; };
+		B9E7093E1ACE2FC00054DE2C /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E7093D1ACE2FC00054DE2C /* SettingsTableViewController.m */; };
+		B9E709421ACF5FB50054DE2C /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E709411ACF5FB50054DE2C /* InitialViewController.m */; };
+		B9E709451AD03CFC0054DE2C /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E709441AD03CFC0054DE2C /* PageViewController.m */; };
+		B9E709481AD042E50054DE2C /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9E709471AD042E50054DE2C /* ContentViewController.m */; };
 		B9EBBCA81A917D2D008FA719 /* ProfileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9EBBCA71A917D2D008FA719 /* ProfileCollectionViewController.m */; };
 		B9EBBCAB1A918622008FA719 /* StreamUpperSuppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9EBBCAA1A918622008FA719 /* StreamUpperSuppViewController.m */; };
 		B9EBBCBA1AA56123008FA719 /* icon-Profile-SELECTED 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB11AA56123008FA719 /* icon-Profile-SELECTED 50x50.png */; };
@@ -114,11 +125,35 @@
 		B938DCFA1A75B6F10073D91F /* Orange Camera Roll Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Orange Camera Roll Button.png"; sourceTree = "<group>"; };
 		B98B88841A900E4D00309EA7 /* TabBarAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarAppViewController.h; sourceTree = "<group>"; };
 		B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarAppViewController.m; sourceTree = "<group>"; };
+		B9A9EDA11ABF69B1000ECE24 /* ProfileCVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCVCell.h; sourceTree = "<group>"; };
+		B9A9EDA21ABF69B1000ECE24 /* ProfileCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCVCell.m; sourceTree = "<group>"; };
+		B9A9EDA41ABF9223000ECE24 /* ProfileViewHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewHeaderView.h; sourceTree = "<group>"; };
+		B9A9EDA51ABF9223000ECE24 /* ProfileViewHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewHeaderView.m; sourceTree = "<group>"; };
+		B9A9EDA71AC22322000ECE24 /* ProfileEnlargedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileEnlargedViewController.h; sourceTree = "<group>"; };
+		B9A9EDA81AC22322000ECE24 /* ProfileEnlargedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileEnlargedViewController.m; sourceTree = "<group>"; };
+		B9A9EDAE1AC36CAD000ECE24 /* StreamPROCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamPROCollectionViewController.h; sourceTree = "<group>"; };
+		B9A9EDAF1AC36CAD000ECE24 /* StreamPROCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamPROCollectionViewController.m; sourceTree = "<group>"; };
+		B9A9EDB11AC376B4000ECE24 /* StreamPROCollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamPROCollectionHeaderView.h; sourceTree = "<group>"; };
+		B9A9EDB21AC376B4000ECE24 /* StreamPROCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamPROCollectionHeaderView.m; sourceTree = "<group>"; };
+		B9A9EDB41AC37B1A000ECE24 /* StreamPROEnlargedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamPROEnlargedViewController.h; sourceTree = "<group>"; };
+		B9A9EDB51AC37B1A000ECE24 /* StreamPROEnlargedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamPROEnlargedViewController.m; sourceTree = "<group>"; };
+		B9A9EDB71AC380D2000ECE24 /* StreamPROCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamPROCollectionViewCell.h; sourceTree = "<group>"; };
+		B9A9EDB81AC380D2000ECE24 /* StreamPROCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamPROCollectionViewCell.m; sourceTree = "<group>"; };
 		B9BC132C1A7D90D700659591 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B9BC13341A8843A700659591 /* DetailStreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailStreamViewController.h; sourceTree = "<group>"; };
 		B9BC13351A8843A700659591 /* DetailStreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailStreamViewController.m; sourceTree = "<group>"; };
 		B9BC13371A8B10D100659591 /* PhotoView.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = PhotoView.jpg; path = UIImages/PhotoView.jpg; sourceTree = SOURCE_ROOT; };
 		B9BC13391A8B10E100659591 /* Welcome 380x449 copy.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Welcome 380x449 copy.jpg"; path = "UIImages/Welcome 380x449 copy.jpg"; sourceTree = SOURCE_ROOT; };
+		B9E709391AC888C10054DE2C /* StreamEnlarge&SaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StreamEnlarge&SaveViewController.h"; sourceTree = "<group>"; };
+		B9E7093A1AC888C10054DE2C /* StreamEnlarge&SaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "StreamEnlarge&SaveViewController.m"; sourceTree = "<group>"; };
+		B9E7093C1ACE2FC00054DE2C /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		B9E7093D1ACE2FC00054DE2C /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		B9E709401ACF5FB50054DE2C /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
+		B9E709411ACF5FB50054DE2C /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
+		B9E709431AD03CFC0054DE2C /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
+		B9E709441AD03CFC0054DE2C /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
+		B9E709461AD042E50054DE2C /* ContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
+		B9E709471AD042E50054DE2C /* ContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
 		B9EBBCA61A917D2D008FA719 /* ProfileCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCollectionViewController.h; sourceTree = "<group>"; };
 		B9EBBCA71A917D2D008FA719 /* ProfileCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCollectionViewController.m; sourceTree = "<group>"; };
 		B9EBBCA91A918622008FA719 /* StreamUpperSuppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamUpperSuppViewController.h; sourceTree = "<group>"; };
@@ -138,7 +173,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9BC132D1A7D90D700659591 /* Security.framework in Frameworks */,
 				2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */,
 				2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */,
 				2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */,
@@ -182,37 +216,21 @@
 			children = (
 				012996DC1A354E5300C89D09 /* AppDelegate.h */,
 				012996DD1A354E5300C89D09 /* AppDelegate.m */,
+				B9E709401ACF5FB50054DE2C /* InitialViewController.h */,
+				B9E709411ACF5FB50054DE2C /* InitialViewController.m */,
 				012996E51A354E5300C89D09 /* Main.storyboard */,
 				B98B88841A900E4D00309EA7 /* TabBarAppViewController.h */,
 				B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */,
-				B938DCC31A73EE0B0073D91F /* EnlargeViewController.h */,
-				B938DCC41A73EE0B0073D91F /* EnlargeViewController.m */,
-				B938DCBD1A71F8140073D91F /* KeychainItemWrapper.h */,
-				B938DCBE1A71F8140073D91F /* KeychainItemWrapper.m */,
-				B938DCB71A6F4F2C0073D91F /* ProfileController.h */,
-				B938DCB81A6F4F2C0073D91F /* ProfileController.m */,
-				B938DCBA1A6F59000073D91F /* ProfileViewController.h */,
-				B938DCBB1A6F59000073D91F /* ProfileViewController.m */,
-				B9EBBCA61A917D2D008FA719 /* ProfileCollectionViewController.h */,
-				B9EBBCA71A917D2D008FA719 /* ProfileCollectionViewController.m */,
-				012997061A38FA9800C89D09 /* WelcomeViewController.h */,
-				012997071A38FA9800C89D09 /* WelcomeViewController.m */,
-				01D47DFD1A45D00600A45013 /* PhotosAccessViewController.h */,
-				01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */,
-				B9BC13341A8843A700659591 /* DetailStreamViewController.h */,
-				B9BC13351A8843A700659591 /* DetailStreamViewController.m */,
-				B938DCB41A6AF2EE0073D91F /* StreamCollectionViewCell.h */,
-				B938DCB51A6AF2EE0073D91F /* StreamCollectionViewCell.m */,
-				B938DCB11A68BF000073D91F /* StreamCollectionViewController.h */,
-				B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */,
-				B9EBBCA91A918622008FA719 /* StreamUpperSuppViewController.h */,
-				B9EBBCAA1A918622008FA719 /* StreamUpperSuppViewController.m */,
-				01D47E081A560BCD00A45013 /* StreamViewController.h */,
-				01D47E091A560BCD00A45013 /* StreamViewController.m */,
-				B938DCAE1A641E560073D91F /* StreamController.h */,
-				B938DCAF1A641E560073D91F /* StreamController.m */,
-				2D6A0E4D1A5F75CE00EDD980 /* LocationController.h */,
-				2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */,
+				B9E709461AD042E50054DE2C /* ContentViewController.h */,
+				B9E709471AD042E50054DE2C /* ContentViewController.m */,
+				B9E709431AD03CFC0054DE2C /* PageViewController.h */,
+				B9E709441AD03CFC0054DE2C /* PageViewController.m */,
+				B9E7093F1ACE2FE40054DE2C /* Settings */,
+				B90B2A571ABF65760087A483 /* Profiles */,
+				B90B2A561ABF650E0087A483 /* Welcome and User Authorization */,
+				B90B2A551ABF64D30087A483 /* Photo Upload */,
+				B90B2A541ABF64930087A483 /* Stream */,
+				B9A9EDAA1AC2FF63000ECE24 /* Location Related */,
 				01D47E141A583B9D00A45013 /* ImageDataObject.h */,
 				01D47E151A583B9D00A45013 /* ImageDataObject.m */,
 				012996E81A354E5300C89D09 /* Images.xcassets */,
@@ -249,6 +267,76 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B90B2A541ABF64930087A483 /* Stream */ = {
+			isa = PBXGroup;
+			children = (
+				B9E709391AC888C10054DE2C /* StreamEnlarge&SaveViewController.h */,
+				B9E7093A1AC888C10054DE2C /* StreamEnlarge&SaveViewController.m */,
+				B9BC13341A8843A700659591 /* DetailStreamViewController.h */,
+				B9BC13351A8843A700659591 /* DetailStreamViewController.m */,
+				B938DCB41A6AF2EE0073D91F /* StreamCollectionViewCell.h */,
+				B938DCB51A6AF2EE0073D91F /* StreamCollectionViewCell.m */,
+				B938DCB11A68BF000073D91F /* StreamCollectionViewController.h */,
+				B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */,
+				B9EBBCA91A918622008FA719 /* StreamUpperSuppViewController.h */,
+				B9EBBCAA1A918622008FA719 /* StreamUpperSuppViewController.m */,
+				B938DCC31A73EE0B0073D91F /* EnlargeViewController.h */,
+				B938DCC41A73EE0B0073D91F /* EnlargeViewController.m */,
+				01D47E081A560BCD00A45013 /* StreamViewController.h */,
+				01D47E091A560BCD00A45013 /* StreamViewController.m */,
+				B938DCAE1A641E560073D91F /* StreamController.h */,
+				B938DCAF1A641E560073D91F /* StreamController.m */,
+			);
+			name = Stream;
+			sourceTree = "<group>";
+		};
+		B90B2A551ABF64D30087A483 /* Photo Upload */ = {
+			isa = PBXGroup;
+			children = (
+				01D47DFD1A45D00600A45013 /* PhotosAccessViewController.h */,
+				01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */,
+			);
+			name = "Photo Upload";
+			sourceTree = "<group>";
+		};
+		B90B2A561ABF650E0087A483 /* Welcome and User Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				B938DCBD1A71F8140073D91F /* KeychainItemWrapper.h */,
+				B938DCBE1A71F8140073D91F /* KeychainItemWrapper.m */,
+				012997061A38FA9800C89D09 /* WelcomeViewController.h */,
+				012997071A38FA9800C89D09 /* WelcomeViewController.m */,
+			);
+			name = "Welcome and User Authorization";
+			sourceTree = "<group>";
+		};
+		B90B2A571ABF65760087A483 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				B9A9EDB11AC376B4000ECE24 /* StreamPROCollectionHeaderView.h */,
+				B9A9EDB21AC376B4000ECE24 /* StreamPROCollectionHeaderView.m */,
+				B9A9EDB71AC380D2000ECE24 /* StreamPROCollectionViewCell.h */,
+				B9A9EDB81AC380D2000ECE24 /* StreamPROCollectionViewCell.m */,
+				B9A9EDAE1AC36CAD000ECE24 /* StreamPROCollectionViewController.h */,
+				B9A9EDAF1AC36CAD000ECE24 /* StreamPROCollectionViewController.m */,
+				B9A9EDB41AC37B1A000ECE24 /* StreamPROEnlargedViewController.h */,
+				B9A9EDB51AC37B1A000ECE24 /* StreamPROEnlargedViewController.m */,
+				B9A9EDA41ABF9223000ECE24 /* ProfileViewHeaderView.h */,
+				B9A9EDA51ABF9223000ECE24 /* ProfileViewHeaderView.m */,
+				B938DCB71A6F4F2C0073D91F /* ProfileController.h */,
+				B938DCB81A6F4F2C0073D91F /* ProfileController.m */,
+				B938DCBA1A6F59000073D91F /* ProfileViewController.h */,
+				B938DCBB1A6F59000073D91F /* ProfileViewController.m */,
+				B9EBBCA61A917D2D008FA719 /* ProfileCollectionViewController.h */,
+				B9EBBCA71A917D2D008FA719 /* ProfileCollectionViewController.m */,
+				B9A9EDA71AC22322000ECE24 /* ProfileEnlargedViewController.h */,
+				B9A9EDA81AC22322000ECE24 /* ProfileEnlargedViewController.m */,
+				B9A9EDA11ABF69B1000ECE24 /* ProfileCVCell.h */,
+				B9A9EDA21ABF69B1000ECE24 /* ProfileCVCell.m */,
+			);
+			name = Profiles;
+			sourceTree = "<group>";
+		};
 		B938DCED1A757BCB0073D91F /* PNG Photo access Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +358,24 @@
 			);
 			path = "PNG Files UI Buttons";
 			sourceTree = SOURCE_ROOT;
+		};
+		B9A9EDAA1AC2FF63000ECE24 /* Location Related */ = {
+			isa = PBXGroup;
+			children = (
+				2D6A0E4D1A5F75CE00EDD980 /* LocationController.h */,
+				2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */,
+			);
+			name = "Location Related";
+			sourceTree = "<group>";
+		};
+		B9E7093F1ACE2FE40054DE2C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B9E7093D1ACE2FC00054DE2C /* SettingsTableViewController.m */,
+				B9E7093C1ACE2FC00054DE2C /* SettingsTableViewController.h */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
 		};
 		B9EBBCAF1AA56123008FA719 /* PNG Icons */ = {
 			isa = PBXGroup;
@@ -439,20 +545,32 @@
 				B98B88861A900E4D00309EA7 /* TabBarAppViewController.m in Sources */,
 				01D47E161A583B9D00A45013 /* ImageDataObject.m in Sources */,
 				B938DCBF1A71F8140073D91F /* KeychainItemWrapper.m in Sources */,
+				B9E709451AD03CFC0054DE2C /* PageViewController.m in Sources */,
 				012997081A38FA9800C89D09 /* WelcomeViewController.m in Sources */,
 				012996DE1A354E5300C89D09 /* AppDelegate.m in Sources */,
+				B9E7093B1AC888C10054DE2C /* StreamEnlarge&SaveViewController.m in Sources */,
 				B938DCB31A68BF000073D91F /* StreamCollectionViewController.m in Sources */,
+				B9A9EDB61AC37B1A000ECE24 /* StreamPROEnlargedViewController.m in Sources */,
+				B9A9EDB01AC36CAD000ECE24 /* StreamPROCollectionViewController.m in Sources */,
+				B9A9EDB31AC376B4000ECE24 /* StreamPROCollectionHeaderView.m in Sources */,
+				B9A9EDA61ABF9223000ECE24 /* ProfileViewHeaderView.m in Sources */,
 				2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */,
+				B9E7093E1ACE2FC00054DE2C /* SettingsTableViewController.m in Sources */,
 				B9EBBCAB1A918622008FA719 /* StreamUpperSuppViewController.m in Sources */,
 				B9EBBCA81A917D2D008FA719 /* ProfileCollectionViewController.m in Sources */,
 				01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */,
 				012996DB1A354E5300C89D09 /* main.m in Sources */,
 				B938DCB91A6F4F2C0073D91F /* ProfileController.m in Sources */,
 				B938DCB01A641E560073D91F /* StreamController.m in Sources */,
+				B9E709421ACF5FB50054DE2C /* InitialViewController.m in Sources */,
 				B938DCC61A73EE0B0073D91F /* EnlargeViewController.m in Sources */,
+				B9A9EDB91AC380D2000ECE24 /* StreamPROCollectionViewCell.m in Sources */,
+				B9A9EDA31ABF69B1000ECE24 /* ProfileCVCell.m in Sources */,
 				B9BC13361A8843A700659591 /* DetailStreamViewController.m in Sources */,
 				B938DCB61A6AF2EE0073D91F /* StreamCollectionViewCell.m in Sources */,
+				B9E709481AD042E50054DE2C /* ContentViewController.m in Sources */,
 				B938DCBC1A6F59000073D91F /* ProfileViewController.m in Sources */,
+				B9A9EDA91AC22322000ECE24 /* ProfileEnlargedViewController.m in Sources */,
 				01D47DFF1A45D00600A45013 /* PhotosAccessViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,7 +696,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Whereabout 2/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Whereabout;
 				PROVISIONING_PROFILE = "7d35b75a-9376-452d-9464-2662f0224229";
@@ -593,7 +711,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Whereabout 2/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Whereabout;
 				PROVISIONING_PROFILE = "7d35b75a-9376-452d-9464-2662f0224229";

@@ -15,18 +15,16 @@
 @implementation EnlargeViewController
 
 NSString *Username;
-NSString *Coordinates;
+NSString *Distance;
 UIImage *EnlargedImage;
 
 - (void)viewDidLoad {
-    //[super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    NSLog(@"The username: %@", Username);
     self.userNameLabel.text = Username;
-    self.coordinateLabel.text = Coordinates;
+    self.distanceLabel.text = [NSString stringWithFormat:@"%@ Miles", Distance];
     self.enlargedPhoto.image = EnlargedImage;
-    self.enlargedPhoto.contentMode = UIViewContentModeScaleAspectFit;
+    self.enlargedPhoto.contentMode = UIViewContentModeScaleToFill;
     self.enlargedPhoto.userInteractionEnabled = YES;
     [super viewDidLoad];
     
@@ -49,11 +47,10 @@ UIImage *EnlargedImage;
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setUpTheEnlargedViewWithUsername:(NSString *)name locationCoordinates:(NSString *)coordinatePair andPhoto:(UIImage *)photo
+- (void)setUpTheEnlargedViewWithUsername:(NSString *)name andDistanceFrom:(NSString *)distance andPhoto:(UIImage *)photo
 {
-    
     Username = name;
-    Coordinates = coordinatePair;
+    Distance = distance;
     EnlargedImage = photo;
 }
 

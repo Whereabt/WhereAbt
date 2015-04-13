@@ -10,7 +10,6 @@
 
 @interface StreamUpperSuppViewController : UICollectionReusableView
 
-@property (strong, nonatomic) IBOutlet UISlider *sliderForRadius;
-- (IBAction)sliderDidMove:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *selectedRadiusLabel;
 
 @end

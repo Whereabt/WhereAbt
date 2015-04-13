@@ -30,16 +30,30 @@ static NSString *const distanceFrom = @"MilesAway";
     NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
     //eventually, include radius in last parameter 'Radius='
     
-    NSURL *url = [[NSURL alloc]initWithString:urlAsString];
+    NSURL *url = [[NSURL alloc] initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
                                                    completionHandler:^(NSData *data,
                                                                        NSURLResponse *response,
                                                                        NSError *error){
+
                                                        NSError *jsonError = nil;
                                                        NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
+                                                       if (error == nil) {
+                                                           error = jsonError;
+                                                       }
+                                                       else {
+                                                           //this means the session data task error will be passed as parameter.
+                                                       }
                                                        _itemCollection = [immutable mutableCopy];
+                                                       
+                                                       if (self.itemCollection == nil) {
+                                                           NSLog(@"Problem occurred, no array from json. The error: %@", jsonError);
+                                                       }
+                                                       
+                                                       else {
+                                                       
                                                        NSLog(@"%@", _itemCollection);
                                                        for (NSDictionary *photoItem in _itemCollection) {
                                                            NSString *thumbPhotoURL = photoItem[@"ThumbnailURL"];
@@ -51,8 +65,10 @@ static NSString *const distanceFrom = @"MilesAway";
                                                            
                                                            //when requests are done, call completion handler (callBack block) with request-created parameters
                                                            //callBack(_itemCollection, error);
+                                                           
+                                                        }
+                                                        callBack(_itemCollection, error);
                                                        }
-                                                       callBack(_itemCollection, error);
                                                    }
                                              ];
     [dataRequestTask resume];

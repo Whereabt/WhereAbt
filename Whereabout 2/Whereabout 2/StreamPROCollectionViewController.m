@@ -1,40 +1,44 @@
 //
-//  ProfileCollectionCollectionViewController.m
+//  StreamPROCollectionViewController.m
 //  Whereabout 2
 //
-//  Created by Nicolas Isaza GitHub on 2/15/15.
+//  Created by Nicolas Isaza GitHub on 3/25/15.
 //  Copyright (c) 2015 Nicolas Isaza. All rights reserved.
 //
 
-#import "ProfileCollectionViewController.h"
+#import "StreamPROCollectionViewController.h"
 #import "ProfileController.h"
 #import "ProfileCVCell.h"
-#import "ProfileViewHeaderView.h"
-#import "WelcomeViewController.h"
-#import "KeychainItemWrapper.h"
-#import <Security/Security.h>
-#import "ProfileEnlargedViewController.h"
+#import "StreamPROCollectionHeaderView.h"
+#import "StreamPROEnlargedViewController.h"
 
-@interface ProfileCollectionViewController ()
+@interface StreamPROCollectionViewController ()
 
-//holds items from JSON Array
-@property (strong, nonatomic) NSMutableArray *profileItems;
+//holds the items from the JSON Array
+@property (strong, nonatomic) NSMutableArray *allProfileItems;
 @end
 
-@implementation ProfileCollectionViewController
+@implementation StreamPROCollectionViewController
 
-static NSString * const reuseIdentifier = @"Cell";
+NSString *UserID;
+
+static NSString * const reuseIdentifier = @"MyCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self refreshProfile];
+}
+
+- (void)refreshProfile {
+    self.profileActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.profileActivityIndicator.color = [UIColor orangeColor];
+    self.profileActivityIndicator.hidesWhenStopped = YES;
+    [self.profileActivityIndicator startAnimating];
+    
+    self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    self.collectionView.alwaysBounceVertical = YES;
-    
-    self.userProfileActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    self.userProfileActivityIndicator.color = [UIColor orangeColor];
-    self.userProfileActivityIndicator.hidesWhenStopped = YES;
-    [self.userProfileActivityIndicator startAnimating];
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -42,71 +46,72 @@ static NSString * const reuseIdentifier = @"Cell";
     // Register cell classes
     [self.collectionView registerClass:[ProfileCVCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
+    // Do any additional setup after loading the view.
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
     [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
     [self.collectionView setCollectionViewLayout:flow];
-
+    
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
     collectionViewLayout.sectionInset = UIEdgeInsetsMake(10, 0, 20, 0);
     
-    NSLog(@"User id: %@",[WelcomeViewController sharedController].userID);
-    
     //get the profile items (images)
     ProfileController *profileController = [[ProfileController alloc] init];
-    [profileController requestProfileItemsFromUser:[WelcomeViewController sharedController].userID WithCompletion:^(NSMutableArray *Items, NSError *error){
+    [profileController requestProfileItemsFromUser:UserID WithCompletion:^(NSMutableArray *Items, NSError *error) {
         
-    if (!error) {
-        self.profileItems = [Items mutableCopy];
-        
-        /*
-        //delete null images
-        NSMutableArray *NullItemsIndexes = [[NSMutableArray alloc] init];
-        for (int i = 0; i < self.profileItems.count; i++) {
-            if ((self.profileItems[i][@"ThumbnailPhoto"] == nil) || (self.profileItems[i][@"LargePhoto"] == nil)) {
-                NSString *nullIndex = [NSString stringWithFormat:@"%d", i];
-                [NullItemsIndexes addObject:nullIndex];
+        if (!error) {
+            self.allProfileItems = [Items mutableCopy];
+            
+            /*
+             //delete null images
+             NSMutableArray *NullItemsIndexes = [[NSMutableArray alloc] init];
+             for (int i = 0; i < self.profileItems.count; i++) {
+             if ((self.profileItems[i][@"ThumbnailPhoto"] == nil) || (self.profileItems[i][@"LargePhoto"] == nil)) {
+             NSString *nullIndex = [NSString stringWithFormat:@"%d", i];
+             [NullItemsIndexes addObject:nullIndex];
+             }
+             }
+             
+             for (NSString *nullIndexString in NullItemsIndexes) {
+             NSInteger index = [nullIndexString integerValue];
+             [_profileItems removeObjectAtIndex:index];
+             NSLog(@"Deleted a null item inside of 'profileItems' array");
+             }
+             */
+            [self.collectionView reloadData];
+            
+            NSLog(@"Finished fetching profileItems");
+            if ([self.profileActivityIndicator isAnimating] == YES) {
+                [self.profileActivityIndicator stopAnimating];
+            }
+            else {
+                //do nothing if for some reason the indicator was not animating
             }
         }
-        
-        for (NSString *nullIndexString in NullItemsIndexes) {
-            NSInteger index = [nullIndexString integerValue];
-            [_profileItems removeObjectAtIndex:index];
-            NSLog(@"Deleted a null item inside of 'profileItems' array");
-        }
-         */
-        NSLog(@"Finished fetching profileItems");
-        [self.collectionView reloadData];
-        if ([self.userProfileActivityIndicator isAnimating] == YES) {
-            [self.userProfileActivityIndicator stopAnimating];
-        }
         else {
-            //do nothing if for some reason the indicator was not animating
-        }
+            NSLog(@"Error getting profile items: %@", error);
+            
+            if (error.code == 3840) {
+                //user has 0 items in profile
+                [self.profileActivityIndicator stopAnimating];
+            }
+            
+            else {
+                UIAlertView *failedToGetProfileItems = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We were unable to retrieve your photos from the server. Please make sure that your device is connected to the internet and try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                
+                [self.profileActivityIndicator stopAnimating];
+                [failedToGetProfileItems show];
+            }
 
-    }
-   else {
-       NSLog(@"Error getting profile items: %@", error);
-       
-       if (error.code == 3840) {
-           //user has 0 items in profile
-             NSLog(@"Current thread: %@", [NSThread currentThread]);
-           [self.userProfileActivityIndicator stopAnimating];
-           [self.userProfileActivityIndicator removeFromSuperview];
-       }
-       
-       else {
-       UIAlertView *failedToGetProfileItems = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We were unable to retrieve your photos from the server. Please make sure that your device is connected to the internet and try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-       
-       [self.userProfileActivityIndicator stopAnimating];
-    
-       [failedToGetProfileItems show];
-       }
-    }
+            
+        }
         
     }];
-     
-     
-    // Do any additional setup after loading the view.
+}
+
+
+//this will pass the userID from the delegate method in the Stream to this vc
+- (void)setUpProfileWithUserID:(NSString *) userId {
+    UserID = userId;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -124,26 +129,17 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 */
 
-- (IBAction)LogOutButtonPressed:(id)sender {
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
-    
-    //set nil for the refresh token, user will have to log back in
-    [WelcomeViewController sharedController].refreshToken = @"";
-    
-    [keychain setObject:[WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
-}
-
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    
+
     return 1;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return self.profileItems.count;
+    return self.allProfileItems.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -151,27 +147,25 @@ static NSString * const reuseIdentifier = @"Cell";
     ProfileCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     // Configure the cell
-    
-    if (cell == nil) {
-        cell = [[ProfileCVCell alloc]init];
+    if (!cell) {
+        cell = [[ProfileCVCell alloc] init];
     }
     
     //use "ThumbnailPhoto" or "LargePhoto"
-    UIImage *imageReturned = self.profileItems[indexPath.row][@"ThumbnailPhoto"];
+    UIImage *imageReturned = self.allProfileItems[indexPath.row][@"ThumbnailPhoto"];
     UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
     
     UIImageView *imageSubview = [[UIImageView alloc] initWithFrame:cellView.frame];
     imageSubview.image = imageReturned;
     imageSubview.contentMode = UIViewContentModeScaleAspectFit;
     [cellView addSubview: imageSubview];
-
+    
     cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
-                                                    green:33.0f/255.0f
-                                                     blue:36.0f/255.0f
-                                                    alpha:1.0f];
+                                           green:33.0f/255.0f
+                                            blue:36.0f/255.0f
+                                           alpha:1.0f];
     cell.backgroundView.frame = cell.frame;
     cell.backgroundView = cellView;
-
     return cell;
 }
 
@@ -193,18 +187,18 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     
-    ProfileViewHeaderView *reusableHeader = nil;
+    StreamPROCollectionHeaderView *reusableHeader = nil;
     if ([kind isEqual:UICollectionElementKindSectionHeader] == YES) {
-        reusableHeader = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        reusableHeader = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Header" forIndexPath:indexPath];
         [reusableHeader sizeToFit];
     }
     
-    NSString *nameString = [WelcomeViewController sharedController].userName;
+    NSString *nameString = self.allProfileItems[indexPath.row][@"UserName"];
     NSArray *firstLastName = [nameString componentsSeparatedByString:@"_"];
     
     reusableHeader.firstNameLabel.text = firstLastName[0];
     reusableHeader.lastNameLabel.text = firstLastName[1];
-    reusableHeader.totalPostsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.profileItems.count];
+    reusableHeader.postsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.allProfileItems.count];
     
     return reusableHeader;
 }
@@ -219,16 +213,16 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    ProfileEnlargedViewController *EnlargedViewManager = [[ProfileEnlargedViewController alloc] init];
+    StreamPROEnlargedViewController *EnlargedViewManager = [[StreamPROEnlargedViewController alloc] init];
     
-    double distanceInt = [self.profileItems[indexPath.row][@"MilesAway"] doubleValue];
-    NSString *distanceString = [NSString stringWithFormat:@"%.3f", distanceInt];
+    double distanceInt = [self.allProfileItems[indexPath.row][@"MilesAway"] doubleValue];
+    NSString *distanceAwayString = [NSString stringWithFormat:@"%.3f", distanceInt];
     
-    UIImage *Image = self.profileItems[indexPath.row][@"LargePhoto"];
-    [EnlargedViewManager setUpEnlargedViewWithDistance:distanceString andPhoto:Image];
+    UIImage *Image = self.allProfileItems[indexPath.row][@"LargePhoto"];
+    [EnlargedViewManager setUpEnlargedViewWithDistanceString:distanceAwayString andPhoto:Image];
     
     //go to the enlarged view
-    [self performSegueWithIdentifier:@"segueToEnlarge" sender:self];
+    [self performSegueWithIdentifier:@"segueEnlargedImage" sender:self];
 }
 
 
@@ -260,6 +254,5 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 	
 }
 */
-
 
 @end

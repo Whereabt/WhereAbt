@@ -12,7 +12,9 @@
 #import "DetailStreamViewController.h"
 #import "StreamUpperSuppViewController.h"
 #import "EnlargeViewController.h"
+#import "StreamEnlarge&SaveViewController.h"
 #include <math.h>
+#include <QuartzCore/QuartzCore.h>
 
 NSString *kCellID = @"cellID";
 
@@ -30,12 +32,44 @@ static NSString *const distanceFrom = @"MilesAway";
 
 @implementation StreamCollectionViewController
 
+UIImage *imageToSave;
+
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
+    [self refreshStream];
+    
+
+    // Uncomment the following line to preserve selection between presentations
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Register cell classes
+   // [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    
+    // Do any additional setup after loading the view.
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+//method to be called by refresh control and on viewDidLoad
+- (void)refreshStream
+{
+    self.StreamActivity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.StreamActivity.hidesWhenStopped = YES;
+    
+    [self.collectionView bringSubviewToFront:self.StreamActivity];
+    [self.StreamActivity startAnimating];
+    
+    self.collectionView.alwaysBounceVertical = YES;
+
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-
+    
     [self.collectionView registerClass: [StreamCollectionViewCell class]forCellWithReuseIdentifier:kCellID];
     
     
@@ -44,53 +78,57 @@ static NSString *const distanceFrom = @"MilesAway";
     [self.collectionView setCollectionViewLayout:flow];
     
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
-    collectionViewLayout.sectionInset = UIEdgeInsetsMake(10, 0, 20, 0);
+    collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
-    self.StreamActivity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    self.StreamActivity.hidesWhenStopped = YES;
-    [self.StreamActivity startAnimating];
     
     //create object to deal with network requests
     StreamController *networkRequester = [[StreamController alloc] init];
     
-    //ADD Slider and change radius parameter to its value
-    [networkRequester getFeedWithRadius:2 andCompletion:^(NSMutableArray *items, NSError *error) {
+    //get default radius
+    float f;
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+    if ([preferences floatForKey:@"Radius Slider"] * 3 == 0) {
+        f = 1.5;
+    }
+    else {
+    f = [preferences floatForKey:@"Radius Slider"] * 3;
+    }
+    
+    NSLog(@"Radius: %f", f);
+    
+    [networkRequester getFeedWithRadius:f andCompletion:^(NSMutableArray *items, NSError *error) {
         if (!error) {
             self.streamItems = items;
             
             /*
-            //loop through the stream array and make sure images are not nil
-            for (int i = 0; i < self.streamItems.count; i++) {
-                if ((self.streamItems[i][@"ThumbnailPhoto"] == nil) || (self.streamItems[i][@"LargePhoto"] == nil)) {
-                    [self.streamItems removeObjectAtIndex:i];
-                }
-            } */
-            [self.collectionView reloadData];
-            [self.StreamActivity stopAnimating];
+             //loop through the stream array and make sure images are not nil
+             for (int i = 0; i < self.streamItems.count; i++) {
+             if ((self.streamItems[i][@"ThumbnailPhoto"] == nil) || (self.streamItems[i][@"LargePhoto"] == nil)) {
+             [self.streamItems removeObjectAtIndex:i];
+             }
+             } */
             
+
+            [self.collectionView reloadData];
+            
+            if ([self.StreamActivity isAnimating] == YES) {
+                [self.StreamActivity stopAnimating];
+            }
+            else {
+                //do nothing if for some reason the indicator was not animating
+            }
+           
         }
         
         else{
             NSLog(@"Error getting streamItems: %@", error);
-            UIAlertView *streamFailAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"Sorry, we were unable to retrieve nearby photos from the server. Make sure that your phone is connected to the internet." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];
+            [self.StreamActivity stopAnimating];
+            UIAlertView *streamFailAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"Sorry, we were unable to retrieve nearby photos from the server. Make sure that your device is connected to the internet and try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];
             [streamFailAlert show];
         }
     }];
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Register cell classes
-   // [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
-    // Do any additional setup after loading the view.
+
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 
 
 #pragma mark - Navigation
@@ -102,35 +140,10 @@ static NSString *const distanceFrom = @"MilesAway";
     // Pass the selected object to the new view controller.
 }
 
-
-- (void)updateCollectionViewWithSliderValueChange:(NSInteger) value {
-    StreamController *networkRequester = [[StreamController alloc] init];
-    [networkRequester getFeedWithRadius:value andCompletion:^(NSMutableArray *items, NSError *error) {
-        if (!error) {
-            self.streamItems = items;
-            
-            /*
-            UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
-            [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
-            [self.collectionView setCollectionViewLayout:flow animated:YES];
-            
-            UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
-            collectionViewLayout.sectionInset = UIEdgeInsetsMake(10, 10, 40, 10);
-             */
-        
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-             
-        }
-        
-        else{
-            NSLog(@"Error getting streamItems: %@", error);
-            
-            //error handling for end-user
-            UIAlertView *streamSliderAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a problem while trying to download nearby photos. Please try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [streamSliderAlert show];
-        }
-    }];
+- (IBAction)refreshButtonPressed:(id)sender {
+    [self refreshStream];
 }
+
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -150,50 +163,112 @@ static NSString *const distanceFrom = @"MilesAway";
    StreamCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellID forIndexPath:indexPath];
     
     if (cell == nil) {
-        cell = [[StreamCollectionViewCell alloc]init];
+        cell = [[StreamCollectionViewCell alloc] init];
     }
    
-    //use "ThumbnailPhoto" or "LargePhoto"
-    UIImage *imageReturned = self.streamItems[indexPath.row][@"ThumbnailPhoto"];
-    
     
     UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
     
-    UIImageView *imageSubview = [[UIImageView alloc] initWithFrame:cellView.frame];
-    imageSubview.image = imageReturned;
-    imageSubview.contentMode = UIViewContentModeScaleAspectFit;
-    [cellView addSubview: imageSubview];
+    //if it has an image, continue with labels and more; otherwise, the cell will be nearly invisible
+    if (self.streamItems[indexPath.row][@"LargePhoto"] != nil) {
+        
+        //use "ThumbnailPhoto" or "LargePhoto"
+        UIImage *imageReturned = self.streamItems[indexPath.row][@"LargePhoto"];
+        //NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.streamItems[indexPath.row][@"PhotoURL"]]];
+        //UIImage *imageReturned = [UIImage imageWithData:imageData];
+        
+        UIImageView *imageSubview = [[UIImageView alloc] initWithFrame:cellView.frame];
+        imageSubview.image = imageReturned;
+        imageSubview.contentMode = UIViewContentModeScaleAspectFit;
+        
+        [cellView addSubview: imageSubview];
+
+        
+        UILabel *DistanceLabel = [[UILabel alloc] initWithFrame:CGRectMake (imageSubview.frame.origin.x, imageSubview.frame.origin.y, self.view.window.frame.size.width, 21)];
+        
+        double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
+        NSString *distanceString = [NSString stringWithFormat:@"%.3f Miles ", distanceInt];
+        DistanceLabel.text = distanceString;
+        DistanceLabel.font = [UIFont fontWithName: @"Arial Rounded MT Bold" size:12];
+        DistanceLabel.numberOfLines = 1;
+        DistanceLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
+        DistanceLabel.adjustsFontSizeToFitWidth = YES;
+        DistanceLabel.textAlignment = NSTextAlignmentCenter;
+        DistanceLabel.textColor = [UIColor whiteColor];
+        [cellView addSubview:DistanceLabel];
+        
+        
+        /*
+        UILabel *NameLabel = [[UILabel alloc] initWithFrame:CGRectMake (imageSubview.frame.origin.x, imageSubview.frame.origin.y, self.view.window.frame.size.width, 21)];
+        NameLabel.font = [UIFont fontWithName: @"Farah" size:17];
+        NameLabel.numberOfLines = 1;
+        NameLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
+        NameLabel.adjustsFontSizeToFitWidth = YES;
+        NameLabel.textAlignment = NSTextAlignmentLeft;
+        NameLabel.textColor = [UIColor whiteColor];
+        NSString *nameString = [NSString stringWithFormat:@"%@", self.streamItems[indexPath.row][@"UserName"]];
+        
+        NSArray *firstLastName = [nameString componentsSeparatedByString:@"_"];
+        NameLabel.text = [NSString stringWithFormat:@"%@ %@", firstLastName[0], firstLastName[1]];
+        [cellView addSubview:NameLabel];
+        */
+        
+    }
     
-    cell.backgroundColor = [UIColor whiteColor];
+    else {
+        cell.backgroundView.frame = CGRectMake(0, 0, 0, 0);
+        //no image could be found, hopefully the empty cell isn't noticeable
+    }
+    
+    //cell.backgroundColor = [UIColor colorWithRed:0 green:0.153 blue:0.255 alpha:1.0];
+    StreamEnlarge_SaveViewController *saveViewController = [[StreamEnlarge_SaveViewController alloc] init];
+    cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
+                    green:33.0f/255.0f
+                     blue:36.0f/255.0f
+                    alpha:1.0f];
+    //cellView.backgroundColor = [saveViewController getBackgroundColor];
     cell.backgroundView.frame = cell.frame;
     cell.backgroundView = cellView;
     
     return cell;
 }
 
-
+/*
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     return CGSizeMake(60.0f, 60.0f);
 }
+ */
 
-
+/*
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
 
     StreamUpperSuppViewController *reusableHeader = nil;
     if ([kind isEqual:UICollectionElementKindSectionHeader] == YES) {
         reusableHeader = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        
+        
+        NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+        float n = [preferences floatForKey:@"Radius Slider"] * 3;
+        
+        [reusableHeader.selectedRadiusLabel setText: [NSString stringWithFormat:@"Within %f Miles", n]];
+         
         [reusableHeader sizeToFit];
     }
     
     return reusableHeader;
 }
-
+*/
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
      //3 per row; 4 per column = about 3.5 and 5.7 (divide by)
-    return CGSizeMake(self.view.window.frame.size.width / 3.2, self.view.window.frame.size.height / 5.0);
+    //return CGSizeMake(self.view.window.frame.size.width / 3.2, self.view.window.frame.size.height / 5.0);
+    
+    UIImageView *sizeImageView = [[UIImageView alloc] initWithImage: self.streamItems[indexPath.row][@"LargePhoto"]];
+    sizeImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    return CGSizeMake(self.view.window.frame.size.width, sizeImageView.frame.size.height);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -209,7 +284,6 @@ static NSString *const distanceFrom = @"MilesAway";
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
  
-    EnlargeViewController *EnlargeManager = [[EnlargeViewController alloc] init];
     /*
     double latitudeInteger = [self.streamItems[indexPath.row][@"Latitude"] doubleValue];
     NSString *latitudeString = [NSString stringWithFormat:@"%.3f", latitudeInteger];
@@ -220,13 +294,23 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
      
     NSString *coordinatePairString = [NSString stringWithFormat:@"(%@, %@)", latitudeString, longitudeString];
     */
+     
+    NSMutableDictionary *dictionaryParameter = [[NSMutableDictionary alloc] init];
     
     double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
-    NSString *distanceString = [NSString stringWithFormat:@"%.3f", distanceInt];
+    NSString *distanceAwayString = [NSString stringWithFormat:@"%.3f", distanceInt];
     
     UIImage *Image = self.streamItems[indexPath.row][@"LargePhoto"];
-    [EnlargeManager setUpTheEnlargedViewWithUsername:self.streamItems[indexPath.row][@"UserName"] locationCoordinates:distanceString andPhoto:Image];
-    [self performSegueWithIdentifier:@"segueToEnlargeNav" sender:self];
+    
+    [dictionaryParameter setObject:distanceAwayString forKey:@"Distance"];
+    [dictionaryParameter setObject:Image forKey:@"Photo"];
+    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserID"] forKey:@"ID"];
+    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserName"] forKey:@"Name"];
+    
+    StreamEnlarge_SaveViewController *SaveController = [[StreamEnlarge_SaveViewController alloc] init];
+    [SaveController setUpTheEnlargedViewWithItemDictionary:dictionaryParameter];
+    
+    [self performSegueWithIdentifier:@"segueToEnlargeSave" sender:self];
 }
 
 #pragma mark <UICollectionViewDelegate>

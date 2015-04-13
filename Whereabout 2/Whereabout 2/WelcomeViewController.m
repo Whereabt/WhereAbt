@@ -30,10 +30,11 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc]initWithIdentifier:@"Login" accessGroup:nil];
-    
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
+    //[keychain setObject:@"" forKey:(__bridge id)(kSecValueData)];
     NSLog(@"KEYCHAIN value data key at app launch: %@", [keychain objectForKey:(__bridge id)(kSecValueData)]);
     
+    /*
     if ([[keychain objectForKey:(__bridge id)(kSecValueData)] length] > 1) {
         
         //refresh the access token
@@ -47,13 +48,21 @@
     }
     
     
-    else{
+    else {
         NSLog(@"User did not have a stored refresh token in his keychain.");
     }
-
+    */
+    
+    if ([WelcomeViewController sharedController].refreshToken != nil) {
+        [self performSegueWithIdentifier:@"segueToTab" sender:self];
+        NSLog(@"User had a stored refresh token");
+    }
+    else {
+        NSLog(@"User did not have a stored refresh token; continuing on with 'welcome view' ");
+    }
 }
 
-- (void)refreshAuthToken{
+- (void)refreshAuthTokenWithCompletion:(void (^)(void)) callback {
     NSString *urlAsString = [NSString stringWithFormat:@"https://login.live.com/oauth20_token.srf?client_id=000000004C13496E&client_secret=tBdSMDxUm5h0HWSdtCtsU1ImTAfrqYxt&redirect_uri=https://n46.org/whereabt/redirect.html&grant_type=refresh_token&refresh_token=%@", [WelcomeViewController sharedController].refreshToken];
     
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];
@@ -81,12 +90,13 @@
 
                                                        ProfileController *profileManager = [[ProfileController alloc]init];
                                                        
-                                                       [profileManager requestProfileItemsWithCompletion:^(NSDictionary *profileItems, NSError *error) {
+                                                       [profileManager getProfilePropertiesWithCompletion:^(NSDictionary *profileItems, NSError *error) {
                                                            
                                                            [WelcomeViewController sharedController].userName = [profileItems[@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
                                                            [WelcomeViewController sharedController].userID = profileItems[@"id"];
+                                                           callback();
                                                        }];
-
+                                                    
                                                    }];
     [dataRequestTask resume];
 }
@@ -115,10 +125,10 @@
                                                        //get other properties from user
                                                        ProfileController *profileManager = [[ProfileController alloc]init];
                                                        
-                                                       [profileManager requestProfileItemsWithCompletion:^(NSDictionary *profileItems, NSError *error) {
+                                                       [profileManager getProfilePropertiesWithCompletion:^(NSDictionary *profileProperties, NSError *error) {
                                                            
-                                                           [WelcomeViewController sharedController].userName = [profileItems[@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-                                                           [WelcomeViewController sharedController].userID = profileItems[@"id"];
+                                                           [WelcomeViewController sharedController].userName = [profileProperties[@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                                                           [WelcomeViewController sharedController].userID = profileProperties[@"id"];
                                                         }];
                                                     }
                                                     
@@ -163,7 +173,9 @@
     //make user log in to get him an auth code
     UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
     webView.delegate = self;
-    NSString *urlAsString = @"https://login.live.com/oauth20_authorize.srf?client_id=000000004C13496E&scope=wl.skydrive_update&response_type=code&redirect_uri=https://n46.org/whereabt/redirect.html";
+    
+    //wl.skydrive_update <--a scope
+    NSString *urlAsString = @"https://login.live.com/oauth20_authorize.srf?client_id=000000004C13496E&scope=wl.offline_access&response_type=code&redirect_uri=https://n46.org/whereabt/redirect.html";
     NSURL *authURL = [[NSURL alloc]initWithString:urlAsString];
     NSURLRequest *loginRequest = [NSURLRequest requestWithURL:authURL];
     [webView loadRequest:loginRequest];

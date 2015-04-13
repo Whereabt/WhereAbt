@@ -12,10 +12,10 @@
 
 
 @property (strong, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *coordinateLabel;
+@property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *enlargedPhoto;
 
-- (void)setUpTheEnlargedViewWithUsername:(NSString *)name locationCoordinates:(NSString *)coordinatePair andPhoto:(UIImage *)photo;
+- (void)setUpTheEnlargedViewWithUsername:(NSString *)name andDistanceFrom:(NSString *)distance andPhoto:(UIImage *)photo;
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 
