@@ -108,9 +108,16 @@ UIImage *imageToSave;
              }
              } */
             
-
+            //[self.collectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+            
             [self.collectionView reloadData];
             
+            /*
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.collectionView reloadData];
+            });
+            */
+             
             if ([self.StreamActivity isAnimating] == YES) {
                 [self.StreamActivity stopAnimating];
             }

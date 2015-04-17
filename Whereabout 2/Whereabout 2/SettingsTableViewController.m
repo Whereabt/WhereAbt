@@ -37,10 +37,11 @@
         
         //set label
         float x = self.radiusSlider.value * 3;
-        [self.radiusLabel setText:[NSString stringWithFormat:@"%f Miles", x]];
+        [self.radiusLabel setText:[NSString stringWithFormat:@"Stream Radius: %f Miles", x]];
 
     }
     
+
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -82,7 +83,7 @@
     //change label text
     
     float y = self.radiusSlider.value * 3;
-    [self.radiusLabel setText:[NSString stringWithFormat:@"%f Miles", y]];
+    [self.radiusLabel setText:[NSString stringWithFormat:@"Stream Radius: %f Miles", y]];
     
 }
 
