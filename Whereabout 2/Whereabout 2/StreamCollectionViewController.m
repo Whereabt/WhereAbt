@@ -64,6 +64,7 @@ UIImage *imageToSave;
     
     [self.collectionView bringSubviewToFront:self.StreamActivity];
     [self.StreamActivity startAnimating];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
     self.collectionView.alwaysBounceVertical = YES;
 
@@ -125,9 +126,12 @@ UIImage *imageToSave;
                 //do nothing if for some reason the indicator was not animating
             }
            
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         }
         
         else{
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+
             NSLog(@"Error getting streamItems: %@", error);
             [self.StreamActivity stopAnimating];
             UIAlertView *streamFailAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"Sorry, we were unable to retrieve nearby photos from the server. Make sure that your device is connected to the internet and try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];

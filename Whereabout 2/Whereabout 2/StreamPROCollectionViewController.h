@@ -11,7 +11,10 @@
 @interface StreamPROCollectionViewController : UICollectionViewController
 
 - (void)setUpProfileWithUserID:(NSString *) userId;
-- (void)refreshProfile;
+
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *profileActivityIndicator;
+
+- (IBAction)streamPRORefreshButtonPress:(id)sender;
+
 
 @end

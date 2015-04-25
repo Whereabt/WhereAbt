@@ -27,14 +27,15 @@ static NSString * const reuseIdentifier = @"MyCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self refreshProfile];
+    [self refreshStreamProfile];
 }
 
-- (void)refreshProfile {
+- (void)refreshStreamProfile {
     self.profileActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.profileActivityIndicator.color = [UIColor orangeColor];
     self.profileActivityIndicator.hidesWhenStopped = YES;
     [self.profileActivityIndicator startAnimating];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.delegate = self;
@@ -86,9 +87,11 @@ static NSString * const reuseIdentifier = @"MyCell";
             else {
                 //do nothing if for some reason the indicator was not animating
             }
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
         }
         else {
             NSLog(@"Error getting profile items: %@", error);
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
             
             if (error.code == 3840) {
                 //user has 0 items in profile
@@ -117,6 +120,11 @@ static NSString * const reuseIdentifier = @"MyCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)streamPRORefreshButtonPress:(id)sender {
+    
+    [self refreshStreamProfile];
 }
 
 /*
@@ -254,5 +262,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 	
 }
 */
+
 
 @end

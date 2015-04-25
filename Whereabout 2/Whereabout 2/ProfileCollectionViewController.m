@@ -26,8 +26,14 @@
 static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
-    self.collectionView.delegate = self;
+    [self refreshProfile];
+     
+    // Do any additional setup after loading the view.
+}
+
+- (void)refreshProfile {
     self.collectionView.dataSource = self;
     self.collectionView.alwaysBounceVertical = YES;
     
@@ -35,6 +41,8 @@ static NSString * const reuseIdentifier = @"Cell";
     self.userProfileActivityIndicator.color = [UIColor orangeColor];
     self.userProfileActivityIndicator.hidesWhenStopped = YES;
     [self.userProfileActivityIndicator startAnimating];
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -45,7 +53,7 @@ static NSString * const reuseIdentifier = @"Cell";
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
     [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
     [self.collectionView setCollectionViewLayout:flow];
-
+    
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
     collectionViewLayout.sectionInset = UIEdgeInsetsMake(10, 0, 20, 0);
     
@@ -55,63 +63,71 @@ static NSString * const reuseIdentifier = @"Cell";
     ProfileController *profileController = [[ProfileController alloc] init];
     [profileController requestProfileItemsFromUser:[WelcomeViewController sharedController].userID WithCompletion:^(NSMutableArray *Items, NSError *error){
         
-    if (!error) {
-        self.profileItems = [Items mutableCopy];
-        
-        /*
-        //delete null images
-        NSMutableArray *NullItemsIndexes = [[NSMutableArray alloc] init];
-        for (int i = 0; i < self.profileItems.count; i++) {
-            if ((self.profileItems[i][@"ThumbnailPhoto"] == nil) || (self.profileItems[i][@"LargePhoto"] == nil)) {
-                NSString *nullIndex = [NSString stringWithFormat:@"%d", i];
-                [NullItemsIndexes addObject:nullIndex];
+        if (!error) {
+            self.profileItems = [Items mutableCopy];
+            
+            /*
+             //delete null images
+             NSMutableArray *NullItemsIndexes = [[NSMutableArray alloc] init];
+             for (int i = 0; i < self.profileItems.count; i++) {
+             if ((self.profileItems[i][@"ThumbnailPhoto"] == nil) || (self.profileItems[i][@"LargePhoto"] == nil)) {
+             NSString *nullIndex = [NSString stringWithFormat:@"%d", i];
+             [NullItemsIndexes addObject:nullIndex];
+             }
+             }
+             
+             for (NSString *nullIndexString in NullItemsIndexes) {
+             NSInteger index = [nullIndexString integerValue];
+             [_profileItems removeObjectAtIndex:index];
+             NSLog(@"Deleted a null item inside of 'profileItems' array");
+             }
+             */
+            NSLog(@"Finished fetching profileItems");
+            [self.collectionView reloadData];
+            if ([self.userProfileActivityIndicator isAnimating] == YES) {
+                [self.userProfileActivityIndicator stopAnimating];
+            }
+            else {
+                //do nothing if for some reason the indicator was not animating
+            }
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+
+        }
+        else {
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+
+            NSLog(@"Error getting profile items: %@", error);
+            
+            if (error.code == 3840) {
+                //user has 0 items in profile
+                NSLog(@"Current thread: %@", [NSThread currentThread]);
+                [self.userProfileActivityIndicator stopAnimating];
+                [self.userProfileActivityIndicator removeFromSuperview];
+            }
+            
+            else {
+                UIAlertView *failedToGetProfileItems = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We were unable to retrieve your photos from the server. Please make sure that your device is connected to the internet and try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                
+                [self.userProfileActivityIndicator stopAnimating];
+                
+                [failedToGetProfileItems show];
             }
         }
         
-        for (NSString *nullIndexString in NullItemsIndexes) {
-            NSInteger index = [nullIndexString integerValue];
-            [_profileItems removeObjectAtIndex:index];
-            NSLog(@"Deleted a null item inside of 'profileItems' array");
-        }
-         */
-        NSLog(@"Finished fetching profileItems");
-        [self.collectionView reloadData];
-        if ([self.userProfileActivityIndicator isAnimating] == YES) {
-            [self.userProfileActivityIndicator stopAnimating];
-        }
-        else {
-            //do nothing if for some reason the indicator was not animating
-        }
-
-    }
-   else {
-       NSLog(@"Error getting profile items: %@", error);
-       
-       if (error.code == 3840) {
-           //user has 0 items in profile
-             NSLog(@"Current thread: %@", [NSThread currentThread]);
-           [self.userProfileActivityIndicator stopAnimating];
-           [self.userProfileActivityIndicator removeFromSuperview];
-       }
-       
-       else {
-       UIAlertView *failedToGetProfileItems = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We were unable to retrieve your photos from the server. Please make sure that your device is connected to the internet and try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-       
-       [self.userProfileActivityIndicator stopAnimating];
-    
-       [failedToGetProfileItems show];
-       }
-    }
-        
     }];
-     
-     
+    
+    
     // Do any additional setup after loading the view.
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)profileRefreshButtonPress:(id)sender {
+    [self refreshProfile];
 }
 
 /*
@@ -260,6 +276,5 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 	
 }
 */
-
 
 @end
