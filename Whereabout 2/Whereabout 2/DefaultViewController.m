@@ -1,28 +1,21 @@
 //
-//  ContentViewController.m
+//  DefaultViewController.m
 //  Whereabout 2
 //
-//  Created by Nicolas Isaza GitHub on 4/4/15.
+//  Created by Nicolas Isaza GitHub on 4/25/15.
 //  Copyright (c) 2015 Nicolas Isaza. All rights reserved.
 //
 
-#import "ContentViewController.h"
+#import "DefaultViewController.h"
 
-@interface ContentViewController ()
-
-@property NSUInteger pageIndex;
-@property NSString *titleText;
-@property NSString *imageFile;
+@interface DefaultViewController ()
 
 @end
 
-@implementation ContentViewController
+@implementation DefaultViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.pageImage.image = [UIImage imageNamed:self.imageFile];
-    self.pageTitle.text = self.titleText;
     // Do any additional setup after loading the view.
 }
 
@@ -30,8 +23,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 /*
 #pragma mark - Navigation
@@ -43,4 +34,6 @@
 }
 */
 
+- (IBAction)beginWalkthrough:(id)sender {
+}
 @end

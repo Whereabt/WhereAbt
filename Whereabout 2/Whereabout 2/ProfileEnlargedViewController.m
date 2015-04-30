@@ -23,6 +23,7 @@ UIImage *LargeImage;
     self.distanceLabel.text = [NSString stringWithFormat:@"%@ Miles", DistanceAway];
     self.largeImageView.image = LargeImage;
     self.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.largeImageView.userInteractionEnabled = YES;
     self.largeImageView.frame = self.view.window.frame;
     
     // Do any additional setup after loading the view.
@@ -91,7 +92,7 @@ UIImage *LargeImage;
     [alertController addAction: odSaveAction];
     
     //cancel action
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", "Cancel Action") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", "Cancel Action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         if (self.presentingViewController == alertController) {
             
             [alertController dismissViewControllerAnimated:YES completion:nil];

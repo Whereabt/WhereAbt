@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ContentViewController : UIViewController <UIPageViewControllerDataSource>
+@interface ContentViewController : UIViewController
 
-@property (strong, nonatomic)UIPageViewController *pageViewController;
+@property (strong, nonatomic) IBOutlet UIImageView *pageImage;
+@property (strong, nonatomic) IBOutlet UILabel *pageTitle;
+
+
 
 @end

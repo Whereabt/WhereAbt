@@ -30,7 +30,60 @@ NSMutableDictionary *UIimageDict;
     self.theImageView.image = UIimageDict[@"Photo"];
     self.theImageView.userInteractionEnabled = YES;
     self.theImageView.contentMode = UIViewContentModeScaleAspectFit;
-    self.distanceLabel.text = [NSString stringWithFormat:@"%@ Miles", UIimageDict[@"Distance"]];
+    self.distanceLabel.text = [NSString stringWithFormat:@"%@ miles", UIimageDict[@"Distance"]];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    NSDate *imageDate = [dateFormatter dateFromString: UIimageDict[@"Time"]];
+    
+    NSDate *today = [NSDate date];
+    NSTimeInterval interval = [today timeIntervalSinceDate: imageDate];
+    double hrs = (interval/3600);
+    double days = (hrs/24);
+    
+    //show days if more than one, if not show hrs
+    double t;
+    NSString *labelString = [[NSString alloc] init];
+    
+    if (interval < 60) {
+        labelString = [NSString stringWithFormat: @"%.0f seconds ago", interval];
+    }
+    else {
+        //will proceed with other conditions
+    }
+    
+    if (days == 1) {
+        if (hrs < 1) {
+            t = round(interval/60);
+            labelString = [NSString stringWithFormat:@"%.0f minutes ago", t];
+        }
+        else {
+            t = round(hrs);
+            labelString = [NSString stringWithFormat:@"%.0f hours ago", t];
+        }
+        
+    }
+    else if (days >= 365) {
+        t = round(days / 365);
+        labelString = [NSString stringWithFormat:@"%.0f years ago", t];
+    }
+    else {
+        t = round(days);
+        NSString *daysString = [NSString stringWithFormat:@"%.0f", t];
+        
+        if ([daysString  isEqual: @"1"]) {
+            labelString = @"1 day ago";
+        }
+        
+        else {
+            labelString = [NSString stringWithFormat:@"%@ days ago", daysString];
+        }
+
+    }
+    
+    
+    self.timeLabel.text = labelString;
 }
 
 - (void)didReceiveMemoryWarning {

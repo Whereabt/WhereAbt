@@ -53,7 +53,7 @@ static NSString * const reuseIdentifier = @"MyCell";
     [self.collectionView setCollectionViewLayout:flow];
     
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
-    collectionViewLayout.sectionInset = UIEdgeInsetsMake(10, 0, 20, 0);
+    collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0);
     
     //get the profile items (images)
     ProfileController *profileController = [[ProfileController alloc] init];
@@ -213,7 +213,7 @@ static NSString * const reuseIdentifier = @"MyCell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return CGSizeMake(self.view.window.frame.size.width, 140.0f);
+    return CGSizeMake(self.view.window.frame.size.width, 100.0f);
 }
 
 #pragma mark <UICollectionViewDelegate>

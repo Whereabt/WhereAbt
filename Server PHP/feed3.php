@@ -43,7 +43,7 @@
     //Step 3 - write out the data & calculate distance from user
     
     //Set a default radius
-    $Radius="25";
+    $Radius="3";
     
     //Check if Radius was set in the query string, if so, override the default with the query value
     if ($_GET['Radius']) $Radius=$_GET['Radius'];
@@ -65,7 +65,8 @@
                   'Latitude' => mysql_result($result,$j,'Latitude'),
                   'Longitude' => mysql_result($result,$j,'Longitude'),
                   'PhotoURL' => mysql_result($result,$j,'PhotoURL'),
-                  'ThumbnailURL' => mysql_result($result,$j,'ThumbnailURL'));
+                  'ThumbnailURL' => mysql_result($result,$j,'ThumbnailURL'),
+                  'TimeStamp' => mysql_result($result,$j,'TimeStamp'));
             
             //Add each row of the for loop to the outer array
             $outerarray[] = $innerarray;
@@ -81,5 +82,5 @@
     echo  stripslashes(json_encode($outerarray, JSON_PRETTY_PRINT));
     
     mysql_close($db_server);
+    
 ?>
-

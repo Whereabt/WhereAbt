@@ -30,8 +30,8 @@
     UITabBarItem *uploadTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:uploadNormalImage selectedImage:uploadSelectedImage];
     [self.viewControllers[0] setTabBarItem:uploadTabBarItem];
     
-    UIImage *streamNormalImage = [UIImage imageNamed:@"icon-Feed GRAY 50x50.png"];
-    UIImage *streamSelectedImage = [UIImage imageNamed:@"icon-Feed-SELECTED 50x50.png"];
+    UIImage *streamNormalImage = [UIImage imageNamed:@"Whereabout-feed-gray-04-25-2015.png"];
+    UIImage *streamSelectedImage = [UIImage imageNamed:@"Whereabout-feed-orange-04-25-2015.png"];
     UITabBarItem *streamTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:streamNormalImage selectedImage:streamSelectedImage];
     [self.viewControllers[1] setTabBarItem:streamTabBarItem];
     
@@ -39,6 +39,11 @@
     UIImage *profileSelectedImage = [UIImage imageNamed:@"icon-Profile-SELECTED 50x50.png"];
     UITabBarItem *profileTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:profileNormalImage selectedImage:profileSelectedImage];
     [self.viewControllers[2] setTabBarItem:profileTabBarItem];
+    
+    UIImage *settingsNormalImage = [UIImage imageNamed:@"Whereabout-settings-gray-04-25-2015.png"];
+    UIImage *settingsSelectedImage = [UIImage imageNamed:@"Whereabout-settings-orange-04-25-2015.png"];
+    UITabBarItem *settingsTabItem = [[UITabBarItem alloc] initWithTitle:@"" image:settingsNormalImage selectedImage:settingsSelectedImage];
+    [self.viewControllers[3] setTabBarItem:settingsTabItem];
 }
 
 - (void)didReceiveMemoryWarning {

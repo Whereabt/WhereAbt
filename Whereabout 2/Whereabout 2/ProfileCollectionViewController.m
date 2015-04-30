@@ -55,7 +55,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView setCollectionViewLayout:flow];
     
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
-    collectionViewLayout.sectionInset = UIEdgeInsetsMake(10, 0, 20, 0);
+    collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0);
     
     NSLog(@"User id: %@",[WelcomeViewController sharedController].userID);
     
@@ -227,7 +227,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
-    return CGSizeMake(self.view.window.frame.size.width, 140.0f);
+    return CGSizeMake(self.view.window.frame.size.width, 100.0f);
 }
 
 #pragma mark <UICollectionViewDelegate>

@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (strong, nonatomic) IBOutlet UIButton *nameButton;
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *longPress;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 
 - (void)setUpTheEnlargedViewWithItemDictionary:(NSMutableDictionary *)imageItem;
 - (IBAction)nameButtonPressed:(id)sender;

@@ -65,6 +65,15 @@
 		B9EAF9F91AE30D8300C99D29 /* Profile tab white.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAF9F01AE30D8300C99D29 /* Profile tab white.png */; };
 		B9EAF9FA1AE30D8300C99D29 /* Upload 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAF9F11AE30D8300C99D29 /* Upload 50x50.png */; };
 		B9EAF9FC1AE30D9500C99D29 /* Upload tab white.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAF9FB1AE30D9500C99D29 /* Upload tab white.png */; };
+		B9EAF9FF1AEC2DB800C99D29 /* DefaultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9EAF9FE1AEC2DB800C99D29 /* DefaultViewController.m */; };
+		B9EAFA0B1AEDD39A00C99D29 /* Whereabout-feed-gray-04-25-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAFA031AEDD39A00C99D29 /* Whereabout-feed-gray-04-25-2015.png */; };
+		B9EAFA0C1AEDD39A00C99D29 /* Whereabout-feed-orange-04-25-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAFA041AEDD39A00C99D29 /* Whereabout-feed-orange-04-25-2015.png */; };
+		B9EAFA0D1AEDD39A00C99D29 /* Whereabout-profile-gray-04-25-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAFA051AEDD39A00C99D29 /* Whereabout-profile-gray-04-25-2015.png */; };
+		B9EAFA0E1AEDD39A00C99D29 /* Whereabout-profile-orange-04-25-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAFA061AEDD39A00C99D29 /* Whereabout-profile-orange-04-25-2015.png */; };
+		B9EAFA0F1AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAFA071AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png */; };
+		B9EAFA101AEDD39A00C99D29 /* Whereabout-settings-orange-04-25-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAFA081AEDD39A00C99D29 /* Whereabout-settings-orange-04-25-2015.png */; };
+		B9EAFA111AEDD39A00C99D29 /* Whereabout-upload-gray-04-25-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAFA091AEDD39A00C99D29 /* Whereabout-upload-gray-04-25-2015.png */; };
+		B9EAFA121AEDD39A00C99D29 /* Whereabout-upload-orange-04-25-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EAFA0A1AEDD39A00C99D29 /* Whereabout-upload-orange-04-25-2015.png */; };
 		B9EBBCA81A917D2D008FA719 /* ProfileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9EBBCA71A917D2D008FA719 /* ProfileCollectionViewController.m */; };
 		B9EBBCAB1A918622008FA719 /* StreamUpperSuppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9EBBCAA1A918622008FA719 /* StreamUpperSuppViewController.m */; };
 		B9EBBCBA1AA56123008FA719 /* icon-Profile-SELECTED 50x50.png in Resources */ = {isa = PBXBuildFile; fileRef = B9EBBCB11AA56123008FA719 /* icon-Profile-SELECTED 50x50.png */; };
@@ -178,6 +187,16 @@
 		B9EAF9F01AE30D8300C99D29 /* Profile tab white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Profile tab white.png"; path = "../../Whereabout tabs 03-29-2015 /Profile tab white.png"; sourceTree = "<group>"; };
 		B9EAF9F11AE30D8300C99D29 /* Upload 50x50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Upload 50x50.png"; path = "../../Whereabout tabs 03-29-2015 /Upload 50x50.png"; sourceTree = "<group>"; };
 		B9EAF9FB1AE30D9500C99D29 /* Upload tab white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Upload tab white.png"; path = "../../Whereabout tabs 03-29-2015 /Upload tab white.png"; sourceTree = "<group>"; };
+		B9EAF9FD1AEC2DB700C99D29 /* DefaultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewController.h; sourceTree = "<group>"; };
+		B9EAF9FE1AEC2DB800C99D29 /* DefaultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultViewController.m; sourceTree = "<group>"; };
+		B9EAFA031AEDD39A00C99D29 /* Whereabout-feed-gray-04-25-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-feed-gray-04-25-2015.png"; path = "Whereabout tabs 04-25-2015/Whereabout-feed-gray-04-25-2015.png"; sourceTree = SOURCE_ROOT; };
+		B9EAFA041AEDD39A00C99D29 /* Whereabout-feed-orange-04-25-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-feed-orange-04-25-2015.png"; path = "Whereabout tabs 04-25-2015/Whereabout-feed-orange-04-25-2015.png"; sourceTree = SOURCE_ROOT; };
+		B9EAFA051AEDD39A00C99D29 /* Whereabout-profile-gray-04-25-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-profile-gray-04-25-2015.png"; path = "Whereabout tabs 04-25-2015/Whereabout-profile-gray-04-25-2015.png"; sourceTree = SOURCE_ROOT; };
+		B9EAFA061AEDD39A00C99D29 /* Whereabout-profile-orange-04-25-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-profile-orange-04-25-2015.png"; path = "Whereabout tabs 04-25-2015/Whereabout-profile-orange-04-25-2015.png"; sourceTree = SOURCE_ROOT; };
+		B9EAFA071AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-settings-gray-04-25-2015.png"; path = "Whereabout tabs 04-25-2015/Whereabout-settings-gray-04-25-2015.png"; sourceTree = SOURCE_ROOT; };
+		B9EAFA081AEDD39A00C99D29 /* Whereabout-settings-orange-04-25-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-settings-orange-04-25-2015.png"; path = "Whereabout tabs 04-25-2015/Whereabout-settings-orange-04-25-2015.png"; sourceTree = SOURCE_ROOT; };
+		B9EAFA091AEDD39A00C99D29 /* Whereabout-upload-gray-04-25-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-upload-gray-04-25-2015.png"; path = "Whereabout tabs 04-25-2015/Whereabout-upload-gray-04-25-2015.png"; sourceTree = SOURCE_ROOT; };
+		B9EAFA0A1AEDD39A00C99D29 /* Whereabout-upload-orange-04-25-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-upload-orange-04-25-2015.png"; path = "Whereabout tabs 04-25-2015/Whereabout-upload-orange-04-25-2015.png"; sourceTree = SOURCE_ROOT; };
 		B9EBBCA61A917D2D008FA719 /* ProfileCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCollectionViewController.h; sourceTree = "<group>"; };
 		B9EBBCA71A917D2D008FA719 /* ProfileCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCollectionViewController.m; sourceTree = "<group>"; };
 		B9EBBCA91A918622008FA719 /* StreamUpperSuppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamUpperSuppViewController.h; sourceTree = "<group>"; };
@@ -245,10 +264,7 @@
 				012996E51A354E5300C89D09 /* Main.storyboard */,
 				B98B88841A900E4D00309EA7 /* TabBarAppViewController.h */,
 				B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */,
-				B9E709461AD042E50054DE2C /* ContentViewController.h */,
-				B9E709471AD042E50054DE2C /* ContentViewController.m */,
-				B9E709431AD03CFC0054DE2C /* PageViewController.h */,
-				B9E709441AD03CFC0054DE2C /* PageViewController.m */,
+				B9EAFA001AEC2DC900C99D29 /* Intro Page View */,
 				B9E7093F1ACE2FE40054DE2C /* Settings */,
 				B90B2A571ABF65760087A483 /* Profiles */,
 				B90B2A561ABF650E0087A483 /* Welcome and User Authorization */,
@@ -401,9 +417,30 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		B9EAFA001AEC2DC900C99D29 /* Intro Page View */ = {
+			isa = PBXGroup;
+			children = (
+				B9E709461AD042E50054DE2C /* ContentViewController.h */,
+				B9E709471AD042E50054DE2C /* ContentViewController.m */,
+				B9E709431AD03CFC0054DE2C /* PageViewController.h */,
+				B9E709441AD03CFC0054DE2C /* PageViewController.m */,
+				B9EAF9FD1AEC2DB700C99D29 /* DefaultViewController.h */,
+				B9EAF9FE1AEC2DB800C99D29 /* DefaultViewController.m */,
+			);
+			name = "Intro Page View";
+			sourceTree = "<group>";
+		};
 		B9EBBCAF1AA56123008FA719 /* PNG Icons */ = {
 			isa = PBXGroup;
 			children = (
+				B9EAFA031AEDD39A00C99D29 /* Whereabout-feed-gray-04-25-2015.png */,
+				B9EAFA041AEDD39A00C99D29 /* Whereabout-feed-orange-04-25-2015.png */,
+				B9EAFA051AEDD39A00C99D29 /* Whereabout-profile-gray-04-25-2015.png */,
+				B9EAFA061AEDD39A00C99D29 /* Whereabout-profile-orange-04-25-2015.png */,
+				B9EAFA071AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png */,
+				B9EAFA081AEDD39A00C99D29 /* Whereabout-settings-orange-04-25-2015.png */,
+				B9EAFA091AEDD39A00C99D29 /* Whereabout-upload-gray-04-25-2015.png */,
+				B9EAFA0A1AEDD39A00C99D29 /* Whereabout-upload-orange-04-25-2015.png */,
 				B9EBBCB01AA56123008FA719 /* PNG Blue Icons */,
 				B9EBBCB51AA56123008FA719 /* PNG Gray Icons */,
 			);
@@ -542,6 +579,7 @@
 				B938DCC91A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png in Resources */,
 				B9EBBCC01AA56123008FA719 /* icon-Profile GRAY 50x50.png in Resources */,
 				B9EBBCBF1AA56123008FA719 /* icon-Upload GRAY 50x50.png in Resources */,
+				B9EAFA0B1AEDD39A00C99D29 /* Whereabout-feed-gray-04-25-2015.png in Resources */,
 				B9BC133A1A8B10E100659591 /* Welcome 380x449 copy.jpg in Resources */,
 				B938DCF21A757BCB0073D91F /* Photo access Image 250x250 REV.png in Resources */,
 				B938DCF31A757BCB0073D91F /* Photo access Image 250x250.png in Resources */,
@@ -549,22 +587,29 @@
 				B9EBBCC11AA56123008FA719 /* icon-Settings GRAY 50x50.png in Resources */,
 				B9EBBCBC1AA56123008FA719 /* icon-Feed-SELECTED 50x50.png in Resources */,
 				B9EBBCBA1AA56123008FA719 /* icon-Profile-SELECTED 50x50.png in Resources */,
+				B9EAFA101AEDD39A00C99D29 /* Whereabout-settings-orange-04-25-2015.png in Resources */,
 				B9EAF9F51AE30D8300C99D29 /* Feed tab white.png in Resources */,
 				012996E71A354E5300C89D09 /* Main.storyboard in Resources */,
 				B9EAF9F81AE30D8300C99D29 /* Profile tab blue negative.png in Resources */,
+				B9EAFA0E1AEDD39A00C99D29 /* Whereabout-profile-orange-04-25-2015.png in Resources */,
+				B9EAFA0C1AEDD39A00C99D29 /* Whereabout-feed-orange-04-25-2015.png in Resources */,
 				B9EAF9E81AE30D2E00C99D29 /* Upload GRAY 50x50.png in Resources */,
 				B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */,
 				B9EAF9F21AE30D8300C99D29 /* Feed 50x50.png in Resources */,
 				B938DCFB1A75B6F10073D91F /* Orange Camera Button.png in Resources */,
 				B9EBBCBD1AA56123008FA719 /* icon-Settings-SELECTED 50x50.png in Resources */,
 				B9EAF9F91AE30D8300C99D29 /* Profile tab white.png in Resources */,
+				B9EAFA121AEDD39A00C99D29 /* Whereabout-upload-orange-04-25-2015.png in Resources */,
 				012996EC1A354E5300C89D09 /* LaunchScreen.xib in Resources */,
 				B9EAF9E61AE3097300C99D29 /* Whereabout tabs 03-29-2015  in Resources */,
+				B9EAFA0D1AEDD39A00C99D29 /* Whereabout-profile-gray-04-25-2015.png in Resources */,
 				B938DCFC1A75B6F10073D91F /* Blue Camera Button.png in Resources */,
 				B9EAF9F61AE30D8300C99D29 /* Profile 50x50.png in Resources */,
 				B938DCF51A757BCB0073D91F /* Photo access Image 350x350.png in Resources */,
 				B9EAF9F41AE30D8300C99D29 /* Feed tab blue negative.png in Resources */,
 				012996E91A354E5300C89D09 /* Images.xcassets in Resources */,
+				B9EAFA0F1AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png in Resources */,
+				B9EAFA111AEDD39A00C99D29 /* Whereabout-upload-gray-04-25-2015.png in Resources */,
 				B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */,
 				B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */,
 				B9EAF9F71AE30D8300C99D29 /* Profile GRAY 50x50.png in Resources */,
@@ -616,6 +661,7 @@
 				B9A9EDA31ABF69B1000ECE24 /* ProfileCVCell.m in Sources */,
 				B9BC13361A8843A700659591 /* DetailStreamViewController.m in Sources */,
 				B938DCB61A6AF2EE0073D91F /* StreamCollectionViewCell.m in Sources */,
+				B9EAF9FF1AEC2DB800C99D29 /* DefaultViewController.m in Sources */,
 				B9E709481AD042E50054DE2C /* ContentViewController.m in Sources */,
 				B938DCBC1A6F59000073D91F /* ProfileViewController.m in Sources */,
 				B9A9EDA91AC22322000ECE24 /* ProfileEnlargedViewController.m in Sources */,

@@ -22,6 +22,7 @@ UIImage *Image;
     self.distanceLabel.text = [NSString stringWithFormat:@"%@ Miles", Distance];
     self.photoView.image = Image;
     self.photoView.contentMode = UIViewContentModeScaleAspectFit;
+    self.photoView.userInteractionEnabled = YES;
     self.photoView.frame = self.view.window.frame;
     
     [super viewDidLoad];
@@ -91,7 +92,7 @@ UIImage *Image;
     [alertController addAction: odSaveAction];
     
     //cancel action
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", "Cancel Action") style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", "Cancel Action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         if (self.presentingViewController == alertController) {
             
             [alertController dismissViewControllerAnimated:YES completion:nil];

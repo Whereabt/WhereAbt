@@ -205,7 +205,7 @@ UIImage *imageToSave;
         DistanceLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
         DistanceLabel.adjustsFontSizeToFitWidth = YES;
         DistanceLabel.textAlignment = NSTextAlignmentCenter;
-        DistanceLabel.textColor = [UIColor whiteColor];
+        DistanceLabel.textColor = [UIColor colorWithRed:255.0f/255.0f green:153.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
         [cellView addSubview:DistanceLabel];
         
         
@@ -231,8 +231,6 @@ UIImage *imageToSave;
         //no image could be found, hopefully the empty cell isn't noticeable
     }
     
-    //cell.backgroundColor = [UIColor colorWithRed:0 green:0.153 blue:0.255 alpha:1.0];
-    StreamEnlarge_SaveViewController *saveViewController = [[StreamEnlarge_SaveViewController alloc] init];
     cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
                     green:33.0f/255.0f
                      blue:36.0f/255.0f
@@ -317,6 +315,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [dictionaryParameter setObject:Image forKey:@"Photo"];
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserID"] forKey:@"ID"];
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserName"] forKey:@"Name"];
+    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"TimeStamp"] forKey:@"Time"];
     
     StreamEnlarge_SaveViewController *SaveController = [[StreamEnlarge_SaveViewController alloc] init];
     [SaveController setUpTheEnlargedViewWithItemDictionary:dictionaryParameter];
