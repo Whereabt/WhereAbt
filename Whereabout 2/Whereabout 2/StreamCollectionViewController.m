@@ -13,6 +13,7 @@
 #import "StreamUpperSuppViewController.h"
 #import "EnlargeViewController.h"
 #import "StreamEnlarge&SaveViewController.h"
+#import "NSNetworkConnection.h"
 #include <math.h>
 #include <QuartzCore/QuartzCore.h>
 
@@ -23,6 +24,7 @@ static NSString *const photoURLIndex = @"PhotoURL";
 static NSString *const photoIndex = @"Photo";
 static NSString *const distanceFrom = @"MilesAway";
 
+@import CoreGraphics;
 
 @interface StreamCollectionViewController () <UICollectionViewDelegateFlowLayout>
 
@@ -33,10 +35,13 @@ static NSString *const distanceFrom = @"MilesAway";
 @implementation StreamCollectionViewController
 
 UIImage *imageToSave;
+UILabel *connectionFailLabel;
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    self.StreamActivity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.StreamActivity.hidesWhenStopped = YES;
     
     [self refreshStream];
     
@@ -59,88 +64,141 @@ UIImage *imageToSave;
 //method to be called by refresh control and on viewDidLoad
 - (void)refreshStream
 {
-    self.StreamActivity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    self.StreamActivity.hidesWhenStopped = YES;
+    NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
     
-    [self.collectionView bringSubviewToFront:self.StreamActivity];
-    [self.StreamActivity startAnimating];
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    
-    self.collectionView.alwaysBounceVertical = YES;
-
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    
-    [self.collectionView registerClass: [StreamCollectionViewCell class]forCellWithReuseIdentifier:kCellID];
-    
-    
-    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
-    [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [self.collectionView setCollectionViewLayout:flow];
-    
-    UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
-    collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    
-    
-    //create object to deal with network requests
-    StreamController *networkRequester = [[StreamController alloc] init];
-    
-    //get default radius
-    float f;
-    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    if ([preferences floatForKey:@"Radius Slider"] * 3 == 0) {
-        f = 1.5;
-    }
-    else {
-    f = [preferences floatForKey:@"Radius Slider"] * 3;
-    }
-    
-    NSLog(@"Radius: %f", f);
-    
-    [networkRequester getFeedWithRadius:f andCompletion:^(NSMutableArray *items, NSError *error) {
-        if (!error) {
-            self.streamItems = items;
-            
-            /*
-             //loop through the stream array and make sure images are not nil
-             for (int i = 0; i < self.streamItems.count; i++) {
-             if ((self.streamItems[i][@"ThumbnailPhoto"] == nil) || (self.streamItems[i][@"LargePhoto"] == nil)) {
-             [self.streamItems removeObjectAtIndex:i];
-             }
-             } */
-            
-            //[self.collectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-            
-            [self.collectionView reloadData];
-            
-            /*
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.collectionView reloadData];
-            });
-            */
-             
-            if ([self.StreamActivity isAnimating] == YES) {
-                [self.StreamActivity stopAnimating];
-            }
-            else {
-                //do nothing if for some reason the indicator was not animating
-            }
-           
-            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+    if ([NetworkManager doesUserHaveInternetConnection]) {
+        NSLog(@"HAS CONNECTION");
+        
+        [self.collectionView bringSubviewToFront:self.StreamActivity];
+        [self.StreamActivity startAnimating];
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+        
+        self.collectionView.alwaysBounceVertical = YES;
+        
+        self.collectionView.delegate = self;
+        self.collectionView.dataSource = self;
+        
+        [self.collectionView registerClass: [StreamCollectionViewCell class]forCellWithReuseIdentifier:kCellID];
+        
+        
+        UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
+        [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
+        [self.collectionView setCollectionViewLayout:flow];
+        
+        UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
+        collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+        
+        //create object to deal with network requests
+        StreamController *networkRequester = [[StreamController alloc] init];
+        
+        //get default radius
+        float f;
+        NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+        if ([preferences floatForKey:@"Radius Slider"] * 3 == 0) {
+            f = 1.5;
+        }
+        else {
+            f = [preferences floatForKey:@"Radius Slider"] * 3;
         }
         
-        else{
-            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        NSLog(@"Radius: %f", f);
+        
+        //USE f FOR RADIUS PARAM
+        [networkRequester getFeedWithRadius:f andCompletion:^(NSMutableArray *items, NSError *error) {
+            if (!error) {
+                self.streamItems = items;
+                
+                /*
+                 //loop through the stream array and make sure images are not nil
+                 for (int i = 0; i < self.streamItems.count; i++) {
+                 if ((self.streamItems[i][@"ThumbnailPhoto"] == nil) || (self.streamItems[i][@"LargePhoto"] == nil)) {
+                 [self.streamItems removeObjectAtIndex:i];
+                 }
+                 } */
+                
+                //[self.collectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+                
+                   [self.collectionView reloadData];
+              
+                
+                /*
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.collectionView reloadData];
+                 });
+                 */
+                
+                if ([self.StreamActivity isAnimating] == YES) {
+                    [self.StreamActivity stopAnimating];
+                }
+                else {
+                    //do nothing if for some reason the indicator was not animating
+                }
+                
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+            }
+            
+            else{
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                
+                NSLog(@"Error getting streamItems: %@", error);
+                [self.StreamActivity stopAnimating];
+                
+                if (error.code == 3840) {
+                    UIView *NoFeedView = [[UIView alloc] initWithFrame:self.collectionView.frame];
+                    
+                    UILabel *nothingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 75, self.view.frame.size.width, 50)];
+                    nothingLabel.text = @"No images from your vicinity";
+                    nothingLabel.textColor = [UIColor colorWithRed:31.0f/255.0f
+                                                             green:33.0f/255.0f
+                                                              blue:36.0f/255.0f
+                                                             alpha:1.0f];
+                    
+                    UILabel *suggestLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 400, self.view.frame.size.width, 35)];
+                    suggestLabel.text = @"We suggest increasing your radius in settings";
+                    suggestLabel.textColor = [UIColor blackColor];
+                    
+                    [NoFeedView addSubview:nothingLabel];
+                    [NoFeedView addSubview:nothingLabel];
+                    
+                    [self.view addSubview:NoFeedView];
+                    
+                }
+                
+                else {
+                    UIAlertView *streamFailAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"Sorry, we were unable to retrieve nearby photos from the server. Make sure that your device is connected to the internet and try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];
+                    [streamFailAlert show];
+                }
+            }
+        }];
 
-            NSLog(@"Error getting streamItems: %@", error);
-            [self.StreamActivity stopAnimating];
-            UIAlertView *streamFailAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"Sorry, we were unable to retrieve nearby photos from the server. Make sure that your device is connected to the internet and try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];
-            [streamFailAlert show];
+    }
+    
+    else {
+        NSLog(@"NO CONNECTION");
+        
+        if ([connectionFailLabel superview] == nil) {
+        connectionFailLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+        //connectionFailLabel.center = CGPointMake(0.0f, 64.0f);
+        [connectionFailLabel setText:@"No Internet Connection"];
+        [connectionFailLabel setTextAlignment:NSTextAlignmentCenter];
+        connectionFailLabel.backgroundColor = [UIColor grayColor];
+        connectionFailLabel.textColor = [UIColor whiteColor];
+        [self.collectionView addSubview:connectionFailLabel];
+        
+        NSTimer *connectionFailViewTimer = [NSTimer timerWithTimeInterval:3.5 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+        
+        [[NSRunLoop mainRunLoop] addTimer:connectionFailViewTimer forMode:NSDefaultRunLoopMode];
         }
-    }];
+    }
 
 }
 
+- (void)timerFireMethod:(NSTimer *)timer {
+    if ([connectionFailLabel superview] != nil) {
+        [connectionFailLabel removeFromSuperview];
+    }
+}
 
 #pragma mark - Navigation
 

@@ -55,7 +55,8 @@
             
             //all good
             else {
-            [self performSegueWithIdentifier:@"segueToMain" sender:self];
+            //[self performSegueWithIdentifier:@"segueToMain" sender:self];
+                [self performSegueWithIdentifier:@"fakeSegue" sender:self];
             }
         }];
         //[self setAuthTokenRefreshTokenAndProfileNamesFromCode:[keychain objectForKey:(__bridge id)(kSecValueData)]];

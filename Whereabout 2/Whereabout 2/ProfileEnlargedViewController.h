@@ -13,8 +13,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *largeImageView;
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *longPress;
+@property (strong, nonatomic) IBOutlet UILabel *timeIntervalLabel;
 
 - (IBAction)longPressGesture:(id)sender;
-- (void)setUpEnlargedViewWithDistance: (NSString *)distanceString andPhoto:(UIImage *)photo;
+- (void)setUpEnlargedViewWithDict:(NSDictionary *)enlargeDict;
 
 @end

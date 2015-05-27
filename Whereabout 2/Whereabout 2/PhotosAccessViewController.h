@@ -21,5 +21,6 @@
 
 - (IBAction)fromCamera:(id)sender;
 - (IBAction)fromCameraRoll:(id)sender;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *uploadActivityIndicator;
 
 @end

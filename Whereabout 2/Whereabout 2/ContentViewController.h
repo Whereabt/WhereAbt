@@ -10,6 +10,7 @@
 
 @interface ContentViewController : UIViewController
 
+@property NSUInteger pageIndex;
 @property (strong, nonatomic) IBOutlet UIImageView *pageImage;
 @property (strong, nonatomic) IBOutlet UILabel *pageTitle;
 

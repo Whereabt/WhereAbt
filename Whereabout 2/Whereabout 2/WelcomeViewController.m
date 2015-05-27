@@ -175,7 +175,8 @@
     webView.delegate = self;
     
     //wl.skydrive_update <--a scope
-    NSString *urlAsString = @"https://login.live.com/oauth20_authorize.srf?client_id=000000004C13496E&scope=wl.offline_access&response_type=code&redirect_uri=https://n46.org/whereabt/redirect.html";
+    //wl.offline_access  <--- another scope, used to
+    NSString *urlAsString = @"https://login.live.com/oauth20_authorize.srf?client_id=000000004C13496E&scope=wl.offline_access,onedrive.readwrite&response_type=code&redirect_uri=https://n46.org/whereabt/redirect.html";
     NSURL *authURL = [[NSURL alloc]initWithString:urlAsString];
     NSURLRequest *loginRequest = [NSURLRequest requestWithURL:authURL];
     [webView loadRequest:loginRequest];

@@ -25,11 +25,11 @@ NSMutableDictionary *UIimageDict;
     NSArray *nameArray = [UIimageDict[@"Name"] componentsSeparatedByString:@"_"];
     
     NSString *nameString = [NSString stringWithFormat:@"%@ %@", nameArray[0], nameArray[1]];
-    
     [self.nameButton setTitle:nameString forState:UIControlStateNormal];
     self.theImageView.image = UIimageDict[@"Photo"];
     self.theImageView.userInteractionEnabled = YES;
     self.theImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.distanceLabel.adjustsFontSizeToFitWidth = YES;
     self.distanceLabel.text = [NSString stringWithFormat:@"%@ miles", UIimageDict[@"Distance"]];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -40,7 +40,7 @@ NSMutableDictionary *UIimageDict;
     NSDate *today = [NSDate date];
     NSTimeInterval interval = [today timeIntervalSinceDate: imageDate];
     double hrs = (interval/3600);
-    double days = (hrs/24);
+    double days = (hrs/24);         
     
     //show days if more than one, if not show hrs
     double t;
@@ -54,17 +54,38 @@ NSMutableDictionary *UIimageDict;
         if (days <= 1) {
             if (hrs < 1) {
                 t = round(interval/60);
-                labelString = [NSString stringWithFormat:@"%.0f minutes ago", t];
+                NSString *minCheckString = [NSString stringWithFormat:@"%.0f minutes ago", t];
+                
+                if ([minCheckString isEqualToString:@"1 minutes ago"]) {
+                    labelString = @"1 minute ago";
+                }
+                else {
+                    labelString = minCheckString;
+                }
             }
             else {
                 t = round(hrs);
-                labelString = [NSString stringWithFormat:@"%.0f hours ago", t];
+                NSString *hrcheckString = [NSString stringWithFormat:@"%.0f hours ago", t];
+                
+                if ([hrcheckString isEqualToString:@"1 hours ago"]) {
+                    labelString = @"1 hour ago";
+                }
+                else {
+                    labelString = hrcheckString;
+                }
             }
         
         }
         else if (days >= 365) {
             t = round(days / 365);
-            labelString = [NSString stringWithFormat:@"%.0f years ago", t];
+            NSString *yrCheckString = [NSString stringWithFormat:@"%.0f years ago", t];
+            if ([yrCheckString isEqualToString:@"1 years ago"]) {
+                labelString = @"1 year ago";
+            }
+            else {
+                labelString = yrCheckString;
+                
+            }
         }
     
         else {
@@ -82,7 +103,8 @@ NSMutableDictionary *UIimageDict;
     }
     
   }
-    
+    self.timeLabel.adjustsFontSizeToFitWidth = YES;
+    NSLog(@"Label string: %@", labelString);
     self.timeLabel.text = labelString;
 }
 

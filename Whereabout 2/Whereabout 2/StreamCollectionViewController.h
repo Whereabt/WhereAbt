@@ -23,6 +23,7 @@ typedef void (^RequestCompletionBlock)(BOOL finished);
 @property (weak,nonatomic) id<StreamDelegate> delegate;
 
 - (void)refreshStream;
+- (void)timerFireMethod:(NSTimer *)timer;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *StreamActivity;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarItem;

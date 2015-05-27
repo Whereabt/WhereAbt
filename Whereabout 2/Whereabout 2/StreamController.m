@@ -28,6 +28,8 @@ static NSString *const distanceFrom = @"MilesAway";
     
     //make request
     NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed3.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
+    
+    //NSString *urlAsString = @"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3.000000";
     //eventually, include radius in last parameter 'Radius='
     
     NSURL *url = [[NSURL alloc] initWithString:urlAsString];
@@ -67,8 +69,9 @@ static NSString *const distanceFrom = @"MilesAway";
                                                            //callBack(_itemCollection, error);
                                                            
                                                         }
-                                                        callBack(_itemCollection, error);
+                                                        //callBack(_itemCollection, error);
                                                        }
+                                                       callBack(_itemCollection, error);
                                                    }
                                              ];
     [dataRequestTask resume];

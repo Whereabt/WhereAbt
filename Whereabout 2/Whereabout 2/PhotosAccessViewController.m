@@ -10,6 +10,7 @@
 #import "WelcomeViewController.h"
 #import "StreamViewController.h"
 #import "LocationController.h"
+#import "NSNetworkConnection.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/CGImageSource.h>
@@ -24,6 +25,7 @@
 @property (assign) BOOL sourceTypeCamera;
 @property (strong, nonatomic) NSString *metaLong;
 @property (strong, nonatomic) NSString *metaLat;
+@property (strong, nonatomic) NSDate *metaTimeStamp;
 @property (strong, nonatomic) NSString *PUTUrlString;
 
 @end
@@ -37,10 +39,22 @@
 
 - (void)viewDidLoad {
     self.uploadURL = @"https://api.onedrive.com/v1.0/drive/root:/%@:/content";
-   [LocationController sharedController];
+   
+    [LocationController sharedController];
+    
+    self.uploadActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+    self.uploadActivityIndicator.color = [UIColor orangeColor];
+    self.uploadActivityIndicator.hidesWhenStopped = YES;
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
+}
+
+- (void)stopAnimatingActivityIndicator {
+    if ([self.uploadActivityIndicator isAnimating]) {
+        [self.uploadActivityIndicator stopAnimating];
+    }
 
 }
 
@@ -75,7 +89,9 @@
         
         //make task
         NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
+            
+            NSLog(@"Share link data, not json: %@", data);
+            
             NSError *jsonError = nil;
             NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
 
@@ -88,16 +104,18 @@
                 NSString *singleEncodedShareURL = [unencodedShareURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 NSString *doubleEncodedShareURL = [singleEncodedShareURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 
+                NSLog(@"double encoded share url:%@", doubleEncodedShareURL);
+                
                 //make request
                 NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
                 
                 NSURL *firstURL = [NSURL URLWithString:theUrlAsString];
                 NSURL *properURL = [firstURL URLByAppendingPathComponent:doubleEncodedShareURL];
                                  
-                NSLog(@"%@", properURL);
+                NSLog(@"Double encoded url from share link: %@", properURL);
                 NSURLSession *theSession = [NSURLSession sharedSession];
                 NSURLSessionDataTask *dataRequestTask = [theSession dataTaskWithURL:properURL completionHandler:^(NSData *theData, NSURLResponse *theResponse, NSError *theError) {
-                    NSLog(@"Response: %@   Error: %@", theResponse, theError);
+                    NSLog(@"Response from encoded url data request task: %@   Error: %@", theResponse, theError);
                     theCallback(theError);
                 }];
                 [dataRequestTask resume];
@@ -193,20 +211,18 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 //responding to user accepting image/video he just took
-- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-  /*
-    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    UIImage *originalImage, *editedImage, *imageToSave;
-  
+- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
-    self.authToken = @"EwBwAq1DBAAUGCCXc8wU/zFu9QnLdZXy%2bYnElFkAAeKuWRh2Dh0CHu2aTDQpw36iUa17swWyhpEBB29nlEXY3DzTxpDXO2V3uUvZsDxRWJ0/t7Zj4F0i1gkI%2bfdiIaYHbD96fzYXoUBGf6MVKK1lIZOZMvPm43ZvTJ9FA9xk3aqsavyJpzM%2bfeYixXlSTuQcaCfYwl9xt1DGrW94lBSmQr9Mgj3bPPzgDvf6tmlphS7Vujg9qouYn4JF4beDsv9p0T3%2bJU%2bN5w6N4RLnuIAEfsXE/ZmDha51L5U%2bCeP7jQKofg9uduU9/x6689nR4g2rbCDuegPUStELwq7sDpvrbYiHVNZLxr7zbsVvWQo/5G2aL2TVIYinQ/Tj9lq0O0EDZgAACLY0oBDZHXRdQAGwJDVB7/2Rw8UavB6DrXxN6b20BpqbxPQOgHWFZ8uC%2bk7zzBPV7GUhrGcYK4%2batzpyFUr96RWCRMhVwra60i8UKpsJ/c92GCMgk8gPapOMb0lRLAtCp7FH4FeEj7/l0ydHdFoYF3rJLtZMXLaSJACVVxtsVytFcz6BneHksRbbGBmXJrjR427wJ6sIf34jVyc9u3unNGJomjAO2jLp3PxqtJhk533C6sHsSm1gzB3V46szJP7pnKQbJPlffQbh4FgrTfQccyHFnSyJDRC83E5FKc7i%2bTd7ygF4MPhFfIsNTQS27Axt5QO0JXDBvPQ6oyM7gv/QjMkngNRoCSFjj1QoReUreKU/pVOftlgcfrVtQ3yLfO7TGV/ZNHAiIRKBjylf8hF%2bPxgQGLMhIHJtcf6l88xufEhHqhUxSoykwAYPEFoB&authentication_token=eyJhbGciOiJIUzI1NiIsImtpZCI6IjEiLCJ0eXAiOiJKV1QifQ.eyJ2ZXIiOjEsImlzcyI6InVybjp3aW5kb3dzOmxpdmVpZCIsImV4cCI6MTQyMTcyMTQ2MCwidWlkIjoiOTI1ODVlZjU1NTdjNzkwOGFiOWEyYmMyMjE3M2EwNmYiLCJhdWQiOiJuNDYub3JnIiwidXJuOm1pY3Jvc29mdDphcHB1cmkiOiJhcHBpZDovLzAwMDAwMDAwNEMxMzQ5NkUiLCJ1cm46bWljcm9zb2Z0OmFwcGlkIjoiMDAwMDAwMDA0QzEzNDk2RSJ9.7dpcoJ47TIH6XoczvfurbO-QkXbeh60cw9mUl-hoWvM";
-  */
-    
+//CHECK CONNECTION BEFORE ANYTHING
+NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
+if ([NetworkManager doesUserHaveInternetConnection]) {
+
     //determining image source
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         _sourceTypeCamera = YES;
-        
+        if (![self.uploadActivityIndicator isAnimating]) {
+            [self.uploadActivityIndicator startAnimating];
+        }
          //get location
         LocationController *locationController = [[LocationController alloc]init];
     
@@ -256,7 +272,7 @@
         
     }
 
-    else{
+    else {
         _sourceTypeCamera = NO;
         
         //fetching image metadata
@@ -271,6 +287,21 @@
                 NSNumber *longitude = [[metadata objectForKey:@"{GPS}"] objectForKey:@"Longitude"];
                 NSConstantString *latRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LatitudeRef"];
                 NSConstantString *lonRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LongitudeRef"];
+                NSDate *metaDateStamp = metadata[@"{GPS}"][@"DateStamp"];
+                //NSString *metaTimeStamp = metadata[@"{GPS}"][@"]
+                
+                NSString *date = [metadata[@"{GPS}"][@"DateStamp"] stringByReplacingOccurrencesOfString: @":" withString:@"-"];
+                
+                NSString *metaDateString = [NSString stringWithFormat:@"%@T%@", date, metadata[@"{GPS}"][@"TimeStamp"]];
+                
+                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+                
+                _metaTimeStamp = [dateFormat dateFromString:metaDateString];
+                NSLog(@"Date found in metadata: %@",_metaTimeStamp);
+                NSLog(@"%@", metadata);
+                
+                
                 
                 
                 if ([latRef isEqualToString:@"S"] == YES) {
@@ -285,6 +316,7 @@
                 if ([lonRef isEqualToString: @"W"] == YES) {
                     _metaLong = [NSString stringWithFormat:@"-%@", longitude];
                 }
+                
                 else //if([lonRef compare:@"E"] == YES)
                 {
                     _metaLong = [NSString stringWithFormat:@"%@", longitude];
@@ -297,7 +329,10 @@
                 
                 else{
             
-                
+                    if (![self.uploadActivityIndicator isAnimating]) {
+                        [self.uploadActivityIndicator startAnimating];
+                    }
+                    
                     //handling image taken
                     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
                 
@@ -349,15 +384,29 @@
                     }
                 
                 }
+                
+                [picker dismissViewControllerAnimated:YES completion:NULL];
+                
+                /* if (![self.uploadActivityIndicator isAnimating]) {
+                    [self.uploadActivityIndicator startAnimating];
+                }
+                 */
             }
             //no metadata found
-        else{
+        else {
+                [picker dismissViewControllerAnimated:YES completion:NULL];
+            if ([self.uploadActivityIndicator isAnimating]) {
+                [self.uploadActivityIndicator stopAnimating];
+            }
                 UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                 [metaAlert show];
             }
         } failureBlock:^(NSError *error) {
             
             //metadata is nil
+            if ([self.uploadActivityIndicator isAnimating]) {
+                [self.uploadActivityIndicator stopAnimating];
+            }
             NSLog(@"Unable to access image metadata: %@", error);
             UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [metaAlert show];
@@ -400,9 +449,22 @@
             //movieURL will be passed as parameter to server
     }
 */
-    //the animated camera view is dismissed
-  [picker dismissViewControllerAnimated:YES completion:NULL];
+
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+  }
+    
+else {
+    NSLog(@"NO CONNECTION");
+    UIAlertController *alertCont = [UIAlertController alertControllerWithTitle:@"No Internet Connection" message:@"We were unable to post your photo." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+    [alertCont addAction:okAction];
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    [self presentViewController:alertCont animated:YES completion:nil];
+  }
+    
 }
+
 
 //user presses cancel button in UIImagePickerView
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
@@ -426,12 +488,15 @@
             if (error == nil){
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                 NSString *publicImage = httpResponse.allHeaderFields[@"Location"];
-                
+                NSLog(@"RESPONSE FROM OD UPLOAD: %@", response);
                 //[self PUTonNewPhotophpWithImageURL:publicImage];
                 [self createShareLinkForODFileWithPath:folderPath andCompletion:^(NSError *Error) {
                     
                     if (!Error) {
-                    [self getThumbnailURLfromStoredImageFile:[NSString stringWithFormat:@"%@/%@", folderPath, name] andCompletion:^(NSString *thumbnail, NSString *large) {
+                        NSString *resourceId = httpResponse.allHeaderFields[@"X-Resource-Id"];
+                    
+                        //[self getThumbnailURLfromStoredImageFile:[NSString stringWithFormat:@"%@/%@", folderPath, name] andCompletion
+                    [self getThumbnailURLfromStoredImageFile:resourceId andCompletion:^(NSString *thumbnail, NSString *large) {
                         if (thumbnail != nil & large != nil) {
                             NSLog(@"The thumbnail URL: %@ ---- The large URL: %@", thumbnail, large);
                             
@@ -461,7 +526,10 @@
 - (void)getThumbnailURLfromStoredImageFile:(NSString *)fileName andCompletion: (void (^)(NSString *thumbnail, NSString *large))callBack{
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/thumbnails", fileName];
+    //NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/thumbnails", fileName];
+    
+    //using itemid rather than path
+    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/items/%@/thumbnails", fileName];
     NSURL *url = [NSURL URLWithString:stringURL];
     /*
      NSMutableURLRequest *thumbnailRequest = [[NSMutableURLRequest alloc]initWithURL:url];
@@ -478,7 +546,7 @@
         NSData *jsonData = [NSData dataWithContentsOfURL:location];
         NSError *jsonError = nil;
         NSArray *responseDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&jsonError];
-        
+        NSLog(@"RESPONSE FROM THUMBNAIL REQUEST: %@", response);
         NSLog(@"Dictionary from response: %@", responseDict);
         
         //pass small and large size images
@@ -546,13 +614,17 @@
 - (void)PUTonNewPhotophpWithImageURLsLarge:(NSString *)largeImage andSmall:(NSString *) smallImage{
     if (_metaLong != nil & _metaLat != nil) {
         
-        NSDate *currentDate = [NSDate date];
+        if (!_metaTimeStamp) {
+            _metaTimeStamp = [NSDate date];
+            NSLog(@"Today's date, as string: %@", _metaTimeStamp);
+        }
+
+        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
         
-        NSString *dateString = [dateFormatter stringFromDate: currentDate];
-        NSLog(@"Today's date, as string: %@", dateString);
-        
+        NSString *dateString = [dateFormatter stringFromDate: _metaTimeStamp];
+
         _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto2.php?UserID=%@&UserName=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, _metaLat, _metaLong, largeImage, smallImage, dateString];
         NSLog(@"PUT URL String: %@", _PUTUrlString);
     
@@ -563,8 +635,18 @@
                                                    completionHandler:^(NSData *data,
                                                                        NSURLResponse *response,
                                                                        NSError *error){
+                                                       
+                                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                                           //self.uploadActivityIndicator.hidden = YES;
+                                                           [self.uploadActivityIndicator stopAnimating];
+                                                           //[self.uploadActivityIndicator removeFromSuperview];
+                                                       });
+                                                       
                                                        if (error) {
                                                            NSLog(@"ERROR: %@", error);
+                                                           UIAlertView *PhotoPUTAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"An error occurred, please try again later." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                                                           [PhotoPUTAlert show];
+
                                                        }
                                                        else{
                                                            NSLog(@"PUT to newPhoto.php completed");
@@ -574,7 +656,7 @@
     [dataRequestTask resume];
     }
     else{
-        UIAlertView *PhotoLocationAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We were unable to find the photo's location, please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView *PhotoLocationAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We were unable to find the photo's location." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [PhotoLocationAlert show];
     }
 }

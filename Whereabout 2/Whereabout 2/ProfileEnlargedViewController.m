@@ -17,14 +17,88 @@
 
 NSString *DistanceAway;
 UIImage *LargeImage;
+NSString *timeString;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.distanceLabel.text = [NSString stringWithFormat:@"%@ Miles", DistanceAway];
+    self.distanceLabel.text = [NSString stringWithFormat:@"%@ miles", DistanceAway];
     self.largeImageView.image = LargeImage;
     self.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.largeImageView.userInteractionEnabled = YES;
     self.largeImageView.frame = self.view.window.frame;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    NSDate *imageDate = [dateFormatter dateFromString: timeString];
+    NSDate *today = [NSDate date];
+    NSTimeInterval interval = [today timeIntervalSinceDate: imageDate];
+    double hrs = (interval/3600);
+    double days = (hrs/24);
+    
+    //show days if more than one, if not show hrs
+    double t;
+    NSString *labelString = [[NSString alloc] init];
+    
+    if (interval < 60) {
+        labelString = [NSString stringWithFormat: @"%.0f seconds ago", interval];
+    }
+    else {
+        
+        if (days <= 1) {
+            if (hrs < 1) {
+                t = round(interval/60);
+                NSString *minCheckString = [NSString stringWithFormat:@"%.0f minutes ago", t];
+                
+                if ([minCheckString isEqualToString:@"1 minutes ago"]) {
+                    labelString = @"1 minute ago";
+                }
+                else {
+                    labelString = minCheckString;
+                }
+            }
+            else {
+                t = round(hrs);
+                NSString *hrcheckString = [NSString stringWithFormat:@"%.0f hours ago", t];
+                
+                if ([hrcheckString isEqualToString:@"1 hours ago"]) {
+                    labelString = @"1 hour ago";
+                }
+                else {
+                    labelString = hrcheckString;
+                }
+            }
+            
+        }
+        else if (days >= 365) {
+            t = round(days / 365);
+            NSString *yrCheckString = [NSString stringWithFormat:@"%.0f years ago", t];
+            if ([yrCheckString isEqualToString:@"1 years ago"]) {
+                labelString = @"1 year ago";
+            }
+            else {
+                labelString = yrCheckString;
+                
+            }
+        }
+        
+        else {
+            t = round(days);
+            NSString *daysString = [NSString stringWithFormat:@"%.0f", t];
+            
+            if ([daysString  isEqual: @"1"]) {
+                labelString = @"1 day ago";
+            }
+            
+            else {
+                labelString = [NSString stringWithFormat:@"%@ days ago", daysString];
+            }
+            
+        }
+        
+    }
+
+    self.timeIntervalLabel.adjustsFontSizeToFitWidth = YES;
+    self.timeIntervalLabel.text = labelString;
     
     // Do any additional setup after loading the view.
 }
@@ -106,10 +180,11 @@ UIImage *LargeImage;
 
 }
 
-- (void)setUpEnlargedViewWithDistance:(NSString *) distanceString andPhoto:(UIImage *)photo
+- (void)setUpEnlargedViewWithDict:(NSDictionary *)enlargeDict
 {
-    LargeImage = photo;
-    DistanceAway = distanceString;
+    LargeImage = enlargeDict[@"photo"];
+    DistanceAway = enlargeDict[@"distanceString"];
+    timeString = enlargeDict[@"time"];
 }
 
 /*

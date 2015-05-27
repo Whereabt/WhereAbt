@@ -7,6 +7,8 @@
 //
 
 #import "SettingsTableViewController.h"
+#import "KeychainItemWrapper.h"
+#import "WelcomeViewController.h"
 
 @interface SettingsTableViewController ()
 
@@ -57,7 +59,13 @@
 
 
 - (IBAction)logoutPressed:(id)sender {
+    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
     
+    //set nil for the refresh token, user will have to log back in
+    [WelcomeViewController sharedController].refreshToken = @"";
+    
+    [keychain setObject:[WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
+    [self performSegueWithIdentifier:@"segueToLogout" sender:self];
 }
 
 - (IBAction)switchChange:(id)sender {

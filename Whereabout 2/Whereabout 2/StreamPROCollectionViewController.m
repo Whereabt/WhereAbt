@@ -227,7 +227,12 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *distanceAwayString = [NSString stringWithFormat:@"%.3f", distanceInt];
     
     UIImage *Image = self.allProfileItems[indexPath.row][@"LargePhoto"];
-    [EnlargedViewManager setUpEnlargedViewWithDistanceString:distanceAwayString andPhoto:Image];
+    NSMutableDictionary *parameterDict = [[ NSMutableDictionary alloc] init];
+    parameterDict[@"photo"] = Image;
+    parameterDict[@"distance"] = distanceAwayString;
+    parameterDict[@"time"] = self.allProfileItems[indexPath.row][@"TimeStamp"];
+    
+    [EnlargedViewManager setUpEnlargedViewWithDict: parameterDict];
     
     //go to the enlarged view
     [self performSegueWithIdentifier:@"segueEnlargedImage" sender:self];

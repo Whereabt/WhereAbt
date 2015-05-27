@@ -34,7 +34,7 @@
 
 - (void)requestProfileItemsFromUser:(NSString *) Id WithCompletion: (void (^)(NSMutableArray *Items, NSError *error))callBack{
     LocationController *locationController = [[LocationController alloc] init];
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/userprofile.php?Latitude=%f&Longitude=%f&Radius=%d&UserID=%@", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, 10000, Id];
+    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/userprofile2.php?Latitude=%f&Longitude=%f&Radius=%d&UserID=%@", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, 10000, Id];
     NSLog(@"URL to get profile items: %@", urlAsString);
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];
     

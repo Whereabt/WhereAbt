@@ -14,6 +14,7 @@
 #import "KeychainItemWrapper.h"
 #import <Security/Security.h>
 #import "ProfileEnlargedViewController.h"
+#import "NSNetworkConnection.h"
 
 @interface ProfileCollectionViewController ()
 
@@ -24,6 +25,7 @@
 @implementation ProfileCollectionViewController
 
 static NSString * const reuseIdentifier = @"Cell";
+UILabel *internetConnLabel;
 
 - (void)viewDidLoad {
     
@@ -34,6 +36,11 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (void)refreshProfile {
+    
+    NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
+    
+    if ([NetworkManager doesUserHaveInternetConnection]){
+        
     self.collectionView.dataSource = self;
     self.collectionView.alwaysBounceVertical = YES;
     
@@ -116,9 +123,35 @@ static NSString * const reuseIdentifier = @"Cell";
         
     }];
     
+    }
+    
+    else {
+        NSLog(@"NO CONNECTION");
+        
+        if ([internetConnLabel superview] == nil) {
+
+        internetConnLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+        //connectionFailLabel.center = CGPointMake(0.0f, 64.0f);
+        [internetConnLabel setText:@"No Internet Connection"];
+        [internetConnLabel setTextAlignment:NSTextAlignmentCenter];
+        internetConnLabel.backgroundColor = [UIColor grayColor];
+        internetConnLabel.textColor = [UIColor whiteColor];
+        [self.collectionView addSubview:internetConnLabel];
+        
+        NSTimer *connectionFailViewTimer = [NSTimer timerWithTimeInterval:3.5 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+        
+        [[NSRunLoop mainRunLoop] addTimer:connectionFailViewTimer forMode:NSDefaultRunLoopMode];
+        }
+    }
     
     // Do any additional setup after loading the view.
 
+}
+
+- (void)timerFireMethod:(NSTimer *)timer {
+    if ([internetConnLabel superview] != nil) {
+        [internetConnLabel removeFromSuperview];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -241,7 +274,13 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSString *distanceString = [NSString stringWithFormat:@"%.3f", distanceInt];
     
     UIImage *Image = self.profileItems[indexPath.row][@"LargePhoto"];
-    [EnlargedViewManager setUpEnlargedViewWithDistance:distanceString andPhoto:Image];
+    
+    NSMutableDictionary *parameterDict = [[NSMutableDictionary alloc] init];
+    parameterDict[@"photo"] = Image;
+    parameterDict[@"distanceString"] = distanceString;
+    parameterDict[@"time"] = self.profileItems[indexPath.row][@"TimeStamp"];
+    
+    [EnlargedViewManager setUpEnlargedViewWithDict:parameterDict];
     
     //go to the enlarged view
     [self performSegueWithIdentifier:@"segueToEnlarge" sender:self];
