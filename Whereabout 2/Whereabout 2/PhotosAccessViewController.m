@@ -39,7 +39,7 @@
 
 - (void)viewDidLoad {
     self.uploadURL = @"https://api.onedrive.com/v1.0/drive/root:/%@:/content";
-   
+
     [LocationController sharedController];
     
     self.uploadActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
@@ -60,7 +60,9 @@
 
 - (void)createShareLinkForODFileWithPath:(NSString *) ODfilePath andCompletion: (void (^)(NSError *Error))theCallback {
     
-    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/action.createLink", ODfilePath];
+    //NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/action.createLink", ODfilePath];
+    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/items/%@/action.createLink", ODfilePath];
+
     NSURL *url = [NSURL URLWithString:stringURL];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -123,9 +125,16 @@
             }
             
             else {
-                UIAlertView *jsonOrDataTaskAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a problem while trying to connect to the server, please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                 
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([self.uploadActivityIndicator isAnimating] == YES) {
+                        [self.uploadActivityIndicator stopAnimating];
+                    }
+                });
+                
+                UIAlertView *jsonOrDataTaskAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a problem while trying to connect to the server, please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                 [jsonOrDataTaskAlert show];
+                
                 NSLog(@"Error in making public folder:%@", jsonError);
             }
 
@@ -136,6 +145,11 @@
     
     else {
         NSLog(@"Error creating request body's JSON");
+        
+        if ([self.uploadActivityIndicator isAnimating] == YES) {
+            [self.uploadActivityIndicator stopAnimating];
+        }
+        
         UIAlertView *requestBodyJsonAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a problem while trying to connect to the server, please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         
         [requestBodyJsonAlert show];
@@ -302,8 +316,6 @@ if ([NetworkManager doesUserHaveInternetConnection]) {
                 NSLog(@"%@", metadata);
                 
                 
-                
-                
                 if ([latRef isEqualToString:@"S"] == YES) {
                     _metaLat = [NSString stringWithFormat:@"-%@", latitude];
                 }
@@ -377,6 +389,9 @@ if ([NetworkManager doesUserHaveInternetConnection]) {
                     }
                     
                     else {
+                        if ([self.uploadActivityIndicator isAnimating]) {
+                            [self.uploadActivityIndicator stopAnimating];
+                        }
                         //movieURL will be passed as parameter to server
                         UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We currently don't allow videos to be uploaded" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                         [noMovieSupport show];
@@ -414,42 +429,6 @@ if ([NetworkManager doesUserHaveInternetConnection]) {
  
     }
   
-   /*
-    //handling image taken
-    if (CFStringCompare((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-        editedImage = (UIImage *) [info objectForKey: UIImagePickerControllerEditedImage];
-        originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
-        
-        if (editedImage) {
-            imageToSave = editedImage;
-        }
-        else {
-            imageToSave = originalImage;
-        }
-        
-        //convert image to data
-        NSData *dataFromImage = UIImagePNGRepresentation(imageToSave);
-        
-        NSURL *imageFileURL = [info objectForKey:imageToSave];
-        NSString *imageFileName = [imageFileURL lastPathComponent];
-        NSLog(@"the name of the image file is: %@", imageFileName);
-        NSString *fakeFileName = @"Fake2.jpg";
-        
-        self.authToken = @"EwCAAq1DBAAUGCCXc8wU/zFu9QnLdZXy+YnElFkAATuAZi+aibAaL06FhFU4mqv+P2ra0N7bedyZEoeGhuRm8sWpefnj9RvVpk/hH3XhwggTcPdX4cV5zpDEYclR0dC2KV+7l5Zo9b1YOd0teNbD3/hhCiqz5BKckl0cCUEPepdOj0seOuyap44gmvSHkLoOrcD0XWlYOD4EcGgpnPWEroMwx2qXIev2fBwGjoAHCwcqGK6EndT1cBdx55As8K4lxqwfN3DVy3AzEI098mXyLcs2C5RYl8bTCLbdSi1wNa7pZUTnUQ7NGG6W7dFwrp81zntChvu9yK/mLs9mQIuAXfG0NRLn7ECRrk0vc/EG2je7HU3pkmWqUr2ElTXhljsDZgAACK1On/KOwyALUAFMdJuHzIkUpJS6EelMTgc5wfCp9FcKfVT5+XITrUieemfal+whEx+FLJnpZJAMgLgcmGarV6dx1YMDJPSuH9uaAjXpY8ipZSC1IxHRdZe3j41yyN05Z7UHdp4Uov9G8oVKVT+FegSPRdZ8QM3gAvOWzHzAeJLUXdFJrL3nlDEQx5MWfji4LRWHYYFGCz6LGsp6j6idVWELHRJUWtutQoKEio98ppEXCjg34XVLoN0ire2Ypwp2k3CogGMbR4+DfBOeC8vtgXMWoyxOKxsl/4O6kXAgGg+1KtIPha3TNC2yzY0/P1h2DC+LvpztLZRJ8Gwdb5KpD6sSsoPMGB2k8arJkzZ4rDf2vfjzA0qLJwGek/huTrC3w/xLyYpq2blgJerYdd9nrcB2WwjYOSKJ1KZa2SyPj4I4J3FgfbS3HJjOMlA/Apwl7q1d3jOnuFUWeMRiAQ==";
-        
-        [self constructTaskWithImageName:fakeFileName andData: dataFromImage];
-        //method call for http request
-       //[self PUTImageToOD:imageFileName imageWithData:dataFromImage];
-        
-    }
-    
-    //handling video taken;
-    else if (CFStringCompare((CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo){
-        NSURL *movieURL = [info objectForKey:UIImagePickerControllerMediaURL];
-            //movieURL will be passed as parameter to server
-    }
-*/
-
     [picker dismissViewControllerAnimated:YES completion:NULL];
   }
     
@@ -471,83 +450,137 @@ else {
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)constructTaskWithImageName:(NSString*)name andData:(NSData*)data {
-    NSString *folderPath = @"Whereabout_Public";
+- (void)createSubfolderInODWithName:(NSString *)folderName andCompletion: (void (^)(bool subfolderErrorBool))subfolderCallback {
     
     NSURLSession *session = [NSURLSession sharedSession];
-    NSString *stringURL = [NSString stringWithFormat:self.uploadURL, [NSString stringWithFormat:@"%@/%@", folderPath, name]];
+    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/special/approot/children"];
     
     NSURL *url = [NSURL URLWithString:stringURL];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
-    [request setHTTPMethod:@"PUT"];
     
+    [request setHTTPMethod:@"POST"];
+    
+    NSMutableDictionary *bodyDict = [[NSMutableDictionary alloc] init];
+    bodyDict[@"name"] = [NSString stringWithFormat:@"%@", folderName];
+    //bodyDict[@"folder"] = @"";
+    bodyDict[@"@name.conflictBehavior"] = @"fail";
+    
+    NSString *jsonBodyString = [self jsonStringFromDictionary:bodyDict];
+    NSLog(@"Request body json: %@", jsonBodyString);
+
+    NSData *DataJSONbody = [jsonBodyString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    [request setHTTPBody:DataJSONbody];
+        
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        
     //referencing auth singleton
     [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
+    
     NSLog(@"UPLOAD_TOKEN: %@", [WelcomeViewController sharedController].authToken);
-    NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request fromData:data completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error){
-            if (error == nil){
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSString *publicImage = httpResponse.allHeaderFields[@"Location"];
-                NSLog(@"RESPONSE FROM OD UPLOAD: %@", response);
-                //[self PUTonNewPhotophpWithImageURL:publicImage];
-                [self createShareLinkForODFileWithPath:folderPath andCompletion:^(NSError *Error) {
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        BOOL errorBool;
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+        if (error || [httpResponse statusCode] == 403) {
+            NSLog(@"ERROR in request to create subfolder: %@", error);
+            errorBool = YES;
+        }
+            
+        else {
+            NSError *jsonError = nil;
+            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+            if (jsonError) {
+                errorBool = YES;
+            }
+            else {
+                NSLog(@"RESPONSE: %@", response);
+                NSLog(@"Returned json from POST: %@", jsonDict);
+            }
+        }
+        
+        subfolderCallback(errorBool);
+    }];
+    
+    [postDataTask resume];
+   
+}
+
+- (void)constructTaskWithImageName:(NSString*)name andData:(NSData*)data {
+    NSString *filePath = [NSString stringWithFormat:@"Whereabout_Public/%@", name];
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSString *stringURL = [NSString stringWithFormat:self.uploadURL, filePath];
+            
+            //NSString *stringURL = [NSString stringWithFormat:self.uploadURL, [NSString stringWithFormat:@"%@", name]];
+            
+            NSURL *url = [NSURL URLWithString:stringURL];
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
+            [request setHTTPMethod:@"PUT"];
+            
+            //referencing auth singleton
+            [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
+            NSLog(@"UPLOAD_TOKEN: %@", [WelcomeViewController sharedController].authToken);
+            NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request fromData:data completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error){
+                if (error == nil) {
+                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                     
-                    if (!Error) {
-                        NSString *resourceId = httpResponse.allHeaderFields[@"X-Resource-Id"];
+                    //url of main image file (not thumbnail)
+                    NSString *publicImage = httpResponse.allHeaderFields[@"Location"];
                     
-                        //[self getThumbnailURLfromStoredImageFile:[NSString stringWithFormat:@"%@/%@", folderPath, name] andCompletion
-                    [self getThumbnailURLfromStoredImageFile:resourceId andCompletion:^(NSString *thumbnail, NSString *large) {
-                        if (thumbnail != nil & large != nil) {
-                            NSLog(@"The thumbnail URL: %@ ---- The large URL: %@", thumbnail, large);
+                    NSError *jsonError = nil;
+                    NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                    NSLog(@"RESPONSE FROM OD UPLOAD: %@", jsonDict);
+                    NSString *resourceId = jsonDict[@"id"];
+                    
+                    [self createShareLinkForODFileWithPath:resourceId andCompletion:^(NSError *Error) {
+                        
+                        if (!Error) {
                             
-                            //using fullsize for 'large image', substitute 'large'  for 'publicImage' to change to large thumbnail
-                            [self PUTonNewPhotophpWithImageURLsLarge:large andSmall:thumbnail];
+                            //[self getThumbnailURLfromStoredImageFile:[NSString stringWithFormat:@"%@/%@", folderPath, name] andCompletion
+                            [self getThumbnailURLfromStoredImageFile:resourceId andCompletion:^(NSString *thumbnail, NSString *large) {
+                                if (thumbnail != nil & large != nil) {
+                                    NSLog(@"The thumbnail URL: %@ ---- The large URL: %@", thumbnail, large);
+                                    
+                                    //using fullsize for 'large image', substitute 'large'  for 'publicImage' to change to large thumbnail
+                                    [self PUTonNewPhotophpWithImageURLsLarge:large andSmall:thumbnail];
+                                }
+                                else {
+                                    NSLog(@"Failed to get a thumbnail URL");
+                                    UIAlertView *thumbnailAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a network error while trying to send your photo to the server. Please try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                                    [thumbnailAlert show];
+                                }
+                            }];
                         }
                         else {
-                            NSLog(@"Failed to get a thumbnail URL");
-                            UIAlertView *thumbnailAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a network error while trying to send your photo to the server. Please try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                            [thumbnailAlert show];
+                            UIAlertView *publicFolderAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a network error while trying to send your photo to the server. Please try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                            [publicFolderAlert show];
                         }
                     }];
-                    }
-                    else {
-                        UIAlertView *publicFolderAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a network error while trying to send your photo to the server. Please try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                        [publicFolderAlert show];
-                    }
-                }];
-                
-            }
-    }];
+                    
+                }
+            }];
     [uploadTask resume];
-    
 }
 
 
 - (void)getThumbnailURLfromStoredImageFile:(NSString *)fileName andCompletion: (void (^)(NSString *thumbnail, NSString *large))callBack{
     
     NSURLSession *session = [NSURLSession sharedSession];
-    //NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/thumbnails", fileName];
-    
-    //using itemid rather than path
     NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/items/%@/thumbnails", fileName];
+    
     NSURL *url = [NSURL URLWithString:stringURL];
-    /*
-     NSMutableURLRequest *thumbnailRequest = [[NSMutableURLRequest alloc]initWithURL:url];
-     [thumbnailRequest setHTTPMethod:@"GET"];
-     
-     //referencing auth singleton
-     [thumbnailRequest addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
-     */
+
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
     [request setHTTPMethod:@"GET"];
     
     [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField:@"Authorization"];
-    NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-        NSData *jsonData = [NSData dataWithContentsOfURL:location];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL: url
+                                            completionHandler:^(NSData *data,
+                                                                NSURLResponse *response,
+                                                                NSError *error){
+        
         NSError *jsonError = nil;
-        NSArray *responseDict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&jsonError];
-        NSLog(@"RESPONSE FROM THUMBNAIL REQUEST: %@", response);
-        NSLog(@"Dictionary from response: %@", responseDict);
+        NSArray *responseDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+        NSLog(@"Dictionary from THUMBNAIL RESPONSE: %@", responseDict);
         
         //pass small and large size images
         /*
@@ -594,7 +627,7 @@ else {
         callBack(smallImageUrl, largeImageUrl);
     }];
     
-    [downloadTask resume];
+    [dataTask resume];
     /*
     NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         NSLog(@"Response: %@", response);
