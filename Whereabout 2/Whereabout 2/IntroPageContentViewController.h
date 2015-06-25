@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ContentViewController : UIViewController
+@interface IntroPageContentViewController : UIViewController
 
 @property NSUInteger pageIndex;
 @property (strong, nonatomic) IBOutlet UIImageView *pageImage;
 @property (strong, nonatomic) IBOutlet UILabel *pageTitle;
 
-
+- (void)setUpPageFromName:(NSString *)imageName andTitle:(NSString *)titleText;
 
 @end

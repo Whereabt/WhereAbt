@@ -65,7 +65,18 @@
     [WelcomeViewController sharedController].refreshToken = @"";
     
     [keychain setObject:[WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
-    [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+    NSURL *url = [NSURL URLWithString:@"https://login.live.com/oauth20_logout.srf?client_id=000000004C13496E&redirect_uri=https://n46.org/whereabt/redirect.html"];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        //completion
+        NSLog(@"Response from logout: %@", response);
+        
+        [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+    }];
+    
+    [dataRequestTask resume];
+    
 }
 
 - (IBAction)switchChange:(id)sender {

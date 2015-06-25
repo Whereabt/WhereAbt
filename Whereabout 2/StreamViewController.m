@@ -9,13 +9,12 @@
 #import "StreamViewController.h"
 #import "StreamController.h"
 #import "EnlargeViewController.h"
-
-/*
-static NSString *const userIdIndex = @"UserID";
-static NSString *const photoURLIndex = @"PhotoURL";
-static NSString *const photoIndex = @"Photo";
-static NSString *const distanceFrom = @"MilesAway";
-*/
+#import "StreamEnlarge&SaveViewController.h"
+#import "NSNetworkConnection.h"
+#include <math.h>
+#include <QuartzCore/QuartzCore.h>
+#import "UIImageView+AFNetworking.h"
+#import "StreamTVCell.h"
 
 @interface StreamViewController ()
 
@@ -24,27 +23,17 @@ static NSString *const distanceFrom = @"MilesAway";
 
 @end
 
-@implementation StreamViewController
 
+
+@implementation StreamViewController
+UILabel *connFailLabel;
 
 - (void)viewDidLoad {
      [super viewDidLoad];
     
-    //create object to deal with network requests
-    self.radiusSlider.continuous = NO;
-    
-    StreamController *networkRequester = [[StreamController alloc]init];
-    [networkRequester getFeedWithRadius:self.radiusSlider.value andCompletion:^(NSMutableArray *items, NSError *error) {
-        if (!error) {
-            self.streamItems = items;
-            [self.tableView reloadData];
-        }
-        
-        else{
-            NSLog(@"Error getting streamItems: %@", error);
-        }
-    }];
-    
+    self.tableActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    self.tableActivityIndicator.hidesWhenStopped = YES;
+    [self refreshStream];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -53,20 +42,132 @@ static NSString *const distanceFrom = @"MilesAway";
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (IBAction)userChangedRadius:(id)sender {
-    StreamController *networkRequester = [[StreamController alloc] init];
-    [networkRequester getFeedWithRadius:self.radiusSlider.value andCompletion:^(NSMutableArray *items, NSError *error) {
-        if (!error) {
-            self.streamItems = items;
-            [self.tableView reloadData];
+- (void)refreshStream
+{
+    NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
+    
+    if ([NetworkManager doesUserHaveInternetConnection]) {
+        NSLog(@"HAS CONNECTION");
+        
+        [self.tableView bringSubviewToFront:self.tableActivityIndicator];
+        [self.tableActivityIndicator startAnimating];
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+        
+        self.tableView.alwaysBounceVertical = YES;
+        
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        
+        //create object to deal with network requests
+        StreamController *networkRequester = [[StreamController alloc] init];
+        
+        //get default radius
+        float f;
+        NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+        if ([preferences floatForKey:@"Radius Slider"] * 3 == 0) {
+            f = 1.5;
+        }
+        else {
+            f = [preferences floatForKey:@"Radius Slider"] * 3;
         }
         
-        else{
-            NSLog(@"Error getting streamItems: %@", error);
+        NSLog(@"Radius: %f", f);
+        
+        //USE f FOR RADIUS PARAM
+        [networkRequester getFeedWithRadius:f andCompletion:^(NSMutableArray *items, NSError *error) {
+            if (!error) {
+                self.streamItems = items;
+                
+                /*
+                 //loop through the stream array and make sure images are not nil
+                 for (int i = 0; i < self.streamItems.count; i++) {
+                 if ((self.streamItems[i][@"ThumbnailPhoto"] == nil) || (self.streamItems[i][@"LargePhoto"] == nil)) {
+                 [self.streamItems removeObjectAtIndex:i];
+                 }
+                 } */
+                
+                //[self.collectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+                
+                [self.tableView reloadData];
+                if ([self.tableActivityIndicator isAnimating] == YES) {
+                    [self.tableActivityIndicator stopAnimating];
+                }
+                
+                /*
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.collectionView reloadData];
+                 });
+                 */
+                
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                
+            }
+            
+            else{
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                
+                NSLog(@"Error getting streamItems: %@", error);
+                [self.tableActivityIndicator stopAnimating];
+                
+                if (error.code == 3840) {
+                    UIView *NoFeedView = [[UIView alloc] initWithFrame:self.tableView.frame];
+                    
+                    UILabel *nothingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 75, self.view.frame.size.width, 50)];
+                    nothingLabel.text = @"No images from your vicinity";
+                    nothingLabel.textColor = [UIColor colorWithRed:31.0f/255.0f
+                                                             green:33.0f/255.0f
+                                                              blue:36.0f/255.0f
+                                                             alpha:1.0f];
+                    
+                    UILabel *suggestLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 400, self.view.frame.size.width, 35)];
+                    suggestLabel.text = @"We suggest increasing your radius in settings";
+                    suggestLabel.textColor = [UIColor blackColor];
+                    
+                    [NoFeedView addSubview:nothingLabel];
+                    [NoFeedView addSubview:nothingLabel];
+                    
+                    [self.view addSubview:NoFeedView];
+                    
+                }
+                
+                else {
+                    UIAlertView *streamFailAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"Sorry, we were unable to retrieve nearby photos from the server. Make sure that your device is connected to the internet and try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil, nil];
+                    [streamFailAlert show];
+                }
+            }
+        }];
+        
+    }
+    
+    else {
+        NSLog(@"NO CONNECTION");
+        
+        if ([connFailLabel superview] == nil) {
+            connFailLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+            //connectionFailLabel.center = CGPointMake(0.0f, 64.0f);
+            [connFailLabel setText:@"No Internet Connection"];
+            [connFailLabel setTextAlignment:NSTextAlignmentCenter];
+            connFailLabel.backgroundColor = [UIColor grayColor];
+            connFailLabel.textColor = [UIColor whiteColor];
+            [self.tableView addSubview:connFailLabel];
+        
+            NSTimer *connectionFailViewTimer = [NSTimer timerWithTimeInterval:3.5 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+            
+            [[NSRunLoop mainRunLoop] addTimer:connectionFailViewTimer forMode:NSDefaultRunLoopMode];
         }
-    }];
+    }
+    
 }
 
+- (void)timerFireMethod:(NSTimer *)timer {
+    if ([connFailLabel superview] != nil) {
+        [connFailLabel removeFromSuperview];
+    }
+}
+
+- (IBAction)refreshButtonCall:(id)sender {
+    [self refreshStream];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -89,58 +190,65 @@ static NSString *const distanceFrom = @"MilesAway";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     // Configure the cell...
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"User ID" forIndexPath:indexPath];
+     StreamTVCell *cell = (StreamTVCell*)[tableView dequeueReusableCellWithIdentifier:@"User ID" forIndexPath:indexPath];
     
-    //setting UI
-    //NSString *milesFrom = self.streamItems[indexPath.row][@"MilesAway"];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", self.streamItems[indexPath.row][@"UserName"]];
-    UIImage *photo = [[UIImage alloc]init];
-    photo = self.streamItems[indexPath.row][@"ThumbnailPhoto"];
-    cell.imageView.image = photo;
+    double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
+    NSString *distanceString = [NSString stringWithFormat:@"%.3f Miles ", distanceInt];
+    cell.cellDistance.text = distanceString;
+    cell.cellDistance.font = [UIFont fontWithName: @"Arial Rounded MT Bold" size:14];
+    cell.cellDistance.numberOfLines = 1;
+    cell.cellDistance.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
+    cell.cellDistance.adjustsFontSizeToFitWidth = YES;
+    cell.cellDistance.textAlignment = NSTextAlignmentLeft;
+    cell.cellDistance.textColor = [UIColor colorWithRed:255.0f/255.0f green:153.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
+    
+    cell.cellImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [cell.cellImage setImageWithURL:[NSURL URLWithString:self.streamItems[indexPath.row][@"PhotoURL"]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
     
     /*
-    UIButton * b = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f , cell.imageView.frame.size.width, cell.imageView.frame.size.height)];
-    b.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [b addTarget:self action:@selector(changeSize:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.imageView addSubview:b];
+    [cell.cellImage setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.streamItems[indexPath.row][@"PhotoURL"]]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        //success
+        self.streamItems[indexPath.row][@"PHOTO"] = image;
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        //failure
+        self.streamItems[indexPath.row][@"PHOTO"] = @"None";
+    }];
     */
-     
+    
+    cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
+                                           green:33.0f/255.0f
+                                            blue:36.0f/255.0f
+                                           alpha:1.0f];
+    
     return cell;
 }
 
 
--(IBAction)changeSize:(UIButton *)sender
-{
-    UIImageView * imageView = (UIImageView *)[sender superview];
-    imageView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
-    // larger frame goes here^
-}
 
 
-/*
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   // UIViewController *SelectedCellViewController = [[UIViewController alloc]initWithNibName:@"Enlarged View" bundle:nil];
-   // [self presentViewController:SelectedCellViewController animated:YES completion:nil];
+
+    NSMutableDictionary *dictionaryParameter = [[NSMutableDictionary alloc] init];
     
-    UIImage *enlargedPhoto = self.streamItems[indexPath.row][@"LargePhoto"];
-    UIImageView *enlargeView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
-   
-    enlargeView.image = enlargedPhoto;
-    [self.view addSubview:enlargeView];
+    double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
+    NSString *distanceAwayString = [NSString stringWithFormat:@"%.3f", distanceInt];
     
-    //EnlargedCellViewController *enlargedCellManager = [[EnlargedCellViewController alloc]init];
+    StreamTVCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSLog(@"cell distance: %@", cell.cellDistance.text);
     
+    [dictionaryParameter setObject:distanceAwayString forKey:@"Distance"];
+    [dictionaryParameter setObject:cell.cellImage.image forKey:@"Photo"];
+    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserID"] forKey:@"ID"];
+    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserName"] forKey:@"Name"];
+    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"TimeStamp"] forKey:@"Time"];
     
+    StreamEnlarge_SaveViewController *SaveController = [[StreamEnlarge_SaveViewController alloc] init];
+    [SaveController setUpTheEnlargedViewWithItemDictionary:dictionaryParameter];
     
-    [enlargedCellManager setImageForEnlargedImageUsingImage:enlargedPhoto];
-    [enlargedCellManager setTextForUsernameLabel:self.streamItems[indexPath.row][@"UserName"]];
-    
-    
-    //enlargedCellManager.enlargedName.text = self.streamItems[indexPath.row][@"UserName"];
-   // enlargedCellManager.enlargedImage.image = enlargedPhoto;
-    //[self performSegueWithIdentifier:@"segueToEnlarge" sender:self];
+    //[self performSegueWithIdentifier:@"segueToEnlargeSave" sender:self];
 }
-*/
+
 
 
 

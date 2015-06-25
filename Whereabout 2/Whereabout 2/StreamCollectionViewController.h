@@ -24,6 +24,7 @@ typedef void (^RequestCompletionBlock)(BOOL finished);
 
 - (void)refreshStream;
 - (void)timerFireMethod:(NSTimer *)timer;
+- (void)updateDataSourceWithImagesFromIndexes:(NSArray *)indexArray;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *StreamActivity;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarItem;

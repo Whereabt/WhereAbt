@@ -177,6 +177,7 @@
     //wl.skydrive_update <--a scope
     //wl.offline_access  <--- another scope, used to
     NSString *urlAsString = @"https://login.live.com/oauth20_authorize.srf?client_id=000000004C13496E&scope=wl.offline_access,onedrive.readwrite&response_type=code&redirect_uri=https://n46.org/whereabt/redirect.html";
+    //https://n46.org/whereabt/redirect.html
     NSURL *authURL = [[NSURL alloc]initWithString:urlAsString];
     NSURLRequest *loginRequest = [NSURLRequest requestWithURL:authURL];
     [webView loadRequest:loginRequest];
@@ -187,46 +188,68 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     NSLog(@"Url: %@", request.URL.absoluteString);
-    NSArray *urlParts = [request.URL.absoluteString componentsSeparatedByString:@"?code="];
     
-    if ([urlParts[0] isEqual: @"https://n46.org/whereabt/redirect.html"] == YES)
-    {
-        //NSMutableDictionary *keychainItem = [NSMutableDictionary dictionary];
-        [WelcomeViewController sharedController].authCode = urlParts[1];
-      
+    if ([request.URL.absoluteString containsString:@"?code="]) {
+        NSArray *urlParts = [request.URL.absoluteString componentsSeparatedByString:@"?code="];
         
-        [self setAuthTokenRefreshTokenAndProfileNamesFromCode:[WelcomeViewController sharedController].authCode];
-        
-        KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
-        
-        [keychain setObject:[WelcomeViewController sharedController].userName forKey:(__bridge id)kSecAttrAccount];
-        
-        [keychain setObject:(__bridge id)kSecAttrAccessibleWhenUnlocked forKey:(__bridge id)kSecAttrAccessible];
-     
-        
-        //store refresh token
-        if (![[WelcomeViewController sharedController].refreshToken  isEqual: @""]) {
+        if ([urlParts[0] isEqual: @"https://n46.org/whereabt/redirect.html"] == YES)
+        {
+            //NSMutableDictionary *keychainItem = [NSMutableDictionary dictionary];
+            [WelcomeViewController sharedController].authCode = urlParts[1];
             
-            [keychain setObject: [WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
             
-            //OSStatus sts = SecItemAdd((__bridge CFDictionaryRef)keychainItem, NULL);
-            //NSLog(@"Error code: %d", (int)sts);
+            [self setAuthTokenRefreshTokenAndProfileNamesFromCode:[WelcomeViewController sharedController].authCode];
+            
+            KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
+            
+            [keychain setObject:[WelcomeViewController sharedController].userName forKey:(__bridge id)kSecAttrAccount];
+            
+            [keychain setObject:(__bridge id)kSecAttrAccessibleWhenUnlocked forKey:(__bridge id)kSecAttrAccessible];
+            
+            
+            //store refresh token
+            if (![[WelcomeViewController sharedController].refreshToken  isEqual: @""]) {
+                
+                [keychain setObject: [WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
+                
+                //OSStatus sts = SecItemAdd((__bridge CFDictionaryRef)keychainItem, NULL);
+                //NSLog(@"Error code: %d", (int)sts);
+            }
+            
+            else {
+                NSLog(@"Cannot store the refresh token in keychain if it has not yet been found");
+            }
+            
+            NSLog(@"The 'Value Data' code of the user: %@", [keychain objectForKey:(__bridge id)(kSecValueData)]);
+            [webView removeFromSuperview];
+            
+            NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+            
+            
+            if ([preferences boolForKey:@"Done Walkthrough"] == NO) {
+                [self performSegueWithIdentifier:@"segueToIntro" sender:self];
+                [preferences setBool:YES forKey:@"Done Walkthrough"];
+            }
+            
+            else {
+                //already done walkthrough
+                [self performSegueWithIdentifier:@"segueToTab" sender:self];
+                
+            }
+          
         }
         
-        else {
-            NSLog(@"Cannot store the refresh token in keychain if it has not yet been found");
+        else{
+            //do something when OD API returns invalid url
+            NSLog(@"Redirect url invalid");
         }
-        
-        NSLog(@"The 'Value Data' code of the user: %@", [keychain objectForKey:(__bridge id)(kSecValueData)]);
-        [webView removeFromSuperview];
-        [self performSegueWithIdentifier:@"segueToTab" sender:self];
+
     }
     
-    else{
-        //do something when OD API returns invalid url
-        NSLog(@"Redirect url invalid");
+    else {
+        NSLog(@"Redirect URL does not include code");
     }
- 
+
    
     return YES;
 }

@@ -16,6 +16,8 @@
 #import "NSNetworkConnection.h"
 #include <math.h>
 #include <QuartzCore/QuartzCore.h>
+#import "UIImageView+AFNetworking.h"
+
 
 NSString *kCellID = @"cellID";
 
@@ -119,7 +121,7 @@ UILabel *connectionFailLabel;
                 
                 //[self.collectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
                 
-                   [self.collectionView reloadData];
+                [self.collectionView reloadData];
               
                 
                 /*
@@ -128,14 +130,13 @@ UILabel *connectionFailLabel;
                  });
                  */
                 
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                
+                
                 if ([self.StreamActivity isAnimating] == YES) {
                     [self.StreamActivity stopAnimating];
                 }
-                else {
-                    //do nothing if for some reason the indicator was not animating
-                }
-                
-                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+            
             }
             
             else{
@@ -158,7 +159,6 @@ UILabel *connectionFailLabel;
                     suggestLabel.text = @"We suggest increasing your radius in settings";
                     suggestLabel.textColor = [UIColor blackColor];
                     
-                    [NoFeedView addSubview:nothingLabel];
                     [NoFeedView addSubview:nothingLabel];
                     
                     [self.view addSubview:NoFeedView];
@@ -200,6 +200,9 @@ UILabel *connectionFailLabel;
     }
 }
 
+
+
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -239,22 +242,21 @@ UILabel *connectionFailLabel;
     UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
     
     //if it has an image, continue with labels and more; otherwise, the cell will be nearly invisible
-    if (self.streamItems[indexPath.row][@"LargePhoto"] != nil) {
+    
+    if (![self.streamItems[indexPath.row][@"PHOTO"]  isEqual: @"NONE"]) {
         
         //use "ThumbnailPhoto" or "LargePhoto"
-        UIImage *imageReturned = self.streamItems[indexPath.row][@"LargePhoto"];
-        //NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.streamItems[indexPath.row][@"PhotoURL"]]];
-        //UIImage *imageReturned = [UIImage imageWithData:imageData];
-        
+        //UIImage *imageReturned = self.streamItems[indexPath.row][@"LargePhoto"];
+     
         UIImageView *imageSubview = [[UIImageView alloc] initWithFrame:cellView.frame];
-        imageSubview.image = imageReturned;
+        //imageSubview.image = imageReturned;
         imageSubview.contentMode = UIViewContentModeScaleAspectFit;
         
-        [cellView addSubview: imageSubview];
+        //[cellView addSubview: imageSubview];
 
         
         UILabel *DistanceLabel = [[UILabel alloc] initWithFrame:CGRectMake (imageSubview.frame.origin.x, imageSubview.frame.origin.y, self.view.window.frame.size.width, 21)];
-        
+        [cellView addSubview:DistanceLabel];
         double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
         NSString *distanceString = [NSString stringWithFormat:@"%.3f Miles ", distanceInt];
         DistanceLabel.text = distanceString;
@@ -264,24 +266,17 @@ UILabel *connectionFailLabel;
         DistanceLabel.adjustsFontSizeToFitWidth = YES;
         DistanceLabel.textAlignment = NSTextAlignmentCenter;
         DistanceLabel.textColor = [UIColor colorWithRed:255.0f/255.0f green:153.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
-        [cellView addSubview:DistanceLabel];
+        [cellView addSubview: imageSubview];
         
+        if (self.streamItems[indexPath.row][@"PHOTO"] != nil) {
+            imageSubview.image = self.streamItems[indexPath.row][@"PHOTO"];
+        }
+        else {
+                [imageSubview setImageWithURL:[NSURL URLWithString:self.streamItems[indexPath.row][@"PhotoURL"]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
+            self.streamItems[indexPath.row][@"PHOTO"] = imageSubview.image;
+        }
         
-        /*
-        UILabel *NameLabel = [[UILabel alloc] initWithFrame:CGRectMake (imageSubview.frame.origin.x, imageSubview.frame.origin.y, self.view.window.frame.size.width, 21)];
-        NameLabel.font = [UIFont fontWithName: @"Farah" size:17];
-        NameLabel.numberOfLines = 1;
-        NameLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
-        NameLabel.adjustsFontSizeToFitWidth = YES;
-        NameLabel.textAlignment = NSTextAlignmentLeft;
-        NameLabel.textColor = [UIColor whiteColor];
-        NSString *nameString = [NSString stringWithFormat:@"%@", self.streamItems[indexPath.row][@"UserName"]];
-        
-        NSArray *firstLastName = [nameString componentsSeparatedByString:@"_"];
-        NameLabel.text = [NSString stringWithFormat:@"%@ %@", firstLastName[0], firstLastName[1]];
-        [cellView addSubview:NameLabel];
-        */
-        
+        //[cellView addSubview: imageSubview];
     }
     
     else {
@@ -326,6 +321,7 @@ UILabel *connectionFailLabel;
     return reusableHeader;
 }
 */
+
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     

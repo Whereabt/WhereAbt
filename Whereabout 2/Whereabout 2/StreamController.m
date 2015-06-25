@@ -57,6 +57,7 @@ static NSString *const distanceFrom = @"MilesAway";
                                                        else {
                                                        
                                                        NSLog(@"%@", _itemCollection);
+                                                           /*
                                                        for (NSDictionary *photoItem in _itemCollection) {
                                                            NSString *thumbPhotoURL = photoItem[@"ThumbnailURL"];
                                                            NSString *largPhotoURL = photoItem[@"PhotoURL"];
@@ -68,7 +69,7 @@ static NSString *const distanceFrom = @"MilesAway";
                                                            //when requests are done, call completion handler (callBack block) with request-created parameters
                                                            //callBack(_itemCollection, error);
                                                            
-                                                        }
+                                                        } */
                                                         //callBack(_itemCollection, error);
                                                        }
                                                        callBack(_itemCollection, error);

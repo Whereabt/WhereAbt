@@ -450,63 +450,9 @@ else {
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)createSubfolderInODWithName:(NSString *)folderName andCompletion: (void (^)(bool subfolderErrorBool))subfolderCallback {
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/special/approot/children"];
-    
-    NSURL *url = [NSURL URLWithString:stringURL];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
-    
-    [request setHTTPMethod:@"POST"];
-    
-    NSMutableDictionary *bodyDict = [[NSMutableDictionary alloc] init];
-    bodyDict[@"name"] = [NSString stringWithFormat:@"%@", folderName];
-    //bodyDict[@"folder"] = @"";
-    bodyDict[@"@name.conflictBehavior"] = @"fail";
-    
-    NSString *jsonBodyString = [self jsonStringFromDictionary:bodyDict];
-    NSLog(@"Request body json: %@", jsonBodyString);
-
-    NSData *DataJSONbody = [jsonBodyString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    [request setHTTPBody:DataJSONbody];
-        
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        
-    //referencing auth singleton
-    [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
-    
-    NSLog(@"UPLOAD_TOKEN: %@", [WelcomeViewController sharedController].authToken);
-    
-    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        BOOL errorBool;
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-        if (error || [httpResponse statusCode] == 403) {
-            NSLog(@"ERROR in request to create subfolder: %@", error);
-            errorBool = YES;
-        }
-            
-        else {
-            NSError *jsonError = nil;
-            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-            if (jsonError) {
-                errorBool = YES;
-            }
-            else {
-                NSLog(@"RESPONSE: %@", response);
-                NSLog(@"Returned json from POST: %@", jsonDict);
-            }
-        }
-        
-        subfolderCallback(errorBool);
-    }];
-    
-    [postDataTask resume];
-   
-}
 
 - (void)constructTaskWithImageName:(NSString*)name andData:(NSData*)data {
-    NSString *filePath = [NSString stringWithFormat:@"Whereabout_Public/%@", name];
+    NSString *filePath = [NSString stringWithFormat:@"Whereabout.public/%@", name];
             NSURLSession *session = [NSURLSession sharedSession];
             NSString *stringURL = [NSString stringWithFormat:self.uploadURL, filePath];
             
@@ -519,6 +465,7 @@ else {
             //referencing auth singleton
             [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
             NSLog(@"UPLOAD_TOKEN: %@", [WelcomeViewController sharedController].authToken);
+        NSURLSessionUploadTask *task = [session uploadTaskWithRequest:<#(NSURLRequest *)#> fromFile:<#(NSURL *)#> completionHandler:<#^(NSData *data, NSURLResponse *response, NSError *error)completionHandler#>]
             NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request fromData:data completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error){
                 if (error == nil) {
                     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;

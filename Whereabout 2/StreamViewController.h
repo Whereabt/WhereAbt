@@ -9,22 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
-@protocol StreamDelegate <NSObject>
-- (void)recievedLocalStreamJSON:(NSData *)objectNotation;
-- (void)gettingLocalStreamFailedWithError:(NSError *)error;
-
-@end
-
-
-typedef void (^RequestCompletionBlock)(BOOL finished);
-
-
 @interface StreamViewController : UITableViewController <CLLocationManagerDelegate>
 
-@property (weak,nonatomic) id<StreamDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *tableActivityIndicator;
 
-@property (weak, nonatomic) IBOutlet UISlider *radiusSlider;
-- (IBAction)userChangedRadius:(id)sender;
-
+- (IBAction)refreshButtonCall:(id)sender;
 
 @end

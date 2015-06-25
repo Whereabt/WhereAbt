@@ -7,6 +7,7 @@
 //
 
 #import "DefaultViewController.h"
+#import "IntroPageContentViewController.h"
 
 @interface DefaultViewController ()
 
@@ -17,16 +18,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _pageTitles = @[@"Log in using OneDrive", @"Take new photos or upload old ones", @"See what's going on nearby", @"View user profiles"];
-    _pageImages = @[@"page1.png", @"page2.png", @"page3.png", @"page4.png"];
+    _pageImages = @[@"Page 1.PNG", @"Page 4.1.PNG", @"Page 1.PNG", @"Page 2.PNG"];
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
     
-    ContentViewController *startingViewController = [self viewControllerAtIndex:0];
+    IntroPageContentViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 30);
+    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 90);
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
@@ -50,13 +51,18 @@
 */
 
 - (IBAction)beginWalkthrough:(id)sender {
+    IntroPageContentViewController *startingViewController = [self viewControllerAtIndex:0];
+    NSArray *viewControllers = @[startingViewController];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:^(BOOL finished) {
+        
+    }];
 }
 
 #pragma mark - Page View Controller Data Source
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    NSUInteger index = ((ContentViewController *) viewController).pageIndex;
+    NSUInteger index = ((IntroPageContentViewController *) viewController).pageIndex;
     
     if ((index == 0) || (index == NSNotFound)) {
         return nil;
@@ -68,7 +74,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSUInteger index = ((ContentViewController *) viewController).pageIndex;
+    NSUInteger index = ((IntroPageContentViewController *) viewController).pageIndex;
     
     if (index == NSNotFound) {
         return nil;
@@ -81,16 +87,30 @@
     return [self viewControllerAtIndex:index];
 }
 
-- (ContentViewController *)viewControllerAtIndex:(NSUInteger)index
+- (IntroPageContentViewController *)viewControllerAtIndex:(NSUInteger)index
 {
     if (([self.pageTitles count] == 0) || (index >= [self.pageTitles count])) {
         return nil;
     }
     
     // Create a new view controller and pass suitable data.
-    ContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageContentViewController"];
-    pageContentViewController.pageImage = self.pageImages[index];
-    pageContentViewController.pageTitle = self.pageTitles[index];
+    IntroPageContentViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageContentViewController"];
+    
+    NSLog(@"Image array: %@    Title array: %@", self.pageImages, self.pageTitles);
+    
+    pageContentViewController.pageImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@", self.pageImages[index]]];
+    UIImageView *pageImageView = [[UIImageView alloc] init];
+    pageImageView.contentMode = UIViewContentModeScaleAspectFit;
+    pageImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@", self.pageImages[index]]];
+    
+    [pageContentViewController.view addSubview:pageImageView];
+    
+    [pageContentViewController.pageTitle setText:[NSString stringWithFormat:@"%@", self.pageTitles[index]]];
+    
+    pageContentViewController.pageImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@", self.pageImages[index]]];
+    
+    NSLog(@"page title: %@", [NSString stringWithFormat:@"%@", self.pageTitles[index]]);
+    
     pageContentViewController.pageIndex = index;
     
     return pageContentViewController;

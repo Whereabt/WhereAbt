@@ -6,23 +6,18 @@
 //  Copyright (c) 2015 Nicolas Isaza. All rights reserved.
 //
 
-#import "ContentViewController.h"
+#import "IntroPageContentViewController.h"
 
-@interface ContentViewController ()
+@interface IntroPageContentViewController ()
 
 //@property NSUInteger pageIndex;
-@property NSString *titleText;
-@property NSString *imageFile;
 
 @end
 
-@implementation ContentViewController
+@implementation IntroPageContentViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.pageImage.image = [UIImage imageNamed:self.imageFile];
-    self.pageTitle.text = self.titleText;
     // Do any additional setup after loading the view.
 }
 
@@ -31,6 +26,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setUpPageFromName:(NSString *)imageName andTitle:(NSString *)titleText {
+    
+    self.pageImage.image = [UIImage imageNamed:imageName];
+    
+    NSLog(@"Title text: %@",[NSString stringWithFormat:@"%@", titleText]);
+    
+    [self.pageTitle setText: titleText];
+}
 
 
 /*
