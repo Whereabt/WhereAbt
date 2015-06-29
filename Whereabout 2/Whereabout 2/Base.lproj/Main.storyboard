@@ -39,7 +39,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="17T-j3-fxe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-851" y="36"/>
+            <point key="canvasLocation" x="-1801" y="-289"/>
         </scene>
         <!--New Photo-->
         <scene sceneID="tvD-ad-qep">
@@ -165,8 +165,9 @@
                         <color key="sectionIndexColor" red="1" green="0.68132159979999996" blue="0.1911690533" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexBackgroundColor" red="0.22019875520000001" green="0.66980765389999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="QhA-FJ-z9c">
-                            <rect key="frame" x="0.0" y="198" width="320" height="20"/>
+                            <rect key="frame" x="0.0" y="530" width="320" height="20"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="color" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         </activityIndicatorView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="User ID" rowHeight="376" id="6Ie-cH-Yn4" customClass="StreamTVCell">
@@ -174,15 +175,15 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Ie-cH-Yn4" id="ENo-sc-bDj">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yJD-JO-us5">
-                                            <rect key="frame" x="18" y="37" width="302" height="338"/>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Distance Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="deh-jD-FkJ">
                                             <rect key="frame" x="18" y="8" width="114" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yJD-JO-us5">
+                                            <rect key="frame" x="9" y="29" width="302" height="338"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
@@ -577,6 +578,11 @@
                                                         <action selector="logoutPressed:" destination="58h-sJ-EZT" eventType="touchUpInside" id="0lQ-Lp-gQ1"/>
                                                     </connections>
                                                 </button>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="fUF-ep-4fE">
+                                                    <rect key="frame" x="223" y="12" width="20" height="20"/>
+                                                    <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                                    <color key="color" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
@@ -714,6 +720,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="8PI-AG-yrj"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="logoutActivityIndicator" destination="fUF-ep-4fE" id="ixO-fk-Nhl"/>
                         <outlet property="logoutButton" destination="Sz8-qt-j8f" id="ih3-w6-bFg"/>
                         <outlet property="radiusLabel" destination="5K9-SN-2eA" id="HmB-r7-Dza"/>
                         <outlet property="radiusSlider" destination="7vb-bQ-Oe2" id="Qgx-dQ-kEN"/>
@@ -822,12 +829,12 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lDX-3F-XYU">
                                 <rect key="frame" x="129" y="524" width="62" height="30"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Finished">
+                                <state key="normal" title="Done">
                                     <color key="titleColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="C1P-Vl-X9Q" kind="presentation" id="VoT-la-KaM"/>
+                                    <segue destination="az3-do-Sfs" kind="presentation" identifier="" id="1g1-9h-IHv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -837,7 +844,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mrb-du-lsA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1229" y="-129"/>
+            <point key="canvasLocation" x="-2302" y="354"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="GeY-4F-lhA">
@@ -848,7 +855,7 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wt2-Nm-vfH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-851" y="-624"/>
+            <point key="canvasLocation" x="-2146" y="-289"/>
         </scene>
         <!--Initial View Controller-->
         <scene sceneID="Aa1-M2-qUR">
@@ -873,6 +880,7 @@
                         <segue destination="az3-do-Sfs" kind="show" identifier="segueToLogin" id="IEe-xo-XNR"/>
                         <segue destination="C1P-Vl-X9Q" kind="show" identifier="segueToMain" id="xbf-Pp-iaP"/>
                         <segue destination="9rA-JX-sA0" kind="showDetail" identifier="fakeSegue" id="cut-J9-wnp"/>
+                        <segue destination="7gh-sw-Vdk" kind="presentation" identifier="segueToWalkthrough" id="Fym-9K-Ggg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ljR-Fv-ON7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -900,7 +908,7 @@
                                 <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWY-fw-5KP">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vWY-fw-5KP">
                                 <rect key="frame" x="61" y="465" width="199" height="30"/>
                                 <state key="normal" title="LOG IN OR SIGN UP">
                                     <color key="titleColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -934,7 +942,6 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <segue destination="C1P-Vl-X9Q" kind="showDetail" identifier="segueToTab" id="JWI-LV-HsN"/>
-                        <segue destination="7gh-sw-Vdk" kind="presentation" identifier="segueToIntro" id="2II-37-LeI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lda-Gy-cNq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1039,6 +1046,15 @@
                                 <color key="textColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Time Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFU-Fx-Oo1">
+                                <rect key="frame" x="216" y="104" width="88" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="88" id="lyZ-Y2-AA0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fUQ-VW-DxM">
                                 <rect key="frame" x="16" y="72" width="288" height="30"/>
                                 <state key="normal" title="NameButton">
@@ -1050,15 +1066,6 @@
                                     <segue destination="g8Y-Ci-Ftk" kind="show" identifier="segueToProfile" id="kWH-I7-hse"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Time Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFU-Fx-Oo1">
-                                <rect key="frame" x="216" y="104" width="88" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="88" id="lyZ-Y2-AA0"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -1210,7 +1217,8 @@
         <image name="iphone 6 plus-App icon 1024x1024 REV.png" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VoT-la-KaM"/>
+        <segue reference="JWI-LV-HsN"/>
+        <segue reference="1g1-9h-IHv"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.68132159979999996" blue="0.1911690533" alpha="1" colorSpace="calibratedRGB"/>
 </document>

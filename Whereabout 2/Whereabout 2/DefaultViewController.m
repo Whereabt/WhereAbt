@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _pageTitles = @[@"Log in using OneDrive", @"Take new photos or upload old ones", @"See what's going on nearby", @"View user profiles"];
-    _pageImages = @[@"Page 1.PNG", @"Page 4.1.PNG", @"Page 1.PNG", @"Page 2.PNG"];
+    _pageImages = @[@"Page 1.0.PNG", @"Page 4.1.PNG", @"Page 1.PNG", @"Page 2.PNG"];
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;

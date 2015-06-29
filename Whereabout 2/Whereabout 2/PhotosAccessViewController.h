@@ -16,11 +16,12 @@
 
 //outlet created for UIImageView
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
+@property (strong, nonatomic) id delegate;
 //establishing action methods for the two bar button items
 
 - (IBAction)fromCamera:(id)sender;
 - (IBAction)fromCameraRoll:(id)sender;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *uploadActivityIndicator;
+- (void)takePhotoFromCamera;
 
 @end

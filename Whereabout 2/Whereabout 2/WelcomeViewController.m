@@ -223,20 +223,7 @@
             NSLog(@"The 'Value Data' code of the user: %@", [keychain objectForKey:(__bridge id)(kSecValueData)]);
             [webView removeFromSuperview];
             
-            NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-            
-            
-            if ([preferences boolForKey:@"Done Walkthrough"] == NO) {
-                [self performSegueWithIdentifier:@"segueToIntro" sender:self];
-                [preferences setBool:YES forKey:@"Done Walkthrough"];
-            }
-            
-            else {
-                //already done walkthrough
-                [self performSegueWithIdentifier:@"segueToTab" sender:self];
-                
-            }
-          
+            [self performSegueWithIdentifier:@"segueToTab" sender:self];
         }
         
         else{

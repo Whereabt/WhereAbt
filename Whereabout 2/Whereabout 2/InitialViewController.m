@@ -63,7 +63,22 @@
     }
     
     else {
-        [self performSegueWithIdentifier:@"segueToLogin" sender:self];
+        
+        NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+        
+        //DELETE
+        //[preferences setBool:NO forKey:@"Done Walkthrough"];
+        
+        if ([preferences boolForKey:@"Done Walkthrough"] == NO) {
+            [self performSegueWithIdentifier:@"segueToWalkthrough" sender:self];
+            [preferences setBool:YES forKey:@"Done Walkthrough"];
+        }
+        
+        else {
+            //already done walkthrough
+            [self performSegueWithIdentifier:@"segueToLogin" sender:self];
+            
+        }
     }
     
 }

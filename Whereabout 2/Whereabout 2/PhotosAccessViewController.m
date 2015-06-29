@@ -7,6 +7,7 @@
 //
 
 #import "PhotosAccessViewController.h"
+#import "OverlayView.h"
 #import "WelcomeViewController.h"
 #import "StreamViewController.h"
 #import "LocationController.h"
@@ -17,6 +18,7 @@
 #import <ImageIO/CGImageProperties.h>
 #import <CoreLocation/CoreLocation.h>
 #include <math.h>
+
 
 //static NSString *const fakeFileName = @"Fake2.jpg";
 
@@ -29,6 +31,16 @@
 @property (strong, nonatomic) NSString *PUTUrlString;
 
 @end
+
+//transform values for full screen support
+#define CAMERA_TRANSFORM_X 1
+#define CAMERA_TRANSFORM_Y 1.12412
+
+//iphone screen dimensions
+#define SCREEN_WIDTH  320
+#define SCREEN_HEIGTH 480
+
+UIImagePickerController *imagePicker;
 
 @implementation PhotosAccessViewController
 
@@ -60,8 +72,8 @@
 
 - (void)createShareLinkForODFileWithPath:(NSString *) ODfilePath andCompletion: (void (^)(NSError *Error))theCallback {
     
-    //NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/action.createLink", ODfilePath];
-    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/items/%@/action.createLink", ODfilePath];
+    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/action.createLink", ODfilePath];
+    //NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/items/%@/action.createLink", ODfilePath];
 
     NSURL *url = [NSURL URLWithString:stringURL];
 
@@ -118,6 +130,9 @@
                 NSURLSession *theSession = [NSURLSession sharedSession];
                 NSURLSessionDataTask *dataRequestTask = [theSession dataTaskWithURL:properURL completionHandler:^(NSData *theData, NSURLResponse *theResponse, NSError *theError) {
                     NSLog(@"Response from encoded url data request task: %@   Error: %@", theResponse, theError);
+                    NSError *jsonerror = nil;
+                    NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonerror];
+                    NSLog(@"JSON from double encoded url request: %@", immutable);
                     theCallback(theError);
                 }];
                 [dataRequestTask resume];
@@ -127,9 +142,7 @@
             else {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if ([self.uploadActivityIndicator isAnimating] == YES) {
-                        [self.uploadActivityIndicator stopAnimating];
-                    }
+                    [self stopAnimatingActivityIndicator];
                 });
                 
                 UIAlertView *jsonOrDataTaskAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a problem while trying to connect to the server, please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
@@ -146,9 +159,7 @@
     else {
         NSLog(@"Error creating request body's JSON");
         
-        if ([self.uploadActivityIndicator isAnimating] == YES) {
-            [self.uploadActivityIndicator stopAnimating];
-        }
+        [self stopAnimatingActivityIndicator];
         
         UIAlertView *requestBodyJsonAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a problem while trying to connect to the server, please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         
@@ -174,11 +185,15 @@
     return jsonString;
 }
 
+- (void)takePhotoFromCamera {
+    NSLog(@"Nothing");
+    [imagePicker takePicture];
+}
 
 //implementing UseCameraRoll action method
 - (IBAction)fromCameraRoll:(id)sender {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
+        imagePicker = [[UIImagePickerController alloc]init];
         imagePicker.delegate = self;
         imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
@@ -199,18 +214,35 @@
 //implementing useCamera action method
 - (IBAction)fromCamera:(id)sender {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES) {
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
-        imagePicker.delegate = self;
+        imagePicker = [[UIImagePickerController alloc]init];
+
         imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         
         //default mediaType propoerty value is only type images so no need to specify
         //imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
         
-        imagePicker.showsCameraControls = YES;
-        imagePicker.allowsEditing = YES;
+        //make NO if using overlay
+        imagePicker.showsCameraControls = NO;
+        
+        OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGTH)];
+        imagePicker.cameraOverlayView = overlay;
+        
+        imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+        imagePicker.toolbarHidden = YES;
+        imagePicker.navigationBarHidden = NO;
+        imagePicker.delegate = self;
+        //imagePicker.cameraViewTransform = CGAffineTransformScale(imagePicker.cameraViewTransform, CAMERA_TRANSFORM_X, CAMERA_TRANSFORM_Y);
+        imagePicker.navigationBar.barStyle = UIBarStyleDefault;
+        
+        imagePicker.navigationBar.tintColor = [UIColor colorWithRed:0.0f/255.0f
+                                                               green:153.0f/255.0f
+                                                                blue:255.0f/255.0f
+                                                               alpha:1.0f];
+        
+        
+        [imagePicker setAllowsEditing:YES];
         [self presentViewController:imagePicker animated:YES completion:nil];
         _newMedia = YES;
-
     }
     
     else{
@@ -434,11 +466,13 @@ if ([NetworkManager doesUserHaveInternetConnection]) {
     
 else {
     NSLog(@"NO CONNECTION");
+    [picker dismissViewControllerAnimated:YES completion:NULL];
     UIAlertController *alertCont = [UIAlertController alertControllerWithTitle:@"No Internet Connection" message:@"We were unable to post your photo." preferredStyle:UIAlertControllerStyleAlert];
+    
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+    
     [alertCont addAction:okAction];
     
-    [picker dismissViewControllerAnimated:YES completion:NULL];
     [self presentViewController:alertCont animated:YES completion:nil];
   }
     
@@ -452,7 +486,7 @@ else {
 
 
 - (void)constructTaskWithImageName:(NSString*)name andData:(NSData*)data {
-    NSString *filePath = [NSString stringWithFormat:@"Whereabout.public/%@", name];
+    NSString *filePath = [NSString stringWithFormat:@"Whereabt.Test/%@", name];
             NSURLSession *session = [NSURLSession sharedSession];
             NSString *stringURL = [NSString stringWithFormat:self.uploadURL, filePath];
             
@@ -465,7 +499,7 @@ else {
             //referencing auth singleton
             [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
             NSLog(@"UPLOAD_TOKEN: %@", [WelcomeViewController sharedController].authToken);
-        NSURLSessionUploadTask *task = [session uploadTaskWithRequest:<#(NSURLRequest *)#> fromFile:<#(NSURL *)#> completionHandler:<#^(NSData *data, NSURLResponse *response, NSError *error)completionHandler#>]
+    
             NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request fromData:data completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error){
                 if (error == nil) {
                     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
@@ -478,7 +512,7 @@ else {
                     NSLog(@"RESPONSE FROM OD UPLOAD: %@", jsonDict);
                     NSString *resourceId = jsonDict[@"id"];
                     
-                    [self createShareLinkForODFileWithPath:resourceId andCompletion:^(NSError *Error) {
+                    [self createShareLinkForODFileWithPath:@"Whereabt.Test" andCompletion:^(NSError *Error) {
                         
                         if (!Error) {
                             

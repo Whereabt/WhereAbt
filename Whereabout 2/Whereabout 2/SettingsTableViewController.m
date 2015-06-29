@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.logoutActivityIndicator.hidesWhenStopped = YES;
     
     NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
     if ([[preferences objectForKey:@"autoSave"] isEqualToString:@"YES"]) {
@@ -59,6 +60,8 @@
 
 
 - (IBAction)logoutPressed:(id)sender {
+    [self.logoutActivityIndicator startAnimating];
+    
     KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
     
     //set nil for the refresh token, user will have to log back in
@@ -71,7 +74,7 @@
     NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         //completion
         NSLog(@"Response from logout: %@", response);
-        
+        [self.logoutActivityIndicator stopAnimating];
         [self performSegueWithIdentifier:@"segueToLogout" sender:self];
     }];
     

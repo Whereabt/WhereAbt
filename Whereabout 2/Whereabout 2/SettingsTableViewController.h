@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *radiusLabel;
 @property (strong, nonatomic) IBOutlet UISwitch *saveSwitch;
 @property (strong, nonatomic) IBOutlet UIButton *logoutButton;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *logoutActivityIndicator;
 - (IBAction)logoutPressed:(id)sender;
 - (IBAction)switchChange:(id)sender;
 - (IBAction)sliderChange:(id)sender;

@@ -70,6 +70,14 @@
 		B985EA841B39A4E9000D2AFD /* Page 2.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B985EA801B39A4E9000D2AFD /* Page 2.PNG */; };
 		B985EA861B39A4E9000D2AFD /* Page 4.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B985EA821B39A4E9000D2AFD /* Page 4.PNG */; };
 		B985EA8B1B3AFE31000D2AFD /* Page 4.1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B985EA8A1B3AFE31000D2AFD /* Page 4.1.PNG */; };
+		B985EA8D1B3D9D00000D2AFD /* Page 1.0.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B985EA8C1B3D9D00000D2AFD /* Page 1.0.PNG */; };
+		B985EA931B409B47000D2AFD /* CamOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B985EA911B409B47000D2AFD /* CamOverlayViewController.m */; };
+		B985EA941B409B47000D2AFD /* CamOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B985EA921B409B47000D2AFD /* CamOverlayViewController.xib */; };
+		B985EA971B4184B1000D2AFD /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B985EA961B4184B1000D2AFD /* OverlayView.m */; };
+		B985EA991B4185A6000D2AFD /* OverlayImage.png in Resources */ = {isa = PBXBuildFile; fileRef = B985EA981B4185A6000D2AFD /* OverlayImage.png */; };
+		B985EA9B1B418B19000D2AFD /* Camera Overlay (1).png in Resources */ = {isa = PBXBuildFile; fileRef = B985EA9A1B418B19000D2AFD /* Camera Overlay (1).png */; };
+		B985EA9D1B418FF1000D2AFD /* OverlayImage(2).jpg in Resources */ = {isa = PBXBuildFile; fileRef = B985EA9C1B418FF1000D2AFD /* OverlayImage(2).jpg */; };
+		B985EA9F1B419284000D2AFD /* overlay image (3).jpg in Resources */ = {isa = PBXBuildFile; fileRef = B985EA9E1B419284000D2AFD /* overlay image (3).jpg */; };
 		B98B88861A900E4D00309EA7 /* TabBarAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */; };
 		B9A9EDA31ABF69B1000ECE24 /* ProfileCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDA21ABF69B1000ECE24 /* ProfileCVCell.m */; };
 		B9A9EDA61ABF9223000ECE24 /* ProfileViewHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDA51ABF9223000ECE24 /* ProfileViewHeaderView.m */; };
@@ -232,6 +240,16 @@
 		B985EA801B39A4E9000D2AFD /* Page 2.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Page 2.PNG"; path = "UIImages/Page 2.PNG"; sourceTree = SOURCE_ROOT; };
 		B985EA821B39A4E9000D2AFD /* Page 4.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Page 4.PNG"; path = "UIImages/Page 4.PNG"; sourceTree = SOURCE_ROOT; };
 		B985EA8A1B3AFE31000D2AFD /* Page 4.1.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Page 4.1.PNG"; path = "UIImages/Page 4.1.PNG"; sourceTree = SOURCE_ROOT; };
+		B985EA8C1B3D9D00000D2AFD /* Page 1.0.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Page 1.0.PNG"; path = "UIImages/Page 1.0.PNG"; sourceTree = SOURCE_ROOT; };
+		B985EA901B409B47000D2AFD /* CamOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamOverlayViewController.h; sourceTree = "<group>"; };
+		B985EA911B409B47000D2AFD /* CamOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamOverlayViewController.m; sourceTree = "<group>"; };
+		B985EA921B409B47000D2AFD /* CamOverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CamOverlayViewController.xib; sourceTree = "<group>"; };
+		B985EA951B4184B1000D2AFD /* OverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayView.h; sourceTree = "<group>"; };
+		B985EA961B4184B1000D2AFD /* OverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayView.m; sourceTree = "<group>"; };
+		B985EA981B4185A6000D2AFD /* OverlayImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = OverlayImage.png; path = UIImages/OverlayImage.png; sourceTree = SOURCE_ROOT; };
+		B985EA9A1B418B19000D2AFD /* Camera Overlay (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Camera Overlay (1).png"; path = "UIImages/Camera Overlay (1).png"; sourceTree = SOURCE_ROOT; };
+		B985EA9C1B418FF1000D2AFD /* OverlayImage(2).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "OverlayImage(2).jpg"; path = "UIImages/OverlayImage(2).jpg"; sourceTree = SOURCE_ROOT; };
+		B985EA9E1B419284000D2AFD /* overlay image (3).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "overlay image (3).jpg"; path = "UIImages/overlay image (3).jpg"; sourceTree = SOURCE_ROOT; };
 		B98B88841A900E4D00309EA7 /* TabBarAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarAppViewController.h; sourceTree = "<group>"; };
 		B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarAppViewController.m; sourceTree = "<group>"; };
 		B9A9EDA11ABF69B1000ECE24 /* ProfileCVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCVCell.h; sourceTree = "<group>"; };
@@ -430,6 +448,11 @@
 			children = (
 				01D47DFD1A45D00600A45013 /* PhotosAccessViewController.h */,
 				01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */,
+				B985EA951B4184B1000D2AFD /* OverlayView.h */,
+				B985EA961B4184B1000D2AFD /* OverlayView.m */,
+				B985EA901B409B47000D2AFD /* CamOverlayViewController.h */,
+				B985EA911B409B47000D2AFD /* CamOverlayViewController.m */,
+				B985EA921B409B47000D2AFD /* CamOverlayViewController.xib */,
 			);
 			name = "Photo Upload";
 			sourceTree = "<group>";
@@ -557,6 +580,7 @@
 			isa = PBXGroup;
 			children = (
 				B985EA8A1B3AFE31000D2AFD /* Page 4.1.PNG */,
+				B985EA8C1B3D9D00000D2AFD /* Page 1.0.PNG */,
 				B985EA7F1B39A4E9000D2AFD /* Page 1.PNG */,
 				B985EA801B39A4E9000D2AFD /* Page 2.PNG */,
 				B985EA821B39A4E9000D2AFD /* Page 4.PNG */,
@@ -663,6 +687,10 @@
 				B9BC13371A8B10D100659591 /* PhotoView.jpg */,
 				B985EA871B39A523000D2AFD /* Page VC Intro Images */,
 				B985EA791B38AB0E000D2AFD /* Gray Stream Placeholder Image.jpg */,
+				B985EA981B4185A6000D2AFD /* OverlayImage.png */,
+				B985EA9A1B418B19000D2AFD /* Camera Overlay (1).png */,
+				B985EA9C1B418FF1000D2AFD /* OverlayImage(2).jpg */,
+				B985EA9E1B419284000D2AFD /* overlay image (3).jpg */,
 				B9BC13391A8B10E100659591 /* Welcome 380x449 copy.jpg */,
 				B938DCC81A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png */,
 			);
@@ -754,6 +782,7 @@
 				B959B9971B098D3F0000B65F /* Whereabout-upload-gray-05-11-2015.png in Resources */,
 				B938DCC91A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png in Resources */,
 				B9EBBCC01AA56123008FA719 /* icon-Profile GRAY 50x50.png in Resources */,
+				B985EA9F1B419284000D2AFD /* overlay image (3).jpg in Resources */,
 				B9EBBCBF1AA56123008FA719 /* icon-Upload GRAY 50x50.png in Resources */,
 				B9EAFA0B1AEDD39A00C99D29 /* Whereabout-feed-gray-04-25-2015.png in Resources */,
 				B9BC133A1A8B10E100659591 /* Welcome 380x449 copy.jpg in Resources */,
@@ -765,6 +794,8 @@
 				B9EBBCBC1AA56123008FA719 /* icon-Feed-SELECTED 50x50.png in Resources */,
 				B9EBBCBA1AA56123008FA719 /* icon-Profile-SELECTED 50x50.png in Resources */,
 				B9EAFA101AEDD39A00C99D29 /* Whereabout-settings-orange-04-25-2015.png in Resources */,
+				B985EA9D1B418FF1000D2AFD /* OverlayImage(2).jpg in Resources */,
+				B985EA991B4185A6000D2AFD /* OverlayImage.png in Resources */,
 				B9EAF9F51AE30D8300C99D29 /* Feed tab white.png in Resources */,
 				012996E71A354E5300C89D09 /* Main.storyboard in Resources */,
 				B9EAF9F81AE30D8300C99D29 /* Profile tab blue negative.png in Resources */,
@@ -794,8 +825,11 @@
 				B938DCF51A757BCB0073D91F /* Photo access Image 350x350.png in Resources */,
 				B9EAF9F41AE30D8300C99D29 /* Feed tab blue negative.png in Resources */,
 				012996E91A354E5300C89D09 /* Images.xcassets in Resources */,
+				B985EA9B1B418B19000D2AFD /* Camera Overlay (1).png in Resources */,
+				B985EA8D1B3D9D00000D2AFD /* Page 1.0.PNG in Resources */,
 				B959B98F1B098D1D0000B65F /* Whereabout-upload-orange-05-11-2015.png in Resources */,
 				B9EAFA0F1AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png in Resources */,
+				B985EA941B409B47000D2AFD /* CamOverlayViewController.xib in Resources */,
 				B9EAFA111AEDD39A00C99D29 /* Whereabout-upload-gray-04-25-2015.png in Resources */,
 				B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */,
 				B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */,
@@ -823,6 +857,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B985EA971B4184B1000D2AFD /* OverlayView.m in Sources */,
 				B98B88861A900E4D00309EA7 /* TabBarAppViewController.m in Sources */,
 				B985EA771B387715000D2AFD /* UIRefreshControl+AFNetworking.m in Sources */,
 				01D47E161A583B9D00A45013 /* ImageDataObject.m in Sources */,
@@ -854,6 +889,7 @@
 				B9EBBCA81A917D2D008FA719 /* ProfileCollectionViewController.m in Sources */,
 				01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */,
 				012996DB1A354E5300C89D09 /* main.m in Sources */,
+				B985EA931B409B47000D2AFD /* CamOverlayViewController.m in Sources */,
 				B938DCB91A6F4F2C0073D91F /* ProfileController.m in Sources */,
 				B938DCB01A641E560073D91F /* StreamController.m in Sources */,
 				B9E709421ACF5FB50054DE2C /* InitialViewController.m in Sources */,

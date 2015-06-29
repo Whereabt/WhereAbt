@@ -18,28 +18,30 @@
 
 @interface StreamViewController ()
 
-
 @property (strong, nonatomic) NSMutableArray *streamItems;
 
 @end
 
 
-
 @implementation StreamViewController
 UILabel *connFailLabel;
+UIActivityIndicatorView *StreamActivityView;
 
 - (void)viewDidLoad {
      [super viewDidLoad];
     
     self.tableActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.tableActivityIndicator.hidesWhenStopped = YES;
-    [self refreshStream];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+        [self refreshStream];
 }
 
 - (void)refreshStream
@@ -50,7 +52,18 @@ UILabel *connFailLabel;
         NSLog(@"HAS CONNECTION");
         
         [self.tableView bringSubviewToFront:self.tableActivityIndicator];
-        [self.tableActivityIndicator startAnimating];
+        //[self.tableActivityIndicator startAnimating];
+        
+        UIActivityIndicatorView *StreamActivityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        
+        NSLog(@"Point: %@", NSStringFromCGPoint(self.view.center));
+        StreamActivityView.center = CGPointMake(self.view.window.center.x, self.view.window.center.y - (self.view.window.frame.size.height/2) + 20);
+        
+        [self.view addSubview:StreamActivityView];
+        
+        
+        [StreamActivityView startAnimating];
+        
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
         self.tableView.alwaysBounceVertical = YES;
@@ -92,7 +105,8 @@ UILabel *connFailLabel;
                 if ([self.tableActivityIndicator isAnimating] == YES) {
                     [self.tableActivityIndicator stopAnimating];
                 }
-                
+                [StreamActivityView stopAnimating];
+                [StreamActivityView removeFromSuperview];
                 /*
                  dispatch_async(dispatch_get_main_queue(), ^{
                  [self.collectionView reloadData];
