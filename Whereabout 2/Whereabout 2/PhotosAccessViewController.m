@@ -29,6 +29,9 @@
 @property (strong, nonatomic) NSString *metaLat;
 @property (strong, nonatomic) NSDate *metaTimeStamp;
 @property (strong, nonatomic) NSString *PUTUrlString;
+@property (strong, nonatomic) NSDictionary *postInfo;
+@property (nonatomic, assign) BOOL hasLoadedVC;
+@property (nonatomic, assign) BOOL wantsCamera;
 
 @end
 
@@ -47,6 +50,7 @@ UIImagePickerController *imagePicker;
 {
     WelcomeViewController *welcomeManager;
     NSString *uniqueFileName;
+    UIViewController *VC;
 }
 
 - (void)viewDidLoad {
@@ -54,20 +58,85 @@ UIImagePickerController *imagePicker;
 
     [LocationController sharedController];
     
-    self.uploadActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
-    self.uploadActivityIndicator.color = [UIColor orangeColor];
-    self.uploadActivityIndicator.hidesWhenStopped = YES;
-    
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-
+    
 }
 
-- (void)stopAnimatingActivityIndicator {
-    if ([self.uploadActivityIndicator isAnimating]) {
-        [self.uploadActivityIndicator stopAnimating];
-    }
+- (void)viewDidAppear:(BOOL)animated {
+    //present camera
+    
+    if (self.hasLoadedVC == NO) {
+        
+        if (self.wantsCamera) {
+        
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES) {
+                imagePicker = [[UIImagePickerController alloc]init];
+        
+                imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        //default mediaType propoerty value is only type images so no need to specify
+        //imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+        
+        //make NO if using overlay
+                imagePicker.showsCameraControls = NO;
+        
+                OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGTH)];
+                imagePicker.cameraOverlayView = overlay;
+                imagePicker.view.alpha = 1.0;
+                imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+                imagePicker.toolbarHidden = YES;
+                imagePicker.navigationBarHidden = YES;
+                imagePicker.delegate = self;
+            //imagePicker.cameraViewTransform = CGAffineTransformScale(imagePicker.cameraViewTransform, CAMERA_TRANSFORM_X, CAMERA_TRANSFORM_Y);
+                imagePicker.navigationBar.barStyle = UIBarStyleDefault;
+        
+                imagePicker.navigationBar.tintColor = [UIColor colorWithRed:0.0f/255.0f
+                                                              green:153.0f/255.0f
+                                                               blue:255.0f/255.0f
+                                                              alpha:1.0f];
+        
+                _newMedia = YES;
+                [imagePicker setAllowsEditing:YES];
+                [self presentViewController:imagePicker animated:YES completion:nil];
+            }
+    
+            else {
+                UIAlertView *noCameraAlert = [[UIAlertView alloc]initWithTitle:@"Problem Occurred" message:@"It appears that your device doesn't have a camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [noCameraAlert show];
+            }
+        }
+        
+        else {
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
+                imagePicker = [[UIImagePickerController alloc]init];
+                imagePicker.delegate = self;
+                imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                
+                //default mediaType propoerty value is only type images so no need to specify
+                //imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                imagePicker.allowsEditing = YES;
+                _newMedia = NO;
+                [self presentViewController:imagePicker animated:YES completion:nil];
+            }
+            
+            else {
+                UIAlertView *noCameraRollAlert = [[UIAlertView alloc]initWithTitle:@"Problem Occurred" message:@"We were unable to access your camera roll" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [noCameraRollAlert show];
+            }
 
+        }
+        self.hasLoadedVC = YES;
+    }
+    
+    else {
+        //remove the vc, go to stream
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+
+- (void)setSourceTypeToWantsCamera:(BOOL) wantsCameraBool {
+    self.wantsCamera = wantsCameraBool;
 }
 
 - (void)createShareLinkForODFileWithPath:(NSString *) ODfilePath andCompletion: (void (^)(NSError *Error))theCallback {
@@ -141,10 +210,6 @@ UIImagePickerController *imagePicker;
             
             else {
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self stopAnimatingActivityIndicator];
-                });
-                
                 UIAlertView *jsonOrDataTaskAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a problem while trying to connect to the server, please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                 [jsonOrDataTaskAlert show];
                 
@@ -158,8 +223,6 @@ UIImagePickerController *imagePicker;
     
     else {
         NSLog(@"Error creating request body's JSON");
-        
-        [self stopAnimatingActivityIndicator];
         
         UIAlertView *requestBodyJsonAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a problem while trying to connect to the server, please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         
@@ -185,23 +248,49 @@ UIImagePickerController *imagePicker;
     return jsonString;
 }
 
+
+//OVERLAY BUTTONS
 - (void)takePhotoFromCamera {
-    NSLog(@"Nothing");
     [imagePicker takePicture];
 }
 
-//implementing UseCameraRoll action method
-- (IBAction)fromCameraRoll:(id)sender {
+- (void)cancelTakePhotoEvent {
+    StreamViewController *streamController = [[StreamViewController alloc] init];
+    
+    [streamController closePhotoVCWithCompletion:^{
+        //[imagePicker dismissViewControllerAnimated:YES completion: nil];
+    }];
+}
+
+- (void)switchCamera {
+    if (imagePicker.cameraDevice == UIImagePickerControllerCameraDeviceRear) {
+        [imagePicker setCameraDevice:UIImagePickerControllerCameraDeviceFront];
+    }
+    else {
+        [imagePicker setCameraDevice:UIImagePickerControllerCameraDeviceRear];
+    }
+    
+}
+
+- (void)selectFromCameraRoll {
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        [self createImagePickerForCameraRoll];
+       }];
+}
+
+- (void)createImagePickerForCameraRoll {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] == YES) {
-        imagePicker = [[UIImagePickerController alloc]init];
-        imagePicker.delegate = self;
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        UIImagePickerController *rollPicker = [[UIImagePickerController alloc]init];
+        rollPicker.delegate = self;
+        rollPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         
         //default mediaType propoerty value is only type images so no need to specify
         //imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-        imagePicker.allowsEditing = YES;
-        [self presentViewController:imagePicker animated:YES completion:nil];
+        rollPicker.allowsEditing = YES;
         _newMedia = NO;
+        
+        NSLog(@"Last VC: %@", [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject]);
+        [self presentViewController:rollPicker animated:YES completion:nil];
     }
     
     else{
@@ -210,277 +299,277 @@ UIImagePickerController *imagePicker;
     }
 }
 
-
-//implementing useCamera action method
-- (IBAction)fromCamera:(id)sender {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES) {
-        imagePicker = [[UIImagePickerController alloc]init];
-
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        
-        //default mediaType propoerty value is only type images so no need to specify
-        //imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
-        
-        //make NO if using overlay
-        imagePicker.showsCameraControls = NO;
-        
-        OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGTH)];
-        imagePicker.cameraOverlayView = overlay;
-        
-        imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
-        imagePicker.toolbarHidden = YES;
-        imagePicker.navigationBarHidden = NO;
-        imagePicker.delegate = self;
-        //imagePicker.cameraViewTransform = CGAffineTransformScale(imagePicker.cameraViewTransform, CAMERA_TRANSFORM_X, CAMERA_TRANSFORM_Y);
-        imagePicker.navigationBar.barStyle = UIBarStyleDefault;
-        
-        imagePicker.navigationBar.tintColor = [UIColor colorWithRed:0.0f/255.0f
-                                                               green:153.0f/255.0f
-                                                                blue:255.0f/255.0f
-                                                               alpha:1.0f];
-        
-        
-        [imagePicker setAllowsEditing:YES];
-        [self presentViewController:imagePicker animated:YES completion:nil];
-        _newMedia = YES;
-    }
-    
-    else{
-        UIAlertView *noCameraAlert = [[UIAlertView alloc]initWithTitle:@"Problem Occurred" message:@"It appears that your device doesn't have a camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [noCameraAlert show];
-    }
-
-}
-
-
-
 #pragma mark - UIImagePickerControllerDelegate
 
 //responding to user accepting image/video he just took
-- (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
-//CHECK CONNECTION BEFORE ANYTHING
-NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
-if ([NetworkManager doesUserHaveInternetConnection]) {
-
-    //determining image source
-    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-        _sourceTypeCamera = YES;
-        if (![self.uploadActivityIndicator isAnimating]) {
-            [self.uploadActivityIndicator startAnimating];
-        }
-         //get location
-        LocationController *locationController = [[LocationController alloc]init];
-    
-        _metaLong = [NSString stringWithFormat: @"%f", locationController.locationManager.location.coordinate.longitude];
-        _metaLat = [NSString stringWithFormat: @"%f", locationController.locationManager.location.coordinate.latitude];
-        NSLog(@"Client longitude: %@ latitude: %@", _metaLong, _metaLat);
+    if (_newMedia == YES) {
+        NSLog(@"From camera");
+        UIImageView *PreviewImageView = [[UIImageView alloc] initWithImage:[info objectForKey: UIImagePickerControllerOriginalImage]];
+        PreviewImageView.frame = CGRectMake(0, 0, self.view.frame.size.width, 430);
+        //PreviewImageView.contentMode = UIViewContentModeScaleAspectFill;
+        PreviewImageView.opaque = YES;
+        PreviewImageView.userInteractionEnabled = YES;
+        VC = [[UIViewController alloc] init];
+        [VC.view addSubview:PreviewImageView];
+        //VC.view = PreviewImageView;
         
-        //handling image taken
-        NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+        //set post stuff
+        imagePicker = picker;
+        self.postInfo = info;
         
-        //declaring images
-        UIImage *originalImage, *editedImage, *imageToSave;
+        //create post button
+        UIButton *postButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2), 533, (self.view.frame.size.width/2) - 5, 35)];
+        [postButton setTitle:@"POST" forState:UIControlStateNormal];
+        [postButton setTitleColor:[UIColor colorWithRed:0.0f/255.0f
+                                                  green:153.0f/255.0f
+                                                   blue:255.0f/255.0f
+                                                  alpha:1.0f] forState:UIControlStateNormal];
         
-        if (CFStringCompare((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-            editedImage = (UIImage *) [info objectForKey: UIImagePickerControllerEditedImage];
-            originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
-            
-            if (editedImage) {
-                imageToSave = editedImage;
-            }
-            else {
-                imageToSave = originalImage;
-            }
-            
-            //convert image to data
-            NSData *dataFromImage = UIImagePNGRepresentation(imageToSave);
-            
-            NSURL *imageFileURL = [info objectForKey:imageToSave];
-            NSString *imageFileName = [imageFileURL lastPathComponent];
-            NSLog(@"the name of the image file is: %@", imageFileName);
-            
-            //set unique file name
-            NSString *processedName = [[NSProcessInfo processInfo] globallyUniqueString];
-            uniqueFileName = [NSString stringWithFormat:@"%@.jpg", processedName];
-            
-            //make request to server
-            [self constructTaskWithImageName:uniqueFileName andData: dataFromImage];
-            
-        }
+        postButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+        [postButton.titleLabel setTextAlignment:NSTextAlignmentRight];
+        [postButton addTarget:self action:@selector(postButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [VC.view addSubview:postButton];
         
-        //handling video taken;
-        else {
-            //movieURL will be passed as parameter to server
-            UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We currently don't support video uploads" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [noMovieSupport show];
-        }
+        NSLog(@"Button width: %f", (self.view.frame.size.width/2) - 5);
         
+        // create cancel button
+        UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 533, (self.view.frame.size.width/2) - 5, 35)];
+        [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
+        [cancelButton setTitleColor: [UIColor colorWithRed:0.0f/255.0f
+                                                              green:153.0f/255.0f
+                                                               blue:255.0f/255.0f
+                                                              alpha:1.0f] forState:UIControlStateNormal];
+        
+        cancelButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+        [cancelButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
+        [cancelButton addTarget:self action: @selector(cancelButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        
+        [VC.view addSubview:cancelButton];
+        
+        [picker presentViewController:VC animated:NO completion:nil];
     }
 
     else {
-        _sourceTypeCamera = NO;
+        [self userFinishedEditingImageWithPicker:picker andInfo:info];
+        NSLog(@"From camera roll");
+    }
+    
+}
+
+- (void)postButtonPressed {
+    [VC dismissViewControllerAnimated:YES completion:^{
+        [imagePicker dismissViewControllerAnimated:NO completion:^{
+                [self userFinishedEditingImageWithPicker:imagePicker andInfo:self.postInfo];
+        }];
+    }];
+}
+
+- (void)cancelButtonPressed {
+    [VC dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)userFinishedEditingImageWithPicker:(UIImagePickerController *)thePicker andInfo:(NSDictionary *)imageInfo {
+    //CHECK CONNECTION BEFORE ANYTHING
+    NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
+    if ([NetworkManager doesUserHaveInternetConnection]) {
         
-        //fetching image metadata
-        NSURL *assetURL = info [@"UIImagePickerControllerReferenceURL"];
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
-            NSDictionary *metadata = asset.defaultRepresentation.metadata;
-            if (metadata) {
+        //determining image source
+        if (thePicker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+            _sourceTypeCamera = YES;
+            
+            //get location
+            LocationController *locationController = [[LocationController alloc]init];
+            
+            _metaLong = [NSString stringWithFormat: @"%f", locationController.locationManager.location.coordinate.longitude];
+            _metaLat = [NSString stringWithFormat: @"%f", locationController.locationManager.location.coordinate.latitude];
+            NSLog(@"Client longitude: %@ latitude: %@", _metaLong, _metaLat);
+            
+            //handling image taken
+            NSString *mediaType = [imageInfo objectForKey:UIImagePickerControllerMediaType];
+            
+            //declaring images
+            UIImage *originalImage, *editedImage, *imageToSave;
+            
+            if (CFStringCompare((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+                editedImage = (UIImage *) [imageInfo objectForKey: UIImagePickerControllerEditedImage];
+                originalImage = (UIImage *) [imageInfo objectForKey: UIImagePickerControllerOriginalImage];
                 
-                //getting GPS dictionary from metadata and then getting lat and lon. Eventually add "TimeStamp" and "DateStamp" as keys like lat. and lon.
-                NSNumber *latitude = [[metadata objectForKey: @"{GPS}"] objectForKey:@"Latitude"];
-                NSNumber *longitude = [[metadata objectForKey:@"{GPS}"] objectForKey:@"Longitude"];
-                NSConstantString *latRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LatitudeRef"];
-                NSConstantString *lonRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LongitudeRef"];
-                NSDate *metaDateStamp = metadata[@"{GPS}"][@"DateStamp"];
-                //NSString *metaTimeStamp = metadata[@"{GPS}"][@"]
-                
-                NSString *date = [metadata[@"{GPS}"][@"DateStamp"] stringByReplacingOccurrencesOfString: @":" withString:@"-"];
-                
-                NSString *metaDateString = [NSString stringWithFormat:@"%@T%@", date, metadata[@"{GPS}"][@"TimeStamp"]];
-                
-                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-                
-                _metaTimeStamp = [dateFormat dateFromString:metaDateString];
-                NSLog(@"Date found in metadata: %@",_metaTimeStamp);
-                NSLog(@"%@", metadata);
-                
-                
-                if ([latRef isEqualToString:@"S"] == YES) {
-                    _metaLat = [NSString stringWithFormat:@"-%@", latitude];
+                if (editedImage) {
+                    imageToSave = editedImage;
                 }
-                else //([latRef compare:@"N"] == YES)
-                {
-                    _metaLat = [NSString stringWithFormat:@"%@", latitude];
+                else {
+                    imageToSave = originalImage;
                 }
                 
+                //convert image to data
+                NSData *dataFromImage = UIImagePNGRepresentation(imageToSave);
                 
-                if ([lonRef isEqualToString: @"W"] == YES) {
-                    _metaLong = [NSString stringWithFormat:@"-%@", longitude];
+                
+                //set unique file name
+                NSString *processedName = [[NSProcessInfo processInfo] globallyUniqueString];
+                uniqueFileName = [NSString stringWithFormat:@"%@.jpg", processedName];
+                
+                //make request to server
+                [self constructTaskWithImageName:uniqueFileName andData: dataFromImage];
+                
+            }
+            
+            //handling video taken;
+            else {
+                //movieURL will be passed as parameter to server
+                UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We currently don't support video uploads" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [noMovieSupport show];
+            }
+            
+        }
+        
+        else {
+            _sourceTypeCamera = NO;
+            
+            //fetching image metadata
+            NSURL *assetURL = imageInfo [@"UIImagePickerControllerReferenceURL"];
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            [library assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+                NSDictionary *metadata = asset.defaultRepresentation.metadata;
+                if (metadata) {
+                    
+                    //getting GPS dictionary from metadata and then getting lat and lon. Eventually add "TimeStamp" and "DateStamp" as keys like lat. and lon.
+                    NSNumber *latitude = [[metadata objectForKey: @"{GPS}"] objectForKey:@"Latitude"];
+                    NSNumber *longitude = [[metadata objectForKey:@"{GPS}"] objectForKey:@"Longitude"];
+                    NSConstantString *latRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LatitudeRef"];
+                    NSConstantString *lonRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LongitudeRef"];
+                    NSDate *metaDateStamp = metadata[@"{GPS}"][@"DateStamp"];
+                    //NSString *metaTimeStamp = metadata[@"{GPS}"][@"]
+                    
+                    NSString *date = [metadata[@"{GPS}"][@"DateStamp"] stringByReplacingOccurrencesOfString: @":" withString:@"-"];
+                    
+                    NSString *metaDateString = [NSString stringWithFormat:@"%@T%@", date, metadata[@"{GPS}"][@"TimeStamp"]];
+                    
+                    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                    [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+                    
+                    _metaTimeStamp = [dateFormat dateFromString:metaDateString];
+                    NSLog(@"Date found in metadata: %@",_metaTimeStamp);
+                    NSLog(@"%@", metadata);
+                    
+                    
+                    if ([latRef isEqualToString:@"S"] == YES) {
+                        _metaLat = [NSString stringWithFormat:@"-%@", latitude];
+                    }
+                    else //([latRef compare:@"N"] == YES)
+                    {
+                        _metaLat = [NSString stringWithFormat:@"%@", latitude];
+                    }
+                    
+                    
+                    if ([lonRef isEqualToString: @"W"] == YES) {
+                        _metaLong = [NSString stringWithFormat:@"-%@", longitude];
+                    }
+                    
+                    else //if([lonRef compare:@"E"] == YES)
+                    {
+                        _metaLong = [NSString stringWithFormat:@"%@", longitude];
+                    }
+                    
+                    if ([_metaLong isEqualToString:@"(null)"] == YES || [_metaLat isEqualToString:@"(null)"] == YES) {
+                        UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                        [metaAlert show];
+                    }
+                    
+                    else{
+                        
+                        //handling image taken
+                        NSString *mediaType = [imageInfo objectForKey:UIImagePickerControllerMediaType];
+                        
+                        //declaring images
+                        UIImage *originalImage, *editedImage, *imageToSave;
+                        
+                        //making sure only photos are uploaded, currently no videos
+                        if (CFStringCompare((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+                            editedImage = (UIImage *) [imageInfo objectForKey: UIImagePickerControllerEditedImage];
+                            originalImage = (UIImage *) [imageInfo objectForKey: UIImagePickerControllerOriginalImage];
+                            
+                            if (editedImage) {
+                                imageToSave = editedImage;
+                            }
+                            else {
+                                imageToSave = originalImage;
+                            }
+                            //check defaults
+                            NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+                            
+                            if ([[preferences objectForKey:@"autoSave"] isEqualToString:@"YES"]) {
+                                UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil);
+                            }
+                            //otherwise, is set to nil or "NO"
+                            
+                            //convert image to data
+                            NSData *dataFromImage = UIImagePNGRepresentation(imageToSave);
+                            
+                            //NSURL *imageFileURL = [info objectForKey:imageToSave];
+                            NSURL *imageFileURL = [imageInfo objectForKey:UIImagePickerControllerReferenceURL];
+                            NSString *imageFileName = [imageFileURL lastPathComponent];
+                            NSLog(@"the name of the image file is: %@", imageFileName);
+                            
+                            //unique file name so as to not replace it with future photo upload
+                            NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
+                            uniqueFileName = [NSString stringWithFormat:@"%@.jpg", processedName];
+                            
+                            [self constructTaskWithImageName:uniqueFileName andData: dataFromImage];
+                            //method call for http request
+                            //[self PUTImageToOD:imageFileName imageWithData:dataFromImage];
+                            
+                        }
+                        
+                        else {
+                            //movieURL will be passed as parameter to server
+                            UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We currently don't allow videos to be uploaded" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                            [noMovieSupport show];
+                            
+                        }
+                        
+                    }
+                    
+                    [thePicker dismissViewControllerAnimated:YES completion:NULL];
                 }
-                
-                else //if([lonRef compare:@"E"] == YES)
-                {
-                    _metaLong = [NSString stringWithFormat:@"%@", longitude];
-                }
-                
-                if ([_metaLong isEqualToString:@"(null)"] == YES || [_metaLat isEqualToString:@"(null)"] == YES) {
+                //no metadata found
+                else {
+                    [thePicker dismissViewControllerAnimated:YES completion:NULL];
+
                     UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     [metaAlert show];
                 }
+            } failureBlock:^(NSError *error) {
                 
-                else{
-            
-                    if (![self.uploadActivityIndicator isAnimating]) {
-                        [self.uploadActivityIndicator startAnimating];
-                    }
-                    
-                    //handling image taken
-                    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-                
-                    //declaring images
-                    UIImage *originalImage, *editedImage, *imageToSave;
-                
-                    //making sure only photos are uploaded, currently no videos
-                    if (CFStringCompare((CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
-                        editedImage = (UIImage *) [info objectForKey: UIImagePickerControllerEditedImage];
-                        originalImage = (UIImage *) [info objectForKey: UIImagePickerControllerOriginalImage];
-                    
-                        if (editedImage) {
-                                imageToSave = editedImage;
-                            }
-                        else {
-                                imageToSave = originalImage;
-                        }
-                                //check defaults
-                        NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-                        
-                        if ([[preferences objectForKey:@"autoSave"] isEqualToString:@"YES"]) {
-                            UIImageWriteToSavedPhotosAlbum(imageToSave, nil, nil, nil);
-                        }
-                        //otherwise, is set to nil or "NO"
-                        
-                                //convert image to data
-                                NSData *dataFromImage = UIImagePNGRepresentation(imageToSave);
-                    
-                                //NSURL *imageFileURL = [info objectForKey:imageToSave];
-                                NSURL *imageFileURL = [info objectForKey:UIImagePickerControllerReferenceURL];
-                                NSString *imageFileName = [imageFileURL lastPathComponent];
-                                NSLog(@"the name of the image file is: %@", imageFileName);
-                        
-                                //unique file name so as to not replace it with future photo upload
-                                NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
-                        uniqueFileName = [NSString stringWithFormat:@"%@.jpg", processedName];
-                    
-                                [self constructTaskWithImageName:uniqueFileName andData: dataFromImage];
-                                //method call for http request
-                                //[self PUTImageToOD:imageFileName imageWithData:dataFromImage];
-                    
-                    }
-                    
-                    else {
-                        if ([self.uploadActivityIndicator isAnimating]) {
-                            [self.uploadActivityIndicator stopAnimating];
-                        }
-                        //movieURL will be passed as parameter to server
-                        UIAlertView *noMovieSupport = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We currently don't allow videos to be uploaded" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                        [noMovieSupport show];
-
-                    }
-                
-                }
-                
-                [picker dismissViewControllerAnimated:YES completion:NULL];
-                
-                /* if (![self.uploadActivityIndicator isAnimating]) {
-                    [self.uploadActivityIndicator startAnimating];
-                }
-                 */
-            }
-            //no metadata found
-        else {
-                [picker dismissViewControllerAnimated:YES completion:NULL];
-            if ([self.uploadActivityIndicator isAnimating]) {
-                [self.uploadActivityIndicator stopAnimating];
-            }
+                NSLog(@"Unable to access image metadata: %@", error);
                 UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                 [metaAlert show];
-            }
-        } failureBlock:^(NSError *error) {
+            }];
             
-            //metadata is nil
-            if ([self.uploadActivityIndicator isAnimating]) {
-                [self.uploadActivityIndicator stopAnimating];
-            }
-            NSLog(@"Unable to access image metadata: %@", error);
-            UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [metaAlert show];
-        }];
- 
+        }
+        
+        [thePicker dismissViewControllerAnimated:YES completion:NULL];
     }
-  
-    [picker dismissViewControllerAnimated:YES completion:NULL];
-  }
     
-else {
-    NSLog(@"NO CONNECTION");
-    [picker dismissViewControllerAnimated:YES completion:NULL];
-    UIAlertController *alertCont = [UIAlertController alertControllerWithTitle:@"No Internet Connection" message:@"We were unable to post your photo." preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
-    
-    [alertCont addAction:okAction];
-    
-    [self presentViewController:alertCont animated:YES completion:nil];
-  }
+    else {
+        NSLog(@"NO CONNECTION");
+        [thePicker dismissViewControllerAnimated:YES completion:NULL];
+        UIAlertController *alertCont = [UIAlertController alertControllerWithTitle:@"No Internet Connection" message:@"We were unable to post your photo." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        
+        [alertCont addAction:okAction];
+        
+        [self presentViewController:alertCont animated:YES completion:nil];
+    }
     
 }
 
 
 //user presses cancel button in UIImagePickerView
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -650,12 +739,13 @@ else {
                                                                        NSURLResponse *response,
                                                                        NSError *error){
                                                        
+                                                       /*
                                                        dispatch_async(dispatch_get_main_queue(), ^{
                                                            //self.uploadActivityIndicator.hidden = YES;
                                                            [self.uploadActivityIndicator stopAnimating];
                                                            //[self.uploadActivityIndicator removeFromSuperview];
                                                        });
-                                                       
+                                                       */
                                                        if (error) {
                                                            NSLog(@"ERROR: %@", error);
                                                            UIAlertView *PhotoPUTAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"An error occurred, please try again later." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];

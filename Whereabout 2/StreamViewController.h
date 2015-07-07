@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *tableActivityIndicator;
 
-- (IBAction)refreshButtonCall:(id)sender;
+- (IBAction)savedPhotoAlbumButtonCalled:(id)sender;
+- (IBAction)cameraButtonCalled:(id)sender;
+- (void)closePhotoVCWithCompletion:(void (^)(void))completionBlock;
 
 @end

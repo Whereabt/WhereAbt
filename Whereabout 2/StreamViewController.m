@@ -15,23 +15,30 @@
 #include <QuartzCore/QuartzCore.h>
 #import "UIImageView+AFNetworking.h"
 #import "StreamTVCell.h"
+#import "PhotosAccessViewController.h"
 
 @interface StreamViewController ()
 
 @property (strong, nonatomic) NSMutableArray *streamItems;
+@property (assign, nonatomic) BOOL hasLoadedStream;
 
 @end
 
 
 @implementation StreamViewController
+
 UILabel *connFailLabel;
 UIActivityIndicatorView *StreamActivityView;
+PhotosAccessViewController *photoVC;
 
 - (void)viewDidLoad {
      [super viewDidLoad];
     
     self.tableActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.tableActivityIndicator.hidesWhenStopped = YES;
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshStream) forControlEvents:UIControlEventValueChanged];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -41,7 +48,13 @@ UIActivityIndicatorView *StreamActivityView;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    if (self.hasLoadedStream == NO) {
         [self refreshStream];
+        self.hasLoadedStream = YES;
+    }
+    else {
+        //do nothing
+    }
 }
 
 - (void)refreshStream
@@ -62,7 +75,11 @@ UIActivityIndicatorView *StreamActivityView;
         [self.view addSubview:StreamActivityView];
         
         
-        [StreamActivityView startAnimating];
+        //[StreamActivityView startAnimating];
+        
+        if (![self.refreshControl isRefreshing]) {
+            [self.refreshControl beginRefreshing];
+        }
         
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
@@ -102,12 +119,24 @@ UIActivityIndicatorView *StreamActivityView;
                 //[self.collectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
                 
                 [self.tableView reloadData];
+                
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                [formatter setDateFormat:@"MMM d, h:mm a"];
+                NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+                NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                                            forKey:NSForegroundColorAttributeName];
+                NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+                self.refreshControl.attributedTitle = attributedTitle;
+                
+                [self.refreshControl endRefreshing];
+                
+                /*
                 if ([self.tableActivityIndicator isAnimating] == YES) {
                     [self.tableActivityIndicator stopAnimating];
                 }
                 [StreamActivityView stopAnimating];
                 [StreamActivityView removeFromSuperview];
-                /*
+                
                  dispatch_async(dispatch_get_main_queue(), ^{
                  [self.collectionView reloadData];
                  });
@@ -124,24 +153,7 @@ UIActivityIndicatorView *StreamActivityView;
                 [self.tableActivityIndicator stopAnimating];
                 
                 if (error.code == 3840) {
-                    UIView *NoFeedView = [[UIView alloc] initWithFrame:self.tableView.frame];
-                    
-                    UILabel *nothingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 75, self.view.frame.size.width, 50)];
-                    nothingLabel.text = @"No images from your vicinity";
-                    nothingLabel.textColor = [UIColor colorWithRed:31.0f/255.0f
-                                                             green:33.0f/255.0f
-                                                              blue:36.0f/255.0f
-                                                             alpha:1.0f];
-                    
-                    UILabel *suggestLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 400, self.view.frame.size.width, 35)];
-                    suggestLabel.text = @"We suggest increasing your radius in settings";
-                    suggestLabel.textColor = [UIColor blackColor];
-                    
-                    [NoFeedView addSubview:nothingLabel];
-                    [NoFeedView addSubview:nothingLabel];
-                    
-                    [self.view addSubview:NoFeedView];
-                    
+                    [self.refreshControl endRefreshing];
                 }
                 
                 else {
@@ -155,7 +167,7 @@ UIActivityIndicatorView *StreamActivityView;
     
     else {
         NSLog(@"NO CONNECTION");
-        
+        [self.refreshControl endRefreshing];
         if ([connFailLabel superview] == nil) {
             connFailLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
             //connectionFailLabel.center = CGPointMake(0.0f, 64.0f);
@@ -179,10 +191,24 @@ UIActivityIndicatorView *StreamActivityView;
     }
 }
 
-- (IBAction)refreshButtonCall:(id)sender {
-    [self refreshStream];
+
+- (IBAction)savedPhotoAlbumButtonCalled:(id)sender {
+    PhotosAccessViewController *photoController = [[PhotosAccessViewController alloc] init];
+    [photoController setSourceTypeToWantsCamera:NO];
+    [self presentViewController:photoController animated:YES completion:nil];
 }
 
+- (IBAction)cameraButtonCalled:(id)sender {
+    photoVC = [[PhotosAccessViewController alloc] init];
+    [photoVC setSourceTypeToWantsCamera:YES];
+    [self presentViewController:photoVC animated:YES completion:nil];
+}
+
+- (void)closePhotoVCWithCompletion:(void (^)(void))completionBlock {
+    [photoVC dismissViewControllerAnimated:YES completion:^{
+        completionBlock();
+    }];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -193,10 +219,27 @@ UIActivityIndicatorView *StreamActivityView;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    // Return the number of sections.
-    return 1;
-
+    if (self.streamItems) {
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        return 1;
+    }
+    
+    else {
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        messageLabel.text = @"No photos are currently available from your vicinity. Please pull down to refresh.";
+        messageLabel.textColor = [UIColor colorWithRed:0.0f/255.0f green:153.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        messageLabel.font = [UIFont fontWithName:@"System Italic" size:20];
+        [messageLabel sizeToFit];
+        
+        self.tableView.backgroundView = messageLabel;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+    
+    return 0;
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     return [self.streamItems count];
@@ -207,13 +250,13 @@ UIActivityIndicatorView *StreamActivityView;
      StreamTVCell *cell = (StreamTVCell*)[tableView dequeueReusableCellWithIdentifier:@"User ID" forIndexPath:indexPath];
     
     double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
-    NSString *distanceString = [NSString stringWithFormat:@"%.3f Miles ", distanceInt];
+    NSString *distanceString = [NSString stringWithFormat:@"%.3f Miles", distanceInt];
     cell.cellDistance.text = distanceString;
     cell.cellDistance.font = [UIFont fontWithName: @"Arial Rounded MT Bold" size:14];
     cell.cellDistance.numberOfLines = 1;
     cell.cellDistance.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
     cell.cellDistance.adjustsFontSizeToFitWidth = YES;
-    cell.cellDistance.textAlignment = NSTextAlignmentLeft;
+    cell.cellDistance.textAlignment = NSTextAlignmentCenter;
     cell.cellDistance.textColor = [UIColor colorWithRed:255.0f/255.0f green:153.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
     
     cell.cellImage.contentMode = UIViewContentModeScaleAspectFit;

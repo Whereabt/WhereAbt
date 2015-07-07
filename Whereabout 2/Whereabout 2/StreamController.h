@@ -21,4 +21,5 @@
 
 - (void)getFeedWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack;
 
+
 @end

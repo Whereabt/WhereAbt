@@ -19,9 +19,9 @@
 @property (strong, nonatomic) id delegate;
 //establishing action methods for the two bar button items
 
-- (IBAction)fromCamera:(id)sender;
-- (IBAction)fromCameraRoll:(id)sender;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *uploadActivityIndicator;
 - (void)takePhotoFromCamera;
-
+- (void)cancelTakePhotoEvent;
+- (void)switchCamera;
+- (void)selectFromCameraRoll;
+- (void)setSourceTypeToWantsCamera:(BOOL) wantsCameraBool;
 @end
