@@ -29,7 +29,7 @@
 @property (strong, nonatomic) NSString *metaLat;
 @property (strong, nonatomic) NSDate *metaTimeStamp;
 @property (strong, nonatomic) NSString *PUTUrlString;
-@property (strong, nonatomic) NSDictionary *postInfo;
+@property (strong, nonatomic) NSMutableDictionary *postInfo;
 @property (nonatomic, assign) BOOL hasLoadedVC;
 @property (nonatomic, assign) BOOL wantsCamera;
 
@@ -183,27 +183,66 @@ UIImagePickerController *imagePicker;
                 NSString *unencodedShareURL = jsonDict[@"link"][@"webUrl"];
                 
                 //must double-encode the url
-                
+                /*
                 NSString *singleEncodedShareURL = [unencodedShareURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                
                 NSString *doubleEncodedShareURL = [singleEncodedShareURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 
-                NSLog(@"double encoded share url:%@", doubleEncodedShareURL);
+                NSLog(@"Single encoded url: %@, Double encoded share url:%@, Unencoded shareURL: %@", singleEncodedShareURL, doubleEncodedShareURL, unencodedShareURL);
+                */
+                
+                NSString *singleEncodedShareURL = [unencodedShareURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+                
+                NSString *doubleEncodedShareURL = [singleEncodedShareURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+                
+                NSString *encString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                          NULL,
+                                                                                          (CFStringRef)unencodedShareURL,
+                                                                                          NULL,
+                                                                                          (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                          kCFStringEncodingUTF8 ));
+                /* encString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                  NULL,
+                                                                                                  (CFStringRef)encString,
+                                                                                                  NULL,
+                                                                                                  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                  kCFStringEncodingUTF8 ));
+                                                        
+                 */
+                 
+                NSLog(@"Single encoded url: %@, Double encoded share url:%@, Unencoded shareURL: %@, Other URL: %@", singleEncodedShareURL, doubleEncodedShareURL, unencodedShareURL, url);
                 
                 //make request
                 NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
                 
                 NSURL *firstURL = [NSURL URLWithString:theUrlAsString];
-                NSURL *properURL = [firstURL URLByAppendingPathComponent:doubleEncodedShareURL];
-                                 
+                NSURL *properURL = [firstURL URLByAppendingPathComponent:singleEncodedShareURL];
+                
+                NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
+                
                 NSLog(@"Double encoded url from share link: %@", properURL);
                 NSURLSession *theSession = [NSURLSession sharedSession];
+                
+                NSURLRequest *theRequest = [NSURLRequest requestWithURL:encURL];
+                NSLog(@"REQUEST: %@", theRequest);
+                NSURLSessionDataTask *dataRequestTask = [theSession dataTaskWithRequest:theRequest completionHandler:^(NSData *theData, NSURLResponse *theResponse, NSError *theError) {
+                    NSLog(@"Response from encoded url data request task: %@   Error: %@", theResponse, theError);
+                    NSError *jsonerror = nil;
+                    NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonerror];
+                    NSLog(@"JSON from double encoded url request: %@", immutable);
+                    
+                    theCallback(theError);
+                }];
+                
+                
+                /*
                 NSURLSessionDataTask *dataRequestTask = [theSession dataTaskWithURL:properURL completionHandler:^(NSData *theData, NSURLResponse *theResponse, NSError *theError) {
                     NSLog(@"Response from encoded url data request task: %@   Error: %@", theResponse, theError);
                     NSError *jsonerror = nil;
                     NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonerror];
                     NSLog(@"JSON from double encoded url request: %@", immutable);
                     theCallback(theError);
-                }];
+                }];*/
                 [dataRequestTask resume];
                 
             }
@@ -306,7 +345,21 @@ UIImagePickerController *imagePicker;
     
     if (_newMedia == YES) {
         NSLog(@"From camera");
-        UIImageView *PreviewImageView = [[UIImageView alloc] initWithImage:[info objectForKey: UIImagePickerControllerOriginalImage]];
+        
+        //set post stuff
+        imagePicker = picker;
+        self.postInfo = [NSMutableDictionary dictionaryWithDictionary:info];
+        
+        UIImage *originalImage = [info objectForKey: UIImagePickerControllerOriginalImage];
+        UIImage *finalImage;
+        if (picker.cameraDevice == UIImagePickerControllerCameraDeviceFront) {
+            finalImage = [UIImage imageWithCGImage:originalImage.CGImage scale:originalImage.scale orientation:UIImageOrientationLeftMirrored];
+        }
+        else {
+            finalImage = originalImage;
+        }
+        
+        UIImageView *PreviewImageView = [[UIImageView alloc] initWithImage:finalImage];
         PreviewImageView.frame = CGRectMake(0, 0, self.view.frame.size.width, 430);
         //PreviewImageView.contentMode = UIViewContentModeScaleAspectFill;
         PreviewImageView.opaque = YES;
@@ -315,9 +368,10 @@ UIImagePickerController *imagePicker;
         [VC.view addSubview:PreviewImageView];
         //VC.view = PreviewImageView;
         
-        //set post stuff
-        imagePicker = picker;
-        self.postInfo = info;
+        [self.postInfo setObject:finalImage forKey:UIImagePickerControllerOriginalImage];
+        
+        
+        
         
         //create post button
         UIButton *postButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2), 533, (self.view.frame.size.width/2) - 5, 35)];
@@ -352,18 +406,40 @@ UIImagePickerController *imagePicker;
     }
 
     else {
+        StreamViewController *streamVC = [[StreamViewController alloc] init];
+        [streamVC setUploadingPhotoVarTo:YES];
         [self userFinishedEditingImageWithPicker:picker andInfo:info];
         NSLog(@"From camera roll");
+
     }
     
 }
 
 - (void)postButtonPressed {
-    [VC dismissViewControllerAnimated:YES completion:^{
-        [imagePicker dismissViewControllerAnimated:NO completion:^{
-                [self userFinishedEditingImageWithPicker:imagePicker andInfo:self.postInfo];
+    
+    StreamViewController *streamVC = [[StreamViewController alloc] init];
+    if ([streamVC uploadingPhoto]) {
+        
+        UIAlertView *tooManyUploadsAlert = [[UIAlertView alloc] initWithTitle:@"Still Uploading" message:@"Please wait until your last photo finishes uploading." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [tooManyUploadsAlert show];
+    }
+    
+    else {
+        [streamVC setUploadingPhotoVarTo:YES];
+        NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+        
+        if ([[preferences objectForKey:@"autoSave"] isEqualToString:@"YES"]) {
+            UIImage *imageFromInfo = [self.postInfo objectForKey:UIImagePickerControllerOriginalImage];
+            
+            UIImage *imageForSave = [[UIImage alloc] initWithCIImage:imageFromInfo.CIImage scale:imageFromInfo.scale orientation:imageFromInfo.imageOrientation];
+            
+            UIImageWriteToSavedPhotosAlbum(imageForSave, nil, nil, nil);
+        }
+
+        [imagePicker dismissViewControllerAnimated:YES completion:^{
+            [self userFinishedEditingImageWithPicker:imagePicker andInfo:self.postInfo];
         }];
-    }];
+    }
 }
 
 - (void)cancelButtonPressed {
@@ -375,9 +451,11 @@ UIImagePickerController *imagePicker;
     NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
     if ([NetworkManager doesUserHaveInternetConnection]) {
         
+        
         //determining image source
         if (thePicker.sourceType == UIImagePickerControllerSourceTypeCamera) {
             _sourceTypeCamera = YES;
+            NSLog(@"IMAGE INFO: %@", imageInfo);
             
             //get location
             LocationController *locationController = [[LocationController alloc]init];
@@ -575,7 +653,8 @@ UIImagePickerController *imagePicker;
 
 
 - (void)constructTaskWithImageName:(NSString*)name andData:(NSData*)data {
-    NSString *filePath = [NSString stringWithFormat:@"Whereabt.Test/%@", name];
+    
+    NSString *filePath = [NSString stringWithFormat:@"Whereabt.Test2/%@", name];
             NSURLSession *session = [NSURLSession sharedSession];
             NSString *stringURL = [NSString stringWithFormat:self.uploadURL, filePath];
             
@@ -601,7 +680,9 @@ UIImagePickerController *imagePicker;
                     NSLog(@"RESPONSE FROM OD UPLOAD: %@", jsonDict);
                     NSString *resourceId = jsonDict[@"id"];
                     
-                    [self createShareLinkForODFileWithPath:@"Whereabt.Test" andCompletion:^(NSError *Error) {
+
+                    //@"Whereabt.Test2"
+                    [self createShareLinkForODFileWithPath:filePath andCompletion:^(NSError *Error) {
                         
                         if (!Error) {
                             
@@ -739,13 +820,12 @@ UIImagePickerController *imagePicker;
                                                                        NSURLResponse *response,
                                                                        NSError *error){
                                                        
-                                                       /*
-                                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                                           //self.uploadActivityIndicator.hidden = YES;
-                                                           [self.uploadActivityIndicator stopAnimating];
-                                                           //[self.uploadActivityIndicator removeFromSuperview];
+                                                                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                                        StreamViewController *streamController = [[StreamViewController alloc] init];
+                                                        [streamController stopRefreshControlOnPhotoUpload];
+                                                                        
                                                        });
-                                                       */
+                                                       
                                                        if (error) {
                                                            NSLog(@"ERROR: %@", error);
                                                            UIAlertView *PhotoPUTAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"An error occurred, please try again later." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];

@@ -53,10 +53,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="100" image="Photo access Image 250x250.png" translatesAutoresizingMaskIntoConstraints="NO" id="0uL-0V-EH1">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="100" misplaced="YES" image="Photo access Image 250x250.png" translatesAutoresizingMaskIntoConstraints="NO" id="0uL-0V-EH1">
                                 <rect key="frame" x="0.0" y="110" width="320" height="242"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="voU-hd-sx4">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="voU-hd-sx4">
                                 <rect key="frame" x="218" y="422" width="83" height="74"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="83" id="37u-Tn-NKv"/>
@@ -68,7 +68,7 @@
                                     <action selector="fromCameraRoll:" destination="IZm-yz-WfK" eventType="touchUpInside" id="XOM-a6-Pg0"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload New or Old Photos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWm-8L-fVp">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Upload New or Old Photos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWm-8L-fVp">
                                 <rect key="frame" x="16" y="358" width="285" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="X0l-lh-9xH"/>
@@ -77,7 +77,7 @@
                                 <color key="textColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1T7-G7-oHe">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1T7-G7-oHe">
                                 <rect key="frame" x="16" y="422" width="84" height="66"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="EGv-YB-UdW"/>
@@ -407,15 +407,21 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="Cell" reuseIdentifier="Cell" id="cqw-qb-flT" customClass="ProfileCVCell">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Profile Cell" id="cqw-qb-flT" customClass="ProfileCVCell">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="136" height="137"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jcc-Mf-a3U">
+                                            <rect key="frame" x="0.0" y="0.0" width="136" height="137"/>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
+                                    <outlet property="cvImage" destination="jcc-Mf-a3U" id="3X1-nn-UVp"/>
                                     <segue destination="QYK-Ad-XFC" kind="show" identifier="segueToEnlarge" id="H67-b1-kgW"/>
                                 </connections>
                             </collectionViewCell>
@@ -956,7 +962,7 @@
             </objects>
             <point key="canvasLocation" x="-1575" y="506"/>
         </scene>
-        <!--Photo-->
+        <!--StreamPRO Enlarged View Controller-->
         <scene sceneID="8Tw-LB-JUd">
             <objects>
                 <viewController id="gSv-kM-6Tc" customClass="StreamPROEnlargedViewController" sceneMemberID="viewController">
@@ -1005,7 +1011,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Ppj-Z1-yw9" secondAttribute="trailing" constant="202" id="w4p-vv-iFc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Photo" id="51Z-Tk-Uvg">
+                    <navigationItem key="navigationItem" id="51Z-Tk-Uvg">
                         <barButtonItem key="backBarButtonItem" title="Photo" id="GdH-E2-Jf2"/>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
@@ -1129,15 +1135,21 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="MyCell" reuseIdentifier="MyCell" id="wQj-9h-q0e" customClass="StreamPROCollectionViewCell">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="MyCell" reuseIdentifier="StreamPROCell" id="wQj-9h-q0e" customClass="StreamPROCollectionViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="136" height="137"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2WD-dq-UMn">
+                                            <rect key="frame" x="0.0" y="0.0" width="136" height="137"/>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
+                                    <outlet property="proCVImage" destination="2WD-dq-UMn" id="JoV-fV-z6C"/>
                                     <segue destination="gSv-kM-6Tc" kind="show" identifier="segueEnlargedImage" id="AXR-ub-xMD"/>
                                 </connections>
                             </collectionViewCell>
@@ -1201,7 +1213,6 @@
                     </collectionView>
                     <tabBarItem key="tabBarItem" systemItem="recents" id="gWu-2d-cDR"/>
                     <navigationItem key="navigationItem" title="Profile" id="Wk2-Kb-tnH">
-                        <barButtonItem key="backBarButtonItem" title="Profile" id="UQI-UI-eTG"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="dZZ-RQ-AfN">
                             <connections>
                                 <action selector="streamPRORefreshButtonPress:" destination="g8Y-Ci-Ftk" id="7Ip-TY-Y22"/>

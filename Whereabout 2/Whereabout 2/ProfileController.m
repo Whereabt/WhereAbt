@@ -53,6 +53,8 @@
         }
         self.itemCollection = [immutable mutableCopy];
         NSLog(@"JSON object of profileItems: %@", _itemCollection);
+        
+        /*
         for (NSDictionary *photoDict in self.itemCollection) {
             NSString *thumbPhotoURL = photoDict[@"ThumbnailURL"];
             NSString *largPhotoURL = photoDict[@"PhotoURL"];
@@ -62,6 +64,8 @@
             //NSArray *copy = [[NSArray alloc] init];
             //copy =[_itemCollection mutableCopy];
         }
+         */
+        
         callBack(_itemCollection, error);
         }
     ];

@@ -17,4 +17,9 @@
 - (IBAction)cameraButtonCalled:(id)sender;
 - (void)closePhotoVCWithCompletion:(void (^)(void))completionBlock;
 
+- (void)stopRefreshControlOnPhotoUpload;
+- (void)startRefreshControlOnPhotoUpload;
+- (void)setUploadingPhotoVarTo:(BOOL) boolean;
+- (BOOL)uploadingPhoto;
+
 @end

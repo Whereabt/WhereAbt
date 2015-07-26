@@ -28,7 +28,9 @@
 @implementation StreamViewController
 
 UILabel *connFailLabel;
+UILabel *uploadLabel;
 UIActivityIndicatorView *StreamActivityView;
+bool isUploadingPhoto;
 PhotosAccessViewController *photoVC;
 
 - (void)viewDidLoad {
@@ -54,6 +56,9 @@ PhotosAccessViewController *photoVC;
     }
     else {
         //do nothing
+        if (isUploadingPhoto) {
+            [self startRefreshControlOnPhotoUpload];
+        }
     }
 }
 
@@ -80,6 +85,7 @@ PhotosAccessViewController *photoVC;
         if (![self.refreshControl isRefreshing]) {
             [self.refreshControl beginRefreshing];
         }
+        
         
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
         
@@ -149,9 +155,6 @@ PhotosAccessViewController *photoVC;
             else{
                 [[UIApplication sharedApplication] endIgnoringInteractionEvents];
                 
-                NSLog(@"Error getting streamItems: %@", error);
-                [self.tableActivityIndicator stopAnimating];
-                
                 if (error.code == 3840) {
                     [self.refreshControl endRefreshing];
                 }
@@ -183,6 +186,47 @@ PhotosAccessViewController *photoVC;
         }
     }
     
+}
+
+- (void)setUploadingPhotoVarTo:(BOOL) boolean {
+    isUploadingPhoto = boolean;
+}
+
+- (BOOL)uploadingPhoto{
+    
+    return isUploadingPhoto;
+}
+
+- (void)startRefreshControlOnPhotoUpload {
+    if ([self.refreshControl isRefreshing]) {
+        [self.refreshControl endRefreshing];
+    }
+    
+    NSString *title = @"Uploading photo";
+    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                                forKey:NSForegroundColorAttributeName];
+    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+    self.refreshControl.attributedTitle = attributedTitle;
+
+    if ([uploadLabel superview] == nil) {
+        uploadLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+        [uploadLabel setText:@"Uploading..."];
+        
+        [uploadLabel setTextAlignment:NSTextAlignmentCenter];
+        uploadLabel.backgroundColor = [UIColor colorWithRed:0.0f/255.0f green:153.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+        
+        uploadLabel.textColor = [UIColor whiteColor];
+        [self.tableView addSubview:uploadLabel];
+    }
+}
+
+- (void)stopRefreshControlOnPhotoUpload {
+
+    if ([uploadLabel superview] != nil) {
+        [uploadLabel performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
+    }
+    
+    [self setUploadingPhotoVarTo:NO];
 }
 
 - (void)timerFireMethod:(NSTimer *)timer {

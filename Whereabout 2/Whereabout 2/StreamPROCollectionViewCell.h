@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface StreamPROCollectionViewCell : UICollectionViewCell
+@property (strong, nonatomic) IBOutlet UIImageView *proCVImage;
 
 @end

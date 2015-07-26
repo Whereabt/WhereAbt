@@ -10,4 +10,8 @@
 
 @implementation StreamPROCollectionViewCell
 
+- (void)awakeFromNib {
+    // Initialization code
+}
+
 @end

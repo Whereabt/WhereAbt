@@ -15,6 +15,7 @@
 #import <Security/Security.h>
 #import "ProfileEnlargedViewController.h"
 #import "NSNetworkConnection.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface ProfileCollectionViewController ()
 
@@ -35,6 +36,7 @@ UILabel *internetConnLabel;
     // Do any additional setup after loading the view.
 }
 
+
 - (void)refreshProfile {
     
     NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
@@ -43,7 +45,8 @@ UILabel *internetConnLabel;
         
     self.collectionView.dataSource = self;
     self.collectionView.alwaysBounceVertical = YES;
-    
+    self.collectionView.delegate = self;
+        
     self.userProfileActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.userProfileActivityIndicator.color = [UIColor orangeColor];
     self.userProfileActivityIndicator.hidesWhenStopped = YES;
@@ -59,7 +62,7 @@ UILabel *internetConnLabel;
     
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
     [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [self.collectionView setCollectionViewLayout:flow];
+    //[self.collectionView setCollectionViewLayout:flow];
     
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
     collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0);
@@ -90,13 +93,16 @@ UILabel *internetConnLabel;
              }
              */
             NSLog(@"Finished fetching profileItems");
-            [self.collectionView reloadData];
-            if ([self.userProfileActivityIndicator isAnimating] == YES) {
-                [self.userProfileActivityIndicator stopAnimating];
-            }
-            else {
-                //do nothing if for some reason the indicator was not animating
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([self.userProfileActivityIndicator isAnimating] == YES) {
+                    [self.userProfileActivityIndicator stopAnimating];
+                }
+                else {
+                    //do nothing if for some reason the indicator was not animating
+                }
+                [self.collectionView reloadData];
+            });
+
             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
 
         }
@@ -173,19 +179,29 @@ UILabel *internetConnLabel;
 }
 */
 
-- (IBAction)LogOutButtonPressed:(id)sender {
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
-    
-    //set nil for the refresh token, user will have to log back in
-    [WelcomeViewController sharedController].refreshToken = @"";
-    
-    [keychain setObject:[WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
-}
-
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     
+    /*
+    if (self.profileItems) {
+        return 1;
+    }
+    
+    else {
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        messageLabel.text = @"You have not uploaded any photos (yet).";
+        messageLabel.textColor = [UIColor colorWithRed:0.0f/255.0f green:153.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        messageLabel.font = [UIFont fontWithName:@"System Italic" size:20];
+        [messageLabel sizeToFit];
+        
+        self.collectionView.backgroundView = messageLabel;
+    }
+    
+    return 0;
+     */
     return 1;
 }
 
@@ -197,29 +213,25 @@ UILabel *internetConnLabel;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    ProfileCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    ProfileCVCell *cell = (ProfileCVCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"Profile Cell" forIndexPath:indexPath];
     
     // Configure the cell
     
-    if (cell == nil) {
+    if (!cell) {
         cell = [[ProfileCVCell alloc]init];
     }
     
     //use "ThumbnailPhoto" or "LargePhoto"
-    UIImage *imageReturned = self.profileItems[indexPath.row][@"ThumbnailPhoto"];
-    UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
-    
-    UIImageView *imageSubview = [[UIImageView alloc] initWithFrame:cellView.frame];
-    imageSubview.image = imageReturned;
-    imageSubview.contentMode = UIViewContentModeScaleAspectFit;
-    [cellView addSubview: imageSubview];
 
     cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
                                                     green:33.0f/255.0f
                                                      blue:36.0f/255.0f
                                                     alpha:1.0f];
     cell.backgroundView.frame = cell.frame;
-    cell.backgroundView = cellView;
+    //cell.backgroundView = cellView;
+    cell.cvImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [cell.cvImage setImageWithURL:[NSURL URLWithString: self.profileItems[indexPath.row][@"PhotoURL"]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
 
     return cell;
 }
@@ -273,17 +285,17 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     double distanceInt = [self.profileItems[indexPath.row][@"MilesAway"] doubleValue];
     NSString *distanceString = [NSString stringWithFormat:@"%.3f", distanceInt];
     
-    UIImage *Image = self.profileItems[indexPath.row][@"LargePhoto"];
+    ProfileCVCell *proCell = [collectionView cellForItemAtIndexPath:indexPath];
     
     NSMutableDictionary *parameterDict = [[NSMutableDictionary alloc] init];
-    parameterDict[@"photo"] = Image;
+    parameterDict[@"photo"] = proCell.cvImage.image;
     parameterDict[@"distanceString"] = distanceString;
     parameterDict[@"time"] = self.profileItems[indexPath.row][@"TimeStamp"];
     
     [EnlargedViewManager setUpEnlargedViewWithDict:parameterDict];
     
     //go to the enlarged view
-    [self performSegueWithIdentifier:@"segueToEnlarge" sender:self];
+    //[self performSegueWithIdentifier:@"segueToEnlarge" sender:self];
 }
 
 

@@ -8,9 +8,12 @@
 
 #import "StreamPROCollectionViewController.h"
 #import "ProfileController.h"
-#import "ProfileCVCell.h"
+#import "StreamPROCollectionViewCell.h"
 #import "StreamPROCollectionHeaderView.h"
 #import "StreamPROEnlargedViewController.h"
+#import "NSNetworkConnection.h"
+#import "UIImageView+AFNetworking.h"
+
 
 @interface StreamPROCollectionViewController ()
 
@@ -20,95 +23,115 @@
 
 @implementation StreamPROCollectionViewController
 
+static NSString * const reuseIdentifier = @"Cell";
 NSString *UserID;
-
-static NSString * const reuseIdentifier = @"MyCell";
+UILabel *internetFailLabel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self refreshStreamProfile];
 }
 
 - (void)refreshStreamProfile {
-    self.profileActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
-    self.profileActivityIndicator.color = [UIColor orangeColor];
-    self.profileActivityIndicator.hidesWhenStopped = YES;
-    [self.profileActivityIndicator startAnimating];
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
     
-    self.collectionView.alwaysBounceVertical = YES;
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
+    if ([NetworkManager doesUserHaveInternetConnection]) {
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
+        self.profileActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        self.profileActivityIndicator.color = [UIColor orangeColor];
+        self.profileActivityIndicator.hidesWhenStopped = YES;
+        [self.profileActivityIndicator startAnimating];
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
-    // Register cell classes
-    [self.collectionView registerClass:[ProfileCVCell class] forCellWithReuseIdentifier:reuseIdentifier];
+        self.collectionView.alwaysBounceVertical = YES;
+        self.collectionView.delegate = self;
+        self.collectionView.dataSource = self;
     
-    // Do any additional setup after loading the view.
-    UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
-    [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [self.collectionView setCollectionViewLayout:flow];
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = NO;
     
-    UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
-    collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0);
+        // Register cell classes
+        [self.collectionView registerClass:[StreamPROCollectionViewCell class]    forCellWithReuseIdentifier:reuseIdentifier];
     
-    //get the profile items (images)
-    ProfileController *profileController = [[ProfileController alloc] init];
-    [profileController requestProfileItemsFromUser:UserID WithCompletion:^(NSMutableArray *Items, NSError *error) {
+        // Do any additional setup after loading the view.
+        UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
+        [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
+        //[self.collectionView setCollectionViewLayout:flow];
+    
+        UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
+        collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0);
+    
+        //get the profile items (images)
+        ProfileController *profileController = [[ProfileController alloc] init];
+        [profileController requestProfileItemsFromUser:UserID WithCompletion:^(NSMutableArray *Items, NSError *error) {
         
-        if (!error) {
-            self.allProfileItems = [Items mutableCopy];
-            
-            /*
-             //delete null images
-             NSMutableArray *NullItemsIndexes = [[NSMutableArray alloc] init];
-             for (int i = 0; i < self.profileItems.count; i++) {
-             if ((self.profileItems[i][@"ThumbnailPhoto"] == nil) || (self.profileItems[i][@"LargePhoto"] == nil)) {
-             NSString *nullIndex = [NSString stringWithFormat:@"%d", i];
-             [NullItemsIndexes addObject:nullIndex];
-             }
-             }
-             
-             for (NSString *nullIndexString in NullItemsIndexes) {
-             NSInteger index = [nullIndexString integerValue];
-             [_profileItems removeObjectAtIndex:index];
-             NSLog(@"Deleted a null item inside of 'profileItems' array");
-             }
-             */
-            [self.collectionView reloadData];
-            
-            NSLog(@"Finished fetching profileItems");
-            if ([self.profileActivityIndicator isAnimating] == YES) {
-                [self.profileActivityIndicator stopAnimating];
-            }
-            else {
-                //do nothing if for some reason the indicator was not animating
-            }
-            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-        }
-        else {
-            NSLog(@"Error getting profile items: %@", error);
-            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-            
-            if (error.code == 3840) {
-                //user has 0 items in profile
-                [self.profileActivityIndicator stopAnimating];
-            }
-            
-            else {
-                UIAlertView *failedToGetProfileItems = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We were unable to retrieve your photos from the server. Please make sure that your device is connected to the internet and try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            if (!error) {
+                self.allProfileItems = [Items mutableCopy];
                 
-                [self.profileActivityIndicator stopAnimating];
-                [failedToGetProfileItems show];
-            }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.navigationItem setTitle:self.allProfileItems[0][@"UserName"]];
+                    if ([self.profileActivityIndicator isAnimating] == YES) {
+                        [self.profileActivityIndicator stopAnimating];
+                    }
+                    else {
+                        //do nothing if for some reason the indicator was not animating
+                    }
+                    [self.collectionView reloadData];
+                });
 
+                //[self.collectionView reloadData];
             
-        }
+                NSLog(@"Finished fetching profileItems");
+
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+            }
+            else {
+                NSLog(@"Error getting profile items: %@", error);
+                [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+            
+                if (error.code == 3840) {
+                    //user has 0 items in profile
+                    [self.profileActivityIndicator stopAnimating];
+                }
+            
+                else {
+                    UIAlertView *failedToGetProfileItems = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We were unable to retrieve your photos from the server. Please make sure that your device is connected to the internet and try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                
+                    [self.profileActivityIndicator stopAnimating];
+                    [failedToGetProfileItems show];
+                }
+
+                
+            }
         
-    }];
+        }];
+        }
+    
+    else {
+        NSLog(@"NO CONNECTION");
+        if ([internetFailLabel superview] == nil) {
+            
+            internetFailLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+            //connectionFailLabel.center = CGPointMake(0.0f, 64.0f);
+            [internetFailLabel setText:@"No Internet Connection"];
+            [internetFailLabel setTextAlignment:NSTextAlignmentCenter];
+            internetFailLabel.backgroundColor = [UIColor grayColor];
+            internetFailLabel.textColor = [UIColor whiteColor];
+            [self.collectionView addSubview:internetFailLabel];
+            
+            NSTimer *connectionFailViewTimer = [NSTimer timerWithTimeInterval:3.5 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+            
+            [[NSRunLoop mainRunLoop] addTimer:connectionFailViewTimer forMode:NSDefaultRunLoopMode];
+        }
+
+    }
+}
+
+- (void)timerFireMethod:(NSTimer *)timer {
+    if ([internetFailLabel superview] != nil) {
+        [internetFailLabel removeFromSuperview];
+    }
 }
 
 
@@ -152,28 +175,24 @@ static NSString * const reuseIdentifier = @"MyCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    ProfileCVCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    StreamPROCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StreamPROCell" forIndexPath:indexPath];
     
     // Configure the cell
     if (!cell) {
-        cell = [[ProfileCVCell alloc] init];
+        cell = [[StreamPROCollectionViewCell alloc] init];
     }
     
     //use "ThumbnailPhoto" or "LargePhoto"
-    UIImage *imageReturned = self.allProfileItems[indexPath.row][@"ThumbnailPhoto"];
-    UIView *cellView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height)];
-    
-    UIImageView *imageSubview = [[UIImageView alloc] initWithFrame:cellView.frame];
-    imageSubview.image = imageReturned;
-    imageSubview.contentMode = UIViewContentModeScaleAspectFit;
-    [cellView addSubview: imageSubview];
     
     cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
                                            green:33.0f/255.0f
                                             blue:36.0f/255.0f
                                            alpha:1.0f];
     cell.backgroundView.frame = cell.frame;
-    cell.backgroundView = cellView;
+    cell.proCVImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [cell.proCVImage setImageWithURL:[NSURL URLWithString: self.allProfileItems[indexPath.row][@"PhotoURL"]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
+
     return cell;
 }
 
@@ -221,21 +240,22 @@ static NSString * const reuseIdentifier = @"MyCell";
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    StreamPROEnlargedViewController *EnlargedViewManager = [[StreamPROEnlargedViewController alloc] init];
-    
     double distanceInt = [self.allProfileItems[indexPath.row][@"MilesAway"] doubleValue];
     NSString *distanceAwayString = [NSString stringWithFormat:@"%.3f", distanceInt];
     
-    UIImage *Image = self.allProfileItems[indexPath.row][@"LargePhoto"];
+    StreamPROCollectionViewCell *streamProCell = [collectionView cellForItemAtIndexPath:indexPath];
+    
     NSMutableDictionary *parameterDict = [[ NSMutableDictionary alloc] init];
-    parameterDict[@"photo"] = Image;
+    parameterDict[@"photo"] = streamProCell.proCVImage.image;
     parameterDict[@"distance"] = distanceAwayString;
     parameterDict[@"time"] = self.allProfileItems[indexPath.row][@"TimeStamp"];
+    
+    StreamPROEnlargedViewController *EnlargedViewManager = [[StreamPROEnlargedViewController alloc] init];
     
     [EnlargedViewManager setUpEnlargedViewWithDict: parameterDict];
     
     //go to the enlarged view
-    [self performSegueWithIdentifier:@"segueEnlargedImage" sender:self];
+    //[self performSegueWithIdentifier:@"segueEnlargedImage" sender:self];
 }
 
 

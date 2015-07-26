@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ProfileCVCell : UICollectionViewCell
+@property (strong, nonatomic) IBOutlet UIImageView *cvImage;
 
 @end

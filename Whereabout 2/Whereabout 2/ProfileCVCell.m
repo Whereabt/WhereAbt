@@ -9,5 +9,8 @@
 #import "ProfileCVCell.h"
 
 @implementation ProfileCVCell
+- (void)awakeFromNib {
+    // Initialization code
+}
 
 @end
