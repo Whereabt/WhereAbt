@@ -52,6 +52,7 @@ UIImagePickerController *imagePicker;
     NSString *uniqueFileName;
     UIViewController *VC;
     UIImage *FinalMedia;
+    NSDate *startUploadDate;
 }
 
 - (void)viewDidLoad {
@@ -603,6 +604,8 @@ UIImagePickerController *imagePicker;
 }
 
 - (void)createPhotoUploadTaskUsingImageName:(NSString *)imageName andImageData:(NSData *)imageData {
+    //recording upload time
+    startUploadDate = [NSDate date];
     
     //DELETE
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"-createPhotoUploadTaskUsingImageNameAndData method just called" message:@"Will now make upload request" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
@@ -777,13 +780,15 @@ UIImagePickerController *imagePicker;
             NSLog(@"Today's date, as string: %@", _metaTimeStamp);
         }
 
+        //recording upload time
+        NSTimeInterval uploadTimeInterval = [startUploadDate timeIntervalSinceNow];
         
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
         
         NSString *dateString = [dateFormatter stringFromDate: _metaTimeStamp];
 
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto2.php?UserID=%@&UserName=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, _metaLat, _metaLong, largeImage, smallImage, dateString];
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto3.php?UserID=%@&UserName=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, _metaLat, _metaLong, largeImage, smallImage, dateString, uploadTimeInterval];
         NSLog(@"PUT URL String: %@", _PUTUrlString);
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];
