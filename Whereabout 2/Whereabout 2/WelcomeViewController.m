@@ -82,21 +82,32 @@
                                                        if (![[WelcomeViewController sharedController].refreshToken  isEqual: @""]) {
                                                            
                                                            [keychain setObject: [WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
+                                                           
+                                                           NSDate *now = [NSDate date];
+                                                           NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+                                                           [preferences setObject:now forKey:@"Last token refresh"];
+                                                           if (![WelcomeViewController sharedController].userID) {
+                                                               //get other properties from user
+                                                               ProfileController *profileManager = [[ProfileController alloc]init];
+                                                               
+                                                               [profileManager getProfilePropertiesWithCompletion:^(NSDictionary *profileProperties, NSError *error) {
+                                                                   
+                                                                   [WelcomeViewController sharedController].userName = [profileProperties[@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                                                                   [WelcomeViewController sharedController].userID = profileProperties[@"id"];
+                                                                   callback();
+                                                               }];
+                                                           }
+                                                           else {
+                                                               //do nothing
+                                                           }
+
                                                        }
                                                        
                                                        else {
                                                            NSLog(@"Cannot store the refresh token in keychain if it has not yet been found");
                                                        }
-
-                                                       ProfileController *profileManager = [[ProfileController alloc]init];
                                                        
-                                                       [profileManager getProfilePropertiesWithCompletion:^(NSDictionary *profileItems, NSError *error) {
-                                                           
-                                                           [WelcomeViewController sharedController].userName = [profileItems[@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-                                                           [WelcomeViewController sharedController].userID = profileItems[@"id"];
-                                                           callback();
-                                                       }];
-                                                    
+                                                                                                           
                                                    }];
     [dataRequestTask resume];
 }
@@ -121,7 +132,11 @@
                                                        KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
                                                        
                                                        [keychain setObject: [WelcomeViewController sharedController].refreshToken forKey:(__bridge id)(kSecValueData)];
-                                                       
+                                                     
+                                                     NSDate *now = [NSDate date];
+                                                     NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+                                                     [preferences setObject:now forKey:@"Last token refresh"];
+                                                     
                                                        //get other properties from user
                                                        ProfileController *profileManager = [[ProfileController alloc]init];
                                                        

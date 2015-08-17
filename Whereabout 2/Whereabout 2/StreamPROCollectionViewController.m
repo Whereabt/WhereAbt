@@ -128,6 +128,13 @@ UILabel *internetFailLabel;
     }
 }
 
+- (BOOL) string:(NSString *) bigString containsString:(NSString*) substring
+{
+    NSRange range = [bigString rangeOfString: substring];
+    BOOL found = ( range.location != NSNotFound );
+    return found;
+}
+
 - (void)timerFireMethod:(NSTimer *)timer {
     if ([internetFailLabel superview] != nil) {
         [internetFailLabel removeFromSuperview];
@@ -191,7 +198,31 @@ UILabel *internetFailLabel;
     cell.backgroundView.frame = cell.frame;
     cell.proCVImage.contentMode = UIViewContentModeScaleAspectFit;
     
-    [cell.proCVImage setImageWithURL:[NSURL URLWithString: self.allProfileItems[indexPath.row][@"PhotoURL"]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
+    NSString *PhotoUrlString = self.allProfileItems[indexPath.row][@"PhotoURL"];
+    
+    if ([self string:PhotoUrlString containsString:@"https://onedrive.live.com/redir?"]) {
+        
+        NSString *encString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                    NULL,
+                                                                                                    (CFStringRef)PhotoUrlString,
+                                                                                                    NULL,
+                                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                    kCFStringEncodingUTF8 ));
+        
+        
+        //make request
+        NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
+        
+        NSURL *firstURL = [NSURL URLWithString:theUrlAsString];
+        
+        NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
+        NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
+        PhotoUrlString = [DwnldUrl absoluteString];
+        NSLog(@"Encoded partially with root: %@", PhotoUrlString);
+    }
+
+    
+    [cell.proCVImage setImageWithURL:[NSURL URLWithString: PhotoUrlString] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
 
     return cell;
 }
@@ -241,13 +272,28 @@ UILabel *internetFailLabel;
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     double distanceInt = [self.allProfileItems[indexPath.row][@"MilesAway"] doubleValue];
-    NSString *distanceAwayString = [NSString stringWithFormat:@"%.3f", distanceInt];
+    NSString *distanceUnit = @"miles";
     
+    if (distanceInt < 2.0) {
+        distanceUnit = @"mile";
+    }
+    if (distanceInt < 1.0) {
+        distanceUnit = @"feet";
+        distanceInt = distanceInt * 5280;
+        if (distanceInt < 2) {
+            distanceUnit = @"foot";
+            if (distanceInt < 0.5) {
+                distanceUnit = @"feet";
+            }
+        }
+    }
+    
+    NSString *distanceString = [NSString stringWithFormat:@"%.f %@", distanceInt, distanceUnit];
     StreamPROCollectionViewCell *streamProCell = [collectionView cellForItemAtIndexPath:indexPath];
     
     NSMutableDictionary *parameterDict = [[ NSMutableDictionary alloc] init];
     parameterDict[@"photo"] = streamProCell.proCVImage.image;
-    parameterDict[@"distance"] = distanceAwayString;
+    parameterDict[@"distance"] = distanceString;
     parameterDict[@"time"] = self.allProfileItems[indexPath.row][@"TimeStamp"];
     
     StreamPROEnlargedViewController *EnlargedViewManager = [[StreamPROEnlargedViewController alloc] init];

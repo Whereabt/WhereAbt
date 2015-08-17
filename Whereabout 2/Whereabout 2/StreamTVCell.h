@@ -10,7 +10,7 @@
 
 @interface StreamTVCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *cellImage;
-@property (strong, nonatomic) IBOutlet UILabel *cellDistance;
+//@property (strong, nonatomic) IBOutlet UILabel *cellDistance;
 
 
 @end

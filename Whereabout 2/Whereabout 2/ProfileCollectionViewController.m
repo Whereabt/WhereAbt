@@ -160,6 +160,13 @@ UILabel *internetConnLabel;
     }
 }
 
+- (BOOL) string:(NSString *) bigString containsString:(NSString*) substring
+{
+    NSRange range = [bigString rangeOfString: substring];
+    BOOL found = ( range.location != NSNotFound );
+    return found;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -220,18 +227,43 @@ UILabel *internetConnLabel;
     if (!cell) {
         cell = [[ProfileCVCell alloc]init];
     }
-    
-    //use "ThumbnailPhoto" or "LargePhoto"
 
-    cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
+    /*cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
                                                     green:33.0f/255.0f
                                                      blue:36.0f/255.0f
                                                     alpha:1.0f];
+     */
+    cell.backgroundColor = [UIColor whiteColor];
+    
     cell.backgroundView.frame = cell.frame;
     //cell.backgroundView = cellView;
     cell.cvImage.contentMode = UIViewContentModeScaleAspectFit;
     
-    [cell.cvImage setImageWithURL:[NSURL URLWithString: self.profileItems[indexPath.row][@"PhotoURL"]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
+    NSString *PhotoUrlString = self.profileItems[indexPath.row][@"PhotoURL"];
+    
+    if ([self string:PhotoUrlString containsString:@"https://onedrive.live.com/redir?"]) {
+        
+        NSString *encString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                    NULL,
+                                                                                                    (CFStringRef)PhotoUrlString,
+                                                                                                    NULL,
+                                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                    kCFStringEncodingUTF8 ));
+        
+        
+        //make request
+        NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
+        
+        NSURL *firstURL = [NSURL URLWithString:theUrlAsString];
+        
+        NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
+        NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
+        PhotoUrlString = [DwnldUrl absoluteString];
+        NSLog(@"Encoded partially with root: %@", PhotoUrlString);
+    }
+
+    
+    [cell.cvImage setImageWithURL:[NSURL URLWithString: PhotoUrlString] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
 
     return cell;
 }
@@ -283,7 +315,20 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     ProfileEnlargedViewController *EnlargedViewManager = [[ProfileEnlargedViewController alloc] init];
     
     double distanceInt = [self.profileItems[indexPath.row][@"MilesAway"] doubleValue];
-    NSString *distanceString = [NSString stringWithFormat:@"%.3f", distanceInt];
+    NSString *distanceUnit = @"miles";
+    
+    if (distanceInt < 1.0) {
+        distanceUnit = @"feet";
+        distanceInt = distanceInt * 5280;
+        if (distanceInt < 2) {
+            distanceUnit = @"foot";
+            if (distanceInt < 0.5) {
+                distanceUnit = @"feet";
+            }
+        }
+    }
+    
+    NSString *distanceString = [NSString stringWithFormat:@"%.f %@", distanceInt, distanceUnit];
     
     ProfileCVCell *proCell = [collectionView cellForItemAtIndexPath:indexPath];
     

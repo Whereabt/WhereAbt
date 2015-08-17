@@ -220,6 +220,13 @@ PhotosAccessViewController *photoVC;
     }
 }
 
+- (BOOL) string:(NSString *) bigString containsString:(NSString*) substring
+{
+    NSRange range = [bigString rangeOfString: substring];
+    BOOL found = ( range.location != NSNotFound );
+    return found;
+}
+
 - (void)stopRefreshControlOnPhotoUpload {
 
     if ([uploadLabel superview] != nil) {
@@ -293,19 +300,41 @@ PhotosAccessViewController *photoVC;
     // Configure the cell...
      StreamTVCell *cell = (StreamTVCell*)[tableView dequeueReusableCellWithIdentifier:@"User ID" forIndexPath:indexPath];
     
-    double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
-    NSString *distanceString = [NSString stringWithFormat:@"%.3f Miles", distanceInt];
+    /*
     cell.cellDistance.text = distanceString;
-    cell.cellDistance.font = [UIFont fontWithName: @"Arial Rounded MT Bold" size:14];
+    cell.cellDistance.font = [UIFont fontWithName: @"System" size:8];
     cell.cellDistance.numberOfLines = 1;
     cell.cellDistance.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
     cell.cellDistance.adjustsFontSizeToFitWidth = YES;
     cell.cellDistance.textAlignment = NSTextAlignmentCenter;
-    cell.cellDistance.textColor = [UIColor colorWithRed:255.0f/255.0f green:153.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
+    cell.cellDistance.textColor = [UIColor colorWithRed:56.0f/255.0f green:171.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+    */
     
     cell.cellImage.contentMode = UIViewContentModeScaleAspectFit;
     
-    [cell.cellImage setImageWithURL:[NSURL URLWithString:self.streamItems[indexPath.row][@"PhotoURL"]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
+    NSString *PhotoUrlString = self.streamItems[indexPath.row][@"PhotoURL"];
+    
+    if ([self string:PhotoUrlString containsString:@"https://onedrive.live.com/redir?"]) {
+        
+        NSString *encString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                    NULL,
+                                                                                                    (CFStringRef)PhotoUrlString,
+                                                                                                    NULL,
+                                                                                                    (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                                    kCFStringEncodingUTF8 ));
+        
+        
+        //make request
+        NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
+        
+        NSURL *firstURL = [NSURL URLWithString:theUrlAsString];
+        
+        NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
+        NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
+        PhotoUrlString = [DwnldUrl absoluteString];
+    }
+    
+    [cell.cellImage setImageWithURL:[NSURL URLWithString:PhotoUrlString] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
     
     /*
     [cell.cellImage setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.streamItems[indexPath.row][@"PhotoURL"]]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -317,28 +346,41 @@ PhotosAccessViewController *photoVC;
     }];
     */
     
-    cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
+    /*cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
                                            green:33.0f/255.0f
                                             blue:36.0f/255.0f
                                            alpha:1.0f];
+     */
+    cell.backgroundColor = [UIColor whiteColor];
+    //[cell.cellImage setFrame:cell.frame];
     
     return cell;
 }
-
-
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     NSMutableDictionary *dictionaryParameter = [[NSMutableDictionary alloc] init];
     
-    double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
-    NSString *distanceAwayString = [NSString stringWithFormat:@"%.3f", distanceInt];
-    
     StreamTVCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    NSLog(@"cell distance: %@", cell.cellDistance.text);
+    double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
+    NSString *distanceUnit = @"miles";
     
-    [dictionaryParameter setObject:distanceAwayString forKey:@"Distance"];
+    if (distanceInt < 1.0) {
+        distanceUnit = @"feet";
+        distanceInt = distanceInt * 5280;
+        if (distanceInt < 2) {
+            distanceUnit = @"foot";
+            if (distanceInt < 0.5) {
+                distanceUnit = @"feet";
+            }
+
+        }
+    }
+    
+    NSString *distanceString = [NSString stringWithFormat:@"%.f %@", distanceInt, distanceUnit];
+
+    [dictionaryParameter setObject:distanceString forKey:@"Distance"];
     [dictionaryParameter setObject:cell.cellImage.image forKey:@"Photo"];
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserID"] forKey:@"ID"];
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserName"] forKey:@"Name"];

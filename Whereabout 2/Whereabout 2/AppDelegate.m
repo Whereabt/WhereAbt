@@ -39,22 +39,7 @@
                                                    blue:36.0f/255.0f
                                                   alpha:1.0f];
     
-    //timer fires every 55 minutes
-    NSDate *fireDate = [NSDate dateWithTimeIntervalSinceNow:3300];
-    NSLog(@"%@", fireDate);
-    
-    NSTimer *authTimer = [[NSTimer alloc] initWithFireDate:fireDate interval:3300 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
-    
-    [authTimer fire];
-    
     return YES;
-}
-
-- (void)timerFireMethod: (NSTimer *)theTimer {
-    WelcomeViewController *welcomeCont = [[WelcomeViewController alloc] init];
-    [welcomeCont refreshAuthTokenWithCompletion:^{
-        //no completion needed
-    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

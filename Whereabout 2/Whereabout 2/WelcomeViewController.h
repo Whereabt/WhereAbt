@@ -22,5 +22,6 @@
 - (IBAction)LoginSignUp:(id)sender;
 + (instancetype)sharedController;
 - (void)refreshAuthTokenWithCompletion:(void (^)(void)) callback;
+- (void)setAuthTokenRefreshTokenAndProfileNamesFromCode:(NSString *)authCode;
 
 @end

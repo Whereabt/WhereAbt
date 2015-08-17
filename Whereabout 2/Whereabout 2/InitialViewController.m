@@ -40,6 +40,7 @@
         NSLog(@"Refresh token property value before refresh called: %@", [WelcomeViewController sharedController].refreshToken);
         
         [welcomeController refreshAuthTokenWithCompletion:^{
+            
             //problem occurred while trying to get profile properties
             if ([WelcomeViewController sharedController].userID == nil) {
                 UIAlertController *profilePropFail = [UIAlertController alertControllerWithTitle:@"Problem Occurred" message:@"We encountered an error while trying to retrieve your profile from the server. Please check your internet connection." preferredStyle:UIAlertControllerStyleAlert];
@@ -68,7 +69,7 @@
         
         //DELETE
         //[preferences setBool:NO forKey:@"Done Walkthrough"];
-        
+ 
         if ([preferences boolForKey:@"Done Walkthrough"] == NO) {
             [self performSegueWithIdentifier:@"segueToWalkthrough" sender:self];
             [preferences setBool:YES forKey:@"Done Walkthrough"];
