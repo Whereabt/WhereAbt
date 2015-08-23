@@ -259,8 +259,7 @@ UILabel *internetConnLabel;
         NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
         NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
         PhotoUrlString = [DwnldUrl absoluteString];
-        NSLog(@"Encoded partially with root: %@", PhotoUrlString);
-    }
+        }
 
     
     [cell.cvImage setImageWithURL:[NSURL URLWithString: PhotoUrlString] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
@@ -336,6 +335,8 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     parameterDict[@"photo"] = proCell.cvImage.image;
     parameterDict[@"distanceString"] = distanceString;
     parameterDict[@"time"] = self.profileItems[indexPath.row][@"TimeStamp"];
+    parameterDict[@"Latitude"] = self.profileItems[indexPath.row][@"Latitude"];
+    parameterDict[@"Longitude"] = self.profileItems[indexPath.row][@"Longitude"];
     
     [EnlargedViewManager setUpEnlargedViewWithDict:parameterDict];
     

@@ -8,6 +8,7 @@
 
 #import "ProfileEnlargedViewController.h"
 #import "WelcomeViewController.h"
+#import "LocationController.h"
 
 @interface ProfileEnlargedViewController ()
 
@@ -15,21 +16,19 @@
 
 @implementation ProfileEnlargedViewController
 
-NSString *DistanceAway;
-UIImage *LargeImage;
-NSString *timeString;
+NSDictionary *itemDict;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.distanceLabel.text = [NSString stringWithFormat:@"%@", DistanceAway];
-    self.largeImageView.image = LargeImage;
+    self.distanceLabel.text = [NSString stringWithFormat:@"%@", itemDict[@"distanceString"]];
+    self.largeImageView.image = itemDict[@"photo"];
     self.largeImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.largeImageView.userInteractionEnabled = YES;
     self.largeImageView.frame = self.view.window.frame;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-    NSDate *imageDate = [dateFormatter dateFromString: timeString];
+    NSDate *imageDate = [dateFormatter dateFromString: itemDict[@"time"]];
     NSDate *today = [NSDate date];
     NSTimeInterval interval = [today timeIntervalSinceDate: imageDate];
     double hrs = (interval/3600);
@@ -96,6 +95,17 @@ NSString *timeString;
         }
         
     }
+    
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:[itemDict[@"Latitude"] doubleValue] longitude:[itemDict[@"Longitude"] doubleValue]];
+    
+    LocationController *locationCont = [[LocationController alloc] init];
+    
+    [locationCont getNameFromLocation:location isNear:NO AndCompletion:^(NSString *locationName) {
+        NSLog(@"%@", locationName);
+        NSString *updatedLabelString = [NSString stringWithFormat: @"%@, %@", locationName, itemDict[@"distanceString"]];
+        self.distanceLabel.adjustsFontSizeToFitWidth = YES;
+        [self.distanceLabel setText:updatedLabelString];
+    }];
 
     self.timeIntervalLabel.adjustsFontSizeToFitWidth = YES;
     self.timeIntervalLabel.text = labelString;
@@ -206,9 +216,7 @@ NSString *timeString;
 
 - (void)setUpEnlargedViewWithDict:(NSDictionary *)enlargeDict
 {
-    LargeImage = enlargeDict[@"photo"];
-    DistanceAway = enlargeDict[@"distanceString"];
-    timeString = enlargeDict[@"time"];
+    itemDict = [[NSDictionary alloc] initWithDictionary:enlargeDict copyItems:YES];
 }
 
 /*

@@ -17,5 +17,6 @@
 + (instancetype)sharedController;
 - (void)updateUserLocation;
 - (instancetype)init;
+- (void)getNameFromLocation: (CLLocation *)locationParam isNear: (BOOL)isNear AndCompletion:(void (^)(NSString *locationName))callBack;
 
 @end

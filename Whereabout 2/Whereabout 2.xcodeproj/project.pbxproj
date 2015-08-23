@@ -79,6 +79,9 @@
 		B985EA9D1B418FF1000D2AFD /* OverlayImage(2).jpg in Resources */ = {isa = PBXBuildFile; fileRef = B985EA9C1B418FF1000D2AFD /* OverlayImage(2).jpg */; };
 		B985EA9F1B419284000D2AFD /* overlay image (3).jpg in Resources */ = {isa = PBXBuildFile; fileRef = B985EA9E1B419284000D2AFD /* overlay image (3).jpg */; };
 		B98B88861A900E4D00309EA7 /* TabBarAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */; };
+		B98C66801B88D0C600A9C810 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B98C667F1B88D0C500A9C810 /* MapKit.framework */; };
+		B98C66831B88D17500A9C810 /* MapVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B98C66821B88D17500A9C810 /* MapVCViewController.m */; };
+		B98C66861B88DB4000A9C810 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B98C66851B88DB4000A9C810 /* MapAnnotation.m */; };
 		B9A9EDA31ABF69B1000ECE24 /* ProfileCVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDA21ABF69B1000ECE24 /* ProfileCVCell.m */; };
 		B9A9EDA61ABF9223000ECE24 /* ProfileViewHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDA51ABF9223000ECE24 /* ProfileViewHeaderView.m */; };
 		B9A9EDA91AC22322000ECE24 /* ProfileEnlargedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A9EDA81AC22322000ECE24 /* ProfileEnlargedViewController.m */; };
@@ -252,6 +255,11 @@
 		B985EA9E1B419284000D2AFD /* overlay image (3).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "overlay image (3).jpg"; path = "UIImages/overlay image (3).jpg"; sourceTree = SOURCE_ROOT; };
 		B98B88841A900E4D00309EA7 /* TabBarAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarAppViewController.h; sourceTree = "<group>"; };
 		B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarAppViewController.m; sourceTree = "<group>"; };
+		B98C667F1B88D0C500A9C810 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B98C66811B88D17500A9C810 /* MapVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapVCViewController.h; sourceTree = "<group>"; };
+		B98C66821B88D17500A9C810 /* MapVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVCViewController.m; sourceTree = "<group>"; };
+		B98C66841B88DB4000A9C810 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
+		B98C66851B88DB4000A9C810 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
 		B9A9EDA11ABF69B1000ECE24 /* ProfileCVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileCVCell.h; sourceTree = "<group>"; };
 		B9A9EDA21ABF69B1000ECE24 /* ProfileCVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileCVCell.m; sourceTree = "<group>"; };
 		B9A9EDA41ABF9223000ECE24 /* ProfileViewHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewHeaderView.h; sourceTree = "<group>"; };
@@ -322,6 +330,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B98C66801B88D0C600A9C810 /* MapKit.framework in Frameworks */,
 				2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */,
 				2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */,
 				2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */,
@@ -341,6 +350,7 @@
 		012996CC1A354E5300C89D09 = {
 			isa = PBXGroup;
 			children = (
+				B98C667F1B88D0C500A9C810 /* MapKit.framework */,
 				B9BC132C1A7D90D700659591 /* Security.framework */,
 				2D6A0E441A5C5B5800EDD980 /* UIKit.framework */,
 				2D6A0E421A5C5B4100EDD980 /* Foundation.framework */,
@@ -593,6 +603,10 @@
 			children = (
 				2D6A0E4D1A5F75CE00EDD980 /* LocationController.h */,
 				2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */,
+				B98C66841B88DB4000A9C810 /* MapAnnotation.h */,
+				B98C66851B88DB4000A9C810 /* MapAnnotation.m */,
+				B98C66811B88D17500A9C810 /* MapVCViewController.h */,
+				B98C66821B88D17500A9C810 /* MapVCViewController.m */,
 			);
 			name = "Location Related";
 			sourceTree = "<group>";
@@ -886,7 +900,9 @@
 				2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */,
 				B9E7093E1ACE2FC00054DE2C /* SettingsTableViewController.m in Sources */,
 				B9EBBCAB1A918622008FA719 /* StreamUpperSuppViewController.m in Sources */,
+				B98C66861B88DB4000A9C810 /* MapAnnotation.m in Sources */,
 				B9EBBCA81A917D2D008FA719 /* ProfileCollectionViewController.m in Sources */,
+				B98C66831B88D17500A9C810 /* MapVCViewController.m in Sources */,
 				01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */,
 				012996DB1A354E5300C89D09 /* main.m in Sources */,
 				B985EA931B409B47000D2AFD /* CamOverlayViewController.m in Sources */,

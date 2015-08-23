@@ -218,7 +218,6 @@ UILabel *internetFailLabel;
         NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
         NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
         PhotoUrlString = [DwnldUrl absoluteString];
-        NSLog(@"Encoded partially with root: %@", PhotoUrlString);
     }
 
     
@@ -295,6 +294,8 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     parameterDict[@"photo"] = streamProCell.proCVImage.image;
     parameterDict[@"distance"] = distanceString;
     parameterDict[@"time"] = self.allProfileItems[indexPath.row][@"TimeStamp"];
+    parameterDict[@"Latitude"] = self.allProfileItems[indexPath.row][@"Latitude"];
+    parameterDict[@"Longitude"] = self.allProfileItems[indexPath.row][@"Longitude"];
     
     StreamPROEnlargedViewController *EnlargedViewManager = [[StreamPROEnlargedViewController alloc] init];
     

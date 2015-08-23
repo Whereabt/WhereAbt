@@ -9,6 +9,8 @@
 #import "StreamEnlarge&SaveViewController.h"
 #import "StreamPROCollectionViewController.h"
 #import "WelcomeViewController.h"
+#import "LocationController.h"
+#import "MapVCViewController.h"
 
 @interface StreamEnlarge_SaveViewController ()
 
@@ -26,11 +28,12 @@ NSMutableDictionary *UIimageDict;
     
     NSString *nameString = [NSString stringWithFormat:@"%@ %@", nameArray[0], nameArray[1]];
     [self.nameButton setTitle:nameString forState:UIControlStateNormal];
+    [self.nameButton.titleLabel adjustsFontSizeToFitWidth];
     self.theImageView.image = UIimageDict[@"Photo"];
     self.theImageView.userInteractionEnabled = YES;
     self.theImageView.contentMode = UIViewContentModeScaleAspectFit;
-    self.distanceLabel.adjustsFontSizeToFitWidth = YES;
-    self.distanceLabel.text = UIimageDict[@"Distance"];
+    self.locationButton.titleLabel.adjustsFontSizeToFitWidth = NO;
+    self.locationButton.titleLabel.text = UIimageDict[@"Distance"];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     //[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
@@ -100,12 +103,45 @@ NSMutableDictionary *UIimageDict;
                 labelString = [NSString stringWithFormat:@"%@ days ago", daysString];
             }
 
-    }
-    
+      }
+        /*CLLocation *location = [[CLLocation alloc] initWithLatitude:[UIimageDict[@"Latitude"] doubleValue] longitude:[UIimageDict[@"Longitude"] doubleValue]];
+        
+        LocationController *locationCont = [[LocationController alloc] init];
+        
+        [locationCont getNameFromLocation:location isNear:YES AndCompletion:^(NSString *locationName) {
+            NSLog(@"%@", locationName);
+            NSString *updatedLabelString = [NSString stringWithFormat: @"%@, %@", locationName, UIimageDict[@"Distance"]];
+            
+            [self.locationButton.titleLabel setText:updatedLabelString];
+            
+            MapVCViewController *mapController = [[MapVCViewController alloc] init];
+            [mapController setUpMapViewWithLocation:location];
+        }];
+         */
   }
     self.timeLabel.adjustsFontSizeToFitWidth = YES;
     NSLog(@"Label string: %@", labelString);
     self.timeLabel.text = labelString;
+
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if ([self.locationButton.titleLabel.text  isEqual: @"Location"]) {
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:[UIimageDict[@"Latitude"] doubleValue] longitude:[UIimageDict[@"Longitude"] doubleValue]];
+        
+        LocationController *locationCont = [[LocationController alloc] init];
+        
+        [locationCont getNameFromLocation:location isNear:YES AndCompletion:^(NSString *locationName) {
+            NSLog(@"%@", locationName);
+            NSString *updatedLabelString = [NSString stringWithFormat: @"%@, %@", locationName, UIimageDict[@"Distance"]];
+            [self.locationButton setTitle:updatedLabelString forState:UIControlStateNormal];
+            [self.locationButton setNeedsLayout];
+            
+            MapVCViewController *mapController = [[MapVCViewController alloc] init];
+            [mapController setUpMapViewWithLocation:location];
+        }];
+
+    }
 }
 
 - (void)didReceiveMemoryWarning {

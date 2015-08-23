@@ -24,11 +24,65 @@
     if (self = [super init]) {
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
-
     }
+    
   return self;
 }
 
+- (void)getNameFromLocation: (CLLocation *)locationParam isNear: (BOOL)isNear AndCompletion:(void (^)(NSString *locationName))callBack {
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:locationParam
+                   completionHandler:^(NSArray *placemarks, NSError *error) {
+                       
+                       if (error){
+                           NSLog(@"Geocode failed with error: %@", error);
+                           return;
+                        }
+                       
+                       CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                       
+                       NSLog(@"placemark.ISOcountryCode %@",placemark.ISOcountryCode);
+                       NSLog(@"placemark.country %@",placemark.country);
+                       NSLog(@"placemark.postalCode %@",placemark.postalCode);
+                       NSLog(@"placemark.administrativeArea %@",placemark.administrativeArea);
+                       NSLog(@"placemark.locality %@",placemark.locality);
+                       NSLog(@"placemark.subLocality %@",placemark.subLocality);
+                       NSLog(@"placemark.subThoroughfare %@",placemark.subThoroughfare);
+                       NSString *locationString;
+                       
+                       if (!isNear) {
+                           if (placemark.subLocality) {
+                               locationString = [NSString stringWithFormat:@"%@, %@, %@, %@", placemark.subLocality, placemark.locality, placemark.administrativeArea, placemark.ISOcountryCode];
+                           }
+                           else {
+                               if (placemark.locality) {
+                                   locationString = [NSString stringWithFormat:@"%@, %@, %@", placemark.locality, placemark.administrativeArea, placemark.ISOcountryCode];
+                               }
+                               else {
+                                   locationString = [NSString stringWithFormat:@"%@, %@", placemark.administrativeArea, placemark.ISOcountryCode];
+                               }
+
+                        }
+
+                    }
+                       else {
+                           if (placemark.subLocality) {
+                               locationString = [NSString stringWithFormat:@"%@", placemark.subLocality];
+                           }
+                           else {
+                               if (placemark.locality) {
+                                   locationString = [NSString stringWithFormat:@"%@", placemark.locality];
+                               }
+                               else {
+                                   locationString = [NSString stringWithFormat:@"%@", placemark.administrativeArea];
+                               }
+                               
+                           }
+
+                       }
+                       callBack(locationString);
+                   }];
+}
 
 
 - (void)updateUserLocation{

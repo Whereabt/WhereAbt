@@ -8,6 +8,7 @@
 
 #import "StreamPROEnlargedViewController.h"
 #import "WelcomeViewController.h"
+#import "LocationController.h"
 
 @interface StreamPROEnlargedViewController ()
 
@@ -15,13 +16,11 @@
 
 @implementation StreamPROEnlargedViewController
 
-NSString *Distance;
-UIImage *Image;
-NSString *TimeString;
+NSDictionary *enlargeItems;
 
 - (void)viewDidLoad {
-    self.distanceLabel.text = [NSString stringWithFormat:@"%@", Distance];
-    self.photoView.image = Image;
+    self.distanceLabel.text = [NSString stringWithFormat:@"%@", enlargeItems[@"distance"]];
+    self.photoView.image = enlargeItems[@"photo"];
     self.photoView.contentMode = UIViewContentModeScaleAspectFit;
     self.photoView.userInteractionEnabled = YES;
     //self.photoView.frame = self.view.window.frame;
@@ -29,7 +28,7 @@ NSString *TimeString;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     //[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-    NSDate *imageDate = [dateFormatter dateFromString: TimeString];
+    NSDate *imageDate = [dateFormatter dateFromString: enlargeItems[@"time"]];
     
     NSDate *today = [NSDate date];
     NSTimeInterval interval = [today timeIntervalSinceDate: imageDate];
@@ -97,6 +96,17 @@ NSString *TimeString;
         }
         
     }
+    
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:[enlargeItems[@"Latitude"] doubleValue] longitude:[enlargeItems[@"Longitude"] doubleValue]];
+    
+    LocationController *locationCont = [[LocationController alloc] init];
+    
+    [locationCont getNameFromLocation:location isNear:NO AndCompletion:^(NSString *locationName) {
+        NSLog(@"%@", locationName);
+        NSString *updatedLabelString = [NSString stringWithFormat: @"%@, %@", locationName, enlargeItems[@"distance"]];
+        self.distanceLabel.adjustsFontSizeToFitWidth = YES;
+        [self.distanceLabel setText:updatedLabelString];
+    }];
 
     self.timeLabel.adjustsFontSizeToFitWidth = YES;
     self.timeLabel.text = labelString;
@@ -208,9 +218,7 @@ NSString *TimeString;
 
 - (void)setUpEnlargedViewWithDict:(NSMutableDictionary *)infoDict
 {
-    Image = infoDict[@"photo"];
-    Distance = infoDict[@"distance"];
-    TimeString = infoDict[@"time"];
+    enlargeItems = [[NSDictionary alloc] initWithDictionary:infoDict copyItems:YES];
 }
 
 

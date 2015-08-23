@@ -31,7 +31,7 @@
         [preferences setFloat:self.radiusSlider.value forKey:@"Radius Slider"];
         
         //set label
-        float foo = self.radiusSlider.value * 3;
+        float foo = self.radiusSlider.value * 10;
         [self.radiusLabel setText:[NSString stringWithFormat:@"%f Miles", foo]];
     }
     
@@ -39,7 +39,7 @@
         [self.radiusSlider setValue:[preferences floatForKey:@"Radius Slider"]];
         
         //set label
-        float x = self.radiusSlider.value * 3;
+        float x = self.radiusSlider.value * 10;
         [self.radiusLabel setText:[NSString stringWithFormat:@"Stream Radius: %f Miles", x]];
 
     }
@@ -104,7 +104,7 @@
     
     //change label text
     
-    float y = self.radiusSlider.value * 3;
+    float y = self.radiusSlider.value * 10;
     [self.radiusLabel setText:[NSString stringWithFormat:@"Stream Radius: %f Miles", y]];
     
 }

@@ -11,7 +11,8 @@
 @interface StreamEnlarge_SaveViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIImageView *theImageView;
-@property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (strong, nonatomic) IBOutlet UIButton *locationButton;
+
 @property (strong, nonatomic) IBOutlet UIButton *nameButton;
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *longPress;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;

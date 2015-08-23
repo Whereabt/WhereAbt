@@ -61,7 +61,6 @@ UIImagePickerController *imagePicker;
     [LocationController sharedController];
     
     [super viewDidLoad];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -103,7 +102,7 @@ UIImagePickerController *imagePicker;
             }
     
             else {
-                UIAlertView *noCameraAlert = [[UIAlertView alloc]initWithTitle:@"Problem Occurred" message:@"It appears that your device doesn't have a camera" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                UIAlertView *noCameraAlert = [[UIAlertView alloc]initWithTitle:@"Problem Occurred" message:@"It appears that your device doesn't have a camera." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 [noCameraAlert show];
             }
         }
@@ -144,9 +143,11 @@ UIImagePickerController *imagePicker;
 - (void)createShareLinkForODFileWithPath:(NSString *) ODfilePath andCompletion: (void (^)(NSError *Error))theCallback {
     
     //DELETE
+    /*
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"-createShareLinkForODFile method called" message:@"will begin request" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alert show];
-    
+    */
+     
     NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/action.createLink", ODfilePath];
     //NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/items/%@/action.createLink", ODfilePath];
 
@@ -179,8 +180,10 @@ UIImagePickerController *imagePicker;
         //make task
         NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             //DELETE
+            /*
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"reached completion of shareLink reuqest" message:@"will continue and PUT to db" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alert show];
+            */
             
             NSLog(@"Share link data, not json: %@", data);
             
@@ -404,8 +407,9 @@ UIImagePickerController *imagePicker;
         }
         
         //DELETE
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"postButtonPress method called" message:@"no photo currently uploading, will continue" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"postButtonPress method called" message:@"no photo currently uploading, will continue" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert show];
+        */
         
         [imagePicker dismissViewControllerAnimated:YES completion:^{
             [self userFinishedEditingImageWithPicker:imagePicker andInfo:self.postInfo];
@@ -445,9 +449,10 @@ UIImagePickerController *imagePicker;
                 NSString *processedName = [[NSProcessInfo processInfo] globallyUniqueString];
                 uniqueFileName = [NSString stringWithFormat:@"%@.jpg", processedName];
                 //DELETE
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"userFinishedEditingImageWithPicker method called" message:@"about to call -constructTaskWithImageNameAndData" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"userFinishedEditingImageWithPicker method called" message:@"about to call -constructTaskWithImageNameAndData" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                 [alert show];
-                
+                */
+                 
                 //make request to server
                 [self constructTaskWithImageName:uniqueFileName andData: dataFromImage];
                 
@@ -511,7 +516,9 @@ UIImagePickerController *imagePicker;
                     }
                     
                     if ([_metaLong isEqualToString:@"(null)"] == YES || [_metaLat isEqualToString:@"(null)"] == YES) {
-                        UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                        StreamViewController *streamVC = [[StreamViewController alloc] init];
+                        [streamVC setUploadingPhotoVarTo:NO];
+                        UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                         [metaAlert show];
                     }
                     
@@ -608,9 +615,10 @@ UIImagePickerController *imagePicker;
     startUploadDate = [NSDate date];
     
     //DELETE
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"-createPhotoUploadTaskUsingImageNameAndData method just called" message:@"Will now make upload request" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"-createPhotoUploadTaskUsingImageNameAndData method just called" message:@"Will now make upload request" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alert show];
-    
+    */
+     
     NSString *filePath = [NSString stringWithFormat:@"WhereaboutApp/%@", imageName];
     NSURLSession *session = [NSURLSession sharedSession];
     NSString *stringURL = [NSString stringWithFormat:self.uploadURL, filePath];
@@ -654,9 +662,10 @@ UIImagePickerController *imagePicker;
 - (void)constructTaskWithImageName:(NSString*)name andData:(NSData*)data {
     
     //DELETE
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"-constructTaskWithImageNameAndDAta method called" message:@"Will check to see if access token needs update" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"-constructTaskWithImageNameAndDAta method called" message:@"Will check to see if access token needs update" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alert show];
-    
+    */
+     
     //check last token refresh and update if needed
     NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
     NSDate *lastUpdate = [preferences objectForKey:@"Last token refresh"];
@@ -665,8 +674,9 @@ UIImagePickerController *imagePicker;
     if (lastUpdate == nil || interval > 3000) {
         
         //DELETE
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"access token needs update" message:@"will call refreshAuthTokenWithCompletion and then -createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"access token needs update" message:@"will call refreshAuthTokenWithCompletion and then -createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert show];
+        */
         
         [welcomeManager refreshAuthTokenWithCompletion:^{
             [self createPhotoUploadTaskUsingImageName:name andImageData:data];
@@ -676,8 +686,9 @@ UIImagePickerController *imagePicker;
     else {
         
         //DELETE
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"no need to update access token" message:@"will continue with createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"no need to update access token" message:@"will continue with createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert show];
+        */
         
         [self createPhotoUploadTaskUsingImageName:name andImageData:data];
     }
@@ -788,7 +799,7 @@ UIImagePickerController *imagePicker;
         
         NSString *dateString = [dateFormatter stringFromDate: _metaTimeStamp];
 
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto3.php?UserID=%@&UserName=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, _metaLat, _metaLong, largeImage, smallImage, dateString, uploadTimeInterval];
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto2.php?UserID=%@&UserName=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, _metaLat, _metaLong, largeImage, smallImage, dateString, uploadTimeInterval];
         NSLog(@"PUT URL String: %@", _PUTUrlString);
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];

@@ -55,7 +55,6 @@ PhotosAccessViewController *photoVC;
         self.hasLoadedStream = YES;
     }
     else {
-        //do nothing
         if (isUploadingPhoto) {
             [self startRefreshControlOnPhotoUpload];
         }
@@ -100,17 +99,17 @@ PhotosAccessViewController *photoVC;
         //get default radius
         float f;
         NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-        if ([preferences floatForKey:@"Radius Slider"] * 3 == 0) {
+        if ([preferences floatForKey:@"Radius Slider"] * 10 == 0) {
             f = 1.5;
         }
         else {
-            f = [preferences floatForKey:@"Radius Slider"] * 3;
+            f = [preferences floatForKey:@"Radius Slider"] * 10;
         }
         
         NSLog(@"Radius: %f", f);
         
         //USE f FOR RADIUS PARAM
-        [networkRequester getFeedWithRadius:f andCompletion:^(NSMutableArray *items, NSError *error) {
+        [networkRequester getFeedWithRadius:3000 andCompletion:^(NSMutableArray *items, NSError *error) {
             if (!error) {
                 self.streamItems = items;
                 
@@ -190,6 +189,11 @@ PhotosAccessViewController *photoVC;
 
 - (void)setUploadingPhotoVarTo:(BOOL) boolean {
     isUploadingPhoto = boolean;
+    if (!isUploadingPhoto) {
+        if ([uploadLabel superview]) {
+            [uploadLabel removeFromSuperview];
+        }
+    }
 }
 
 - (BOOL)uploadingPhoto{
@@ -250,9 +254,15 @@ PhotosAccessViewController *photoVC;
 }
 
 - (IBAction)cameraButtonCalled:(id)sender {
-    photoVC = [[PhotosAccessViewController alloc] init];
-    [photoVC setSourceTypeToWantsCamera:YES];
-    [self presentViewController:photoVC animated:YES completion:nil];
+    if (([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES)) {
+        photoVC = [[PhotosAccessViewController alloc] init];
+        [photoVC setSourceTypeToWantsCamera:YES];
+        [self presentViewController:photoVC animated:YES completion:nil];
+    }
+    else {
+        UIAlertView *noCameraAlert = [[UIAlertView alloc]initWithTitle:@"Problem Occurred" message:@"It appears that your device doesn't have a camera." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [noCameraAlert show];
+    }
 }
 
 - (void)closePhotoVCWithCompletion:(void (^)(void))completionBlock {
@@ -336,21 +346,7 @@ PhotosAccessViewController *photoVC;
     
     [cell.cellImage setImageWithURL:[NSURL URLWithString:PhotoUrlString] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
     
-    /*
-    [cell.cellImage setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.streamItems[indexPath.row][@"PhotoURL"]]] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"] success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        //success
-        self.streamItems[indexPath.row][@"PHOTO"] = image;
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        //failure
-        self.streamItems[indexPath.row][@"PHOTO"] = @"None";
-    }];
-    */
-    
-    /*cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
-                                           green:33.0f/255.0f
-                                            blue:36.0f/255.0f
-                                           alpha:1.0f];
-     */
+
     cell.backgroundColor = [UIColor whiteColor];
     //[cell.cellImage setFrame:cell.frame];
     
@@ -379,12 +375,18 @@ PhotosAccessViewController *photoVC;
     }
     
     NSString *distanceString = [NSString stringWithFormat:@"%.f %@", distanceInt, distanceUnit];
+    
+    if ([distanceString  isEqual: @"1 miles"]) {
+        distanceString = @"1 mile";
+    }
 
     [dictionaryParameter setObject:distanceString forKey:@"Distance"];
     [dictionaryParameter setObject:cell.cellImage.image forKey:@"Photo"];
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserID"] forKey:@"ID"];
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserName"] forKey:@"Name"];
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"TimeStamp"] forKey:@"Time"];
+    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"Longitude"] forKey:@"Longitude"];
+    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"Latitude"] forKey:@"Latitude"];
     
     StreamEnlarge_SaveViewController *SaveController = [[StreamEnlarge_SaveViewController alloc] init];
     [SaveController setUpTheEnlargedViewWithItemDictionary:dictionaryParameter];

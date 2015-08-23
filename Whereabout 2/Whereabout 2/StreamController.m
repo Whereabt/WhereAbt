@@ -23,13 +23,15 @@ static NSString *const distanceFrom = @"MilesAway";
 - (void)getFeedWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
     //get location
     //CLLocation *location = [LocationController sharedController].currentLocation;
+    
+    [LocationController sharedController];
+    
     LocationController *locationController = [[LocationController alloc]init];
-
     
     //make request
     NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed3.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
     
-    //NSString *urlAsString = @"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3.000000";
+   //NSString *urlAsString = @"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3.000000";
     //eventually, include radius in last parameter 'Radius='
     
     NSURL *url = [[NSURL alloc] initWithString:urlAsString];
@@ -57,20 +59,7 @@ static NSString *const distanceFrom = @"MilesAway";
                                                        else {
                                                        
                                                        NSLog(@"%@", _itemCollection);
-                                                           /*
-                                                       for (NSDictionary *photoItem in _itemCollection) {
-                                                           NSString *thumbPhotoURL = photoItem[@"ThumbnailURL"];
-                                                           NSString *largPhotoURL = photoItem[@"PhotoURL"];
-                                                           NSInteger photoItemIndex = [_itemCollection indexOfObject:photoItem];
-                                                           [self imageFromURLString:thumbPhotoURL atIndex:photoItemIndex OfArray:_itemCollection isThumbnail:YES];
-                                                           [self imageFromURLString:largPhotoURL atIndex:photoItemIndex OfArray:_itemCollection isThumbnail:NO];
-                                                          // [self imageFromURLString:photoURL atIndex:photoItemIndex OfArray:_itemCollection];
-                                                           
-                                                           //when requests are done, call completion handler (callBack block) with request-created parameters
-                                                           //callBack(_itemCollection, error);
-                                                           
-                                                        } */
-                                                        //callBack(_itemCollection, error);
+                                                          
                                                        }
                                                        callBack(_itemCollection, error);
                                                    }

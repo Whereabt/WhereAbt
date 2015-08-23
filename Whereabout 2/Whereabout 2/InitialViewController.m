@@ -9,6 +9,8 @@
 #import "InitialViewController.h"
 #import "WelcomeViewController.h"
 #import "KeychainItemWrapper.h"
+#import <CoreLocation/CoreLocation.h>
+#import "LocationController.h"
 
 @interface InitialViewController ()
 
@@ -17,6 +19,7 @@
 @implementation InitialViewController
 
 - (void)viewDidLoad {
+    [LocationController sharedController];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
