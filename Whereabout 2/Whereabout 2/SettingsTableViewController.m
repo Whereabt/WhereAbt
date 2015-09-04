@@ -9,6 +9,8 @@
 #import "SettingsTableViewController.h"
 #import "KeychainItemWrapper.h"
 #import "WelcomeViewController.h"
+#import <OneDriveSDK/OneDriveSDK.h>
+
 
 @interface SettingsTableViewController ()
 
@@ -62,6 +64,18 @@
 - (IBAction)logoutPressed:(id)sender {
     [self.logoutActivityIndicator startAnimating];
     
+    [[ODClient loadCurrentClient] signOutWithCompletion:^(NSError *erro) {
+        if (erro) {
+            UIAlertView *logoutFailAlert = [[UIAlertView alloc] initWithTitle:@"Logout Failed" message:@"An error occurred" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [logoutFailAlert show];
+        }
+        else {
+            [self.logoutActivityIndicator stopAnimating];
+            [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+        }
+    }];
+    
+    /* ---> OLD WAY
     KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
     
     //set nil for the refresh token, user will have to log back in
@@ -79,6 +93,7 @@
     }];
     
     [dataRequestTask resume];
+    */
     
 }
 

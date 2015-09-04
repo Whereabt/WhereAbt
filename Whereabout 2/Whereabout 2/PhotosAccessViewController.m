@@ -18,7 +18,7 @@
 #import <ImageIO/CGImageProperties.h>
 #import <CoreLocation/CoreLocation.h>
 #include <math.h>
-
+#import <OneDriveSDK/OneDriveSDK.h>
 
 //static NSString *const fakeFileName = @"Fake2.jpg";
 
@@ -147,7 +147,34 @@ UIImagePickerController *imagePicker;
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"-createShareLinkForODFile method called" message:@"will begin request" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alert show];
     */
-     
+    
+    ODClient *currentClient = [ODClient loadCurrentClient];
+    
+    ODItemCreateLinkRequestBuilder *linkReqBuilder = [[[currentClient root]itemByPath:ODfilePath]createLinkWithType:@"edit"];
+    
+    ODItemCreateLinkRequest *linkReq = [linkReqBuilder request];
+    
+    [linkReq executeWithCompletion:^(ODPermission *response, NSError *error) {
+        NSLog(@"SHARELINK RESPONSE: %@", response);
+        if (error) {
+            UIAlertView *shareLinkAlert = [[UIAlertView alloc] initWithTitle:@"Error occurred during upload" message:@"Something went wrong, please try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [shareLinkAlert show];
+        }
+        
+        else {
+            NSLog(@"Success on shareLink request");
+            
+            NSLog(@"Link prop value: %@", response.link);
+            NSString *unencodedShareURLstring = response.link.webUrl;
+            NSString *escapedString = [unencodedShareURLstring stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+            escapedString = [escapedString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+            
+            [self PUTonNewPhotophpWithImageURLsLarge:escapedString andSmall:@"NONE"];
+
+        }
+    }];
+    
+    /*
     NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/action.createLink", ODfilePath];
     //NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/items/%@/action.createLink", ODfilePath];
 
@@ -180,10 +207,9 @@ UIImagePickerController *imagePicker;
         //make task
         NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
             //DELETE
-            /*
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"reached completion of shareLink reuqest" message:@"will continue and PUT to db" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alert show];
-            */
+            //----
             
             NSLog(@"Share link data, not json: %@", data);
             
@@ -195,13 +221,13 @@ UIImagePickerController *imagePicker;
                 NSString *unencodedShareURLstring = jsonDict[@"link"][@"webUrl"];
                 
                 //must double-encode the url
-                /*
+                //--
                 NSString *singleEncodedShareURL = [unencodedShareURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 
                 NSString *doubleEncodedShareURL = [singleEncodedShareURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                 
                 NSLog(@"Single encoded url: %@, Double encoded share url:%@, Unencoded shareURL: %@", singleEncodedShareURL, doubleEncodedShareURL, unencodedShareURL);
-                */
+                //---
                 
                 NSString *singleEncodedShareURL = [unencodedShareURLstring stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
                 
@@ -246,6 +272,7 @@ UIImagePickerController *imagePicker;
         [requestBodyJsonAlert show];
         
     }
+ */
 }
 
 - (NSString *)jsonStringFromDictionary:(NSMutableDictionary *) dictToTranslate {
@@ -618,7 +645,40 @@ UIImagePickerController *imagePicker;
     /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"-createPhotoUploadTaskUsingImageNameAndData method just called" message:@"Will now make upload request" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alert show];
     */
-     
+    
+    NSString *path = [NSString stringWithFormat:@"WhereaboutAppTest/%@", imageName];
+    ODClient *odclient = [ODClient loadCurrentClient];
+    
+    
+   // ODItemContentRequest *request = [[[odclient drive] items:[[[[ODClient] drive] root] itemBypath:path] contentRequest];
+    
+    ODItemContentRequest *Request = [[[odclient root] itemByPath:path] contentRequest];
+    
+    [Request uploadFromData:imageData completion:^(ODItem *response, NSError *error) {
+        
+         NSLog(@"RESPONSE FROM UPLOAD: %@", response);
+        if (error) {
+            NSLog(@"Error uploading: %@", error);
+        }
+        
+        else {
+            //all good
+            [self createShareLinkForODFileWithPath:path andCompletion:^(NSError *Error) {
+                
+                if (!Error) {
+                    NSLog(@"Success, no error on creating share link");
+                }
+                else {
+                    UIAlertView *publicFolderAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a network error while trying to send your photo to the server. Please try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    [publicFolderAlert show];
+                }
+            }];
+            
+        }
+    }];
+
+    
+     /* OLD WAY -->
     NSString *filePath = [NSString stringWithFormat:@"WhereaboutApp/%@", imageName];
     NSURLSession *session = [NSURLSession sharedSession];
     NSString *stringURL = [NSString stringWithFormat:self.uploadURL, filePath];
@@ -656,7 +716,7 @@ UIImagePickerController *imagePicker;
         }
     }];
     [uploadTask resume];
-
+    */
 }
 
 - (void)constructTaskWithImageName:(NSString*)name andData:(NSData*)data {
@@ -667,6 +727,8 @@ UIImagePickerController *imagePicker;
     */
      
     //check last token refresh and update if needed
+    
+    /*
     NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
     NSDate *lastUpdate = [preferences objectForKey:@"Last token refresh"];
     
@@ -674,9 +736,9 @@ UIImagePickerController *imagePicker;
     if (lastUpdate == nil || interval > 3000) {
         
         //DELETE
-        /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"access token needs update" message:@"will call refreshAuthTokenWithCompletion and then -createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"access token needs update" message:@"will call refreshAuthTokenWithCompletion and then -createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert show];
-        */
+     
         
         [welcomeManager refreshAuthTokenWithCompletion:^{
             [self createPhotoUploadTaskUsingImageName:name andImageData:data];
@@ -686,13 +748,16 @@ UIImagePickerController *imagePicker;
     else {
         
         //DELETE
-        /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"no need to update access token" message:@"will continue with createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"no need to update access token" message:@"will continue with createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert show];
-        */
+        
         
         [self createPhotoUploadTaskUsingImageName:name andImageData:data];
     }
-    
+    */
+
+    [self createPhotoUploadTaskUsingImageName:name andImageData:data];
+
 }
 
 

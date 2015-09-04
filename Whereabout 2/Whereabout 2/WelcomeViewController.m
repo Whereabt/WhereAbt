@@ -12,6 +12,7 @@
 #import "ProfileController.h"
 #import "KeychainItemWrapper.h"
 #import <Security/Security.h>
+#import <OneDriveSDK/OneDriveSDK.h>
 
 
 @interface WelcomeViewController ()
@@ -185,6 +186,31 @@
 
 
 - (IBAction)LoginSignUp:(id)sender {
+    NSArray *scopeArray = [[NSArray alloc] initWithObjects:@"wl.offline_access", @"onedrive.readwrite", nil];
+    
+    [ODClient setMicrosoftAccountAppId:@"000000004C13496E" scopes:scopeArray];
+    
+    [ODClient authenticatedClientWithCompletion:^(ODClient *client, NSError *error) {
+        
+        if (!error) {
+        //temporary fix for getting username
+        ProfileController *profileManager = [[ProfileController alloc]init];
+        [profileManager requestProfileItemsFromUser:client.accountId WithCompletion:^(NSMutableArray *Items, NSError *error) {
+            
+            [WelcomeViewController sharedController].userName = Items[0][@"UserName"];
+            [WelcomeViewController sharedController].userID = client.accountId;
+             [self performSegueWithIdentifier:@"segueToTab" sender:self];
+        }];
+      }
+    
+        else {
+        
+            UIAlertView *odAuthErrorAlert = [[UIAlertView alloc] initWithTitle:@"Error signing in to OneDrive" message:@"Please try again" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [odAuthErrorAlert show];
+        }
+    }];
+        
+    /*
     //make user log in to get him an auth code
     UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
     webView.delegate = self;
@@ -197,6 +223,7 @@
     NSURLRequest *loginRequest = [NSURLRequest requestWithURL:authURL];
     [webView loadRequest:loginRequest];
     [self.view addSubview:webView];
+     */
 }
 
 
