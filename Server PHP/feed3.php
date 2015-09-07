@@ -61,6 +61,7 @@
             $innerarray =
             array('MilesAway' => $MilesAway,
                   'UserID' => mysql_result($result,$j,'UserID') ,
+                  'Mapping' => mysql_result($result,$j,'Mapping') ,
                   'UserName' => mysql_result($result,$j,'UserName') ,
                   'Latitude' => mysql_result($result,$j,'Latitude'),
                   'Longitude' => mysql_result($result,$j,'Longitude'),

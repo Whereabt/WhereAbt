@@ -9,6 +9,7 @@
 #import "StreamPROEnlargedViewController.h"
 #import "WelcomeViewController.h"
 #import "LocationController.h"
+#import <OneDriveSDK/OneDriveSDK.h>
 
 @interface StreamPROEnlargedViewController ()
 
@@ -137,28 +138,34 @@ NSDictionary *enlargeItems;
     
     UIAlertAction *odSaveAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save to Private OneDrive", "OneDrive Save Action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
-        //check last token refresh and update if needed
-        NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-        NSDate *lastUpdate = [preferences objectForKey:@"Last token refresh"];
+        NSData *dataFromImage = UIImagePNGRepresentation(self.photoView.image);
         
-        NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:lastUpdate];
-        if (lastUpdate == nil || interval > 3000) {
+        //unique name for onedrive file
+        NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
+        NSString *uniqueFileName = [NSString stringWithFormat:@"%@.jpg", processedName];
+        
+        //request
+        NSString *path = [NSString stringWithFormat:@"Whereabout_Private/%@", uniqueFileName];
+        ODClient *odclient = [ODClient loadCurrentClient];
+        
+        ODItemContentRequest *Request = [[[odclient root] itemByPath:path] contentRequest];
+        
+        [Request uploadFromData:dataFromImage completion:^(ODItem *response, NSError *error) {
             
-            WelcomeViewController *welcomeManager = [[WelcomeViewController alloc] init];
-            [welcomeManager refreshAuthTokenWithCompletion:^{
-                [self uploadToPrivateOneDriveAndCompletion:^{
-                    [alertController dismissViewControllerAnimated:YES completion:nil];
-                }];
-            }];
-        }
+            NSLog(@"RESPONSE FROM UPLOAD: %@", response);
+            if (error) {
+                NSLog(@"Error uploading: %@", error);
+            }
+            
+            else {
+                //all good
+                NSLog(@"Success on private upload");
+            }
+        }];
         
-        else {
-            [self uploadToPrivateOneDriveAndCompletion:^{
-                [alertController dismissViewControllerAnimated:YES completion:nil];
-            }];
-        }
         
         [alertController dismissViewControllerAnimated:YES completion:nil];
+
     }];
 
     [alertController addAction: odSaveAction];

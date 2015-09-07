@@ -16,6 +16,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "StreamTVCell.h"
 #import "PhotosAccessViewController.h"
+#import "MapVCViewController.h"
 
 @interface StreamViewController ()
 
@@ -109,7 +110,7 @@ PhotosAccessViewController *photoVC;
         NSLog(@"Radius: %f", f);
         
         //USE f FOR RADIUS PARAM
-        [networkRequester getFeedWithRadius:3000 andCompletion:^(NSMutableArray *items, NSError *error) {
+        [networkRequester getFeedWithRadius:f andCompletion:^(NSMutableArray *items, NSError *error) {
             if (!error) {
                 self.streamItems = items;
                 
@@ -387,9 +388,13 @@ PhotosAccessViewController *photoVC;
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"TimeStamp"] forKey:@"Time"];
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"Longitude"] forKey:@"Longitude"];
     [dictionaryParameter setObject:self.streamItems[indexPath.row][@"Latitude"] forKey:@"Latitude"];
+    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"Mapping"] forKey:@"Mapping"];
     
     StreamEnlarge_SaveViewController *SaveController = [[StreamEnlarge_SaveViewController alloc] init];
     [SaveController setUpTheEnlargedViewWithItemDictionary:dictionaryParameter];
+    
+    MapVCViewController *mapVC = [[MapVCViewController alloc] init];
+    [mapVC setUpMapViewWithDictionary:dictionaryParameter];
     
     //[self performSegueWithIdentifier:@"segueToEnlargeSave" sender:self];
 }

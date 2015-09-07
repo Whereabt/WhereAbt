@@ -8,6 +8,7 @@
 
 #import "MapVCViewController.h"
 #import "MapAnnotation.h"
+#import "LocationController.h"
 
 #define METERS_PER_MILE 1609.344
 
@@ -18,6 +19,7 @@
 @implementation MapVCViewController
 
 CLLocation *Location;
+NSDictionary *imageDict;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,20 +32,45 @@ CLLocation *Location;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    if (!Location) {
+        UIAlertView *noMappingAlert = [[UIAlertView alloc] initWithTitle:@"Location Not Available" message:@"The user denied mapping for this photo." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [noMappingAlert show];
+
+    }
+    
+    else {
     CLLocationCoordinate2D zoomLocation;
     zoomLocation.latitude = Location.coordinate.latitude;
     zoomLocation.longitude= Location.coordinate.longitude;
     
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
     
+    __block NSString *place;
+    
+    LocationController *locationCont = [[LocationController alloc] init];
+    [locationCont getNameFromLocation:Location isNear:YES AndCompletion:^(NSString *locationName) {
+        place = [[NSString alloc] initWithString:locationName];
+    }];
+    
     [_mapView setRegion:viewRegion animated:YES];
-    MapAnnotation *annotation = [[MapAnnotation alloc] initWithName:@"Photo" address:[NSString stringWithFormat:@"Address"] coordinate:Location.coordinate] ;
+    MapAnnotation *annotation = [[MapAnnotation alloc] initWithName:imageDict[@"Name"] address:place coordinate:Location.coordinate] ;
     [_mapView addAnnotation:annotation];
+        
+    }
 }
 
-- (void)setUpMapViewWithLocation: (CLLocation *)imageLocation {
+- (void)setUpMapViewWithDictionary:(NSDictionary *)photoDict {
     Location = [[CLLocation alloc] init];
-    Location = imageLocation;
+    if ([photoDict[@"Mapping"]  isEqual: @"TRUE"]) {
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:[photoDict[@"Latitude"] doubleValue] longitude:[photoDict[@"Longitude"] doubleValue]];
+        Location = location;
+    }
+    
+    else {
+        Location = nil;
+    }
+    imageDict = [[NSDictionary alloc] init];
+    imageDict = photoDict;
 }
 
 /*

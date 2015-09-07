@@ -193,14 +193,20 @@
     [ODClient authenticatedClientWithCompletion:^(ODClient *client, NSError *error) {
         
         if (!error) {
-        //temporary fix for getting username
-        ProfileController *profileManager = [[ProfileController alloc]init];
-        [profileManager requestProfileItemsFromUser:client.accountId WithCompletion:^(NSMutableArray *Items, NSError *error) {
-            
-            [WelcomeViewController sharedController].userName = Items[0][@"UserName"];
-            [WelcomeViewController sharedController].userID = client.accountId;
-             [self performSegueWithIdentifier:@"segueToTab" sender:self];
-        }];
+            [[[[ODClient loadCurrentClient] drive] request] getWithCompletion:^(ODDrive *response, NSError *error) {
+                if (error) {
+                    UIAlertView *usernameAlert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"A problem occurred while logging in, you may have to restart the app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    [usernameAlert show];
+                }
+                
+                else{
+                    [WelcomeViewController sharedController].userName = [response.owner.user.displayName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                    
+                    [WelcomeViewController sharedController].userID = client.accountId;
+                    [self performSegueWithIdentifier:@"segueToTab" sender:self];
+                }
+            }];
+
       }
     
         else {

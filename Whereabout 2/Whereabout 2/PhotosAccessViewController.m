@@ -32,6 +32,7 @@
 @property (strong, nonatomic) NSMutableDictionary *postInfo;
 @property (nonatomic, assign) BOOL hasLoadedVC;
 @property (nonatomic, assign) BOOL wantsCamera;
+@property (strong, nonatomic) NSString *mappingString;
 
 @end
 
@@ -159,6 +160,8 @@ UIImagePickerController *imagePicker;
         if (error) {
             UIAlertView *shareLinkAlert = [[UIAlertView alloc] initWithTitle:@"Error occurred during upload" message:@"Something went wrong, please try again." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [shareLinkAlert show];
+            StreamViewController *streamController = [[StreamViewController alloc] init];
+            [streamController stopRefreshControlOnPhotoUpload];
         }
         
         else {
@@ -433,14 +436,35 @@ UIImagePickerController *imagePicker;
             UIImageWriteToSavedPhotosAlbum(FinalMedia, nil, nil, nil);
         }
         
+        //alert controller
+        UIAlertController *mappingAlert = [UIAlertController alertControllerWithTitle:@"Allow Mapping?" message:@"Mapping allows other users to see your photo's exact location." preferredStyle:UIAlertControllerStyleAlert];
+        
+        //yes action
+        UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            self.mappingString = @"TRUE";
+            [imagePicker dismissViewControllerAnimated:YES completion:^{
+                [self userFinishedEditingImageWithPicker:imagePicker andInfo:self.postInfo];
+            }];
+        }];
+        [mappingAlert addAction:yesAction];
+        
+        //no action
+        UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            self.mappingString = @"FALSE";
+            [imagePicker dismissViewControllerAnimated:YES completion:^{
+                [self userFinishedEditingImageWithPicker:imagePicker andInfo:self.postInfo];
+            }];
+        }];
+        [mappingAlert addAction:noAction];
+        
+        //present alert
+        [VC presentViewController:mappingAlert animated:YES completion:nil];
+
         //DELETE
         /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"postButtonPress method called" message:@"no photo currently uploading, will continue" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert show];
         */
         
-        [imagePicker dismissViewControllerAnimated:YES completion:^{
-            [self userFinishedEditingImageWithPicker:imagePicker andInfo:self.postInfo];
-        }];
     }
 }
 
@@ -544,9 +568,11 @@ UIImagePickerController *imagePicker;
                     
                     if ([_metaLong isEqualToString:@"(null)"] == YES || [_metaLat isEqualToString:@"(null)"] == YES) {
                         StreamViewController *streamVC = [[StreamViewController alloc] init];
-                        [streamVC setUploadingPhotoVarTo:NO];
+                        //[streamVC setUploadingPhotoVarTo:NO];
                         UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                         [metaAlert show];
+                        StreamViewController *streamController = [[StreamViewController alloc] init];
+                        [streamController stopRefreshControlOnPhotoUpload];
                     }
                     
                     else{
@@ -604,12 +630,16 @@ UIImagePickerController *imagePicker;
 
                     UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     [metaAlert show];
+                    StreamViewController *streamController = [[StreamViewController alloc] init];
+                    [streamController stopRefreshControlOnPhotoUpload];
                 }
             } failureBlock:^(NSError *error) {
                 
                 NSLog(@"Unable to access image metadata: %@", error);
                 UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                 [metaAlert show];
+                StreamViewController *streamController = [[StreamViewController alloc] init];
+                [streamController stopRefreshControlOnPhotoUpload];
             }];
             
         }
@@ -646,7 +676,7 @@ UIImagePickerController *imagePicker;
     [alert show];
     */
     
-    NSString *path = [NSString stringWithFormat:@"WhereaboutAppTest/%@", imageName];
+    NSString *path = [NSString stringWithFormat:@"WhereaboutApp/%@", imageName];
     ODClient *odclient = [ODClient loadCurrentClient];
     
     
@@ -671,6 +701,8 @@ UIImagePickerController *imagePicker;
                 else {
                     UIAlertView *publicFolderAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a network error while trying to send your photo to the server. Please try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     [publicFolderAlert show];
+                    StreamViewController *streamController = [[StreamViewController alloc] init];
+                    [streamController stopRefreshControlOnPhotoUpload];
                 }
             }];
             
@@ -761,92 +793,6 @@ UIImagePickerController *imagePicker;
 }
 
 
-- (void)getThumbnailURLfromStoredImageFile:(NSString *)fileName andCompletion: (void (^)(NSString *thumbnail, NSString *large))callBack{
-    
-    //get new access token
-    WelcomeViewController *welcomeVC = [[WelcomeViewController alloc] init];
-    
-    [welcomeVC refreshAuthTokenWithCompletion:^{
-        NSURLSession *session = [NSURLSession sharedSession];
-        NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/items/%@/thumbnails", fileName];
-        
-        NSURL *url = [NSURL URLWithString:stringURL];
-        
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-        [request setHTTPMethod:@"GET"];
-        NSLog(@"ACCESS TOKEN: %@", [WelcomeViewController sharedController].authToken);
-        [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField:@"Authorization"];
-        NSURLSessionDataTask *DataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            NSError *jsonError = nil;
-            NSArray *responseDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-            NSLog(@"RESPONSE: %@", response);
-            NSLog(@"Dictionary from THUMBNAIL RESPONSE: %@", responseDict);
-            
-            
-            //pass small and large size images
-            /*
-             NSDictionary *bothDict = [responseDict objectAtIndex:1];
-             NSLog(@"%@", bothDict);
-             NSArray *bothArray = bothDict[@"value"];
-             NSArray *bothArrayTwo = bothArray[0];
-             NSDictionary *largeDictOne = bothArrayTwo[0];
-             NSArray *largeArrayOne = largeDictOne[@"large"];
-             NSDictionary *largeDictTwo = largeArrayOne[0];
-             
-             NSDictionary *smallDictOne = bothArray[0];
-             NSArray *smallArrayOne = smallDictOne[@"small"];
-             NSDictionary *smallDictTwo = smallArrayOne[0];
-             */
-            
-            NSString *stringResponse = [NSString stringWithFormat:@"%@", responseDict];
-            NSString *withoutEnter = [stringResponse stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-            NSString *withoutSpaces = [withoutEnter stringByReplacingOccurrencesOfString:@" " withString:@""];
-            NSString *fixedStringREsponse = [withoutSpaces stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-            NSLog(@"%@", fixedStringREsponse);
-            NSArray *largeAll = [fixedStringREsponse componentsSeparatedByString:@";large="];
-            NSLog(@"%@", largeAll);
-            NSString *largeAllString = largeAll[1];
-            NSArray *largeItemsMore = [largeAllString componentsSeparatedByString:@";medium="];
-            NSString *largeItemString = largeItemsMore[0];
-            NSArray *beforeUrl = [largeItemString componentsSeparatedByString:@";url="];
-            NSString *stringAfterUrl = beforeUrl[1];
-            NSArray *urlMore = [stringAfterUrl componentsSeparatedByString:@";width="];
-            NSString *largeImageUrl = urlMore[0];
-            
-            NSArray *mediumSmall = [fixedStringREsponse componentsSeparatedByString:@"};medium="];
-            NSString *mediumSmallString = mediumSmall[1];
-            
-            NSArray *smallOnly = [fixedStringREsponse componentsSeparatedByString:@"};small="];
-            NSString *smallOnlyString = smallOnly[1];
-            NSArray *beforeSmallUrl = [smallOnlyString componentsSeparatedByString:@";url="];
-            NSString *stringAfterSmallUrl = beforeSmallUrl[1];
-            NSArray *SmallUrlMore = [stringAfterSmallUrl componentsSeparatedByString:@";width"];
-            NSString *smallImageUrl = SmallUrlMore[0];
-            
-            
-            
-            callBack(smallImageUrl, largeImageUrl);
-        }];
-                
-        [DataTask resume];
-        /*
-         NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
-         NSLog(@"Response: %@", response);
-         }];
-         
-         NSURLSessionDataTask *thumbnailTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-         NSError *jsonError = nil;
-         NSDictionary *thumbnailDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-         NSString *urlToThumbnail = [thumbnailDict objectForKey:@"url"];
-         callBack(urlToThumbnail);
-         }];
-         [thumbnailTask resume];
-         */
-
-    }];
-    
-}
-
 
 - (void)PUTonNewPhotophpWithImageURLsLarge:(NSString *)largeImage andSmall:(NSString *) smallImage{
     if (_metaLong != nil & _metaLat != nil) {
@@ -864,7 +810,7 @@ UIImagePickerController *imagePicker;
         
         NSString *dateString = [dateFormatter stringFromDate: _metaTimeStamp];
 
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto2.php?UserID=%@&UserName=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, _metaLat, _metaLong, largeImage, smallImage, dateString, uploadTimeInterval];
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto2.php?UserID=%@&UserName=%@&Mapping=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, self.mappingString, _metaLat, _metaLong, largeImage, smallImage, dateString, uploadTimeInterval];
         NSLog(@"PUT URL String: %@", _PUTUrlString);
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];

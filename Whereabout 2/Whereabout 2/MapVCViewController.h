@@ -13,6 +13,6 @@
 
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 
-- (void)setUpMapViewWithLocation: (CLLocation *)imageLocation;
+- (void)setUpMapViewWithDictionary:(NSDictionary *)photoDict;
 
 @end

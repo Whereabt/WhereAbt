@@ -1108,7 +1108,6 @@
                                 </state>
                                 <connections>
                                     <action selector="nameButtonPressed:" destination="Lrt-Zq-cXs" eventType="touchUpInside" id="nyx-i5-pd5"/>
-                                    <segue destination="g8Y-Ci-Ftk" kind="show" identifier="segueToProfile" id="kWH-I7-hse"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SbP-7t-pAQ">
@@ -1121,7 +1120,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="HMN-AK-u1R" kind="show" id="kVu-ky-0GV"/>
+                                    <segue destination="HMN-AK-u1R" kind="show" id="iq3-yX-ecR"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFU-Fx-Oo1">
@@ -1170,7 +1169,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-518" y="2819"/>
+            <point key="canvasLocation" x="-506" y="2833"/>
         </scene>
         <!--MapVC View Controller-->
         <scene sceneID="fSg-Q4-RIf">
@@ -1198,7 +1197,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hW5-gW-niN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-531" y="3464"/>
+            <point key="canvasLocation" x="-506" y="3462"/>
         </scene>
         <!--Profile-->
         <scene sceneID="pFD-53-g3M">
@@ -1320,7 +1319,7 @@
         <image name="iphone 6 plus-App icon 1024x1024 REV.png" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xbf-Pp-iaP"/>
+        <segue reference="Jwd-Le-3JH"/>
         <segue reference="IEe-xo-XNR"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.68132159979999996" blue="0.1911690533" alpha="1" colorSpace="calibratedRGB"/>

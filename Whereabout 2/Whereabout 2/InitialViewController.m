@@ -49,9 +49,6 @@
         [ODClient clientWithCompletion:^(ODClient *client, NSError *error){
             if (!error){
                 
-                //temporary fix for getting username
-                ProfileController *profileManager = [[ProfileController alloc]init];
-                
                 NSLog(@"Account ID: %@", client.accountId);
                 
                 [[[[ODClient loadCurrentClient] drive] request] getWithCompletion:^(ODDrive *response, NSError *error) {
@@ -61,7 +58,8 @@
                     }
                     
                     else{
-                        [WelcomeViewController sharedController].userName = response.owner.user.displayName;
+                        [WelcomeViewController sharedController].userName = [response.owner.user.displayName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                        
                         [WelcomeViewController sharedController].userID = client.accountId;
                          [self performSegueWithIdentifier:@"fakeSegue" sender:self];
                     }
