@@ -1,5 +1,7 @@
 # OneDrive iOS SDK
 
+[![Build Status](https://travis-ci.org/OneDrive/onedrive-sdk-ios.svg?branch=master)](https://travis-ci.org/OneDrive/onedrive-sdk-ios)
+
 Integrate the [OneDrive API](https://dev.onedrive.com/README.htm) into your iOS app!
 
 ## 1. Installation
@@ -11,6 +13,66 @@ Integrate the [OneDrive API](https://dev.onedrive.com/README.htm) into your iOS 
 * Add `#import <OneDriveSDK/OneDriveSDK.h>` to all files that need to reference the SDK.
 
 ## 2. Getting started
+
+#### Note: iOS 9 App Transport Security (ATS)
+
+If you are targeting iOS 9 with XCode 7, you need to temporarily enable PFS exceptions for the following domains:
+
+* login.live.com
+* login.microsoftonline.com
+* login.windows.net
+* secure.aadcdn.microsoftonline-p.com
+
+To do this, add the following to your Info.plist :
+
+```
+<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>login.windows.net</key>
+			<dict/>
+			<key>NSIncludeSubdomains</key>
+			<true/>
+			<key>NSExceptionRequiresForwardSecrecy</key>
+			<false/>
+			<key>secure.aadcdn.microsoftonline-p.com</key>
+			<dict>
+				<key>NSIncludeSubmdomains</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+			<key>login.microsoftonline.com</key>
+			<dict>
+				<key>NSIncludeSubmdomains</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+			<key>login.live.com</key>
+			<dict>
+				<key>NSIncludeSubmdomains</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<false/>
+			</dict>
+		</dict>
+	</dict>
+```
+You can also see [OneDriveAPIExplorer](Examples/iOSExplorer) for an example.
+
+These domains enable MSA and standard AAD authentication. It's possible that an AAD domain has a multifactor auth flow or ADFS integration would send you to another domain. If you're targeting a customer set, you'll need to add exceptions for those domains to your app or disable ATS all together. To disable ATFS entirely add the following to your Info.plist:
+
+**Warning** This it not the recommended approach and is only necessary if you wish to target all tenants that do not use standard AAD authentication and do not support Transport Layer Security v1.2.
+
+```
+<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowArbitraryLoads</key>
+        <true/>
+    </dict>
+```
 
 ### 2.1 Register your application
 

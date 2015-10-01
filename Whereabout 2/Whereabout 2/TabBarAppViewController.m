@@ -33,18 +33,18 @@
     */
     
     UIImage *streamNormalImage = [UIImage imageNamed:@"Whereabout-feed-gray-05-11-2015.png"];
-    UIImage *streamSelectedImage = [UIImage imageNamed:@"Whereabout-feed-orange-05-11-2015.png"];
-    UITabBarItem *streamTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:streamNormalImage selectedImage:streamSelectedImage];
+    //UIImage *streamSelectedImage = [UIImage imageNamed:@"Whereabout-feed-orange-05-11-2015.png"];
+    UITabBarItem *streamTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:streamNormalImage selectedImage:nil];
     [self.viewControllers[0] setTabBarItem:streamTabBarItem];
     
-    UIImage *profileNormalImage = [UIImage imageNamed:@"Whereabout-profile-gray-05-11-2015.png"];
-    UIImage *profileSelectedImage = [UIImage imageNamed:@"Whereabout-profile-orange-05-11-2015.png"];
-    UITabBarItem *profileTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:profileNormalImage selectedImage:profileSelectedImage];
+    UIImage *profileNormalImage = [UIImage imageNamed:@"Whereabout profile tab-09-20-2015 GRAY.png"];
+    //UIImage *profileSelectedImage = [UIImage imageNamed:@"Whereabout-profile-orange-05-11-2015.png"];
+    UITabBarItem *profileTabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:profileNormalImage selectedImage:nil];
     [self.viewControllers[1] setTabBarItem:profileTabBarItem];
     
     UIImage *settingsNormalImage = [UIImage imageNamed:@"Whereabout-settings-gray-05-11-2015.png"];
-    UIImage *settingsSelectedImage = [UIImage imageNamed:@"Whereabout-settings-orange-05-11-2015.png"];
-    UITabBarItem *settingsTabItem = [[UITabBarItem alloc] initWithTitle:@"" image:settingsNormalImage selectedImage:settingsSelectedImage];
+    //UIImage *settingsSelectedImage = [UIImage imageNamed:@"Whereabout-settings-orange-05-11-2015.png"];
+    UITabBarItem *settingsTabItem = [[UITabBarItem alloc] initWithTitle:@"" image:settingsNormalImage selectedImage:nil];
     [self.viewControllers[2] setTabBarItem:settingsTabItem];
 }
 

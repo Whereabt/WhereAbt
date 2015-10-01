@@ -22,6 +22,10 @@
 		2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E421A5C5B4100EDD980 /* Foundation.framework */; };
 		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */; };
+		4A2BE0921BBCE4F30043B207 /* Whereabout-feed-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BE08A1BBCE4F30043B207 /* Whereabout-feed-gray-05-11-2015.png */; settings = {ASSET_TAGS = (); }; };
+		4A2BE0961BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BE08E1BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png */; settings = {ASSET_TAGS = (); }; };
+		4A2BE0981BBCE4F30043B207 /* Whereabout-upload-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BE0901BBCE4F30043B207 /* Whereabout-upload-gray-05-11-2015.png */; settings = {ASSET_TAGS = (); }; };
+		4A2BE0A31BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BE0A21BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png */; settings = {ASSET_TAGS = (); }; };
 		B927F1211B1239D1007D5D05 /* NSNetworkConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = B927F1201B1239D1007D5D05 /* NSNetworkConnection.m */; };
 		B938DCB01A641E560073D91F /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCAF1A641E560073D91F /* StreamController.m */; };
 		B938DCB31A68BF000073D91F /* StreamCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */; };
@@ -40,14 +44,6 @@
 		B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCF91A75B6F10073D91F /* Blue Camera Roll Button.png */; };
 		B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */ = {isa = PBXBuildFile; fileRef = B938DCFA1A75B6F10073D91F /* Orange Camera Roll Button.png */; };
 		B959B9811AF9C0EE0000B65F /* InitialSegueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B959B9801AF9C0EE0000B65F /* InitialSegueViewController.m */; };
-		B959B9891B098D010000B65F /* Whereabout-feed-orange-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B959B9881B098D010000B65F /* Whereabout-feed-orange-05-11-2015.png */; };
-		B959B98D1B098D1D0000B65F /* Whereabout-profile-orange-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B959B98A1B098D1D0000B65F /* Whereabout-profile-orange-05-11-2015.png */; };
-		B959B98E1B098D1D0000B65F /* Whereabout-settings-orange-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B959B98B1B098D1D0000B65F /* Whereabout-settings-orange-05-11-2015.png */; };
-		B959B98F1B098D1D0000B65F /* Whereabout-upload-orange-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B959B98C1B098D1D0000B65F /* Whereabout-upload-orange-05-11-2015.png */; };
-		B959B9941B098D3F0000B65F /* Whereabout-feed-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B959B9901B098D3F0000B65F /* Whereabout-feed-gray-05-11-2015.png */; };
-		B959B9951B098D3F0000B65F /* Whereabout-profile-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B959B9911B098D3F0000B65F /* Whereabout-profile-gray-05-11-2015.png */; };
-		B959B9961B098D3F0000B65F /* Whereabout-settings-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B959B9921B098D3F0000B65F /* Whereabout-settings-gray-05-11-2015.png */; };
-		B959B9971B098D3F0000B65F /* Whereabout-upload-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = B959B9931B098D3F0000B65F /* Whereabout-upload-gray-05-11-2015.png */; };
 		B985EA681B387715000D2AFD /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B985EA441B387715000D2AFD /* AFHTTPRequestOperation.m */; };
 		B985EA691B387715000D2AFD /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B985EA461B387715000D2AFD /* AFHTTPRequestOperationManager.m */; };
 		B985EA6A1B387715000D2AFD /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B985EA481B387715000D2AFD /* AFHTTPSessionManager.m */; };
@@ -167,6 +163,10 @@
 		2D6A0E441A5C5B5800EDD980 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2D6A0E4D1A5F75CE00EDD980 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		2D6A0E4E1A5F75CE00EDD980 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
+		4A2BE08A1BBCE4F30043B207 /* Whereabout-feed-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Whereabout-feed-gray-05-11-2015.png"; sourceTree = "<group>"; };
+		4A2BE08E1BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Whereabout-settings-gray-05-11-2015.png"; sourceTree = "<group>"; };
+		4A2BE0901BBCE4F30043B207 /* Whereabout-upload-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Whereabout-upload-gray-05-11-2015.png"; sourceTree = "<group>"; };
+		4A2BE0A21BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Whereabout profile tab-09-20-2015 GRAY.png"; sourceTree = "<group>"; };
 		6FC2A26AF400AF77735F63E9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		77F1A66FF8985FBB2D8DDA25 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B927F11F1B1239D1007D5D05 /* NSNetworkConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNetworkConnection.h; sourceTree = "<group>"; };
@@ -196,14 +196,6 @@
 		B938DCFA1A75B6F10073D91F /* Orange Camera Roll Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Orange Camera Roll Button.png"; sourceTree = "<group>"; };
 		B959B97F1AF9C0EE0000B65F /* InitialSegueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialSegueViewController.h; sourceTree = "<group>"; };
 		B959B9801AF9C0EE0000B65F /* InitialSegueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialSegueViewController.m; sourceTree = "<group>"; };
-		B959B9881B098D010000B65F /* Whereabout-feed-orange-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-feed-orange-05-11-2015.png"; path = "../../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2A73C11E-0048-4230-8EDF-E797AF092D21/Whereabout tabs 05-11-2015/Whereabout-feed-orange-05-11-2015.png"; sourceTree = "<group>"; };
-		B959B98A1B098D1D0000B65F /* Whereabout-profile-orange-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-profile-orange-05-11-2015.png"; path = "../../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2A73C11E-0048-4230-8EDF-E797AF092D21/Whereabout tabs 05-11-2015/Whereabout-profile-orange-05-11-2015.png"; sourceTree = "<group>"; };
-		B959B98B1B098D1D0000B65F /* Whereabout-settings-orange-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-settings-orange-05-11-2015.png"; path = "../../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2A73C11E-0048-4230-8EDF-E797AF092D21/Whereabout tabs 05-11-2015/Whereabout-settings-orange-05-11-2015.png"; sourceTree = "<group>"; };
-		B959B98C1B098D1D0000B65F /* Whereabout-upload-orange-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-upload-orange-05-11-2015.png"; path = "../../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2A73C11E-0048-4230-8EDF-E797AF092D21/Whereabout tabs 05-11-2015/Whereabout-upload-orange-05-11-2015.png"; sourceTree = "<group>"; };
-		B959B9901B098D3F0000B65F /* Whereabout-feed-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-feed-gray-05-11-2015.png"; path = "../../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2A73C11E-0048-4230-8EDF-E797AF092D21/Whereabout tabs 05-11-2015/Whereabout-feed-gray-05-11-2015.png"; sourceTree = "<group>"; };
-		B959B9911B098D3F0000B65F /* Whereabout-profile-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-profile-gray-05-11-2015.png"; path = "../../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2A73C11E-0048-4230-8EDF-E797AF092D21/Whereabout tabs 05-11-2015/Whereabout-profile-gray-05-11-2015.png"; sourceTree = "<group>"; };
-		B959B9921B098D3F0000B65F /* Whereabout-settings-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-settings-gray-05-11-2015.png"; path = "../../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2A73C11E-0048-4230-8EDF-E797AF092D21/Whereabout tabs 05-11-2015/Whereabout-settings-gray-05-11-2015.png"; sourceTree = "<group>"; };
-		B959B9931B098D3F0000B65F /* Whereabout-upload-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Whereabout-upload-gray-05-11-2015.png"; path = "../../../../../Library/Containers/com.apple.mail/Data/Library/Mail Downloads/2A73C11E-0048-4230-8EDF-E797AF092D21/Whereabout tabs 05-11-2015/Whereabout-upload-gray-05-11-2015.png"; sourceTree = "<group>"; };
 		B985EA431B387715000D2AFD /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		B985EA441B387715000D2AFD /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		B985EA451B387715000D2AFD /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -677,10 +669,6 @@
 		B9EBBCB01AA56123008FA719 /* PNG Blue Icons */ = {
 			isa = PBXGroup;
 			children = (
-				B959B98A1B098D1D0000B65F /* Whereabout-profile-orange-05-11-2015.png */,
-				B959B98B1B098D1D0000B65F /* Whereabout-settings-orange-05-11-2015.png */,
-				B959B98C1B098D1D0000B65F /* Whereabout-upload-orange-05-11-2015.png */,
-				B959B9881B098D010000B65F /* Whereabout-feed-orange-05-11-2015.png */,
 				B9EBBCB11AA56123008FA719 /* icon-Profile-SELECTED 50x50.png */,
 				B9EBBCB21AA56123008FA719 /* icon-Upload-SELECTED 50x50.png */,
 				B9EBBCB31AA56123008FA719 /* icon-Feed-SELECTED 50x50.png */,
@@ -707,10 +695,10 @@
 				B9EBBCB71AA56123008FA719 /* icon-Upload GRAY 50x50.png */,
 				B9EBBCB81AA56123008FA719 /* icon-Profile GRAY 50x50.png */,
 				B9EBBCB91AA56123008FA719 /* icon-Settings GRAY 50x50.png */,
-				B959B9901B098D3F0000B65F /* Whereabout-feed-gray-05-11-2015.png */,
-				B959B9911B098D3F0000B65F /* Whereabout-profile-gray-05-11-2015.png */,
-				B959B9921B098D3F0000B65F /* Whereabout-settings-gray-05-11-2015.png */,
-				B959B9931B098D3F0000B65F /* Whereabout-upload-gray-05-11-2015.png */,
+				4A2BE0A21BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png */,
+				4A2BE08A1BBCE4F30043B207 /* Whereabout-feed-gray-05-11-2015.png */,
+				4A2BE08E1BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png */,
+				4A2BE0901BBCE4F30043B207 /* Whereabout-upload-gray-05-11-2015.png */,
 			);
 			path = "PNG Gray Icons";
 			sourceTree = "<group>";
@@ -819,7 +807,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B959B9971B098D3F0000B65F /* Whereabout-upload-gray-05-11-2015.png in Resources */,
 				B938DCC91A75788C0073D91F /* iphone 6 plus-App icon 1024x1024 REV.png in Resources */,
 				B9EBBCC01AA56123008FA719 /* icon-Profile GRAY 50x50.png in Resources */,
 				B985EA9F1B419284000D2AFD /* overlay image (3).jpg in Resources */,
@@ -841,23 +828,21 @@
 				B9EAF9F81AE30D8300C99D29 /* Profile tab blue negative.png in Resources */,
 				B9EAFA0E1AEDD39A00C99D29 /* Whereabout-profile-orange-04-25-2015.png in Resources */,
 				B9EAFA0C1AEDD39A00C99D29 /* Whereabout-feed-orange-04-25-2015.png in Resources */,
+				4A2BE0981BBCE4F30043B207 /* Whereabout-upload-gray-05-11-2015.png in Resources */,
+				4A2BE0961BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png in Resources */,
+				4A2BE0921BBCE4F30043B207 /* Whereabout-feed-gray-05-11-2015.png in Resources */,
 				B985EA7A1B38AB0E000D2AFD /* Gray Stream Placeholder Image.jpg in Resources */,
 				B9EAF9E81AE30D2E00C99D29 /* Upload GRAY 50x50.png in Resources */,
-				B959B98E1B098D1D0000B65F /* Whereabout-settings-orange-05-11-2015.png in Resources */,
 				B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */,
 				B9EAF9F21AE30D8300C99D29 /* Feed 50x50.png in Resources */,
 				B938DCFB1A75B6F10073D91F /* Orange Camera Button.png in Resources */,
-				B959B9891B098D010000B65F /* Whereabout-feed-orange-05-11-2015.png in Resources */,
 				B985EA8B1B3AFE31000D2AFD /* Page 4.1.PNG in Resources */,
 				B9EBBCBD1AA56123008FA719 /* icon-Settings-SELECTED 50x50.png in Resources */,
 				B9EAF9F91AE30D8300C99D29 /* Profile tab white.png in Resources */,
-				B959B9961B098D3F0000B65F /* Whereabout-settings-gray-05-11-2015.png in Resources */,
 				B9EAFA121AEDD39A00C99D29 /* Whereabout-upload-orange-04-25-2015.png in Resources */,
-				B959B9941B098D3F0000B65F /* Whereabout-feed-gray-05-11-2015.png in Resources */,
 				012996EC1A354E5300C89D09 /* LaunchScreen.xib in Resources */,
 				B985EA831B39A4E9000D2AFD /* Page 1.PNG in Resources */,
 				B9EAF9E61AE3097300C99D29 /* Whereabout tabs 03-29-2015  in Resources */,
-				B959B98D1B098D1D0000B65F /* Whereabout-profile-orange-05-11-2015.png in Resources */,
 				B985EA841B39A4E9000D2AFD /* Page 2.PNG in Resources */,
 				B9EAFA0D1AEDD39A00C99D29 /* Whereabout-profile-gray-04-25-2015.png in Resources */,
 				B938DCFC1A75B6F10073D91F /* Blue Camera Button.png in Resources */,
@@ -867,8 +852,8 @@
 				012996E91A354E5300C89D09 /* Images.xcassets in Resources */,
 				B985EA9B1B418B19000D2AFD /* Camera Overlay (1).png in Resources */,
 				B985EA8D1B3D9D00000D2AFD /* Page 1.0.PNG in Resources */,
-				B959B98F1B098D1D0000B65F /* Whereabout-upload-orange-05-11-2015.png in Resources */,
 				B9EAFA0F1AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png in Resources */,
+				4A2BE0A31BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png in Resources */,
 				B985EA941B409B47000D2AFD /* CamOverlayViewController.xib in Resources */,
 				B9EAFA111AEDD39A00C99D29 /* Whereabout-upload-gray-04-25-2015.png in Resources */,
 				B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */,
@@ -876,7 +861,6 @@
 				B9EAF9F71AE30D8300C99D29 /* Profile GRAY 50x50.png in Resources */,
 				B9EAF9FA1AE30D8300C99D29 /* Upload 50x50.png in Resources */,
 				B9EBBCBB1AA56123008FA719 /* icon-Upload-SELECTED 50x50.png in Resources */,
-				B959B9951B098D3F0000B65F /* Whereabout-profile-gray-05-11-2015.png in Resources */,
 				B938DCF41A757BCB0073D91F /* Photo access Image 350x350 REV.png in Resources */,
 				B9EBBCBE1AA56123008FA719 /* icon-Feed GRAY 50x50.png in Resources */,
 				B9EAF9F31AE30D8300C99D29 /* Feed GRAY 50x50.png in Resources */,
