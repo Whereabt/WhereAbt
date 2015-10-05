@@ -203,7 +203,7 @@
                     [WelcomeViewController sharedController].userName = [response.owner.user.displayName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
                     
                     [WelcomeViewController sharedController].userID = client.accountId;
-                    [self performSegueWithIdentifier:@"segueToTab" sender:self];
+                    [self performSegueWithIdentifier:@"segueToInitial" sender:self];
                 }
             }];
 

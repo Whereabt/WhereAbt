@@ -177,105 +177,6 @@ UIImagePickerController *imagePicker;
         }
     }];
     
-    /*
-    NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/root:/%@:/action.createLink", ODfilePath];
-    //NSString *stringURL = [NSString stringWithFormat:@"https://api.onedrive.com/v1.0/drive/items/%@/action.createLink", ODfilePath];
-
-    NSURL *url = [NSURL URLWithString:stringURL];
-
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
-    
-    NSLog(@"UPLOAD_TOKEN: %@", [WelcomeViewController sharedController].authToken);
-    
-    //auth header
-    [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
-    
-    //content type header
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    
-    NSMutableDictionary *requestBodyDict = [[NSMutableDictionary alloc] init];
-    [requestBodyDict setObject:@"edit" forKey:@"type"];
-    
-    NSString *StringJSONbody = [self jsonStringFromDictionary:requestBodyDict];
-
-    if (StringJSONbody != nil) {
-        
-        NSData *DataJSONbody = [StringJSONbody dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-        
-        [request setHTTPBody:DataJSONbody];
-        
-        //make task
-        NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            //DELETE
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"reached completion of shareLink reuqest" message:@"will continue and PUT to db" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [alert show];
-            //----
-            
-            NSLog(@"Share link data, not json: %@", data);
-            
-            NSError *jsonError = nil;
-            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-
-            if (!jsonError && !error) {
-                NSLog(@"JSON from returned data (share link):%@", jsonDict);
-                NSString *unencodedShareURLstring = jsonDict[@"link"][@"webUrl"];
-                
-                //must double-encode the url
-                //--
-                NSString *singleEncodedShareURL = [unencodedShareURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                
-                NSString *doubleEncodedShareURL = [singleEncodedShareURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                
-                NSLog(@"Single encoded url: %@, Double encoded share url:%@, Unencoded shareURL: %@", singleEncodedShareURL, doubleEncodedShareURL, unencodedShareURL);
-                //---
-                
-                NSString *singleEncodedShareURL = [unencodedShareURLstring stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
-                
-                NSString *doubleEncodedShareURL = [singleEncodedShareURL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
-                
-                NSString *encString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
-                                                                                          NULL,
-                                                                                          (CFStringRef)unencodedShareURLstring,
-                                                                                          NULL,
-                                                                                          (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                          kCFStringEncodingUTF8 ));
-
-                
-                //make request
-                NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
-                
-                NSURL *firstURL = [NSURL URLWithString:theUrlAsString];
-                
-                NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
-                NSURL *PutUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
-                
-                NSString *escapedString = [unencodedShareURLstring stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
-                escapedString = [escapedString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
-                
-                [self PUTonNewPhotophpWithImageURLsLarge:escapedString andSmall:@"NONE"];
-                    
-                    theCallback(error);
-                }
-
-                
-        }];
-        
-        [postDataTask resume];
-        
-    }
-    
-    else {
-        NSLog(@"Error creating request body's JSON");
-        
-        UIAlertView *requestBodyJsonAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a problem while trying to connect to the server, please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        
-        [requestBodyJsonAlert show];
-        
-    }
- */
 }
 
 - (NSString *)jsonStringFromDictionary:(NSMutableDictionary *) dictToTranslate {
@@ -361,6 +262,7 @@ UIImagePickerController *imagePicker;
         FinalMedia = [self.postInfo objectForKey:UIImagePickerControllerOriginalImage];
         if (picker.cameraDevice == UIImagePickerControllerCameraDeviceFront) {
            FinalMedia = [UIImage imageWithCGImage:FinalMedia.CGImage scale:FinalMedia.scale orientation:UIImageOrientationLeftMirrored];
+           
         }
         else {
             //leave image as is
@@ -368,9 +270,11 @@ UIImagePickerController *imagePicker;
         
         FinalMedia = [self fixOrientationOfImage:FinalMedia];
         
+        
         UIImageView *PreviewImageView = [[UIImageView alloc] initWithImage:FinalMedia];
         PreviewImageView.frame = CGRectMake(0, 0, self.view.frame.size.width, 430);
-        //PreviewImageView.contentMode = UIViewContentModeScaleAspectFill;
+        //check
+        PreviewImageView.contentMode = UIViewContentModeScaleAspectFit;
         PreviewImageView.opaque = YES;
         PreviewImageView.userInteractionEnabled = YES;
         VC = [[UIViewController alloc] init];
@@ -708,85 +612,9 @@ UIImagePickerController *imagePicker;
             
         }
     }];
-
-    
-     /* OLD WAY -->
-    NSString *filePath = [NSString stringWithFormat:@"WhereaboutApp/%@", imageName];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSString *stringURL = [NSString stringWithFormat:self.uploadURL, filePath];
-    
-    //NSString *stringURL = [NSString stringWithFormat:self.uploadURL, [NSString stringWithFormat:@"%@", name]];
-    
-    NSURL *url = [NSURL URLWithString:stringURL];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
-    [request setHTTPMethod:@"PUT"];
-    
-    //referencing auth singleton
-    [request addValue:[NSString stringWithFormat:@"Bearer %@", [WelcomeViewController sharedController].authToken] forHTTPHeaderField: @"Authorization"];
-    NSLog(@"UPLOAD_TOKEN: %@", [WelcomeViewController sharedController].authToken);
-    
-    NSURLSessionUploadTask *uploadTask = [session uploadTaskWithRequest:request fromData:imageData completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error){
-        if (error == nil) {
-            
-            NSError *jsonError = nil;
-            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-            NSLog(@"RESPONSE FROM OD UPLOAD: %@", jsonDict);
-            // TO USE ID --> NSString *resourceId = jsonDict[@"id"];
-            
-            
-            [self createShareLinkForODFileWithPath:filePath andCompletion:^(NSError *Error) {
-                
-                if (!Error) {
-                    NSLog(@"Success, no error on creating share link");
-                }
-                else {
-                    UIAlertView *publicFolderAlert = [[UIAlertView alloc] initWithTitle:@"Problem Occurred" message:@"We encountered a network error while trying to send your photo to the server. Please try again later." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                    [publicFolderAlert show];
-                }
-            }];
-            
-        }
-    }];
-    [uploadTask resume];
-    */
 }
 
 - (void)constructTaskWithImageName:(NSString*)name andData:(NSData*)data {
-    
-    //DELETE
-    /*UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"-constructTaskWithImageNameAndDAta method called" message:@"Will check to see if access token needs update" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-    [alert show];
-    */
-     
-    //check last token refresh and update if needed
-    
-    /*
-    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    NSDate *lastUpdate = [preferences objectForKey:@"Last token refresh"];
-    
-    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:lastUpdate];
-    if (lastUpdate == nil || interval > 3000) {
-        
-        //DELETE
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"access token needs update" message:@"will call refreshAuthTokenWithCompletion and then -createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [alert show];
-     
-        
-        [welcomeManager refreshAuthTokenWithCompletion:^{
-            [self createPhotoUploadTaskUsingImageName:name andImageData:data];
-        }];
-    }
-    
-    else {
-        
-        //DELETE
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"no need to update access token" message:@"will continue with createPhotoUploadTask" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [alert show];
-        
-        
-        [self createPhotoUploadTaskUsingImageName:name andImageData:data];
-    }
-    */
 
     [self createPhotoUploadTaskUsingImageName:name andImageData:data];
 

@@ -191,10 +191,12 @@ UILabel *internetFailLabel;
     
     //use "ThumbnailPhoto" or "LargePhoto"
     
-    cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
+    /*cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
                                            green:33.0f/255.0f
                                             blue:36.0f/255.0f
-                                           alpha:1.0f];
+                                           alpha:1.0f]; */
+    cell.backgroundColor = [UIColor whiteColor];
+    
     cell.backgroundView.frame = cell.frame;
     cell.proCVImage.contentMode = UIViewContentModeScaleAspectFit;
     

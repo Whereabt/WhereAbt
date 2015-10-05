@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //self.tableView.allowsSelection = NO;
     self.logoutActivityIndicator.hidesWhenStopped = YES;
     
     NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
