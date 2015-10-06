@@ -36,6 +36,9 @@ PhotosAccessViewController *photoVC;
 
 - (void)viewDidLoad {
      [super viewDidLoad];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    NSLog(@"screen width: %f AND height: %f", screenWidth, screenRect.size.height);
     
     self.tableActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.tableActivityIndicator.hidesWhenStopped = YES;

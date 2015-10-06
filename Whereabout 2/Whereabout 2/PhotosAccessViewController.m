@@ -82,7 +82,11 @@ UIImagePickerController *imagePicker;
         //make NO if using overlay
                 imagePicker.showsCameraControls = NO;
         
-                OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGTH)];
+                CGRect screenRect = [[UIScreen mainScreen] bounds];
+                CGFloat screenWidth = screenRect.size.width;
+                CGFloat screenHeight = screenRect.size.height;
+                
+                OverlayView *overlay = [[OverlayView alloc] initWithFrame:CGRectMake(0, 0, screenWidth, screenHeight)];
                 imagePicker.cameraOverlayView = overlay;
                 imagePicker.view.alpha = 1.0;
                 imagePicker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
@@ -270,9 +274,12 @@ UIImagePickerController *imagePicker;
         
         FinalMedia = [self fixOrientationOfImage:FinalMedia];
         
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenW = screenRect.size.width;
+        CGFloat screenH = screenRect.size.height;
         
         UIImageView *PreviewImageView = [[UIImageView alloc] initWithImage:FinalMedia];
-        PreviewImageView.frame = CGRectMake(0, 0, self.view.frame.size.width, 430);
+        PreviewImageView.frame = CGRectMake(0, 0, screenW, screenH);
         //check
         PreviewImageView.contentMode = UIViewContentModeScaleAspectFit;
         PreviewImageView.opaque = YES;
@@ -282,7 +289,7 @@ UIImagePickerController *imagePicker;
         //VC.view = PreviewImageView;
         
         //create post button
-        UIButton *postButton = [[UIButton alloc] initWithFrame:CGRectMake((self.view.frame.size.width/2), 533, (self.view.frame.size.width/2) - 5, 35)];
+        UIButton *postButton = [[UIButton alloc] initWithFrame:CGRectMake((screenW/2), (screenH - 30), (screenW/2) - 5, 35)];
         [postButton setTitle:@"POST" forState:UIControlStateNormal];
         [postButton setTitleColor:[UIColor colorWithRed:0.0f/255.0f
                                                   green:153.0f/255.0f
@@ -297,7 +304,7 @@ UIImagePickerController *imagePicker;
         NSLog(@"Button width: %f", (self.view.frame.size.width/2) - 5);
         
         // create cancel button
-        UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 533, (self.view.frame.size.width/2) - 5, 35)];
+        UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(5, (screenH - 30), (screenW/2) - 5, 35)];
         [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
         [cancelButton setTitleColor: [UIColor colorWithRed:0.0f/255.0f
                                                               green:153.0f/255.0f

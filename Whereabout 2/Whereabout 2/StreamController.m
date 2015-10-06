@@ -28,43 +28,88 @@ static NSString *const distanceFrom = @"MilesAway";
     
     LocationController *locationController = [[LocationController alloc]init];
     
-    //make request
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed3.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
-    
-   //NSString *urlAsString = @"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3.000000";
-    //eventually, include radius in last parameter 'Radius='
-    
-    NSURL *url = [[NSURL alloc] initWithString:urlAsString];
-    NSLog(@"%@", urlAsString);
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
-                                                   completionHandler:^(NSData *data,
-                                                                       NSURLResponse *response,
-                                                                       NSError *error){
+    //check to see if location working
+    if (locationController.locationManager.location) {
+        //make request
+        NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed3.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
+        
+        //NSString *urlAsString = @"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3.000000";
+        //eventually, include radius in last parameter 'Radius='
+        
+        NSURL *url = [[NSURL alloc] initWithString:urlAsString];
+        NSLog(@"%@", urlAsString);
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
+                                                       completionHandler:^(NSData *data,
+                                                                           NSURLResponse *response,
+                                                                           NSError *error){
+                                                           
+                                                           NSError *jsonError = nil;
+                                                           NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
+                                                           if (error == nil) {
+                                                               error = jsonError;
+                                                           }
+                                                           else {
+                                                               //this means the session data task error will be passed as parameter.
+                                                           }
+                                                           _itemCollection = [immutable mutableCopy];
+                                                           
+                                                           if (self.itemCollection == nil) {
+                                                               NSLog(@"Problem occurred, no array from json. The error: %@", jsonError);
+                                                           }
+                                                           
+                                                           else {
+                                                               
+                                                               NSLog(@"%@", _itemCollection);
+                                                               
+                                                           }
+                                                           callBack(_itemCollection, error);
+                                                       }
+                                                 ];
+        [dataRequestTask resume];
 
-                                                       NSError *jsonError = nil;
-                                                       NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
-                                                       if (error == nil) {
-                                                           error = jsonError;
+    }
+    
+    else {
+       
+        UIAlertView *locationAlert = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"We were unable to get your current location. Instead of presenting nearby photos we're just going to show you some from around the world." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [locationAlert show];
+        
+        //make request
+        NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3000.000000"];
+        
+        NSURL *url = [[NSURL alloc] initWithString:urlAsString];
+        NSLog(@"%@", urlAsString);
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
+                                                       completionHandler:^(NSData *data,
+                                                                           NSURLResponse *response,
+                                                                           NSError *error){
+                                                           
+                                                           NSError *jsonError = nil;
+                                                           NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
+                                                           if (error == nil) {
+                                                               error = jsonError;
+                                                           }
+                                                           else {
+                                                               //this means the session data task error will be passed as parameter.
+                                                           }
+                                                           _itemCollection = [immutable mutableCopy];
+                                                           
+                                                           if (self.itemCollection == nil) {
+                                                               NSLog(@"Problem occurred, no array from json. The error: %@", jsonError);
+                                                           }
+                                                           
+                                                           else {
+                                                               
+                                                               NSLog(@"%@", _itemCollection);
+                                                               
+                                                           }
+                                                           callBack(_itemCollection, error);
                                                        }
-                                                       else {
-                                                           //this means the session data task error will be passed as parameter.
-                                                       }
-                                                       _itemCollection = [immutable mutableCopy];
-                                                       
-                                                       if (self.itemCollection == nil) {
-                                                           NSLog(@"Problem occurred, no array from json. The error: %@", jsonError);
-                                                       }
-                                                       
-                                                       else {
-                                                       
-                                                       NSLog(@"%@", _itemCollection);
-                                                          
-                                                       }
-                                                       callBack(_itemCollection, error);
-                                                   }
-                                             ];
-    [dataRequestTask resume];
+                                                 ];
+        [dataRequestTask resume];
+    }
 }
 
 

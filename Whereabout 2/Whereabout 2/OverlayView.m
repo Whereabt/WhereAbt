@@ -28,11 +28,16 @@
         self.opaque = NO;
         self.backgroundColor = [UIColor clearColor];
         
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        CGFloat screenHeight = screenRect.size.height;
+        
         //image for overlay
         UIImage *overlayImage = [UIImage imageNamed:@"OverlayImage(2).jpg"];
         UIImageView *overlayImageView = [[UIImageView alloc] initWithImage:overlayImage];
-        //300 height
-        overlayImageView.frame = CGRectMake(0, 40, 320, 300);
+        
+        //300 height, 40 y, -528
+        overlayImageView.frame = CGRectMake(0, (screenHeight - 480), 320, 300);
         overlayImageView.contentMode = UIViewContentModeCenter;
         overlayImageView.userInteractionEnabled = YES;
         [self addSubview:overlayImageView];
@@ -42,11 +47,10 @@
         
         //overlayImage.png for orange
         [button setImage:[UIImage imageNamed:@"OverlayImage.png"] forState:UIControlStateNormal];
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGFloat screenWidth = screenRect.size.width;
+
         
-        //430 y
-        button.frame = CGRectMake((screenWidth/2) - (ROUND_BUTTON_WIDTH_HEIGHT/2), 430, ROUND_BUTTON_WIDTH_HEIGHT, ROUND_BUTTON_WIDTH_HEIGHT);
+        //430 y, -138
+        button.frame = CGRectMake((screenWidth/2) - (ROUND_BUTTON_WIDTH_HEIGHT/2), (screenHeight - 90), ROUND_BUTTON_WIDTH_HEIGHT, ROUND_BUTTON_WIDTH_HEIGHT);
         
         button.clipsToBounds = YES;
         button.layer.cornerRadius = ROUND_BUTTON_WIDTH_HEIGHT/2.0f;
