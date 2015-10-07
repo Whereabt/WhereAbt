@@ -301,7 +301,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                            <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="tintColor" red="1" green="0.59999999999999998" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="MZp-ib-gva" firstAttribute="top" secondItem="bt0-S9-BkJ" secondAttribute="bottom" constant="8" symbolic="YES" id="3GG-gV-CWs"/>
@@ -571,7 +571,7 @@
                             <outlet property="delegate" destination="58h-sJ-EZT" id="xu0-nK-akj"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" systemItem="recents" id="7tp-z5-Wgy"/>
+                    <tabBarItem key="tabBarItem" title="" systemItem="contacts" id="7tp-z5-Wgy"/>
                     <navigationItem key="navigationItem" title="Settings" id="8PI-AG-yrj">
                         <barButtonItem key="backBarButtonItem" title="Settings" id="FsZ-2w-RUp"/>
                     </navigationItem>
@@ -601,7 +601,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ROa-Mz-hNR">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ROa-Mz-hNR">
                                 <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -714,6 +714,12 @@ Contact Us
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ROa-Mz-hNR" firstAttribute="bottom" secondItem="WDb-Gb-J8n" secondAttribute="top" id="9Ro-UP-WsG"/>
+                            <constraint firstAttribute="trailing" secondItem="ROa-Mz-hNR" secondAttribute="trailing" id="9kC-sV-mzS"/>
+                            <constraint firstItem="ROa-Mz-hNR" firstAttribute="top" secondItem="M24-At-xbp" secondAttribute="bottom" id="P67-pX-XZA"/>
+                            <constraint firstItem="ROa-Mz-hNR" firstAttribute="leading" secondItem="MOy-Ln-vbT" secondAttribute="leading" id="nc6-zK-qjd"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Privacy Policy" id="rQk-hB-RB6"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -734,9 +740,9 @@ Contact Us
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XE6-Z0-8jw">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XE6-Z0-8jw">
                                 <rect key="frame" x="0.0" y="64" width="320" height="455"/>
-                                <mutableString key="text">THE FOLLOWING SETS FORTH ATTRIBUTION NOTICES FOR THIRD PARTY SOFTWARE THAT MAY BE INCLUDED IN PORTIONS OF WHEREABOUT.                                 
+                                <string key="text">THE FOLLOWING SETS FORTH ATTRIBUTION NOTICES FOR THIRD PARTY SOFTWARE THAT MAY BE INCLUDED IN PORTIONS OF WHEREABOUT.                                 
 
 
 --------                                 
@@ -837,12 +843,18 @@ KeychainItemWrapper. This software is subject to the following license and notic
  POSSIBILITY OF SUCH DAMAGE.
  
  Copyright (C) 2010 Apple Inc. All Rights Reserved.
- </mutableString>
+ </string>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XE6-Z0-8jw" firstAttribute="top" secondItem="P3y-dy-Kcg" secondAttribute="bottom" id="1PE-28-rVh"/>
+                            <constraint firstAttribute="trailing" secondItem="XE6-Z0-8jw" secondAttribute="trailing" id="BhP-T4-npc"/>
+                            <constraint firstItem="XE6-Z0-8jw" firstAttribute="bottom" secondItem="zoz-Wd-Ryw" secondAttribute="top" id="KWN-QN-3SR"/>
+                            <constraint firstItem="XE6-Z0-8jw" firstAttribute="leading" secondItem="KMe-Vr-4ff" secondAttribute="leading" id="t8j-fQ-HzT"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Licenses" id="w0S-Vk-X5b"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -885,7 +897,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                     <view key="view" contentMode="scaleToFill" id="nP6-mk-itn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -962,7 +974,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                        <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="JGE-rL-Udy" firstAttribute="centerX" secondItem="u50-Fq-SWJ" secondAttribute="centerX" id="D5E-dE-Jcf"/>
                             <constraint firstItem="lDX-3F-XYU" firstAttribute="centerX" secondItem="JGE-rL-Udy" secondAttribute="centerX" id="GJ8-wW-gjW"/>
@@ -1003,7 +1015,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                 <rect key="frame" x="0.0" y="158" width="320" height="252"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Oaf-OB-5VF" secondAttribute="trailing" id="DQE-Lm-Clf"/>
                             <constraint firstItem="Oaf-OB-5VF" firstAttribute="leading" secondItem="Jgv-xR-ahM" secondAttribute="leading" id="RGd-Nb-V0w"/>
@@ -1310,12 +1322,18 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                     <rect key="frame" x="0.0" y="0.0" width="136" height="137"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2WD-dq-UMn">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2WD-dq-UMn">
                                             <rect key="frame" x="0.0" y="0.0" width="136" height="137"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="2WD-dq-UMn" firstAttribute="top" secondItem="wQj-9h-q0e" secondAttribute="top" id="6v6-xI-unh"/>
+                                    <constraint firstAttribute="trailing" secondItem="2WD-dq-UMn" secondAttribute="trailing" id="GsQ-YZ-Zqo"/>
+                                    <constraint firstAttribute="bottom" secondItem="2WD-dq-UMn" secondAttribute="bottom" id="Mkf-R1-PuG"/>
+                                    <constraint firstItem="2WD-dq-UMn" firstAttribute="leading" secondItem="wQj-9h-q0e" secondAttribute="leading" id="lDP-PY-98m"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="proCVImage" destination="2WD-dq-UMn" id="JoV-fV-z6C"/>
                                     <segue destination="gSv-kM-6Tc" kind="show" identifier="segueEnlargedImage" id="AXR-ub-xMD"/>
@@ -1359,14 +1377,12 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                 <constraint firstItem="1ag-zk-zuC" firstAttribute="centerX" secondItem="wWh-R4-20v" secondAttribute="centerX" id="0s4-r1-4ao"/>
                                 <constraint firstItem="1ag-zk-zuC" firstAttribute="trailing" secondItem="wWh-R4-20v" secondAttribute="trailing" id="1zp-vF-qaH"/>
                                 <constraint firstItem="lDa-QA-NHX" firstAttribute="leading" secondItem="1ag-zk-zuC" secondAttribute="trailing" constant="47" id="4ik-Gp-Sws"/>
-                                <constraint firstItem="1ag-zk-zuC" firstAttribute="top" secondItem="4GK-ux-xzE" secondAttribute="topMargin" constant="25" id="71k-Mv-dfx"/>
                                 <constraint firstItem="lDa-QA-NHX" firstAttribute="leading" secondItem="IiK-jE-qw9" secondAttribute="leading" id="Axm-Z1-uki"/>
                                 <constraint firstItem="IiK-jE-qw9" firstAttribute="centerX" secondItem="lDa-QA-NHX" secondAttribute="centerX" constant="2" id="H7o-E1-rFh"/>
                                 <constraint firstItem="IiK-jE-qw9" firstAttribute="baseline" secondItem="wWh-R4-20v" secondAttribute="baseline" constant="-2" id="JaW-Uo-8aY"/>
                                 <constraint firstItem="IiK-jE-qw9" firstAttribute="baseline" secondItem="wWh-R4-20v" secondAttribute="firstBaseline" constant="-4" id="MpL-bl-keX"/>
                                 <constraint firstItem="wWh-R4-20v" firstAttribute="top" secondItem="1ag-zk-zuC" secondAttribute="bottom" constant="1" id="Nx6-0M-5rt"/>
                                 <constraint firstItem="1ag-zk-zuC" firstAttribute="leading" secondItem="wWh-R4-20v" secondAttribute="leading" id="dZs-ca-dEv"/>
-                                <constraint firstItem="lDa-QA-NHX" firstAttribute="top" secondItem="4GK-ux-xzE" secondAttribute="topMargin" constant="27" id="eNj-wz-jo3"/>
                             </constraints>
                             <connections>
                                 <outlet property="firstNameLabel" destination="1ag-zk-zuC" id="IQh-CD-7Rb"/>
@@ -1401,9 +1417,9 @@ KeychainItemWrapper. This software is subject to the following license and notic
         <image name="iphone 6 plus-App icon 1024x1024 REV.png" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xbf-Pp-iaP"/>
+        <segue reference="Jwd-Le-3JH"/>
+        <segue reference="cut-J9-wnp"/>
         <segue reference="IEe-xo-XNR"/>
-        <segue reference="63x-xL-boo"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.68132159979999996" blue="0.1911690533" alpha="1" colorSpace="calibratedRGB"/>
 </document>

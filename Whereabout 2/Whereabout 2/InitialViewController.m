@@ -53,7 +53,7 @@
                 
                 [[[[ODClient loadCurrentClient] drive] request] getWithCompletion:^(ODDrive *response, NSError *error) {
                     if (error) {
-                        UIAlertView *usernameAlert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"A problem occurred while logging in, you may have to restart the app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                        UIAlertView *usernameAlert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"Please check your internet connection, you may have to restart the app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                         [usernameAlert show];
                     }
                     

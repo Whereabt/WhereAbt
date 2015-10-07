@@ -175,7 +175,12 @@ PhotosAccessViewController *photoVC;
         NSLog(@"NO CONNECTION");
         [self.refreshControl endRefreshing];
         if ([connFailLabel superview] == nil) {
-            connFailLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+            CGRect screenRect = [[UIScreen mainScreen] bounds];
+            CGFloat screenW = screenRect.size.width;
+            //CGFloat screenH = screenRect.size.height;
+            
+            //10,10,300,20
+            connFailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, screenW, 20)];
             //connectionFailLabel.center = CGPointMake(0.0f, 64.0f);
             [connFailLabel setText:@"No Internet Connection"];
             [connFailLabel setTextAlignment:NSTextAlignmentCenter];
@@ -217,7 +222,8 @@ PhotosAccessViewController *photoVC;
     self.refreshControl.attributedTitle = attributedTitle;
 
     if ([uploadLabel superview] == nil) {
-        uploadLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        uploadLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, screenRect.size.width, 20)];
         [uploadLabel setText:@"Uploading..."];
         
         [uploadLabel setTextAlignment:NSTextAlignmentCenter];
