@@ -644,8 +644,11 @@ UIImagePickerController *imagePicker;
         [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
         
         NSString *dateString = [dateFormatter stringFromDate: _metaTimeStamp];
-
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto2.php?UserID=%@&UserName=%@&Mapping=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, self.mappingString, _metaLat, _metaLong, largeImage, smallImage, dateString, uploadTimeInterval];
+        
+        //Photo's unique ID for db
+        NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
+        
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto2.php?UserID=%@&UserName=%@&Mapping=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, self.mappingString, _metaLat, _metaLong, largeImage, processedName, dateString, uploadTimeInterval];
         NSLog(@"PUT URL String: %@", _PUTUrlString);
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];

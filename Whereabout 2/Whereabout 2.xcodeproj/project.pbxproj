@@ -36,6 +36,14 @@
 		4AB8EEF11BC4D31800D233DA /* rsz_1whereabout_profile_tab-09-20-2015_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEEE1BC4D31800D233DA /* rsz_1whereabout_profile_tab-09-20-2015_gray.png */; settings = {ASSET_TAGS = (); }; };
 		4AB8EEF21BC4D31800D233DA /* rsz_45whereabout-feed-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEEF1BC4D31800D233DA /* rsz_45whereabout-feed-gray-05-11-2015.png */; settings = {ASSET_TAGS = (); }; };
 		4AB8EEF31BC4D31800D233DA /* rsz45_whereabout-settings-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF01BC4D31800D233DA /* rsz45_whereabout-settings-gray-05-11-2015.png */; settings = {ASSET_TAGS = (); }; };
+		4AB8EEFB1BC5D97200D233DA /* CRUploadPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF41BC5D97200D233DA /* CRUploadPreview.PNG */; settings = {ASSET_TAGS = (); }; };
+		4AB8EEFC1BC5D97200D233DA /* EnlargeSavePreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF51BC5D97200D233DA /* EnlargeSavePreview.PNG */; settings = {ASSET_TAGS = (); }; };
+		4AB8EEFD1BC5D97200D233DA /* LoginPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF61BC5D97200D233DA /* LoginPreview.PNG */; settings = {ASSET_TAGS = (); }; };
+		4AB8EEFE1BC5D97200D233DA /* ProEnlargePreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF71BC5D97200D233DA /* ProEnlargePreview.PNG */; settings = {ASSET_TAGS = (); }; };
+		4AB8EEFF1BC5D97200D233DA /* ProfilePreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF81BC5D97200D233DA /* ProfilePreview.PNG */; settings = {ASSET_TAGS = (); }; };
+		4AB8EF001BC5D97200D233DA /* SettingsPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF91BC5D97200D233DA /* SettingsPreview.PNG */; settings = {ASSET_TAGS = (); }; };
+		4AB8EF011BC5D97200D233DA /* StreamPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEFA1BC5D97200D233DA /* StreamPreview.PNG */; settings = {ASSET_TAGS = (); }; };
+		4AB8EF031BC5DCA900D233DA /* UploadPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EF021BC5DCA900D233DA /* UploadPreview.PNG */; settings = {ASSET_TAGS = (); }; };
 		B927F1211B1239D1007D5D05 /* NSNetworkConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = B927F1201B1239D1007D5D05 /* NSNetworkConnection.m */; };
 		B938DCB01A641E560073D91F /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCAF1A641E560073D91F /* StreamController.m */; };
 		B938DCB31A68BF000073D91F /* StreamCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */; };
@@ -187,6 +195,14 @@
 		4AB8EEEE1BC4D31800D233DA /* rsz_1whereabout_profile_tab-09-20-2015_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rsz_1whereabout_profile_tab-09-20-2015_gray.png"; path = "Resized Tabs/rsz_1whereabout_profile_tab-09-20-2015_gray.png"; sourceTree = "<group>"; };
 		4AB8EEEF1BC4D31800D233DA /* rsz_45whereabout-feed-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rsz_45whereabout-feed-gray-05-11-2015.png"; path = "Resized Tabs/rsz_45whereabout-feed-gray-05-11-2015.png"; sourceTree = "<group>"; };
 		4AB8EEF01BC4D31800D233DA /* rsz45_whereabout-settings-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rsz45_whereabout-settings-gray-05-11-2015.png"; path = "Resized Tabs/rsz45_whereabout-settings-gray-05-11-2015.png"; sourceTree = "<group>"; };
+		4AB8EEF41BC5D97200D233DA /* CRUploadPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CRUploadPreview.PNG; path = UIImages/CRUploadPreview.PNG; sourceTree = SOURCE_ROOT; };
+		4AB8EEF51BC5D97200D233DA /* EnlargeSavePreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = EnlargeSavePreview.PNG; path = UIImages/EnlargeSavePreview.PNG; sourceTree = SOURCE_ROOT; };
+		4AB8EEF61BC5D97200D233DA /* LoginPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoginPreview.PNG; path = UIImages/LoginPreview.PNG; sourceTree = SOURCE_ROOT; };
+		4AB8EEF71BC5D97200D233DA /* ProEnlargePreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ProEnlargePreview.PNG; path = UIImages/ProEnlargePreview.PNG; sourceTree = SOURCE_ROOT; };
+		4AB8EEF81BC5D97200D233DA /* ProfilePreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ProfilePreview.PNG; path = UIImages/ProfilePreview.PNG; sourceTree = SOURCE_ROOT; };
+		4AB8EEF91BC5D97200D233DA /* SettingsPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SettingsPreview.PNG; path = UIImages/SettingsPreview.PNG; sourceTree = SOURCE_ROOT; };
+		4AB8EEFA1BC5D97200D233DA /* StreamPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StreamPreview.PNG; path = UIImages/StreamPreview.PNG; sourceTree = SOURCE_ROOT; };
+		4AB8EF021BC5DCA900D233DA /* UploadPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UploadPreview.PNG; path = UIImages/UploadPreview.PNG; sourceTree = SOURCE_ROOT; };
 		6FC2A26AF400AF77735F63E9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		77F1A66FF8985FBB2D8DDA25 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B927F11F1B1239D1007D5D05 /* NSNetworkConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNetworkConnection.h; sourceTree = "<group>"; };
@@ -626,6 +642,14 @@
 		B985EA871B39A523000D2AFD /* Page VC Intro Images */ = {
 			isa = PBXGroup;
 			children = (
+				4AB8EEF41BC5D97200D233DA /* CRUploadPreview.PNG */,
+				4AB8EEF51BC5D97200D233DA /* EnlargeSavePreview.PNG */,
+				4AB8EEF61BC5D97200D233DA /* LoginPreview.PNG */,
+				4AB8EF021BC5DCA900D233DA /* UploadPreview.PNG */,
+				4AB8EEF71BC5D97200D233DA /* ProEnlargePreview.PNG */,
+				4AB8EEF81BC5D97200D233DA /* ProfilePreview.PNG */,
+				4AB8EEF91BC5D97200D233DA /* SettingsPreview.PNG */,
+				4AB8EEFA1BC5D97200D233DA /* StreamPreview.PNG */,
 				B985EA8A1B3AFE31000D2AFD /* Page 4.1.PNG */,
 				B985EA8C1B3D9D00000D2AFD /* Page 1.0.PNG */,
 				B985EA7F1B39A4E9000D2AFD /* Page 1.PNG */,
@@ -842,6 +866,7 @@
 				B9EBBCC01AA56123008FA719 /* icon-Profile GRAY 50x50.png in Resources */,
 				B985EA9F1B419284000D2AFD /* overlay image (3).jpg in Resources */,
 				B9EBBCBF1AA56123008FA719 /* icon-Upload GRAY 50x50.png in Resources */,
+				4AB8EEFC1BC5D97200D233DA /* EnlargeSavePreview.PNG in Resources */,
 				4AB8EEF11BC4D31800D233DA /* rsz_1whereabout_profile_tab-09-20-2015_gray.png in Resources */,
 				B9EAFA0B1AEDD39A00C99D29 /* Whereabout-feed-gray-04-25-2015.png in Resources */,
 				B9BC133A1A8B10E100659591 /* Welcome 380x449 copy.jpg in Resources */,
@@ -850,6 +875,8 @@
 				B985EA861B39A4E9000D2AFD /* Page 4.PNG in Resources */,
 				B9EAF9FC1AE30D9500C99D29 /* Upload tab white.png in Resources */,
 				4AB8EEE11BC4C58D00D233DA /* Media.xcassets in Resources */,
+				4AB8EEFE1BC5D97200D233DA /* ProEnlargePreview.PNG in Resources */,
+				4AB8EF031BC5DCA900D233DA /* UploadPreview.PNG in Resources */,
 				B9EBBCC11AA56123008FA719 /* icon-Settings GRAY 50x50.png in Resources */,
 				B9EBBCBC1AA56123008FA719 /* icon-Feed-SELECTED 50x50.png in Resources */,
 				B9EBBCBA1AA56123008FA719 /* icon-Profile-SELECTED 50x50.png in Resources */,
@@ -870,7 +897,9 @@
 				B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */,
 				B9EAF9F21AE30D8300C99D29 /* Feed 50x50.png in Resources */,
 				B938DCFB1A75B6F10073D91F /* Orange Camera Button.png in Resources */,
+				4AB8EF001BC5D97200D233DA /* SettingsPreview.PNG in Resources */,
 				B985EA8B1B3AFE31000D2AFD /* Page 4.1.PNG in Resources */,
+				4AB8EEFB1BC5D97200D233DA /* CRUploadPreview.PNG in Resources */,
 				B9EBBCBD1AA56123008FA719 /* icon-Settings-SELECTED 50x50.png in Resources */,
 				B9EAF9F91AE30D8300C99D29 /* Profile tab white.png in Resources */,
 				4AB8EEDF1BC4B84400D233DA /* Whereabout-settings-tab-GRAY-10-06-2015.png in Resources */,
@@ -898,11 +927,14 @@
 				B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */,
 				B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */,
 				B9EAF9F71AE30D8300C99D29 /* Profile GRAY 50x50.png in Resources */,
+				4AB8EEFF1BC5D97200D233DA /* ProfilePreview.PNG in Resources */,
 				B9EAF9FA1AE30D8300C99D29 /* Upload 50x50.png in Resources */,
+				4AB8EEFD1BC5D97200D233DA /* LoginPreview.PNG in Resources */,
 				B9EBBCBB1AA56123008FA719 /* icon-Upload-SELECTED 50x50.png in Resources */,
 				B938DCF41A757BCB0073D91F /* Photo access Image 350x350 REV.png in Resources */,
 				4AB8EEDD1BC4B84400D233DA /* Whereabout-feed-tab-GRAY-10-06-2015.png in Resources */,
 				B9EBBCBE1AA56123008FA719 /* icon-Feed GRAY 50x50.png in Resources */,
+				4AB8EF011BC5D97200D233DA /* StreamPreview.PNG in Resources */,
 				B9EAF9F31AE30D8300C99D29 /* Feed GRAY 50x50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

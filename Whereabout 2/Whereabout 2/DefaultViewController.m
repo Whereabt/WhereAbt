@@ -17,8 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _pageTitles = @[@"Log in using OneDrive", @"Take new photos or upload old ones", @"See what's going on nearby", @"View user profiles"];
-    _pageImages = @[@"Page 1.0.PNG", @"Page 4.1.PNG", @"Page 1.PNG", @"Page 2.PNG"];
+    _pageTitles = @[@"Log in using OneDrive", @"See what's going on nearby", @"Upload new or existing photos", @"Save any photo"];
+    _pageImages = @[@"LoginPreview.PNG", @"StreamPreview.PNG", @"UploadPreview.PNG", @"EnlargeSavePreview.PNG"];
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;
@@ -27,7 +27,11 @@
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 90);
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    //self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 90);
+    self.pageViewController.view.frame = CGRectMake(0, 0, screenRect.size.width, screenRect.size.height-45);
+    
+    
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
