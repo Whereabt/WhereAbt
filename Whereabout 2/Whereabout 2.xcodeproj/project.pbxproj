@@ -44,6 +44,7 @@
 		4AB8EF001BC5D97200D233DA /* SettingsPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF91BC5D97200D233DA /* SettingsPreview.PNG */; settings = {ASSET_TAGS = (); }; };
 		4AB8EF011BC5D97200D233DA /* StreamPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEFA1BC5D97200D233DA /* StreamPreview.PNG */; settings = {ASSET_TAGS = (); }; };
 		4AB8EF031BC5DCA900D233DA /* UploadPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EF021BC5DCA900D233DA /* UploadPreview.PNG */; settings = {ASSET_TAGS = (); }; };
+		4AB8EF071BD0743800D233DA /* Flag.php in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EF061BD0743800D233DA /* Flag.php */; settings = {ASSET_TAGS = (); }; };
 		B927F1211B1239D1007D5D05 /* NSNetworkConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = B927F1201B1239D1007D5D05 /* NSNetworkConnection.m */; };
 		B938DCB01A641E560073D91F /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCAF1A641E560073D91F /* StreamController.m */; };
 		B938DCB31A68BF000073D91F /* StreamCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */; };
@@ -203,6 +204,7 @@
 		4AB8EEF91BC5D97200D233DA /* SettingsPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SettingsPreview.PNG; path = UIImages/SettingsPreview.PNG; sourceTree = SOURCE_ROOT; };
 		4AB8EEFA1BC5D97200D233DA /* StreamPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StreamPreview.PNG; path = UIImages/StreamPreview.PNG; sourceTree = SOURCE_ROOT; };
 		4AB8EF021BC5DCA900D233DA /* UploadPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UploadPreview.PNG; path = UIImages/UploadPreview.PNG; sourceTree = SOURCE_ROOT; };
+		4AB8EF061BD0743800D233DA /* Flag.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = Flag.php; path = ../Flag.php; sourceTree = "<group>"; };
 		6FC2A26AF400AF77735F63E9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		77F1A66FF8985FBB2D8DDA25 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		B927F11F1B1239D1007D5D05 /* NSNetworkConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNetworkConnection.h; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 		012996CC1A354E5300C89D09 = {
 			isa = PBXGroup;
 			children = (
+				4AB8EF061BD0743800D233DA /* Flag.php */,
 				4AB8EEE01BC4C58D00D233DA /* Media.xcassets */,
 				B98C667F1B88D0C500A9C810 /* MapKit.framework */,
 				B9BC132C1A7D90D700659591 /* Security.framework */,
@@ -893,6 +896,7 @@
 				4A2BE0961BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png in Resources */,
 				4A2BE0921BBCE4F30043B207 /* Whereabout-feed-gray-05-11-2015.png in Resources */,
 				B985EA7A1B38AB0E000D2AFD /* Gray Stream Placeholder Image.jpg in Resources */,
+				4AB8EF071BD0743800D233DA /* Flag.php in Resources */,
 				B9EAF9E81AE30D2E00C99D29 /* Upload GRAY 50x50.png in Resources */,
 				B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */,
 				B9EAF9F21AE30D8300C99D29 /* Feed 50x50.png in Resources */,
@@ -1163,7 +1167,7 @@
 			baseConfigurationReference = 77F1A66FF8985FBB2D8DDA25 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Whereabout 2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1179,7 +1183,7 @@
 			baseConfigurationReference = 6FC2A26AF400AF77735F63E9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Whereabout 2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
