@@ -18,4 +18,6 @@
 
 - (void)getProfilePropertiesWithCompletion: (void (^)(NSDictionary *profileProperties, NSError *error))callBack;
 
+- (void)deletePhotoFromDBWithPhotoID:(NSString *)photoId;
+
 @end

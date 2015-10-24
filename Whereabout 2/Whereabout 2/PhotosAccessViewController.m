@@ -444,7 +444,7 @@ UIImagePickerController *imagePicker;
                     NSNumber *longitude = [[metadata objectForKey:@"{GPS}"] objectForKey:@"Longitude"];
                     NSConstantString *latRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LatitudeRef"];
                     NSConstantString *lonRef = [[metadata objectForKey:@"{GPS}"] objectForKey:@"LongitudeRef"];
-                    NSDate *metaDateStamp = metadata[@"{GPS}"][@"DateStamp"];
+                    //NSDate *metaDateStamp = metadata[@"{GPS}"][@"DateStamp"];
                     //NSString *metaTimeStamp = metadata[@"{GPS}"][@"]
                     
                     NSString *date = [metadata[@"{GPS}"][@"DateStamp"] stringByReplacingOccurrencesOfString: @":" withString:@"-"];
@@ -478,7 +478,7 @@ UIImagePickerController *imagePicker;
                     }
                     
                     if ([_metaLong isEqualToString:@"(null)"] == YES || [_metaLat isEqualToString:@"(null)"] == YES) {
-                        StreamViewController *streamVC = [[StreamViewController alloc] init];
+                        //StreamViewController *streamVC = [[StreamViewController alloc] init];
                         //[streamVC setUploadingPhotoVarTo:NO];
                         UIAlertView *metaAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"You may only upload photos from your camera roll if they have a location stored in their metadata." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                         [metaAlert show];
@@ -648,7 +648,7 @@ UIImagePickerController *imagePicker;
         //Photo's unique ID for db
         NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
         
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphoto2.php?UserID=%@&UserName=%@&Mapping=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, [WelcomeViewController sharedController].userName, self.mappingString, _metaLat, _metaLong, largeImage, processedName, dateString, uploadTimeInterval];
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphotoTestFile.php?UserID=%@&PhotoID=%@&UserName=%@&Mapping=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, processedName, [WelcomeViewController sharedController].userName, self.mappingString, _metaLat, _metaLong, largeImage, @"UNAVAILABLE", dateString, uploadTimeInterval];
         NSLog(@"PUT URL String: %@", _PUTUrlString);
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];

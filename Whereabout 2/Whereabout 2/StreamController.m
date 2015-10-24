@@ -31,7 +31,7 @@ static NSString *const distanceFrom = @"MilesAway";
     //check to see if location working
     if (locationController.locationManager.location) {
         //make request
-        NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed3.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
+        NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTestFile.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
         
         //NSString *urlAsString = @"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3.000000";
         //eventually, include radius in last parameter 'Radius='

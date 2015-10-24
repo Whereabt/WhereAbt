@@ -189,26 +189,7 @@ UILabel *internetConnLabel;
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    
-    /*
-    if (self.profileItems) {
-        return 1;
-    }
-    
-    else {
-        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        messageLabel.text = @"You have not uploaded any photos (yet).";
-        messageLabel.textColor = [UIColor colorWithRed:0.0f/255.0f green:153.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont fontWithName:@"System Italic" size:20];
-        [messageLabel sizeToFit];
-        
-        self.collectionView.backgroundView = messageLabel;
-    }
-    
-    return 0;
-     */
+  
     return 1;
 }
 
@@ -332,11 +313,9 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     ProfileCVCell *proCell = [collectionView cellForItemAtIndexPath:indexPath];
     
     NSMutableDictionary *parameterDict = [[NSMutableDictionary alloc] init];
+    parameterDict = self.profileItems[indexPath.row];
     parameterDict[@"photo"] = proCell.cvImage.image;
     parameterDict[@"distanceString"] = distanceString;
-    parameterDict[@"time"] = self.profileItems[indexPath.row][@"TimeStamp"];
-    parameterDict[@"Latitude"] = self.profileItems[indexPath.row][@"Latitude"];
-    parameterDict[@"Longitude"] = self.profileItems[indexPath.row][@"Longitude"];
     
     [EnlargedViewManager setUpEnlargedViewWithDict:parameterDict];
     

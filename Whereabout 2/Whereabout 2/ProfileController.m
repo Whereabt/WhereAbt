@@ -31,10 +31,49 @@
     
 }
 
+- (void)deletePhotoFromDBWithPhotoID:(NSString *)photoId {
+    NSString *stringURL = [NSString stringWithFormat:@"https://n46.org/whereabt/deletephoto.php?PhotoID=%@", photoId];
+    
+    NSURL *url = [NSURL URLWithString:stringURL];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSURLSession *session = [NSURLSession sharedSession];
+    /*request.HTTPMethod = @"POST";
+    NSString *post = [NSString stringWithFormat:@"product=%@", productName];
+    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    //content type header
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:postData];
+     
+    
+    NSMutableDictionary *requestBodyDict = [[NSMutableDictionary alloc] init];
+    [requestBodyDict setObject:productName forKey:@"product"];
+    
+    NSString *StringJSONbody = [self jsonStringFromDictionary:requestBodyDict];
+        */
+    
+        //make task
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSLog(@"RESPONSE FROM DELETE: %@", response);
+        
+        if (!error){
+            NSLog(@"Delete completed succesfully");
+        }
+        else {
+            NSLog(@"Error occurred while deleted photo: %@", error);
+        }
+        
+    }];
+    
+    [postDataTask resume];
+
+}
 
 - (void)requestProfileItemsFromUser:(NSString *) Id WithCompletion: (void (^)(NSMutableArray *Items, NSError *error))callBack{
     LocationController *locationController = [[LocationController alloc] init];
-    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/userprofile2.php?Latitude=%f&Longitude=%f&Radius=%d&UserID=%@", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, 10000, Id];
+    NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/userprofileTestFile.php?Latitude=%f&Longitude=%f&Radius=%d&UserID=%@", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, 10000, Id];
     NSLog(@"URL to get profile items: %@", urlAsString);
     NSURL *url = [[NSURL alloc]initWithString:urlAsString];
     

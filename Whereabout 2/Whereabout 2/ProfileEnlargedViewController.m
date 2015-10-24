@@ -9,6 +9,7 @@
 #import "ProfileEnlargedViewController.h"
 #import "WelcomeViewController.h"
 #import "LocationController.h"
+#import "ProfileController.h"
 #import <OneDriveSDK/OneDriveSDK.h>
 
 @interface ProfileEnlargedViewController ()
@@ -121,7 +122,16 @@ NSDictionary *itemDict;
 
 - (IBAction)longPressGesture:(id)sender {
     //create the alert
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Save Image" message:@"Where would you like to save this image?" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Where would you like to do with this photo?" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    //action for delete
+    UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete from Whereabout" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        ProfileController *profileController = [[ProfileController alloc] init];
+        [profileController deletePhotoFromDBWithPhotoID:itemDict[@"PhotoID"]];
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [alertController addAction:deleteAction];
     
     //action for save
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save to Camera Roll", "Save Action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

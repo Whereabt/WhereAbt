@@ -14,7 +14,7 @@
     mysql_select_db($dbname) or die("Unable to select database: " . mysql_error());
     
     // sql to delete a record
-    $photoID = mysql_real_escape_string($_GET['PhotoID']);
+    $photoID = mysql_real_escape_string($_GET['PhotoID']); 
 
     $sql = "SELECT FROM Feed WHERE ThumbnailURL='%s'", $photoID;
     $sql
