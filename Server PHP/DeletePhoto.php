@@ -13,7 +13,10 @@
     mysql_select_db($dbname) or die("Unable to select database: " . mysql_error());
     
     //create string for call on sql
-    $sql = "DELETE FROM Feed WHERE PhotoID='".$_GET['PhotoID']."'";
+    //$sql = "DELETE FROM Feed WHERE PhotoID='".$_GET['PhotoID']."'";
+    $sql = str_replace("x", $_GET['PhotoID'], "DELETE FROM Feed WHERE PhotoID='x'");
+    
+    echo $sql;
     
     //make db query
     $result = mysql_query($sql);

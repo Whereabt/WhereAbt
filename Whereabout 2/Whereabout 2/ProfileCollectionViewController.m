@@ -29,13 +29,15 @@ static NSString * const reuseIdentifier = @"Cell";
 UILabel *internetConnLabel;
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
     [self refreshProfile];
      
     // Do any additional setup after loading the view.
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self.collectionView reloadData];
+}
 
 - (void)refreshProfile {
     
@@ -73,8 +75,8 @@ UILabel *internetConnLabel;
     ProfileController *profileController = [[ProfileController alloc] init];
     [profileController requestProfileItemsFromUser:[WelcomeViewController sharedController].userID WithCompletion:^(NSMutableArray *Items, NSError *error){
         
+        self.profileItems = [Items mutableCopy];
         if (!error) {
-            self.profileItems = [Items mutableCopy];
             
             /*
              //delete null images
@@ -108,12 +110,13 @@ UILabel *internetConnLabel;
         }
         else {
             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+            [self.collectionView reloadData];
 
             NSLog(@"Error getting profile items: %@", error);
             
             if (error.code == 3840) {
                 //user has 0 items in profile
-                NSLog(@"Current thread: %@", [NSThread currentThread]);
+                //NSLog(@"Current thread: %@", [NSThread currentThread]);
                 [self.userProfileActivityIndicator stopAnimating];
                 [self.userProfileActivityIndicator removeFromSuperview];
             }
@@ -176,6 +179,10 @@ UILabel *internetConnLabel;
     [self refreshProfile];
 }
 
+- (void)deleteEntryFromProfileItemsWithIndex:(NSIndexPath *)entryIndex {
+    [self.profileItems removeObjectAtIndex:entryIndex.row];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -189,7 +196,23 @@ UILabel *internetConnLabel;
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-  
+   /*
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    messageLabel.text = @"You haven't uploaded any photos yet.";
+    messageLabel.textColor = [UIColor colorWithRed:0.0f/255.0f green:153.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+    messageLabel.numberOfLines = 0;
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.font = [UIFont fontWithName:@"System Italic" size:20];
+    [messageLabel sizeToFit];
+    
+    self.collectionView.backgroundView = messageLabel;
+
+    if (self.profileItems) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [messageLabel removeFromSuperview];
+        });
+    }
+    */
     return 1;
 }
 
@@ -316,6 +339,8 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     parameterDict = self.profileItems[indexPath.row];
     parameterDict[@"photo"] = proCell.cvImage.image;
     parameterDict[@"distanceString"] = distanceString;
+    [parameterDict setValue:indexPath forKey:@"Index"];
+    
     
     [EnlargedViewManager setUpEnlargedViewWithDict:parameterDict];
     

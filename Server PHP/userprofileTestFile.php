@@ -17,8 +17,8 @@
         //$query = "SELECT * FROM 'Feed' WHERE 'UserID' ='".$_GET['UserID']."'"; //BUGBUG: easy to make this more selective using Latitude and Longitude as WHERE clause criteria
     
         //$query = "SELECT * FROM 'Feed' WHERE 'UserID' = '%s\n'", $_GET['UserID'];
-        $query = str_replace("x", $_GET['UserID'], "SELECT * FROM Feed WHERE UserID=x");
-        echo $query;
+        $query = str_replace("x", $_GET['UserID'], "SELECT * FROM Feed WHERE UserID='x'");
+        //echo $query;
     
         $result = mysql_query($query);
         

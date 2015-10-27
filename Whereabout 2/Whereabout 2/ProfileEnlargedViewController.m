@@ -11,6 +11,7 @@
 #import "LocationController.h"
 #import "ProfileController.h"
 #import <OneDriveSDK/OneDriveSDK.h>
+#import "ProfileCollectionViewController.h"
 
 @interface ProfileEnlargedViewController ()
 
@@ -122,12 +123,41 @@ NSDictionary *itemDict;
 
 - (IBAction)longPressGesture:(id)sender {
     //create the alert
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"Where would you like to do with this photo?" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"What would you like to do with this photo?" preferredStyle:UIAlertControllerStyleActionSheet];
     
     //action for delete
     UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Delete from Whereabout" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //start indicator
+        [self.activityIndicatorView startAnimating];
+        //make request
         ProfileController *profileController = [[ProfileController alloc] init];
-        [profileController deletePhotoFromDBWithPhotoID:itemDict[@"PhotoID"]];
+        [profileController deletePhotoFromDBWithPhotoID:itemDict[@"PhotoID"] andCompletion:^(NSError *completionError) {
+            //stop indicator
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.activityIndicatorView stopAnimating];
+            });
+
+            if (completionError) {
+                NSLog(@"Error in deleting photo:%@", completionError);
+                //create alert cont
+                UIAlertController *completionAlertCont = [UIAlertController alertControllerWithTitle:@"Error Deleting Photo" message:@"We ran into an error deleting your photo, please try again later." preferredStyle:UIAlertControllerStyleAlert];
+                
+                //create ok action
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    //completion
+                    [completionAlertCont dismissViewControllerAnimated:YES completion:nil];
+                    
+                }];
+                //add action
+                [completionAlertCont addAction:okAction];
+            }
+            
+            else {
+                NSLog(@"Successfully deleted photo from db");
+                ProfileCollectionViewController *profileCollVC = [[ProfileCollectionViewController alloc] init];
+                [profileCollVC deleteEntryFromProfileItemsWithIndex:itemDict[@"Index"]];
+            }
+        }];
         [alertController dismissViewControllerAnimated:YES completion:nil];
     }];
     

@@ -1,7 +1,7 @@
 <?php
     //This page inserts new photo information from the client into the database
     
-    //The page accepts query string parameters UserID, Longitude, Latitude, PhotoURL, UserName, ThumbnailURL, TimeStamp, Mapping, and UploadTime
+    //The page accepts query string parameters UserID, PhotoID, Longitude, Latitude, PhotoURL, UserName, ThumbnailURL, TimeStamp, Mapping, and UploadTime
     
     //Step1 - Connect to the DB using the connection info stored in login.php
     
@@ -30,7 +30,7 @@
     
     //Step 3 - Build the query string in a temp variable then actually insert the URL query string into
     
-    $result = mysql_query("INSERT INTO Feed VALUES('$tempUserID','$tempPhotoID','$tempMapping','$tempUserName','$tempLatitude','$tempLongitude','$tempPhotoURL','$tempThumbnailURL','$tempTimeStamp','$tempUploadTime')");
+    $result = mysql_query("INSERT INTO Feed VALUES('$tempPhotoID','$tempUserID','$tempMapping','$tempUserName','$tempLatitude','$tempLongitude','$tempPhotoURL','$tempThumbnailURL','$tempTimeStamp','$tempUploadTime')");
     
     if (!$result) die("Database INSERT failed: " . mysql_error());
     

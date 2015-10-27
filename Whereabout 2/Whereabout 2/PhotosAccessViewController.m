@@ -647,8 +647,11 @@ UIImagePickerController *imagePicker;
         
         //Photo's unique ID for db
         NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
+        if (!self.mappingString) {
+            self.mappingString = @"FALSE";
+        }
         
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphotoTestFile.php?UserID=%@&PhotoID=%@&UserName=%@&Mapping=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, processedName, [WelcomeViewController sharedController].userName, self.mappingString, _metaLat, _metaLong, largeImage, @"UNAVAILABLE", dateString, uploadTimeInterval];
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphotoTestFile.php?UserID=%@&PhotoID=%@&UserName=%@&Mapping=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, processedName, [WelcomeViewController sharedController].userName, _mappingString, _metaLat, _metaLong, largeImage, @"UNAVAILABLE", dateString, uploadTimeInterval];
         NSLog(@"PUT URL String: %@", _PUTUrlString);
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];
@@ -677,6 +680,7 @@ UIImagePickerController *imagePicker;
                                                        
                 }];
     [dataRequestTask resume];
+        
     }
     else{
         UIAlertView *PhotoLocationAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We were unable to find the photo's location." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];

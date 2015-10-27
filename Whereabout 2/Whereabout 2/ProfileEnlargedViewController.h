@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *largeImageView;
 @property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *longPress;
 @property (strong, nonatomic) IBOutlet UILabel *timeIntervalLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
 - (IBAction)longPressGesture:(id)sender;
 - (void)setUpEnlargedViewWithDict:(NSDictionary *)enlargeDict;

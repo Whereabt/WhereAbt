@@ -31,7 +31,7 @@
     
 }
 
-- (void)deletePhotoFromDBWithPhotoID:(NSString *)photoId {
+- (void)deletePhotoFromDBWithPhotoID:(NSString *)photoId andCompletion:(void(^)(NSError *completionError))completionHandler {
     NSString *stringURL = [NSString stringWithFormat:@"https://n46.org/whereabt/deletephoto.php?PhotoID=%@", photoId];
     
     NSURL *url = [NSURL URLWithString:stringURL];
@@ -58,13 +58,7 @@
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         NSLog(@"RESPONSE FROM DELETE: %@", response);
         
-        if (!error){
-            NSLog(@"Delete completed succesfully");
-        }
-        else {
-            NSLog(@"Error occurred while deleted photo: %@", error);
-        }
-        
+        completionHandler(error);
     }];
     
     [postDataTask resume];

@@ -13,5 +13,6 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *userProfileActivityIndicator;
 
 - (IBAction)profileRefreshButtonPress:(id)sender;
+- (void)deleteEntryFromProfileItemsWithIndex:(NSIndexPath *)entryIndex;
 
 @end
