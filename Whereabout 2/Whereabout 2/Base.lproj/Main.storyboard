@@ -1242,7 +1242,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1043" y="931"/>
+            <point key="canvasLocation" x="365" y="2568"/>
         </scene>
         <!--Photo-->
         <scene sceneID="ciP-Gc-RhV">
@@ -1304,6 +1304,17 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                 <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7s-hm-aty">
+                                <rect key="frame" x="248" y="101" width="52" height="22"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <state key="normal" title="Report">
+                                    <color key="titleColor" red="1" green="0.012057142094868412" blue="0.094587621217662177" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="ui7-7O-xEu" kind="show" id="hL1-xO-2Zs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1379,6 +1390,76 @@ KeychainItemWrapper. This software is subject to the following license and notic
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hW5-gW-niN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-506" y="3462"/>
+        </scene>
+        <!--Report Photo-->
+        <scene sceneID="SMY-Iv-axe">
+            <objects>
+                <viewController id="ui7-7O-xEu" customClass="ReportViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gU9-eN-9Fq"/>
+                        <viewControllerLayoutGuide type="bottom" id="Boj-U7-ib9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Udj-ow-la1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6i4-gd-rrr">
+                                <rect key="frame" x="89" y="212" width="143" height="30"/>
+                                <animations/>
+                                <state key="normal" title="I don't like this photo">
+                                    <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="dontLikePress:" destination="ui7-7O-xEu" eventType="touchUpInside" id="SeT-bj-0aY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4NK-kr-ieA">
+                                <rect key="frame" x="66" y="250" width="189" height="30"/>
+                                <animations/>
+                                <state key="normal" title="This photo is scam or spam">
+                                    <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="scamSpamPress:" destination="ui7-7O-xEu" eventType="touchUpInside" id="bcc-m3-KPt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Su3-86-4jH">
+                                <rect key="frame" x="59" y="288" width="204" height="30"/>
+                                <animations/>
+                                <state key="normal" title="This photo puts people at risk">
+                                    <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="riskPress:" destination="ui7-7O-xEu" eventType="touchUpInside" id="3fK-y3-8uz"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36u-d4-1hF">
+                                <rect key="frame" x="25" y="326" width="271" height="30"/>
+                                <animations/>
+                                <state key="normal" title="This photo shouldn't be on Whereabout">
+                                    <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="doesntBelongPress:" destination="ui7-7O-xEu" eventType="touchUpInside" id="5i9-ro-c56"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Why are you reporting this photo?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pr0-wE-Mo9">
+                                <rect key="frame" x="30" y="133" width="260" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Report Photo" id="MUS-2m-25z"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IFw-c4-uUJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-67" y="3214"/>
         </scene>
         <!--Profile-->
         <scene sceneID="pFD-53-g3M">
@@ -1504,7 +1585,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HdR-1F-5lK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-88" y="2826"/>
+            <point key="canvasLocation" x="-67" y="2568"/>
         </scene>
     </scenes>
     <resources>

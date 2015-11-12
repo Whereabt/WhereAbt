@@ -145,5 +145,21 @@ static NSString *const distanceFrom = @"MilesAway";
     [photoRequestTask resume];
 }
 
+- (void)reportPhotoWithUserID: (NSString *)userId andPhotoID: (NSString *)photoId andCompletion:(void (^)(NSError *error))completionHandler {
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://n46.org/whereabt/reportPhoto.php?PhotoID=%@&UserID=%@", photoId, userId]];;
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:postRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        
+        NSLog(@"RESPONSE FROM REPORT: %@", response);
+        
+        completionHandler (error);
+    }];
+    [postDataTask resume];
+    
+}
+
 
 @end

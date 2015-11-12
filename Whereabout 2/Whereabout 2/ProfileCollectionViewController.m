@@ -21,12 +21,14 @@
 
 //holds items from JSON Array
 @property (strong, nonatomic) NSMutableArray *profileItems;
+//@property (assign, nonatomic) BOOL shouldRefreshProfileOnAppear;
 @end
 
 @implementation ProfileCollectionViewController
 
 static NSString * const reuseIdentifier = @"Cell";
 UILabel *internetConnLabel;
+BOOL shouldRefreshProfileOnAppear;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,6 +39,10 @@ UILabel *internetConnLabel;
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.collectionView reloadData];
+    if (shouldRefreshProfileOnAppear) {
+        [self refreshProfile];
+        shouldRefreshProfileOnAppear = NO;
+    }
 }
 
 - (void)refreshProfile {
@@ -110,7 +116,11 @@ UILabel *internetConnLabel;
         }
         else {
             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-            [self.collectionView reloadData];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.collectionView reloadData];
+            });
+
 
             NSLog(@"Error getting profile items: %@", error);
             
@@ -180,7 +190,16 @@ UILabel *internetConnLabel;
 }
 
 - (void)deleteEntryFromProfileItemsWithIndex:(NSIndexPath *)entryIndex {
-    [self.profileItems removeObjectAtIndex:entryIndex.row];
+   /* [self.profileItems removeObjectAtIndex:entryIndex.row];
+    
+    NSArray *ipArray = [[NSArray alloc] initWithObjects:entryIndex, nil];
+    [self.collectionView deleteItemsAtIndexPaths:ipArray]; */
+    
+    shouldRefreshProfileOnAppear = YES;
+}
+
+- (void)makeProfileRefreshOnAppear {
+    shouldRefreshProfileOnAppear = YES;
 }
 
 /*

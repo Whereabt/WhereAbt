@@ -14,5 +14,6 @@
 
 - (IBAction)profileRefreshButtonPress:(id)sender;
 - (void)deleteEntryFromProfileItemsWithIndex:(NSIndexPath *)entryIndex;
+- (void)makeProfileRefreshOnAppear;
 
 @end

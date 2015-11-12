@@ -31,7 +31,7 @@ NSDictionary *itemDict;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-    NSDate *imageDate = [dateFormatter dateFromString: itemDict[@"time"]];
+    NSDate *imageDate = [dateFormatter dateFromString: itemDict[@"TimeStamp"]];
     NSDate *today = [NSDate date];
     NSTimeInterval interval = [today timeIntervalSinceDate: imageDate];
     double hrs = (interval/3600);
@@ -150,12 +150,19 @@ NSDictionary *itemDict;
                 }];
                 //add action
                 [completionAlertCont addAction:okAction];
+                [self presentViewController:completionAlertCont animated:YES completion:nil];
             }
             
             else {
                 NSLog(@"Successfully deleted photo from db");
                 ProfileCollectionViewController *profileCollVC = [[ProfileCollectionViewController alloc] init];
-                [profileCollVC deleteEntryFromProfileItemsWithIndex:itemDict[@"Index"]];
+                //[profileCollVC deleteEntryFromProfileItemsWithIndex:itemDict[@"Index"]];
+                [profileCollVC makeProfileRefreshOnAppear];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+                
             }
         }];
         [alertController dismissViewControllerAnimated:YES completion:nil];
