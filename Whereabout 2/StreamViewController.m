@@ -366,7 +366,7 @@ PhotosAccessViewController *photoVC;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    NSMutableDictionary *dictionaryParameter = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *dictionaryParameter = [[NSMutableDictionary alloc] initWithDictionary:self.streamItems[indexPath.row]];
     
     StreamTVCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     double distanceInt = [self.streamItems[indexPath.row][@"MilesAway"] doubleValue];
@@ -392,12 +392,6 @@ PhotosAccessViewController *photoVC;
 
     [dictionaryParameter setObject:distanceString forKey:@"Distance"];
     [dictionaryParameter setObject:cell.cellImage.image forKey:@"Photo"];
-    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserID"] forKey:@"ID"];
-    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"UserName"] forKey:@"Name"];
-    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"TimeStamp"] forKey:@"Time"];
-    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"Longitude"] forKey:@"Longitude"];
-    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"Latitude"] forKey:@"Latitude"];
-    [dictionaryParameter setObject:self.streamItems[indexPath.row][@"Mapping"] forKey:@"Mapping"];
     
     StreamEnlarge_SaveViewController *SaveController = [[StreamEnlarge_SaveViewController alloc] init];
     [SaveController setUpTheEnlargedViewWithItemDictionary:dictionaryParameter];

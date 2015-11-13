@@ -1403,6 +1403,13 @@ KeychainItemWrapper. This software is subject to the following license and notic
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Why are you reporting this photo?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pr0-wE-Mo9">
+                                <rect key="frame" x="30" y="133" width="260" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6i4-gd-rrr">
                                 <rect key="frame" x="89" y="212" width="143" height="30"/>
                                 <animations/>
@@ -1443,19 +1450,24 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                     <action selector="doesntBelongPress:" destination="ui7-7O-xEu" eventType="touchUpInside" id="5i9-ro-c56"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Why are you reporting this photo?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pr0-wE-Mo9">
-                                <rect key="frame" x="30" y="133" width="260" height="21"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jIS-Yh-v3V">
+                                <rect key="frame" x="150" y="384" width="20" height="20"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="color" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Report Photo" id="MUS-2m-25z"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="jIS-Yh-v3V" id="oEh-yU-cl5"/>
+                        <outlet property="doesntBelongButton" destination="36u-d4-1hF" id="fI7-7r-Mkk"/>
+                        <outlet property="dontLikeButton" destination="6i4-gd-rrr" id="yKq-J3-Mhe"/>
+                        <outlet property="riskButton" destination="Su3-86-4jH" id="EkJ-dX-aYU"/>
+                        <outlet property="scameSpamButton" destination="4NK-kr-ieA" id="hyH-Oz-GjS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IFw-c4-uUJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

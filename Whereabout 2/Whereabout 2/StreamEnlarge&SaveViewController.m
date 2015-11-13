@@ -12,7 +12,7 @@
 #import "LocationController.h"
 #import "MapVCViewController.h"
 #import <OneDriveSDK/OneDriveSDK.h>
-
+#import "ReportViewController.h"
 
 @interface StreamEnlarge_SaveViewController ()
 
@@ -26,7 +26,7 @@ NSMutableDictionary *UIimageDict;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    NSArray *nameArray = [UIimageDict[@"Name"] componentsSeparatedByString:@"_"];
+    NSArray *nameArray = [UIimageDict[@"UserName"] componentsSeparatedByString:@"_"];
     
     NSString *nameString = [NSString stringWithFormat:@"%@ %@", nameArray[0], nameArray[1]];
     [self.nameButton setTitle:nameString forState:UIControlStateNormal];
@@ -40,7 +40,7 @@ NSMutableDictionary *UIimageDict;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     //[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-    NSDate *imageDate = [dateFormatter dateFromString: UIimageDict[@"Time"]];
+    NSDate *imageDate = [dateFormatter dateFromString: UIimageDict[@"TimeStamp"]];
     
     NSDate *today = [NSDate date];
     NSTimeInterval interval = [today timeIntervalSinceDate: imageDate];
@@ -124,7 +124,9 @@ NSMutableDictionary *UIimageDict;
     self.timeLabel.adjustsFontSizeToFitWidth = YES;
     NSLog(@"Label string: %@", labelString);
     self.timeLabel.text = labelString;
-
+    
+    ReportViewController *reportVC = [[ReportViewController alloc]init];
+    [reportVC getPhotoIdToReportVC:UIimageDict[@"PhotoID"]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -159,7 +161,7 @@ NSMutableDictionary *UIimageDict;
 
 - (IBAction)nameButtonPressed:(id)sender {
     StreamPROCollectionViewController *StreamPROController = [[StreamPROCollectionViewController alloc] init];
-    [StreamPROController setUpProfileWithUserID:UIimageDict[@"ID"]];
+    [StreamPROController setUpProfileWithUserID:UIimageDict[@"UserID"]];
     //[self performSegueWithIdentifier:@"segueToProfile" sender:self];
 }
 

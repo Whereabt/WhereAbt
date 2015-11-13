@@ -21,6 +21,6 @@
 
 - (void)getFeedWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack;
 
-- (void)reportPhotoWithUserID: (NSString *)userId andPhotoID: (NSString *)photoId andCompletion:(void (^)(NSError *error))completionHandler;
+- (void)reportPhotoWithUserID: (NSString *)userId andPhotoID: (NSString *)photoId andReason: (NSString *)reasonID withCompletion:(void (^)(NSError *error))completionHandler;
 
 @end

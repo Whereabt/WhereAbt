@@ -27,10 +27,11 @@
     $tempThumbnailURL = $_GET['ThumbnailURL'];
     $tempTimeStamp = $_GET['TimeStamp'];
     $tempUploadTime = $_GET['UploadTime'];
+    $tempViewable = "TRUE";
     
     //Step 3 - Build the query string in a temp variable then actually insert the URL query string into
     
-    $result = mysql_query("INSERT INTO Feed VALUES('$tempPhotoID','$tempUserID','$tempMapping','$tempUserName','$tempLatitude','$tempLongitude','$tempPhotoURL','$tempThumbnailURL','$tempTimeStamp','$tempUploadTime')");
+    $result = mysql_query("INSERT INTO Feed VALUES('$tempPhotoID','$tempUserID','$tempMapping','$tempUserName','$tempLatitude','$tempLongitude','$tempPhotoURL','$tempThumbnailURL','$tempTimeStamp','$tempUploadTime','$tempViewable')");
     
     if (!$result) die("Database INSERT failed: " . mysql_error());
     

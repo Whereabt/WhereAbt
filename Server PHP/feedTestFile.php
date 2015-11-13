@@ -68,7 +68,8 @@
                   'Longitude' => mysql_result($result,$j,'Longitude'),
                   'PhotoURL' => mysql_result($result,$j,'PhotoURL'),
                   'ThumbnailURL' => mysql_result($result,$j,'ThumbnailURL'),
-                  'TimeStamp' => mysql_result($result,$j,'TimeStamp'));
+                  'TimeStamp' => mysql_result($result,$j,'TimeStamp'),
+                  'Viewable' => mysql_result($result,$j,'Viewable'));
             
             //Add each row of the for loop to the outer array
             $outerarray[] = $innerarray;

@@ -1,4 +1,4 @@
- //
+  //
 //  StreamLogic.m
 //  Whereabout 2
 //
@@ -145,9 +145,9 @@ static NSString *const distanceFrom = @"MilesAway";
     [photoRequestTask resume];
 }
 
-- (void)reportPhotoWithUserID: (NSString *)userId andPhotoID: (NSString *)photoId andCompletion:(void (^)(NSError *error))completionHandler {
+- (void)reportPhotoWithUserID: (NSString *)userId andPhotoID: (NSString *)photoId andReason: (NSString *)reasonID withCompletion:(void (^)(NSError *error))completionHandler {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://n46.org/whereabt/reportPhoto.php?PhotoID=%@&UserID=%@", photoId, userId]];;
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://n46.org/whereabt/reportPhoto.php?PhotoID=%@&UserID=%@&Reason=%@", photoId, userId, reasonID]];;
     NSURLSession *session = [NSURLSession sharedSession];
     NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:url];
     
