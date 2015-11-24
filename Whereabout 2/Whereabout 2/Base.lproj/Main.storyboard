@@ -242,6 +242,45 @@
             </objects>
             <point key="canvasLocation" x="617" y="642"/>
         </scene>
+        <!--Terms-->
+        <scene sceneID="CJz-PZ-AdP">
+            <objects>
+                <viewController id="UVZ-jc-MQb" customClass="TermsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="W5y-Xg-4ad"/>
+                        <viewControllerLayoutGuide type="bottom" id="gik-Pf-pdt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RWc-SE-LWh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9RY-f0-9Wp">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <animations/>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" address="YES"/>
+                            </textView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="9RY-f0-9Wp" secondAttribute="trailing" id="9bq-RX-3ko"/>
+                            <constraint firstItem="9RY-f0-9Wp" firstAttribute="top" secondItem="W5y-Xg-4ad" secondAttribute="bottom" id="auW-dV-wGN"/>
+                            <constraint firstItem="9RY-f0-9Wp" firstAttribute="leading" secondItem="RWc-SE-LWh" secondAttribute="leading" id="fvB-0x-9v3"/>
+                            <constraint firstItem="9RY-f0-9Wp" firstAttribute="bottom" secondItem="gik-Pf-pdt" secondAttribute="top" id="tHJ-Ez-M0V"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Terms" id="hpl-Bl-VxU"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="termsField" destination="9RY-f0-9Wp" id="7S7-sE-kuC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rlo-Iu-ggc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="960" y="-1064"/>
+        </scene>
         <!--My Profile-->
         <scene sceneID="C8W-gH-0DE">
             <objects>
@@ -532,8 +571,31 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="About" id="jMt-XZ-8f3">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="OOD-WK-Ix4" style="IBUITableViewCellStyleDefault" id="yTJ-az-E1y">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Jlr-tQ-G87" style="IBUITableViewCellStyleDefault" id="QzI-2c-R9V">
                                         <rect key="frame" x="0.0" y="340" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QzI-2c-R9V" id="hWE-Kw-rZs">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Terms" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jlr-tQ-G87">
+                                                    <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <segue destination="UVZ-jc-MQb" kind="show" id="fzd-nv-0EN"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="OOD-WK-Ix4" style="IBUITableViewCellStyleDefault" id="yTJ-az-E1y">
+                                        <rect key="frame" x="0.0" y="384" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yTJ-az-E1y" id="Eue-Py-RvO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -560,7 +622,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="YbD-gC-czz" style="IBUITableViewCellStyleDefault" id="iTK-hk-a26">
-                                        <rect key="frame" x="0.0" y="384" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="428" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iTK-hk-a26" id="BJ8-Cw-Ibo">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -587,7 +649,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="EZY-4j-CFT" detailTextLabel="0tf-Wu-cAH" style="IBUITableViewCellStyleValue1" id="uLP-N7-OMW">
-                                        <rect key="frame" x="0.0" y="428" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="472" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uLP-N7-OMW" id="vWz-5Y-ioO">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1304,9 +1366,12 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                 <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7s-hm-aty">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7s-hm-aty">
                                 <rect key="frame" x="248" y="101" width="52" height="22"/>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="52" id="UO0-LP-PRb"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <state key="normal" title="Report">
                                     <color key="titleColor" red="1" green="0.012057142094868412" blue="0.094587621217662177" alpha="1" colorSpace="calibratedRGB"/>
@@ -1320,14 +1385,17 @@ KeychainItemWrapper. This software is subject to the following license and notic
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="tqk-l6-E0o" firstAttribute="top" secondItem="SbP-7t-pAQ" secondAttribute="bottom" constant="8" symbolic="YES" id="23d-PT-xaL"/>
+                            <constraint firstItem="tqk-l6-E0o" firstAttribute="top" secondItem="z7s-hm-aty" secondAttribute="bottom" constant="8" symbolic="YES" id="3qg-1D-aph"/>
                             <constraint firstItem="PFU-Fx-Oo1" firstAttribute="bottom" secondItem="fUQ-VW-DxM" secondAttribute="bottom" id="5Xe-T7-ZJ3"/>
                             <constraint firstItem="SbP-7t-pAQ" firstAttribute="leading" secondItem="D6O-av-rGH" secondAttribute="leadingMargin" id="7Y9-XM-RHw"/>
+                            <constraint firstItem="z7s-hm-aty" firstAttribute="top" secondItem="SbP-7t-pAQ" secondAttribute="top" id="EfO-5h-Ytm"/>
                             <constraint firstItem="tqk-l6-E0o" firstAttribute="bottom" secondItem="nQ8-Hb-DD8" secondAttribute="top" id="Gk7-GD-dIa"/>
                             <constraint firstItem="PFU-Fx-Oo1" firstAttribute="trailing" secondItem="SbP-7t-pAQ" secondAttribute="trailing" id="I5p-Rm-ctA"/>
                             <constraint firstItem="SbP-7t-pAQ" firstAttribute="top" secondItem="fUQ-VW-DxM" secondAttribute="bottom" constant="7" id="bdM-yr-5iD"/>
                             <constraint firstItem="tqk-l6-E0o" firstAttribute="centerX" secondItem="SbP-7t-pAQ" secondAttribute="centerX" id="gPr-MF-aZU"/>
                             <constraint firstItem="fUQ-VW-DxM" firstAttribute="leading" secondItem="SbP-7t-pAQ" secondAttribute="leading" id="gdF-Lc-A7H"/>
                             <constraint firstItem="PFU-Fx-Oo1" firstAttribute="top" secondItem="L9k-cT-hg6" secondAttribute="bottom" constant="6" id="gkf-HY-URN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="z7s-hm-aty" secondAttribute="trailing" constant="4" id="ldj-vy-IyJ"/>
                             <constraint firstItem="fUQ-VW-DxM" firstAttribute="top" secondItem="L9k-cT-hg6" secondAttribute="bottom" constant="8" symbolic="YES" id="x6d-3n-07Q"/>
                             <constraint firstItem="PFU-Fx-Oo1" firstAttribute="leading" secondItem="fUQ-VW-DxM" secondAttribute="trailing" constant="8" symbolic="YES" id="x9L-qH-DIM"/>
                             <constraint firstAttribute="trailing" secondItem="tqk-l6-E0o" secondAttribute="trailing" id="ygz-Uv-lyM"/>
@@ -1403,14 +1471,14 @@ KeychainItemWrapper. This software is subject to the following license and notic
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Why are you reporting this photo?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pr0-wE-Mo9">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Why are you reporting this photo?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pr0-wE-Mo9">
                                 <rect key="frame" x="30" y="133" width="260" height="21"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6i4-gd-rrr">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6i4-gd-rrr">
                                 <rect key="frame" x="89" y="212" width="143" height="30"/>
                                 <animations/>
                                 <state key="normal" title="I don't like this photo">
@@ -1420,7 +1488,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                     <action selector="dontLikePress:" destination="ui7-7O-xEu" eventType="touchUpInside" id="SeT-bj-0aY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4NK-kr-ieA">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4NK-kr-ieA">
                                 <rect key="frame" x="66" y="250" width="189" height="30"/>
                                 <animations/>
                                 <state key="normal" title="This photo is scam or spam">
@@ -1430,7 +1498,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                     <action selector="scamSpamPress:" destination="ui7-7O-xEu" eventType="touchUpInside" id="bcc-m3-KPt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Su3-86-4jH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Su3-86-4jH">
                                 <rect key="frame" x="59" y="288" width="204" height="30"/>
                                 <animations/>
                                 <state key="normal" title="This photo puts people at risk">
@@ -1440,7 +1508,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                     <action selector="riskPress:" destination="ui7-7O-xEu" eventType="touchUpInside" id="3fK-y3-8uz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36u-d4-1hF">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36u-d4-1hF">
                                 <rect key="frame" x="25" y="326" width="271" height="30"/>
                                 <animations/>
                                 <state key="normal" title="This photo shouldn't be on Whereabout">
@@ -1450,14 +1518,40 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                     <action selector="doesntBelongPress:" destination="ui7-7O-xEu" eventType="touchUpInside" id="5i9-ro-c56"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jIS-Yh-v3V">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jIS-Yh-v3V">
                                 <rect key="frame" x="150" y="384" width="20" height="20"/>
                                 <animations/>
                                 <color key="color" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6rM-ny-w0O">
+                                <rect key="frame" x="20" y="424" width="280" height="100"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Our team will review this photo per your request. We will no longer make this photo visible to other users if we believe that it violates our terms of use.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Su3-86-4jH" firstAttribute="top" secondItem="4NK-kr-ieA" secondAttribute="bottom" constant="8" symbolic="YES" id="CcC-nS-24D"/>
+                            <constraint firstItem="pr0-wE-Mo9" firstAttribute="top" secondItem="gU9-eN-9Fq" secondAttribute="bottom" constant="69" id="D9Y-2Z-SEB"/>
+                            <constraint firstItem="jIS-Yh-v3V" firstAttribute="top" secondItem="36u-d4-1hF" secondAttribute="bottom" constant="28" id="E7R-97-H8c"/>
+                            <constraint firstItem="4NK-kr-ieA" firstAttribute="top" secondItem="6i4-gd-rrr" secondAttribute="bottom" constant="8" symbolic="YES" id="Fg1-Hz-Twl"/>
+                            <constraint firstItem="Su3-86-4jH" firstAttribute="centerX" secondItem="36u-d4-1hF" secondAttribute="centerX" id="JGN-Wh-nk8"/>
+                            <constraint firstItem="jIS-Yh-v3V" firstAttribute="centerX" secondItem="6rM-ny-w0O" secondAttribute="centerX" id="Kwd-c5-CUj"/>
+                            <constraint firstItem="6rM-ny-w0O" firstAttribute="top" secondItem="jIS-Yh-v3V" secondAttribute="bottom" constant="20" id="PNX-A9-oYQ"/>
+                            <constraint firstItem="6i4-gd-rrr" firstAttribute="centerX" secondItem="4NK-kr-ieA" secondAttribute="centerX" id="Pae-mq-chY"/>
+                            <constraint firstItem="36u-d4-1hF" firstAttribute="centerX" secondItem="jIS-Yh-v3V" secondAttribute="centerX" id="Yv7-bX-Kmw"/>
+                            <constraint firstItem="4NK-kr-ieA" firstAttribute="centerX" secondItem="Udj-ow-la1" secondAttribute="centerX" id="fMA-oD-Mxu"/>
+                            <constraint firstItem="pr0-wE-Mo9" firstAttribute="centerX" secondItem="6i4-gd-rrr" secondAttribute="centerX" id="iQc-C0-j4X"/>
+                            <constraint firstItem="36u-d4-1hF" firstAttribute="top" secondItem="Su3-86-4jH" secondAttribute="bottom" constant="8" symbolic="YES" id="jsn-Xe-i3O"/>
+                            <constraint firstItem="6rM-ny-w0O" firstAttribute="leading" secondItem="Udj-ow-la1" secondAttribute="leadingMargin" constant="4" id="lEy-lC-BIN"/>
+                            <constraint firstItem="6i4-gd-rrr" firstAttribute="top" secondItem="pr0-wE-Mo9" secondAttribute="bottom" constant="58" id="o1f-sc-REj"/>
+                            <constraint firstItem="Su3-86-4jH" firstAttribute="centerX" secondItem="4NK-kr-ieA" secondAttribute="centerX" id="ofU-Px-ONq"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="6rM-ny-w0O" secondAttribute="bottom" constant="44" id="xLQ-N4-35v"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Report Photo" id="MUS-2m-25z"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

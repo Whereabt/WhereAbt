@@ -26,6 +26,8 @@
 		4A2BE0961BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BE08E1BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png */; };
 		4A2BE0981BBCE4F30043B207 /* Whereabout-upload-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BE0901BBCE4F30043B207 /* Whereabout-upload-gray-05-11-2015.png */; };
 		4A2BE0A31BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BE0A21BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png */; };
+		4A5C4F981BFEDE7B0075BE2B /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5C4F971BFEDE7B0075BE2B /* TermsViewController.m */; };
+		4A5C4F9E1BFEE43E0075BE2B /* EULA.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4A5C4F9D1BFEE43E0075BE2B /* EULA.txt */; };
 		4AB0BE451BEEB526006AD8E1 /* sesquile.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB0BE441BEEB526006AD8E1 /* sesquile.JPG */; };
 		4AB0BE481BEEB561006AD8E1 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0BE471BEEB561006AD8E1 /* ReportViewController.m */; };
 		4AB8EED71BC4B82500D233DA /* Whereabout-feed-tab-BLUE-10-06-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EED41BC4B82500D233DA /* Whereabout-feed-tab-BLUE-10-06-2015.png */; };
@@ -188,6 +190,9 @@
 		4A2BE08E1BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Whereabout-settings-gray-05-11-2015.png"; sourceTree = "<group>"; };
 		4A2BE0901BBCE4F30043B207 /* Whereabout-upload-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Whereabout-upload-gray-05-11-2015.png"; sourceTree = "<group>"; };
 		4A2BE0A21BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Whereabout profile tab-09-20-2015 GRAY.png"; sourceTree = "<group>"; };
+		4A5C4F961BFEDE7B0075BE2B /* TermsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsViewController.h; sourceTree = "<group>"; };
+		4A5C4F971BFEDE7B0075BE2B /* TermsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsViewController.m; sourceTree = "<group>"; };
+		4A5C4F9D1BFEE43E0075BE2B /* EULA.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = EULA.txt; path = ../../EULA.txt; sourceTree = "<group>"; };
 		4AB0BE441BEEB526006AD8E1 /* sesquile.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sesquile.JPG; sourceTree = SOURCE_ROOT; };
 		4AB0BE461BEEB561006AD8E1 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
 		4AB0BE471BEEB561006AD8E1 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
@@ -685,6 +690,9 @@
 		B9E7093F1ACE2FE40054DE2C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				4A5C4F9D1BFEE43E0075BE2B /* EULA.txt */,
+				4A5C4F961BFEDE7B0075BE2B /* TermsViewController.h */,
+				4A5C4F971BFEDE7B0075BE2B /* TermsViewController.m */,
 				B9E7093D1ACE2FC00054DE2C /* SettingsTableViewController.m */,
 				B9E7093C1ACE2FC00054DE2C /* SettingsTableViewController.h */,
 			);
@@ -889,6 +897,7 @@
 				4AB8EEFE1BC5D97200D233DA /* ProEnlargePreview.PNG in Resources */,
 				4AB8EF031BC5DCA900D233DA /* UploadPreview.PNG in Resources */,
 				B9EBBCC11AA56123008FA719 /* icon-Settings GRAY 50x50.png in Resources */,
+				4A5C4F9E1BFEE43E0075BE2B /* EULA.txt in Resources */,
 				B9EBBCBC1AA56123008FA719 /* icon-Feed-SELECTED 50x50.png in Resources */,
 				B9EBBCBA1AA56123008FA719 /* icon-Profile-SELECTED 50x50.png in Resources */,
 				B9EAFA101AEDD39A00C99D29 /* Whereabout-settings-orange-04-25-2015.png in Resources */,
@@ -1026,6 +1035,7 @@
 				B985EA781B387715000D2AFD /* UIWebView+AFNetworking.m in Sources */,
 				B9A9EDA61ABF9223000ECE24 /* ProfileViewHeaderView.m in Sources */,
 				2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */,
+				4A5C4F981BFEDE7B0075BE2B /* TermsViewController.m in Sources */,
 				B9E7093E1ACE2FC00054DE2C /* SettingsTableViewController.m in Sources */,
 				B9EBBCAB1A918622008FA719 /* StreamUpperSuppViewController.m in Sources */,
 				B98C66861B88DB4000A9C810 /* MapAnnotation.m in Sources */,

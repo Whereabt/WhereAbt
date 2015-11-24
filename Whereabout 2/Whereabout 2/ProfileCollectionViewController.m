@@ -79,7 +79,7 @@ BOOL shouldRefreshProfileOnAppear;
     
     //get the profile items (images)
     ProfileController *profileController = [[ProfileController alloc] init];
-    [profileController requestProfileItemsFromUser:[WelcomeViewController sharedController].userID WithCompletion:^(NSMutableArray *Items, NSError *error){
+        [profileController requestProfileItemsFromUser:[WelcomeViewController sharedController].userID AndIsCurrentUser:YES WithCompletion:^(NSMutableArray *Items, NSError *error) {
         
         self.profileItems = [Items mutableCopy];
         if (!error) {

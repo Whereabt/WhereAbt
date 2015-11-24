@@ -64,7 +64,7 @@ UILabel *internetFailLabel;
     
         //get the profile items (images)
         ProfileController *profileController = [[ProfileController alloc] init];
-        [profileController requestProfileItemsFromUser:UserID WithCompletion:^(NSMutableArray *Items, NSError *error) {
+        [profileController requestProfileItemsFromUser:UserID AndIsCurrentUser:NO WithCompletion:^(NSMutableArray *Items, NSError *error) {
         
             if (!error) {
                 self.allProfileItems = [Items mutableCopy];

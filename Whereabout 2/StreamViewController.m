@@ -332,11 +332,13 @@ PhotosAccessViewController *photoVC;
     
     cell.cellImage.contentMode = UIViewContentModeScaleAspectFit;
     
-    NSString *PhotoUrlString = self.streamItems[indexPath.row][@"PhotoURL"];
+ 
     
-    if ([self string:PhotoUrlString containsString:@"https://onedrive.live.com/redir?"]) {
+        NSString *PhotoUrlString = self.streamItems[indexPath.row][@"PhotoURL"];
+    
+        if ([self string:PhotoUrlString containsString:@"https://onedrive.live.com/redir?"]) {
         
-        NSString *encString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+            NSString *encString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
                                                                                                     NULL,
                                                                                                     (CFStringRef)PhotoUrlString,
                                                                                                     NULL,
@@ -344,21 +346,21 @@ PhotosAccessViewController *photoVC;
                                                                                                     kCFStringEncodingUTF8 ));
         
         
-        //make request
-        NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
+            //make request
+            NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
         
-        NSURL *firstURL = [NSURL URLWithString:theUrlAsString];
+            NSURL *firstURL = [NSURL URLWithString:theUrlAsString];
         
-        NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
-        NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
-        PhotoUrlString = [DwnldUrl absoluteString];
-    }
+            NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
+            NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
+            PhotoUrlString = [DwnldUrl absoluteString];
+        }
     
-    [cell.cellImage setImageWithURL:[NSURL URLWithString:PhotoUrlString] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
+        [cell.cellImage setImageWithURL:[NSURL URLWithString:PhotoUrlString]    placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
     
 
-    cell.backgroundColor = [UIColor whiteColor];
-    //[cell.cellImage setFrame:cell.frame];
+        cell.backgroundColor = [UIColor whiteColor];
+        //[cell.cellImage setFrame:cell.frame];
     
     return cell;
 }

@@ -63,6 +63,13 @@ static NSString *const distanceFrom = @"MilesAway";
                                                                NSLog(@"%@", _itemCollection);
                                                                
                                                            }
+                                                           
+                                                           for (int i = 0; i < self.itemCollection.count; i++) {
+                                                               if ([_itemCollection[i][@"Viewable"]  isEqual: @"FALSE"]) {
+                                                                   [_itemCollection removeObjectAtIndex:i];
+                                                               }
+                                                           }
+                                                           
                                                            callBack(_itemCollection, error);
                                                        }
                                                  ];

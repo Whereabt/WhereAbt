@@ -14,10 +14,11 @@
 @property (strong, nonatomic) NSData *imageData;
 @property (strong, nonatomic) NSMutableDictionary *indexDict;
 
-- (void)requestProfileItemsFromUser:(NSString *) Id WithCompletion: (void (^)(NSMutableArray *Items, NSError *error))callBack;
-
 - (void)getProfilePropertiesWithCompletion: (void (^)(NSDictionary *profileProperties, NSError *error))callBack;
 
 - (void)deletePhotoFromDBWithPhotoID:(NSString *)photoId andCompletion:(void(^)(NSError *completionError))completionHandler;
+
+- (void)requestProfileItemsFromUser:(NSString *) Id AndIsCurrentUser:(BOOL) isCurrentUser WithCompletion: (void (^)(NSMutableArray *Items, NSError *error))callBack;
+
 
 @end

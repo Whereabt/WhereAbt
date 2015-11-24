@@ -65,7 +65,7 @@
 
 }
 
-- (void)requestProfileItemsFromUser:(NSString *) Id WithCompletion: (void (^)(NSMutableArray *Items, NSError *error))callBack{
+- (void)requestProfileItemsFromUser:(NSString *) Id AndIsCurrentUser:(BOOL) isCurrentUser WithCompletion: (void (^)(NSMutableArray *Items, NSError *error))callBack {
     LocationController *locationController = [[LocationController alloc] init];
     NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/userprofileTestFile.php?Latitude=%f&Longitude=%f&Radius=%d&UserID=%@", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, 10000, Id];
     NSLog(@"URL to get profile items: %@", urlAsString);
@@ -98,6 +98,13 @@
             //copy =[_itemCollection mutableCopy];
         }
          */
+        if (!isCurrentUser) {
+            for (int i = 0; i < self.itemCollection.count; i++) {
+                if ([_itemCollection[i][@"Viewable"]  isEqual: @"FALSE"]) {
+                    [_itemCollection removeObjectAtIndex:i];
+                }
+            }
+        }
         
         callBack(_itemCollection, error);
         }

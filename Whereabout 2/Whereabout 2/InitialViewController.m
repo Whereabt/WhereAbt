@@ -61,7 +61,9 @@
                         [WelcomeViewController sharedController].userName = [response.owner.user.displayName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
                         
                         [WelcomeViewController sharedController].userID = client.accountId;
-                         [self performSegueWithIdentifier:@"fakeSegue" sender:self];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self performSegueWithIdentifier:@"fakeSegue" sender:self];
+                        });
                     }
                 }];
 

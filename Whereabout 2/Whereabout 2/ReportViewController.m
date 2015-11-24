@@ -77,14 +77,15 @@ NSString *photoID;
         }
         
         else {
-            //nothing needs to happen at this point
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.doesntBelongButton setEnabled:YES];
+                [self.dontLikeButton setEnabled:YES];
+                [self.riskButton setEnabled:YES];
+                [self.scameSpamButton setEnabled:YES];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         }
-        
-        [self.doesntBelongButton setEnabled:YES];
-        [self.dontLikeButton setEnabled:YES];
-        [self.riskButton setEnabled:YES];
-        [self.scameSpamButton setEnabled:YES];
-        
     }];
 }
 
@@ -119,13 +120,15 @@ NSString *photoID;
         }
         
         else {
-            //nothing needs to happen at this point
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.doesntBelongButton setEnabled:YES];
+                [self.dontLikeButton setEnabled:YES];
+                [self.riskButton setEnabled:YES];
+                [self.scameSpamButton setEnabled:YES];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         }
-        
-        [self.doesntBelongButton setEnabled:YES];
-        [self.dontLikeButton setEnabled:YES];
-        [self.riskButton setEnabled:YES];
-        [self.scameSpamButton setEnabled:YES];
         
     }];
 }
@@ -161,13 +164,15 @@ NSString *photoID;
         }
         
         else {
-            //nothing needs to happen at this point
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.doesntBelongButton setEnabled:YES];
+                [self.dontLikeButton setEnabled:YES];
+                [self.riskButton setEnabled:YES];
+                [self.scameSpamButton setEnabled:YES];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         }
-        
-        [self.doesntBelongButton setEnabled:YES];
-        [self.dontLikeButton setEnabled:YES];
-        [self.riskButton setEnabled:YES];
-        [self.scameSpamButton setEnabled:YES];
         
     }];
 }
@@ -203,13 +208,16 @@ NSString *photoID;
         }
         
         else {
-            //nothing needs to happen at this point
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.doesntBelongButton setEnabled:YES];
+                [self.dontLikeButton setEnabled:YES];
+                [self.riskButton setEnabled:YES];
+                [self.scameSpamButton setEnabled:YES];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         }
         
-        [self.doesntBelongButton setEnabled:YES];
-        [self.dontLikeButton setEnabled:YES];
-        [self.riskButton setEnabled:YES];
-        [self.scameSpamButton setEnabled:YES];
         
     }];
 }
