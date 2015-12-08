@@ -32,6 +32,7 @@ BOOL shouldRefreshProfileOnAppear;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.userProfileActivityIndicator.hidesWhenStopped = YES;
     [self refreshProfile];
      
     // Do any additional setup after loading the view.
@@ -57,7 +58,6 @@ BOOL shouldRefreshProfileOnAppear;
         
     self.userProfileActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.userProfileActivityIndicator.color = [UIColor orangeColor];
-    self.userProfileActivityIndicator.hidesWhenStopped = YES;
     [self.userProfileActivityIndicator startAnimating];
     [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
 
@@ -84,22 +84,6 @@ BOOL shouldRefreshProfileOnAppear;
         self.profileItems = [Items mutableCopy];
         if (!error) {
             
-            /*
-             //delete null images
-             NSMutableArray *NullItemsIndexes = [[NSMutableArray alloc] init];
-             for (int i = 0; i < self.profileItems.count; i++) {
-             if ((self.profileItems[i][@"ThumbnailPhoto"] == nil) || (self.profileItems[i][@"LargePhoto"] == nil)) {
-             NSString *nullIndex = [NSString stringWithFormat:@"%d", i];
-             [NullItemsIndexes addObject:nullIndex];
-             }
-             }
-             
-             for (NSString *nullIndexString in NullItemsIndexes) {
-             NSInteger index = [nullIndexString integerValue];
-             [_profileItems removeObjectAtIndex:index];
-             NSLog(@"Deleted a null item inside of 'profileItems' array");
-             }
-             */
             NSLog(@"Finished fetching profileItems");
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([self.userProfileActivityIndicator isAnimating] == YES) {
@@ -117,9 +101,13 @@ BOOL shouldRefreshProfileOnAppear;
         else {
             [[UIApplication sharedApplication] endIgnoringInteractionEvents];
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+            /*dispatch_async(dispatch_get_main_queue(), ^{
                 [self.collectionView reloadData];
-            });
+            }); */
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([self.userProfileActivityIndicator isAnimating] == YES) {
+                    [self.userProfileActivityIndicator stopAnimating];
+                }});
 
 
             NSLog(@"Error getting profile items: %@", error);
@@ -127,8 +115,6 @@ BOOL shouldRefreshProfileOnAppear;
             if (error.code == 3840) {
                 //user has 0 items in profile
                 //NSLog(@"Current thread: %@", [NSThread currentThread]);
-                [self.userProfileActivityIndicator stopAnimating];
-                [self.userProfileActivityIndicator removeFromSuperview];
             }
             
             else {
@@ -146,10 +132,19 @@ BOOL shouldRefreshProfileOnAppear;
     
     else {
         NSLog(@"NO CONNECTION");
-        
-        if ([internetConnLabel superview] == nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([self.userProfileActivityIndicator isAnimating] == YES) {
+                [self.userProfileActivityIndicator stopAnimating];
+            }});
 
-        internetConnLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+        if ([internetConnLabel superview] == nil) {
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenW = screenRect.size.width;
+        //CGFloat screenH = screenRect.size.height;
+            
+        //10,10,300,20
+        internetConnLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, screenW, 20)];
+
         //connectionFailLabel.center = CGPointMake(0.0f, 64.0f);
         [internetConnLabel setText:@"No Internet Connection"];
         [internetConnLabel setTextAlignment:NSTextAlignmentCenter];
@@ -157,7 +152,7 @@ BOOL shouldRefreshProfileOnAppear;
         internetConnLabel.textColor = [UIColor whiteColor];
         [self.collectionView addSubview:internetConnLabel];
         
-        NSTimer *connectionFailViewTimer = [NSTimer timerWithTimeInterval:3.5 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+        NSTimer *connectionFailViewTimer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
         
         [[NSRunLoop mainRunLoop] addTimer:connectionFailViewTimer forMode:NSDefaultRunLoopMode];
         }

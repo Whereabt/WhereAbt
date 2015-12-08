@@ -28,6 +28,12 @@
 		4A2BE0A31BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2BE0A21BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png */; };
 		4A5C4F981BFEDE7B0075BE2B /* TermsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5C4F971BFEDE7B0075BE2B /* TermsViewController.m */; };
 		4A5C4F9E1BFEE43E0075BE2B /* EULA.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4A5C4F9D1BFEE43E0075BE2B /* EULA.txt */; };
+		4A5C4FAB1C0A728D0075BE2B /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C4FA61C0A718A0075BE2B /* libGPUImage.a */; };
+		4A5C4FAD1C0A72CA0075BE2B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C4FAC1C0A72CA0075BE2B /* CoreMedia.framework */; };
+		4A5C4FAF1C0A72D50075BE2B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C4FAE1C0A72D50075BE2B /* CoreVideo.framework */; };
+		4A5C4FB11C0A72E10075BE2B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C4FB01C0A72E10075BE2B /* OpenGLES.framework */; };
+		4A5C4FB31C0A72F10075BE2B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C4FB21C0A72F10075BE2B /* AVFoundation.framework */; };
+		4A5C4FB51C0A72FA0075BE2B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A5C4FB41C0A72FA0075BE2B /* QuartzCore.framework */; };
 		4AB0BE451BEEB526006AD8E1 /* sesquile.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB0BE441BEEB526006AD8E1 /* sesquile.JPG */; };
 		4AB0BE481BEEB561006AD8E1 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0BE471BEEB561006AD8E1 /* ReportViewController.m */; };
 		4AB8EED71BC4B82500D233DA /* Whereabout-feed-tab-BLUE-10-06-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EED41BC4B82500D233DA /* Whereabout-feed-tab-BLUE-10-06-2015.png */; };
@@ -158,6 +164,27 @@
 			remoteGlobalIDString = 012996D41A354E5300C89D09;
 			remoteInfo = "Whereabout 2";
 		};
+		4A5C4FA51C0A718A0075BE2B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A5C4F9F1C0A71890075BE2B /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		4A5C4FA71C0A718A0075BE2B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A5C4F9F1C0A71890075BE2B /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCE209E51943F20C002FEED8;
+			remoteInfo = GPUImageFramework;
+		};
+		4A5C4FA91C0A72210075BE2B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A5C4F9F1C0A71890075BE2B /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCF1A33314DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -193,6 +220,12 @@
 		4A5C4F961BFEDE7B0075BE2B /* TermsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsViewController.h; sourceTree = "<group>"; };
 		4A5C4F971BFEDE7B0075BE2B /* TermsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsViewController.m; sourceTree = "<group>"; };
 		4A5C4F9D1BFEE43E0075BE2B /* EULA.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = EULA.txt; path = ../../EULA.txt; sourceTree = "<group>"; };
+		4A5C4F9F1C0A71890075BE2B /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = "../GPUImage-master/framework/GPUImage.xcodeproj"; sourceTree = "<group>"; };
+		4A5C4FAC1C0A72CA0075BE2B /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		4A5C4FAE1C0A72D50075BE2B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		4A5C4FB01C0A72E10075BE2B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		4A5C4FB21C0A72F10075BE2B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4A5C4FB41C0A72FA0075BE2B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4AB0BE441BEEB526006AD8E1 /* sesquile.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sesquile.JPG; sourceTree = SOURCE_ROOT; };
 		4AB0BE461BEEB561006AD8E1 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
 		4AB0BE471BEEB561006AD8E1 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
@@ -374,6 +407,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A5C4FB51C0A72FA0075BE2B /* QuartzCore.framework in Frameworks */,
+				4A5C4FB31C0A72F10075BE2B /* AVFoundation.framework in Frameworks */,
+				4A5C4FB11C0A72E10075BE2B /* OpenGLES.framework in Frameworks */,
+				4A5C4FAF1C0A72D50075BE2B /* CoreVideo.framework in Frameworks */,
+				4A5C4FAD1C0A72CA0075BE2B /* CoreMedia.framework in Frameworks */,
+				4A5C4FAB1C0A728D0075BE2B /* libGPUImage.a in Frameworks */,
 				B98C66801B88D0C600A9C810 /* MapKit.framework in Frameworks */,
 				2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */,
 				2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */,
@@ -395,6 +434,7 @@
 		012996CC1A354E5300C89D09 = {
 			isa = PBXGroup;
 			children = (
+				4A5C4F9F1C0A71890075BE2B /* GPUImage.xcodeproj */,
 				4AB8EF061BD0743800D233DA /* Flag.php */,
 				4AB8EEE01BC4C58D00D233DA /* Media.xcassets */,
 				B98C667F1B88D0C500A9C810 /* MapKit.framework */,
@@ -480,9 +520,23 @@
 		1B622F6693BA89CE7EF96553 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A5C4FB41C0A72FA0075BE2B /* QuartzCore.framework */,
+				4A5C4FB21C0A72F10075BE2B /* AVFoundation.framework */,
+				4A5C4FB01C0A72E10075BE2B /* OpenGLES.framework */,
+				4A5C4FAE1C0A72D50075BE2B /* CoreVideo.framework */,
+				4A5C4FAC1C0A72CA0075BE2B /* CoreMedia.framework */,
 				1C7F58B3B077B59E66A13082 /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A5C4FA01C0A71890075BE2B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A5C4FA61C0A718A0075BE2B /* libGPUImage.a */,
+				4A5C4FA81C0A718A0075BE2B /* GPUImage.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		B066BEFB3EB587249331BF5B /* Pods */ = {
@@ -813,6 +867,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4A5C4FAA1C0A72210075BE2B /* PBXTargetDependency */,
 			);
 			name = Whereabout;
 			productName = "Whereabout 2";
@@ -867,6 +922,12 @@
 			mainGroup = 012996CC1A354E5300C89D09;
 			productRefGroup = 012996D61A354E5300C89D09 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4A5C4FA01C0A71890075BE2B /* Products */;
+					ProjectRef = 4A5C4F9F1C0A71890075BE2B /* GPUImage.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				012996D41A354E5300C89D09 /* Whereabout */,
@@ -874,6 +935,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4A5C4FA61C0A718A0075BE2B /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = 4A5C4FA51C0A718A0075BE2B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4A5C4FA81C0A718A0075BE2B /* GPUImage.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = GPUImage.framework;
+			remoteRef = 4A5C4FA71C0A718A0075BE2B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		012996D31A354E5300C89D09 /* Resources */ = {
@@ -1084,6 +1162,11 @@
 			target = 012996D41A354E5300C89D09 /* Whereabout */;
 			targetProxy = 012996F21A354E5300C89D09 /* PBXContainerItemProxy */;
 		};
+		4A5C4FAA1C0A72210075BE2B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImage;
+			targetProxy = 4A5C4FA91C0A72210075BE2B /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1189,6 +1272,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/ADALiOS\"",
+					"\"${PODS_ROOT}/Headers/Public/OneDriveSDK\"",
+					"\"Users/user/Desktop/WhereAbt/GPUImage-master/framework/Source/\"/**",
+				);
 				INFOPLIST_FILE = "Whereabout 2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1205,6 +1295,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/ADALiOS\"",
+					"\"${PODS_ROOT}/Headers/Public/OneDriveSDK\"",
+					"\"Users/user/Desktop/WhereAbt/GPUImage-master/framework/Source/\"/**",
+				);
 				INFOPLIST_FILE = "Whereabout 2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

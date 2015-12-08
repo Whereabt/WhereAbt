@@ -29,7 +29,7 @@ UILabel *internetFailLabel;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.profileActivityIndicator.hidesWhenStopped = YES;
     [self refreshStreamProfile];
 }
 
@@ -40,7 +40,6 @@ UILabel *internetFailLabel;
     
         self.profileActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
         self.profileActivityIndicator.color = [UIColor orangeColor];
-        self.profileActivityIndicator.hidesWhenStopped = YES;
         [self.profileActivityIndicator startAnimating];
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
@@ -89,10 +88,15 @@ UILabel *internetFailLabel;
             else {
                 NSLog(@"Error getting profile items: %@", error);
                 [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([self.profileActivityIndicator isAnimating] == YES) {
+                        [self.profileActivityIndicator stopAnimating];
+                    }});
+
             
                 if (error.code == 3840) {
                     //user has 0 items in profile
-                    [self.profileActivityIndicator stopAnimating];
+                  
                 }
             
                 else {
@@ -110,9 +114,19 @@ UILabel *internetFailLabel;
     
     else {
         NSLog(@"NO CONNECTION");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([self.profileActivityIndicator isAnimating] == YES) {
+                [self.profileActivityIndicator stopAnimating];
+            }});
         if ([internetFailLabel superview] == nil) {
             
-            internetFailLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 300, 20)];
+            CGRect screenRect = [[UIScreen mainScreen] bounds];
+            CGFloat screenW = screenRect.size.width;
+            //CGFloat screenH = screenRect.size.height;
+            
+            //10,10,300,20
+            internetFailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, screenW, 20)];
+
             //connectionFailLabel.center = CGPointMake(0.0f, 64.0f);
             [internetFailLabel setText:@"No Internet Connection"];
             [internetFailLabel setTextAlignment:NSTextAlignmentCenter];
@@ -120,7 +134,7 @@ UILabel *internetFailLabel;
             internetFailLabel.textColor = [UIColor whiteColor];
             [self.collectionView addSubview:internetFailLabel];
             
-            NSTimer *connectionFailViewTimer = [NSTimer timerWithTimeInterval:3.5 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
+            NSTimer *connectionFailViewTimer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:NO];
             
             [[NSRunLoop mainRunLoop] addTimer:connectionFailViewTimer forMode:NSDefaultRunLoopMode];
         }

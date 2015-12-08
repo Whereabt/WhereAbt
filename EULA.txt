@@ -7,10 +7,7 @@ IMPORTANT: PLEASE READ THIS LICENSE CAREFULLY BEFORE USING THIS SOFTWARE.
 
 1. LICENSE
 
-By installing and/or using using Whereabout ("Software") containing this software, you agree that
-this End User User License Agreement (EULA) is a legally binding and valid contract and agree to be
-bound by it. You agree to abide by the intellectual property laws and all of the terms and conditions
-of this Agreement.
+By installing and/or using using Whereabout ("Software") containing this software, you agree that this End User User License Agreement (EULA) is a legally binding and valid contract and agree to be bound by it. You agree to abide by the intellectual property laws and all of the terms and conditions of this Agreement.
 
 Your use of Whereabout indicates your acceptance of this license agreement and warranty.
 
@@ -69,9 +66,7 @@ Any failure to comply with the terms and conditions of this Agreement will resul
 
 4. DISCLAIMER OF WARRANTY
 
-THIS SOFTWARE AND THE ACCOMPANYING FILES ARE SOLD "AS IS" AND WITHOUT WARRANTIES AS
-TO PERFORMANCE OR MERCHANTABILITY OR ANY OTHER WARRANTIES WHETHER EXPRESSED OR
-IMPLIED. THIS DISCLAIMER CONCERNS ALL FILES GENERATED AND EDITED BY [APP NAME] AS WELL.
+THIS SOFTWARE AND THE ACCOMPANYING FILES ARE SOLD "AS IS" AND WITHOUT WARRANTIES AS TO PERFORMANCE OR MERCHANTABILITY OR ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED. THIS DISCLAIMER CONCERNS ALL FILES GENERATED AND EDITED BY [APP NAME] AS WELL.
 
 5. CONSENT OF USE OF DATA
 
