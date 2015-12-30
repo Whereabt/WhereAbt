@@ -25,7 +25,7 @@
 #import "ADAuthenticationViewController.h"
 #import "ADAuthenticationBroker.h"
 #import "ADAuthenticationSettings.h"
-#import "ADWorkplaceJoined.h"
+#import "ADNTLMHandler.h"
 
 NSString *const AD_FAILED_NO_CONTROLLER = @"The Application does not have a current ViewController";
 NSString *const AD_FAILED_NO_RESOURCES  = @"The required resource bundle could not be loaded. Please read the ADALiOS readme on how to build your application with ADAL provided authentication UI resources.";
@@ -39,11 +39,12 @@ NSString *const AD_IPHONE_STORYBOARD = @"ADAL_iPhone_Storyboard";
 // Implementation
 @implementation ADAuthenticationBroker
 {
+    UIViewController* parentController;
     ADAuthenticationViewController    *_authenticationViewController;
     ADAuthenticationWebViewController *_authenticationWebViewController;
     
+    BOOL                               _ntlmSession;
     NSLock                             *_completionLock;
-    BOOL                               _clientTLSSession;
     
     void (^_completionBlock)( ADAuthenticationError *, NSURL *);
 }
@@ -104,7 +105,7 @@ NSString *const AD_IPHONE_STORYBOARD = @"ADAL_iPhone_Storyboard";
     if ( self )
     {
         _completionLock = [[NSLock alloc] init];
-        _clientTLSSession = NO;
+        _ntlmSession = NO;
     }
     
     return self;
@@ -218,16 +219,23 @@ correlationId:(NSUUID *)correlationId
     THROW_ON_NIL_ARGUMENT(endURL);
     THROW_ON_NIL_ARGUMENT(correlationId);
     THROW_ON_NIL_ARGUMENT(completionBlock)
-    AD_LOG_VERBOSE(@"Authorization", startURL.absoluteString);
+    //AD_LOG_VERBOSE(@"Authorization", startURL.absoluteString);
     
     startURL = [self addToURL:startURL correlationId:correlationId];//Append the correlation id
     
     // Save the completion block
     _completionBlock = [completionBlock copy];
     ADAuthenticationError* error = nil;
-
+    
+    _ntlmSession = [ADNTLMHandler startWebViewNTLMHandlerWithError:nil];
+    if (_ntlmSession)
+    {
+        AD_LOG_INFO(@"Authorization UI", @"NTLM support enabled.");
+    }
+    
     if (webView)
     {
+        AD_LOG_INFO(@"Authorization UI", @"Use the application provided WebView.");
         // Use the application provided WebView
         _authenticationWebViewController = [[ADAuthenticationWebViewController alloc] initWithWebView:webView startAtURL:startURL endAtURL:endURL];
         
@@ -252,13 +260,10 @@ correlationId:(NSUUID *)correlationId
             // Must have a parent view controller to start the authentication view
             parent = [UIApplication adCurrentViewController];
         }
-        if ( parent )
+        
+        if (parent)
         {
-            _clientTLSSession = [ADWorkplaceJoined startWebViewTLSSessionWithError:nil];
-            if (_clientTLSSession)
-            {
-                AD_LOG_INFO(@"Authorization UI", @"The device is workplace joined. Client TLS Session started.");
-            }
+            parentController = parent;
             // Load our resource bundle, find the navigation controller for the authentication view, and then the authentication view
             UINavigationController *navigationController = [[self.class storyboard:&error] instantiateViewControllerWithIdentifier:@"LogonNavigator"];
             
@@ -323,10 +328,9 @@ correlationId:(NSUUID *)correlationId
     //       be resilient to this condition and should not generate
     //       two callbacks.
     [_completionLock lock];
-    
-    if (_clientTLSSession)
+    if (_ntlmSession)
     {
-        [ADWorkplaceJoined endWebViewTLSSession];
+        [ADNTLMHandler endWebViewNTLMHandler];
     }
     if ( _completionBlock )
     {
@@ -355,7 +359,7 @@ correlationId:(NSUUID *)correlationId
     if ( nil != _authenticationViewController)
     {
         // Dismiss the authentication view and dispatch the completion block
-        [[UIApplication adCurrentViewController] dismissViewControllerAnimated:YES completion:^{
+        [parentController dismissViewControllerAnimated:YES completion:^{
             [self dispatchCompletionBlock:error URL:nil];
         }];
     }
@@ -377,7 +381,7 @@ correlationId:(NSUUID *)correlationId
     if ( nil != _authenticationViewController)
     {
         // Dismiss the authentication view and dispatch the completion block
-        [[UIApplication adCurrentViewController] dismissViewControllerAnimated:YES completion:^{
+        [parentController dismissViewControllerAnimated:YES completion:^{
             [self dispatchCompletionBlock:nil URL:endURL];
         }];
     }
@@ -400,7 +404,7 @@ correlationId:(NSUUID *)correlationId
     if ( nil != _authenticationViewController)
     {
         // Dismiss the authentication view and dispatch the completion block
-        [[UIApplication adCurrentViewController] dismissViewControllerAnimated:YES completion:^{
+        [parentController dismissViewControllerAnimated:YES completion:^{
             [self dispatchCompletionBlock:adError URL:nil];
         }];
     }

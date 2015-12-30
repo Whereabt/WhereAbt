@@ -264,6 +264,7 @@ PhotosAccessViewController *photoVC;
 }
 
 - (IBAction)cameraButtonCalled:(id)sender {
+    /*
     if (([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] == YES)) {
         photoVC = [[PhotosAccessViewController alloc] init];
         [photoVC setSourceTypeToWantsCamera:YES];
@@ -273,6 +274,9 @@ PhotosAccessViewController *photoVC;
         UIAlertView *noCameraAlert = [[UIAlertView alloc]initWithTitle:@"Problem Occurred" message:@"It appears that your device doesn't have a camera." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [noCameraAlert show];
     }
+     */
+    
+    [self performSegueWithIdentifier:@"segueToImageCapture" sender:self];
 }
 
 - (void)closePhotoVCWithCompletion:(void (^)(void))completionBlock {

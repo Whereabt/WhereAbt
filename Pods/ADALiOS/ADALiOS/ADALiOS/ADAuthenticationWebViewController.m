@@ -21,6 +21,13 @@
 #import "ADAuthenticationSettings.h"
 #import "ADErrorCodes.h"
 #import "ADLogger.h"
+#import "ADPkeyAuthHelper.h"
+#import "ADWorkPlaceJoinUtil.h"
+#import "ADWorkPlaceJoin.h"
+#import "ADWorkPlaceJoinConstants.h"
+#import "NSDictionary+ADExtensions.h"
+#import "ADAuthenticationSettings.h"
+#import "ADNTLMHandler.h"
 
 @implementation ADAuthenticationWebViewController
 {
@@ -29,9 +36,11 @@
     NSURL    *_startURL;
     NSString *_endURL;
     BOOL      _complete;
+    float _timeout;
 }
 
 #pragma mark - Initialization
+NSTimer *timer;
 
 - (id)initWithWebView:(UIWebView *)webView startAtURL:(NSURL *)startURL endAtURL:(NSURL *)endURL
 {
@@ -44,12 +53,12 @@
     if ( ( self = [super init] ) != nil )
     {
         _startURL  = [startURL copy];
-        _endURL    = [[endURL absoluteString] lowercaseString];
-        
+        _endURL    = [endURL absoluteString];
         _complete  = NO;
-        
+        _timeout = [[ADAuthenticationSettings sharedInstance] requestTimeOut];
         _webView          = webView;
         _webView.delegate = self;
+        [ADNTLMHandler setCancellationUrl:[_startURL absoluteString]];
     }
     
     return self;
@@ -69,12 +78,36 @@
 
 - (void)start
 {
-    [_webView loadRequest:[NSURLRequest requestWithURL:_startURL]];
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:_startURL];
+    [_webView loadRequest:request];
 }
 
 - (void)stop
 {
 }
+
+- (void) handlePKeyAuthChallenge:(NSString *)challengeUrl
+{
+    
+    AD_LOG_VERBOSE(@"Handling PKeyAuth Challenge", nil);
+
+    NSArray * parts = [challengeUrl componentsSeparatedByString:@"?"];
+    NSString *qp = [parts objectAtIndex:1];
+    NSDictionary* queryParamsMap = [NSDictionary adURLFormDecode:qp];
+    NSString* value = [queryParamsMap valueForKey:@"SubmitUrl"];
+    
+    NSArray * authorityParts = [value componentsSeparatedByString:@"?"];
+    NSString *authority = [authorityParts objectAtIndex:0];
+    
+    NSMutableURLRequest* responseUrl = [[NSMutableURLRequest alloc] initWithURL: [NSURL URLWithString: value]];
+    
+    NSString* authHeader = [ADPkeyAuthHelper createDeviceAuthResponse:authority challengeData:queryParamsMap challengeType:AD_ISSUER];
+    
+    [responseUrl setValue:pKeyAuthHeaderVersion forHTTPHeaderField: pKeyAuthHeader];
+    [responseUrl setValue:authHeader forHTTPHeaderField:@"Authorization"];
+    [_webView loadRequest:responseUrl];
+}
+
 
 #pragma mark - UIWebViewDelegate Protocol
 
@@ -83,13 +116,32 @@
 #pragma unused(webView)
 #pragma unused(navigationType)
     
-    //DebugLog( @"URL: %@", request.URL.absoluteString );
+    if([ADNTLMHandler isChallengeCancelled]){
+        _complete = YES;
+        dispatch_async( dispatch_get_main_queue(), ^{[_delegate webAuthenticationDidCancel];});
+        return NO;
+    }
     
-    // TODO: We lowercase both URLs, is this the right thing to do?
-    NSString *requestURL = [[request.URL absoluteString] lowercaseString];
+    NSString *requestURL = [request.URL absoluteString];
+    if ([[[request.URL scheme] lowercaseString] isEqualToString:@"browser"]) {
+        _complete = YES;
+        dispatch_async( dispatch_get_main_queue(), ^{[_delegate webAuthenticationDidCancel];});
+        
+        requestURL = [requestURL stringByReplacingOccurrencesOfString:@"browser://" withString:@"https://"];
+        [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:requestURL]];
+        
+        return NO;
+    }
+    
+    // check for pkeyauth challenge.
+    if ([requestURL hasPrefix: pKeyAuthUrn] )
+    {
+        [self handlePKeyAuthChallenge: requestURL];
+        return NO;
+    }
     
     // Stop at the end URL.
-    if ( [requestURL hasPrefix:_endURL] )
+    if ( [[requestURL lowercaseString] hasPrefix:[_endURL lowercaseString]] )
     {
         // iOS generates a 102, Frame load interrupted error from stopLoading, so we set a flag
         // here to note that it was this code that halted the frame load in order that we can ignore
@@ -99,6 +151,7 @@
         // Schedule the finish event; we do this so that the web view gets a chance to stop
         // This event is explicitly scheduled on the main thread as it is UI related.
         NSAssert( nil != _delegate, @"Delegate object was lost" );
+        
         dispatch_async( dispatch_get_main_queue(), ^{ [_delegate webAuthenticationDidCompleteWithURL:request.URL]; } );
         
         // Tell the web view that this URL should not be loaded.
@@ -110,17 +163,28 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    if (timer != nil){
+        [timer invalidate];
+    }
 #pragma unused(webView)
+    timer = [NSTimer scheduledTimerWithTimeInterval:_timeout target:self selector:@selector(failWithTimeout) userInfo:nil repeats:NO];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
 #pragma unused(webView)
+    [timer invalidate];
+    timer = nil;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
 #pragma unused(webView)
+    if(timer && [timer isValid]){
+        [timer invalidate];
+        timer = nil;
+    }
+    
     if (NSURLErrorCancelled == error.code)
     {
         //This is a common error that webview generates and could be ignored.
@@ -128,6 +192,10 @@
         return;
     }
 
+    if([error.domain isEqual:@"WebKitErrorDomain"]){
+        return;
+    }
+    
     // Ignore failures that are triggered after we have found the end URL
     if ( _complete == YES )
     {
@@ -140,12 +208,24 @@
     if (_delegate)
     {
         AD_LOG_ERROR(@"authorization error", error.code, [error localizedDescription]);
-        dispatch_async( dispatch_get_main_queue(), ^{ [_delegate webAuthenticationDidFailWithError:error]; } );
+        if([ADNTLMHandler isChallengeCancelled]){
+            dispatch_async( dispatch_get_main_queue(), ^{ [_delegate webAuthenticationDidCancel]; } );
+        } else{
+            dispatch_async( dispatch_get_main_queue(), ^{ [_delegate webAuthenticationDidFailWithError:error]; } );
+        }
     }
     else
     {
         AD_LOG_ERROR(@"Delegate object is lost", AD_ERROR_APPLICATION, @"The delegate object was lost, potentially due to another concurrent request.");
     }
+}
+
+- (void) failWithTimeout{
+    
+    AD_LOG_ERROR(@"Request load timeout", NSURLErrorTimedOut, nil);
+    [self webView:_webView didFailLoadWithError:[NSError errorWithDomain:NSURLErrorDomain
+                                                                    code:NSURLErrorTimedOut
+                                                                userInfo:nil]];
 }
 
 @end

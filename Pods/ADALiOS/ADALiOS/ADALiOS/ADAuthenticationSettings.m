@@ -17,7 +17,6 @@
 // governing permissions and limitations under the License.
 #import "ADAuthenticationSettings.h"
 #import "ADKeychainTokenCacheStore.h"
-#import "ADWorkplaceJoined.h"
 
 @implementation ADAuthenticationSettings
 
@@ -32,7 +31,7 @@
     {
         //Initialize the defaults here:
         self.credentialsType = AD_CREDENTIALS_AUTO;
-        self.requestTimeOut = 30;//in seconds.
+        self.requestTimeOut = 300;//in seconds.
         self.expirationBuffer = 300;//in seconds, ensures catching of clock differences between the server and the device
         self.enableFullScreen = YES;
         
@@ -41,7 +40,6 @@
         //exists. Hence for now, we create the connection on the main thread by default:
         self.dispatchQueue = dispatch_get_main_queue();
         self.defaultTokenCacheStore = [ADKeychainTokenCacheStore new];
-        self.clientTLSKeychainGroup = nil;
     }
     return self;
 }

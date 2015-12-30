@@ -1,29 +1,32 @@
 PODS:
-  - ADALiOS (1.0.2)
-  - OneDriveSDK (1.0.4):
-    - OneDriveSDK/Auth (= 1.0.4)
-    - OneDriveSDK/Common (= 1.0.4)
-    - OneDriveSDK/Extensions (= 1.0.4)
-    - OneDriveSDK/Implementations (= 1.0.4)
-    - OneDriveSDK/OneDriveCoreSDK (= 1.0.4)
-  - OneDriveSDK/Auth (1.0.4):
-    - ADALiOS (~> 1.0.2)
+  - ADALiOS (1.2.4)
+  - GPUImage (0.1.7)
+  - OneDriveSDK (1.1.2):
+    - OneDriveSDK/Auth (= 1.1.2)
+    - OneDriveSDK/Common (= 1.1.2)
+    - OneDriveSDK/Extensions (= 1.1.2)
+    - OneDriveSDK/Implementations (= 1.1.2)
+    - OneDriveSDK/OneDriveCoreSDK (= 1.1.2)
+  - OneDriveSDK/Auth (1.1.2):
+    - ADALiOS (~> 1.2.4)
     - OneDriveSDK/Common
-  - OneDriveSDK/Common (1.0.4)
-  - OneDriveSDK/Extensions (1.0.4):
+  - OneDriveSDK/Common (1.1.2)
+  - OneDriveSDK/Extensions (1.1.2):
     - OneDriveSDK/Auth
     - OneDriveSDK/Implementations
     - OneDriveSDK/OneDriveCoreSDK
-  - OneDriveSDK/Implementations (1.0.4):
+  - OneDriveSDK/Implementations (1.1.2):
     - OneDriveSDK/Common
-  - OneDriveSDK/OneDriveCoreSDK (1.0.4):
+  - OneDriveSDK/OneDriveCoreSDK (1.1.2):
     - OneDriveSDK/Common
 
 DEPENDENCIES:
+  - GPUImage
   - OneDriveSDK
 
 SPEC CHECKSUMS:
-  ADALiOS: 3d07f75bb12c6ceb6a8240b19e691c03ace8aed6
-  OneDriveSDK: b284c17b0efa0b31b7be06d334b15480f732b421
+  ADALiOS: 8179aed8e136bf79dca5a4138a0c1a0d52701cb2
+  GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
+  OneDriveSDK: 2ba8787756deef12e787ee5dae6cb60e9dc7a6a9
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

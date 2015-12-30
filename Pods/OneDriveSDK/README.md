@@ -1,4 +1,4 @@
-# OneDrive iOS SDK
+# Get started with the OneDrive SDK for iOS
 
 [![Build Status](https://travis-ci.org/OneDrive/onedrive-sdk-ios.svg?branch=master)](https://travis-ci.org/OneDrive/onedrive-sdk-ios)
 
@@ -14,66 +14,6 @@ Integrate the [OneDrive API](https://dev.onedrive.com/README.htm) into your iOS 
 
 ## 2. Getting started
 
-#### Note: iOS 9 App Transport Security (ATS)
-
-If you are targeting iOS 9 with XCode 7, you need to temporarily enable PFS exceptions for the following domains:
-
-* login.live.com
-* login.microsoftonline.com
-* login.windows.net
-* secure.aadcdn.microsoftonline-p.com
-
-To do this, add the following to your Info.plist :
-
-```
-<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>login.windows.net</key>
-			<dict/>
-			<key>NSIncludeSubdomains</key>
-			<true/>
-			<key>NSExceptionRequiresForwardSecrecy</key>
-			<false/>
-			<key>secure.aadcdn.microsoftonline-p.com</key>
-			<dict>
-				<key>NSIncludeSubmdomains</key>
-				<true/>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
-			</dict>
-			<key>login.microsoftonline.com</key>
-			<dict>
-				<key>NSIncludeSubmdomains</key>
-				<true/>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
-			</dict>
-			<key>login.live.com</key>
-			<dict>
-				<key>NSIncludeSubmdomains</key>
-				<true/>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
-			</dict>
-		</dict>
-	</dict>
-```
-You can also see [OneDriveAPIExplorer](Examples/iOSExplorer) for an example.
-
-These domains enable MSA and standard AAD authentication. It's possible that an AAD domain has a multifactor auth flow or ADFS integration would send you to another domain. If you're targeting a customer set, you'll need to add exceptions for those domains to your app or disable ATS all together. To disable ATFS entirely add the following to your Info.plist:
-
-**Warning** This it not the recommended approach and is only necessary if you wish to target all tenants that do not use standard AAD authentication and do not support Transport Layer Security v1.2.
-
-```
-<key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowArbitraryLoads</key>
-        <true/>
-    </dict>
-```
-
 ### 2.1 Register your application
 
 Register your application by following [these](https://dev.onedrive.com/app-registration.htm) steps.
@@ -82,7 +22,9 @@ Register your application by following [these](https://dev.onedrive.com/app-regi
 
 * You can set your application Id and scopes directly on the ODClient object. 
 
-* Call the class method `[ODClient setMicrosoftAccountAppId:<applicationId> scopes:<scopes>]` with a specified <applicationId> and <scopes>. For more info about scopes, see [Authentication scopes](https://dev.onedrive.com/auth/msa_oauth.htm#authentication-scopes).
+* For applications targeting OneDrive call the class method `[ODClient setMicrosoftAccountAppId:<applicationId> scopes:<scopes>]` with a specified `<applicationId>` and `<scopes>`. For more info about scopes, see [Authentication scopes](https://dev.onedrive.com/auth/msa_oauth.htm#authentication-scopes).
+
+* For applications targeting OneDrive for Business call the class method `[ODClient setActiveDirectoryAppId:<applicationId> redirectURL:<redirectURL>]`  with specified `<applicationId>` and `<redirectURL>`.  Note: the redirect URL must match the redirect URL that you specified in the [Azure Management Portal](https://manage.windowsazure.com/).
 
 ### 2.3 Getting an authenticated ODClient object
 
@@ -94,7 +36,7 @@ Register your application by following [these](https://dev.onedrive.com/app-regi
 * Get an authenticated ODClient via the clientWithCompletion method:
 
 ```objc
-ODClient *odClient = [ODClient clientWithCompletion:^(ODClient *client, NSError *error){
+[ODClient clientWithCompletion:^(ODClient *client, NSError *error){
     if (!error){
         self.odClient = client;
     }

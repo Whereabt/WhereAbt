@@ -18,6 +18,7 @@
 #import "ADALiOS.h"
 #import "ADKeyChainHelper.h"
 #import "ADKeyChainHelper.h"
+#import "ADWorkPlaceJoinUtil.h"
 
 extern NSString* const sKeyChainlog;
 
@@ -47,8 +48,9 @@ extern NSString* const sKeyChainlog;
     mValueDataKey = (__bridge id)kSecValueData;
     _classValue = classValue;
     _genericValue = generic;
-    _sharedGroup = sharedGroup;
-    
+    if(sharedGroup){
+        _sharedGroup = [NSString stringWithFormat:@"%@.%@", [[ADWorkPlaceJoinUtil WorkPlaceJoinUtilManager]  getApplicationIdentifierPrefix], sharedGroup];
+    }
     return self;
 }
 
@@ -212,7 +214,7 @@ extern NSString* const sKeyChainlog;
     [updatedAttributes addEntriesFromDictionary:
      @{
         (__bridge id)kSecAttrIsInvisible:(__bridge id)kCFBooleanTrue, // do not show in the keychain UI
-        (__bridge id)kSecAttrAccessible:(__bridge id)kSecAttrAccessibleWhenUnlockedThisDeviceOnly, // do not roam or migrate to other devices
+        (__bridge id)kSecAttrAccessible:(__bridge id)kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly, // do not roam or migrate to other devices
         mValueDataKey:value,//Item data
     }];
     

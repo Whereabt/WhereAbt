@@ -41,7 +41,7 @@ static byte rgbDecodeTable[128] = {                         // character code
 };
 
 //Checks that all bytes inside the format are valid base64 characters:
-BOOL validBase64Characters(const byte* data, const int size)
+BOOL validBase64Characters(const byte* data, const int size)    
 {
     for (int i = 0; i < size; ++i)
     {
@@ -69,7 +69,7 @@ BOOL validBase64Characters(const byte* data, const int size)
         return nil;
     }
     
-    NSData      *encodedBytes = [encodedString dataUsingEncoding:NSASCIIStringEncoding];
+    NSData      *encodedBytes = [encodedString dataUsingEncoding:NSUTF8StringEncoding];
     const byte  *pbEncoded    = [encodedBytes bytes];
     const int    cbEncoded    = (int)[encodedBytes length];
     if (!validBase64Characters(pbEncoded, cbEncoded))
@@ -105,6 +105,10 @@ BOOL validBase64Characters(const byte* data, const int size)
     cbDecodedSize -= virtualPadding;
     
     byte *pbDecoded = (byte *)calloc( cbDecodedSize, sizeof(byte) );
+    
+    if(!pbDecoded) {
+        return nil;
+    }
     
     // Decode each four-byte cluster into the corresponding three data bytes,
     // allowing for the fact that the last cluster may be less than four bytes
@@ -191,6 +195,10 @@ static inline void Encode3bytesTo4bytes(char* output, int b0, int b1, int b2)
     int   encodedSize = 1 + ( cbBytes + 2 ) / 3 * 4;
     char *pbEncoded = (char *)calloc( encodedSize, sizeof(char) );
     
+    if(!pbEncoded){
+        return nil;
+    }
+    
     // Encode data byte triplets into four-byte clusters.
     int   iBytes;      // raw byte index
     int   iEncoded;    // encoded byte index
@@ -241,7 +249,7 @@ static inline void Encode3bytesTo4bytes(char* output, int b0, int b1, int b2)
     // Null terminate, convert to NSString and free the buffer
     pbEncoded[iEncoded++] = '\0';
     
-    NSString *result = [NSString stringWithCString:pbEncoded encoding:NSASCIIStringEncoding];
+    NSString *result = [NSString stringWithCString:pbEncoded encoding:NSUTF8StringEncoding];
     
     free(pbEncoded);
     
@@ -251,7 +259,7 @@ static inline void Encode3bytesTo4bytes(char* output, int b0, int b1, int b2)
 // Base64 URL encodes a string
 - (NSString *) adBase64UrlEncode
 {
-    NSData *decodedData = [self dataUsingEncoding:NSASCIIStringEncoding];
+    NSData *decodedData = [self dataUsingEncoding:NSUTF8StringEncoding];
     
     return [self.class Base64EncodeData:decodedData];
 }

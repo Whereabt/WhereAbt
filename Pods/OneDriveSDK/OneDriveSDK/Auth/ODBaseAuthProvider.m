@@ -47,10 +47,12 @@
 
 - (void) authenticateWithViewController:(UIViewController *)viewController completion:(void (^)(NSError *error))completionHandler;
 {
-    // if the view controller is an ODAuthenticationViewController we just want to redirect to a new URL
+    // Get the view controller on the top of the stack
+    UIViewController *presentingViewController = [[viewController childViewControllers] firstObject];
+    // if the view controller's child is an ODAuthenticationViewController we just want to redirect to a new URL
     // not push another view controller
-    if ([viewController respondsToSelector:@selector(redirectWithStartURL:endURL:success:)]){
-        __block ODAuthenticationViewController *authViewController = (ODAuthenticationViewController *)viewController;
+    if (presentingViewController && [presentingViewController respondsToSelector:@selector(redirectWithStartURL:endURL:success:)]){
+        __block ODAuthenticationViewController *authViewController = (ODAuthenticationViewController *)presentingViewController;
         NSURL *authURL = [self authURL];
         [self.logger logWithLevel:ODLogDebug message:@"Authentication URL : %@", authURL];
         [authViewController redirectWithStartURL:authURL
@@ -58,37 +60,43 @@
                                           success:^(NSURL *endURL, NSError *error){
                                               [self authorizationFlowCompletedWithURL:endURL
                                                                                 error:error
-                                                             presentingViewControlelr:authViewController
+                                                             presentingViewController:presentingViewController
                                                                            completion:completionHandler];
                                           }];
     }
     else {
         __block ODAuthenticationViewController *authViewController =
         [[ODAuthenticationViewController alloc] initWithStartURL:[self authURL]
-                                                        endURL:[NSURL URLWithString:self.serviceInfo.redirectURL]
-                                                       success:^(NSURL *endURL, NSError *error){
-                                                           [self authorizationFlowCompletedWithURL:endURL
-                                                                                error:error
-                                                             presentingViewControlelr:authViewController
-                                                                           completion:completionHandler];
+                                                          endURL:[NSURL URLWithString:self.serviceInfo.redirectURL]
+                                                         success:^(NSURL *endURL, NSError *error){
+                                                             [self authorizationFlowCompletedWithURL:endURL
+                                                                                               error:error
+                                                                            presentingViewController:authViewController
+                                                                                          completion:completionHandler];
                                                            
                                                        }];
         dispatch_async(dispatch_get_main_queue(), ^{
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:authViewController];
-            UIViewController *parentViewController = viewController;
-            [parentViewController presentViewController:navController animated:YES completion:nil];
+            navController.modalPresentationStyle = viewController.modalPresentationStyle;
+            UIViewController *viewControllerToPresentOn = viewController;
+            while (viewControllerToPresentOn.presentedViewController) {
+                viewControllerToPresentOn = viewControllerToPresentOn.presentedViewController;
+            }
+            [viewControllerToPresentOn presentViewController:navController animated:YES  completion:^{
+                [authViewController loadInitialRequest];
+            }];
         });
     }
 }
 
 - (void)authorizationFlowCompletedWithURL:(NSURL *)endURL
                                     error:(NSError *)error
-                 presentingViewControlelr:(UIViewController *)presentingViewController
-                              completion:(AuthCompletion)completionHandler
+                 presentingViewController:(UIViewController *)presentingViewController
+                               completion:(AuthCompletion)completionHandler
 {
     // Always remove the auth view when we finished loading.
     dispatch_async(dispatch_get_main_queue(), ^{
-            [presentingViewController dismissViewControllerAnimated:YES completion:nil];
+        [presentingViewController dismissViewControllerAnimated:NO completion:nil];
     });
     
     if (!error){
@@ -140,6 +148,8 @@
     NSParameterAssert(completionHandler);
     NSParameterAssert(request);
     
+    NSString *telemtryValue = [NSString stringWithFormat:OD_TELEMTRY_HEADER_VALUE_FORMAT, OD_SDK_VERSION];
+    [request setValue:telemtryValue forHTTPHeaderField:self.telemtryHeaderField];
     if([ODAuthHelper shouldRefreshSession:self.accountSession]){
         [self.logger logWithLevel:ODLogDebug message:@"Refreshing session %@", self.accountSession.accountId];
         [self refreshAndStoreAccountSession:self.accountSession withCompletion:^(NSError *error){
@@ -208,7 +218,6 @@
         }
     }] resume];
 }
-
 
 - (NSError *)errorFromURL:(NSURL *)url
 {

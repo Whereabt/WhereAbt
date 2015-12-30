@@ -20,13 +20,15 @@
 #import "ADOAuth2Constants.h"
 #import "NSURL+ADExtensions.h"
 #import "ADErrorCodes.h"
-
+#import "NSString+ADHelperMethods.h"
 #import "ADWebRequest.h"
 #import "ADWebResponse.h"
-#import "ADWorkplaceJoined.h"
+#import "ADAuthenticationSettings.h"
 
 NSString *const HTTPGet  = @"GET";
 NSString *const HTTPPost = @"POST";
+
+static NSOperationQueue *s_queue;
 
 @interface ADWebRequest () <NSURLConnectionDelegate>
 
@@ -39,14 +41,20 @@ NSString *const HTTPPost = @"POST";
 @implementation ADWebRequest
 {
     NSURLConnection     *_connection;
-
+    
     NSData              *_requestData;
     
     NSHTTPURLResponse   *_response;
     NSMutableData       *_responseData;
     NSUUID              *_correlationId;
-
+    
     void (^_completionHandler)( NSError *, ADWebResponse *);
+}
+
++ (void)initialize
+{
+    s_queue = [[NSOperationQueue alloc] init];
+    
 }
 
 #pragma mark - Properties
@@ -82,7 +90,7 @@ NSString *const HTTPPost = @"POST";
     THROW_ON_CONDITION_ARGUMENT(![self verifyRequestURL:requestURL], requestURL);//Should have been checked by the caller
     
     self = [super init];
-
+    
     if ( nil != self )
     {
         _connection     = nil;
@@ -95,8 +103,8 @@ NSString *const HTTPPost = @"POST";
         _response          = nil;
         _responseData      = nil;
         
-        // Default timeout for ADWebRequest is 30 seconds 
-        _timeout           = 30;
+        // Default timeout for ADWebRequest is 30 seconds
+        _timeout           = [[ADAuthenticationSettings sharedInstance] requestTimeOut];
         
         _completionHandler = nil;
         _correlationId     = correlationId;
@@ -156,14 +164,15 @@ NSString *const HTTPPost = @"POST";
     }
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:_requestURL
-                                                                cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                                cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                             timeoutInterval:_timeout];
-    
     request.HTTPMethod          = _requestMethod;
     request.allHTTPHeaderFields = _requestHeaders;
     request.HTTPBody            = _requestData;
     
-    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    _connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
+    [_connection setDelegateQueue:s_queue];
+    [_connection start];
 }
 
 - (BOOL)verifyRequestURL:(NSURL *)requestURL
@@ -188,12 +197,8 @@ NSString *const HTTPPost = @"POST";
 - (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
 #pragma unused(connection)
-
-    if (![ADWorkplaceJoined handleClientTLSChallenge:challenge])
-    {
-        // Do default handling
-        [challenge.sender performDefaultHandlingForAuthenticationChallenge:challenge];
-    }
+    // Do default handling
+    [challenge.sender performDefaultHandlingForAuthenticationChallenge:challenge];
 }
 
 // Connection Completion
@@ -246,7 +251,7 @@ NSString *const HTTPPost = @"POST";
     //       dependent on the the challenge processing that the application performs.
     //
     NSAssert( _response != nil, @"No HTTP Response available" );
-
+    
     [self completeWithError:nil andResponse:[[ADWebResponse alloc] initWithResponse:_response data:_responseData]];
 }
 
@@ -259,7 +264,5 @@ NSString *const HTTPPost = @"POST";
 #pragma unused(totalBytesExpectedToWrite)
     
 }
-
-//– connection:needNewBodyStream
 
 @end

@@ -19,6 +19,8 @@
 #import <CoreLocation/CoreLocation.h>
 #include <math.h>
 #import <OneDriveSDK/OneDriveSDK.h>
+#import "GPUImage.h"
+
 
 //static NSString *const fakeFileName = @"Fake2.jpg";
 
@@ -144,6 +146,7 @@ UIImagePickerController *imagePicker;
 - (void)setSourceTypeToWantsCamera:(BOOL) wantsCameraBool {
     self.wantsCamera = wantsCameraBool;
 }
+
 
 - (void)createShareLinkForODFileWithPath:(NSString *) ODfilePath andCompletion: (void (^)(NSError *Error))theCallback {
     

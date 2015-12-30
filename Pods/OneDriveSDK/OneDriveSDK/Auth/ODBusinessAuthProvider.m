@@ -28,6 +28,7 @@
 #import "ODAuthConstants.h"
 #import "ODAccountSession.h"
 #import "ODAADAccountBridge.h"
+#import "ODAuthenticationViewController.h"
 
 @interface ODBusinessAuthProvider(){
     @private
@@ -41,6 +42,16 @@
 - (void) authenticateWithViewController:(UIViewController*)viewController completion:(void (^)(NSError *error))completionHandler
 {
     self.authContext.parentController = viewController;
+    // If the disambiguation page is still being displayed remove it from the view
+    if (self.authContext.parentController){
+        UIViewController *childViewController = [[viewController childViewControllers] firstObject];
+        if (childViewController && [childViewController respondsToSelector:@selector(redirectWithStartURL:endURL:success:)]){
+            self.authContext.parentController = viewController.presentingViewController;
+           dispatch_async(dispatch_get_main_queue(), ^{
+               [childViewController dismissViewControllerAnimated:NO completion:nil];
+           });
+       }
+    }
     [self.authContext acquireTokenWithResource:self.serviceInfo.resourceId
                                       clientId:self.serviceInfo.appId
                                    redirectUri:[NSURL URLWithString:self.serviceInfo.redirectURL]
@@ -52,15 +63,25 @@
                                   // If the resourceId being used is for the discovery service
                                   if ([self.serviceInfo.discoveryServiceURL containsString:self.serviceInfo.resourceId]){
                                       // Find the resourceIds needed
-                                      [self discoverResourceWithAuthResult:result completion:^(NSString *resourceIds, NSError *error){
+                                      [self discoverResourceWithAuthResult:result completion:^(ODServiceInfo *serviceInfo, NSError *error){
                                           //Refresh the token with the correct resource Ids
-                                          if (result.tokenCacheStoreItem.refreshToken){
-                                              [self.authContext acquireTokenByRefreshToken:result.tokenCacheStoreItem.refreshToken clientId:self.serviceInfo.appId resource:resourceIds completionBlock:^(ADAuthenticationResult *innerResult){
+                                          if (!error){
+                                              self.serviceInfo = serviceInfo;
+                                          }
+                                          if (!self.serviceInfo.apiEndpoint){
+                                              NSError *apiEndpointError = [NSError errorWithDomain:OD_AUTH_ERROR_DOMAIN
+                                                                                              code:ODServiceError
+                                                                                          userInfo:@{
+                                                                                                     NSLocalizedDescriptionKey : @"There was a problem logging you in",
+                                                                                                     OD_AUTH_ERROR_KEY : @"Could not discover the api endpoint for the given user.  Make sure you have correctly enabled the SharePoint files permissions in Azure portal."
+                                                                                                    }];
+                                              completionHandler(apiEndpointError);
+                                          }
+                                          else if (result.tokenCacheStoreItem.refreshToken){
+                                              [self.authContext acquireTokenByRefreshToken:result.tokenCacheStoreItem.refreshToken clientId:self.serviceInfo.appId resource:self.serviceInfo.resourceId completionBlock:^(ADAuthenticationResult *innerResult){
                                                   if (innerResult.status == AD_SUCCEEDED) {
                                                       innerResult.tokenCacheStoreItem.userInformation = result.tokenCacheStoreItem.userInformation;
                                                       
-                                                      // the refresh response doesn't contain the user information so we must set it from the previous response
-                                                      self.serviceInfo.resourceId = resourceIds;
                                                       [self setAccountSessionWithAuthResult:innerResult];
                                                       completionHandler(nil);
                                                   }
@@ -70,12 +91,12 @@
                                               }];
                                           }
                                           else {
-                                              NSError *error = [NSError errorWithDomain:OD_AUTH_ERROR_DOMAIN
-                                                                                   code:ODServiceError
-                                                                               userInfo:@{
-                                                                                          NSLocalizedDescriptionKey : @"There was a problem logging you in",
-                                                                                          OD_AUTH_ERROR_KEY : @" The auth result must have a refresh token" }];
-                                              completionHandler(error);
+                                              NSError *noRefreshTokenError = [NSError errorWithDomain:OD_AUTH_ERROR_DOMAIN
+                                                                                                 code:ODServiceError
+                                                                                             userInfo:@{
+                                                                                                        NSLocalizedDescriptionKey : @"There was a problem logging you in",
+                                                                                                        OD_AUTH_ERROR_KEY : @" The auth result must have a refresh token" }];
+                                              completionHandler(noRefreshTokenError);
                                           }
                                       }];
                                   }
@@ -98,19 +119,17 @@
     }
 }
 
--(void)discoverResourceWithAuthResult:(ADAuthenticationResult *)result completion:(void (^)(NSString *, NSError *))completion
+-(void)discoverResourceWithAuthResult:(ADAuthenticationResult *)result completion:(void (^)(ODServiceInfo *, NSError *))completion
 {
     NSMutableURLRequest *discoveryRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.serviceInfo.discoveryServiceURL]];
     [ODAuthHelper appendAuthHeaders:discoveryRequest token:result.accessToken];
     [[self.httpProvider dataTaskWithRequest:discoveryRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
        if (!error){
            NSDictionary *responseObject = [ODAuthHelper sessionDictionaryWithResponse:response data:data error:&error];
-           NSString *resourceIds = nil;
            if (responseObject){
-               NSSet *capabilitySet = [self capabilitySetWithScopes:self.serviceInfo.scopes];
-               resourceIds = [self resourceIdsWithCapabilities:capabilitySet discoveryResponse:responseObject];
+               [self setServiceInfo:self.serviceInfo withCapability:self.serviceInfo.capability discoveryResponse:responseObject];
            }
-           completion(resourceIds, error);
+           completion(self.serviceInfo, error);
         }
        else{
            completion(nil, error);
@@ -118,38 +137,15 @@
     }] resume];
 }
 
-- (NSString *)resourceIdsWithCapabilities:(NSSet *)capabilities discoveryResponse:(NSDictionary *)discoveryResponse
+- (void)setServiceInfo:(ODServiceInfo *)serviceInfo withCapability:(NSString *)capability discoveryResponse:(NSDictionary *)discoveryResponse
 {
-    __block NSMutableArray *resourceIds = [NSMutableArray array];
     NSArray *values = discoveryResponse[@"value"];
     [values enumerateObjectsUsingBlock:^(NSDictionary *serviceResponse, NSUInteger index, BOOL *stop){
-        if ([capabilities containsObject:serviceResponse[@"capability"]]){
-            NSString *serviceResourceId = serviceResponse[@"serviceResourceId"];
-            if (![resourceIds containsObject:serviceResourceId]){
-                [resourceIds addObject:serviceResourceId];
-            }
+        if ([serviceResponse[@"capability"] isEqualToString:capability]){
+            serviceInfo.resourceId = serviceResponse[@"serviceResourceId"];
+            serviceInfo.apiEndpoint = serviceResponse[@"serviceEndpointUri"];
         }
     }];
-    return [resourceIds componentsJoinedByString:@" "];
-}
-
-- (NSSet *)capabilitySetWithScopes:(NSArray *)scopes
-{
-    __block NSMutableSet *scopesSet = [NSMutableSet set];
-    [self.serviceInfo.scopes enumerateObjectsUsingBlock:^(NSString *scope, NSUInteger index, BOOL *stop){
-        // trim off the end part of the scopes if it exists
-        // i.e. if the scope is MyFiles.readwrite we just want MyFiles
-        NSRange prefixRange = [scope rangeOfString:@"."];
-        NSString *capability = nil;
-        if (prefixRange.location){
-            capability = [scope substringToIndex:prefixRange.location];
-        }
-        else {
-            capability = scope;
-        }
-        [scopesSet addObject:capability];
-    }];
-    return scopesSet;
 }
 
 - (void)refreshSession:(ODAccountSession *)session withCompletion:(void (^)(ODAccountSession *updatedSession, NSError *error))completionHandler
@@ -168,6 +164,11 @@
                                          completionHandler(nil, authResult.error);
                                      }
     }];
+}
+
+- (NSString*)telemtryHeaderField
+{
+    return [OD_AAD_TELEMTRY_HEADER copy];
 }
 
 - (ADAuthenticationContext *)authContext

@@ -19,7 +19,7 @@
 #import "ADALiOS.h"
 #import "ADURLProtocol.h"
 #import "ADLogger.h"
-#import "ADWorkplaceJoined.h"
+#import "ADNTLMHandler.h"
 
 NSString* const sLog = @"HTTP Protocol";
 
@@ -40,20 +40,20 @@ NSString* const sLog = @"HTTP Protocol";
         //for initialization
         if ( [NSURLProtocol propertyForKey:@"ADURLProtocol" inRequest:request] == nil )
         {
-            AD_LOG_VERBOSE_F(sLog, @"Requested handling of URL: %@", [request.URL absoluteString]);
+            AD_LOG_VERBOSE_F(sLog, @"Requested handling of URL host: %@", [request.URL host]);
 
             return YES;
         }
     }
     
-    AD_LOG_VERBOSE_F(sLog, @"Ignoring handling of URL: %@", [request.URL absoluteString]);
+    AD_LOG_VERBOSE_F(sLog, @"Ignoring handling of URL host: %@", [request.URL host]);
     
     return NO;
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
 {
-    AD_LOG_VERBOSE_F(sLog, @"canonicalRequestForRequest: %@", [request.URL absoluteString] );
+    AD_LOG_VERBOSE_F(sLog, @"canonicalRequestForRequest host: %@", [request.URL host] );
     
     return request;
 }
@@ -66,12 +66,9 @@ NSString* const sLog = @"HTTP Protocol";
         return;
     }
     
-    AD_LOG_VERBOSE_F(sLog, @"startLoading: %@", [self.request.URL absoluteString] );
-    
+    AD_LOG_VERBOSE_F(sLog, @"startLoading host: %@", [self.request.URL host] );
     NSMutableURLRequest *mutableRequest = [self.request mutableCopy];
-
     [NSURLProtocol setProperty:@"YES" forKey:@"ADURLProtocol" inRequest:mutableRequest];
-    
     _connection = [[NSURLConnection alloc] initWithRequest:mutableRequest
                                                   delegate:self
                                           startImmediately:YES];
@@ -84,16 +81,11 @@ NSString* const sLog = @"HTTP Protocol";
     [self.client URLProtocol:self didFailWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
 }
 
-#pragma mark - Private Methods
-
-
-
 #pragma mark - NSURLConnectionDelegate Methods
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     AD_LOG_VERBOSE_F(sLog, @"connection:didFaileWithError: %@", error);
-    
     [self.client URLProtocol:self didFailWithError:error];
 }
 
@@ -101,8 +93,8 @@ NSString* const sLog = @"HTTP Protocol";
 willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     AD_LOG_VERBOSE_F(sLog, @"connection:willSendRequestForAuthenticationChallenge: %@. Previous challenge failure count: %ld", challenge.protectionSpace.authenticationMethod, (long)challenge.previousFailureCount);
-
-    if (![ADWorkplaceJoined handleClientTLSChallenge:challenge])
+    
+    if (![ADNTLMHandler handleNTLMChallenge:challenge urlRequest:[connection currentRequest] customProtocol:self])
     {
         // Do default handling
         [challenge.sender performDefaultHandlingForAuthenticationChallenge:challenge];
@@ -115,17 +107,26 @@ willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challe
 {
     AD_LOG_VERBOSE_F(sLog, @"HTTPProtocol::connection:willSendRequest:. Redirect response: %@. New request:%@", response.URL, request.URL);
     //Ensure that the webview gets the redirect notifications:
+    NSMutableURLRequest* mutableRequest = [request mutableCopy];
     if (response)
     {
-        NSMutableURLRequest* mutableRequest = [request mutableCopy];
-        
         [[self class] removePropertyForKey:@"ADURLProtocol" inRequest:mutableRequest];
         [self.client URLProtocol:self wasRedirectedToRequest:mutableRequest redirectResponse:response];
         
         [_connection cancel];
         [self.client URLProtocol:self didFailWithError:[NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError userInfo:nil]];
-        
+        if(![request.allHTTPHeaderFields valueForKey:@"x-ms-PkeyAuth"])
+        {
+            [mutableRequest addValue:@"1.0" forHTTPHeaderField:@"x-ms-PkeyAuth"];
+        }
         return mutableRequest;
+    }
+    
+    if(![request.allHTTPHeaderFields valueForKey:@"x-ms-PkeyAuth"])
+    {
+        [mutableRequest addValue:@"1.0" forHTTPHeaderField:@"x-ms-PkeyAuth"];
+        request = [mutableRequest copy];
+        mutableRequest = nil;
     }
     return request;
 }
