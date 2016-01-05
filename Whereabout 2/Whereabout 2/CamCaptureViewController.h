@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CamCaptureViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIImageView *camImageView;
+@interface CamCaptureViewController : UIViewController <UIActionSheetDelegate>
+- (IBAction)takePhotoPressed:(id)sender;
 
 @end

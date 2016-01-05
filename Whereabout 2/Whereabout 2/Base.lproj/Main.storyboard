@@ -51,6 +51,23 @@
             </objects>
             <point key="canvasLocation" x="-1801" y="-289"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="TAr-yh-0Aw">
+            <objects>
+                <navigationController id="wbz-RM-KNk" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Y40-uf-RJb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="O5A-ZJ-rty" kind="relationship" relationship="rootViewController" id="2gP-Vw-MVs"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RvX-Vk-lVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1789" y="3480"/>
+        </scene>
         <!--Cam Capture View Controller-->
         <scene sceneID="8Z3-Cm-Pvl">
             <objects>
@@ -59,38 +76,65 @@
                         <viewControllerLayoutGuide type="top" id="JLF-9e-Jhg"/>
                         <viewControllerLayoutGuide type="bottom" id="IrJ-OZ-LQj"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="J5A-ra-qr6">
+                    <view key="view" contentMode="scaleToFill" id="J5A-ra-qr6" customClass="GPUImageView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g8P-ml-Zpm">
-                                <rect key="frame" x="0.0" y="94" width="320" height="425"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2M-Xd-UHe">
-                                <rect key="frame" x="137" y="476" width="46" height="30"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jmk-Ns-3pd">
+                                <rect key="frame" x="0.0" y="475" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="9Wk-H1-hSv"/>
+                                    <barButtonItem title="Take Photo" style="plain" id="5tp-Wm-N7I">
+                                        <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="takePhotoPressed:" destination="O5A-ZJ-rty" id="Ac4-4G-2FD"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ppH-Gt-NjR"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="g8P-ml-Zpm" firstAttribute="top" secondItem="JLF-9e-Jhg" secondAttribute="bottom" id="4pJ-Gl-VpX"/>
-                            <constraint firstItem="g8P-ml-Zpm" firstAttribute="centerX" secondItem="Y2M-Xd-UHe" secondAttribute="centerX" id="QgT-Po-tX0"/>
-                            <constraint firstItem="g8P-ml-Zpm" firstAttribute="bottom" secondItem="IrJ-OZ-LQj" secondAttribute="top" id="Va3-r4-VOx"/>
-                            <constraint firstItem="g8P-ml-Zpm" firstAttribute="leading" secondItem="J5A-ra-qr6" secondAttribute="leading" id="ffL-Tr-AHQ"/>
-                            <constraint firstItem="IrJ-OZ-LQj" firstAttribute="top" secondItem="Y2M-Xd-UHe" secondAttribute="bottom" constant="13" id="nHm-aZ-4jz"/>
-                            <constraint firstAttribute="trailing" secondItem="g8P-ml-Zpm" secondAttribute="trailing" id="qa2-pg-lWj"/>
-                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="dbe-hv-gbi"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="camImageView" destination="g8P-ml-Zpm" id="iJS-PR-gL9"/>
+                        <segue destination="1bi-5W-lpc" kind="show" identifier="segueToFinalUpload" id="SpP-5n-deT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jre-WG-D4P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1338" y="2833"/>
+            <point key="canvasLocation" x="-1401" y="3480"/>
+        </scene>
+        <!--Final Upload View Controller-->
+        <scene sceneID="5Kb-Kw-Vca">
+            <objects>
+                <viewController id="1bi-5W-lpc" customClass="FinalUploadViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qrw-Pk-GjM"/>
+                        <viewControllerLayoutGuide type="bottom" id="Sqt-YH-wPk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6lb-Ag-tto">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W5j-CZ-amq">
+                                <rect key="frame" x="0.0" y="114" width="320" height="165"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="W5j-CZ-amq" secondAttribute="trailing" id="798-jZ-zxJ"/>
+                            <constraint firstItem="W5j-CZ-amq" firstAttribute="top" secondItem="Qrw-Pk-GjM" secondAttribute="bottom" id="ECY-2I-4Ky"/>
+                            <constraint firstItem="Sqt-YH-wPk" firstAttribute="top" secondItem="W5j-CZ-amq" secondAttribute="bottom" constant="260" id="Ne7-5F-8SK"/>
+                            <constraint firstItem="W5j-CZ-amq" firstAttribute="leading" secondItem="6lb-Ag-tto" secondAttribute="leading" id="UeO-ei-CtU"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QOz-Qz-PRZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1018" y="3480"/>
         </scene>
         <!--Stream-->
         <scene sceneID="XP0-fF-fGs">
@@ -162,7 +206,7 @@
                     </refreshControl>
                     <connections>
                         <outlet property="tableActivityIndicator" destination="QhA-FJ-z9c" id="14S-jJ-lMg"/>
-                        <segue destination="O5A-ZJ-rty" kind="show" identifier="segueToImageCapture" id="NcZ-a8-l7c"/>
+                        <segue destination="wbz-RM-KNk" kind="show" identifier="segueToImageCapture" id="JHC-2k-1v8"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4y-nN-jVD" userLabel="First Responder" sceneMemberID="firstResponder"/>

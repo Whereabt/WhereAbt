@@ -1,5 +1,6 @@
 PODS:
   - ADALiOS (1.2.4)
+  - AZSClient (0.1.1)
   - GPUImage (0.1.7)
   - OneDriveSDK (1.1.2):
     - OneDriveSDK/Auth (= 1.1.2)
@@ -21,11 +22,13 @@ PODS:
     - OneDriveSDK/Common
 
 DEPENDENCIES:
+  - AZSClient
   - GPUImage
   - OneDriveSDK
 
 SPEC CHECKSUMS:
   ADALiOS: 8179aed8e136bf79dca5a4138a0c1a0d52701cb2
+  AZSClient: 0277c23fd35cc7512f126d9258f3afd083937c93
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   OneDriveSDK: 2ba8787756deef12e787ee5dae6cb60e9dc7a6a9
 

@@ -16,6 +16,8 @@
 		012997081A38FA9800C89D09 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 012997071A38FA9800C89D09 /* WelcomeViewController.m */; };
 		01C78A191C33451200FE41D0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01C78A181C33451200FE41D0 /* libPods.a */; };
 		01C78A1C1C3350BA00FE41D0 /* CamCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C78A1B1C3350BA00FE41D0 /* CamCaptureViewController.m */; };
+		01C78A2C1C359FCD00FE41D0 /* FinalUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C78A2B1C359FCD00FE41D0 /* FinalUploadViewController.m */; };
+		01C78A7A1C3ADDA200FE41D0 /* ReadWriteBlobsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C78A791C3ADDA200FE41D0 /* ReadWriteBlobsManager.m */; };
 		01D47DFF1A45D00600A45013 /* PhotosAccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */; };
 		01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E091A560BCD00A45013 /* StreamViewController.m */; };
 		01D47E161A583B9D00A45013 /* ImageDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E151A583B9D00A45013 /* ImageDataObject.m */; };
@@ -183,6 +185,10 @@
 		01C78A181C33451200FE41D0 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/nicolasisaza/Desktop/WhereAbt-Repo/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
 		01C78A1A1C3350BA00FE41D0 /* CamCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamCaptureViewController.h; sourceTree = "<group>"; };
 		01C78A1B1C3350BA00FE41D0 /* CamCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamCaptureViewController.m; sourceTree = "<group>"; };
+		01C78A2A1C359FCD00FE41D0 /* FinalUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FinalUploadViewController.h; path = ../FinalUploadViewController.h; sourceTree = "<group>"; };
+		01C78A2B1C359FCD00FE41D0 /* FinalUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FinalUploadViewController.m; path = ../FinalUploadViewController.m; sourceTree = "<group>"; };
+		01C78A781C3ADDA200FE41D0 /* ReadWriteBlobsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadWriteBlobsManager.h; path = ../../ReadWriteBlobsManager.h; sourceTree = "<group>"; };
+		01C78A791C3ADDA200FE41D0 /* ReadWriteBlobsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReadWriteBlobsManager.m; path = ../../ReadWriteBlobsManager.m; sourceTree = "<group>"; };
 		01D47DFD1A45D00600A45013 /* PhotosAccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosAccessViewController.h; sourceTree = "<group>"; };
 		01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosAccessViewController.m; sourceTree = "<group>"; };
 		01D47E081A560BCD00A45013 /* StreamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamViewController.h; path = ../StreamViewController.h; sourceTree = "<group>"; };
@@ -452,6 +458,8 @@
 				012996E51A354E5300C89D09 /* Main.storyboard */,
 				B98B88841A900E4D00309EA7 /* TabBarAppViewController.h */,
 				B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */,
+				01C78A781C3ADDA200FE41D0 /* ReadWriteBlobsManager.h */,
+				01C78A791C3ADDA200FE41D0 /* ReadWriteBlobsManager.m */,
 				B985EA7E1B39A1E8000D2AFD /* AFNetworking Files */,
 				B9EAFA001AEC2DC900C99D29 /* Intro Page View */,
 				B9E7093F1ACE2FE40054DE2C /* Settings */,
@@ -551,6 +559,8 @@
 			children = (
 				01C78A1A1C3350BA00FE41D0 /* CamCaptureViewController.h */,
 				01C78A1B1C3350BA00FE41D0 /* CamCaptureViewController.m */,
+				01C78A2A1C359FCD00FE41D0 /* FinalUploadViewController.h */,
+				01C78A2B1C359FCD00FE41D0 /* FinalUploadViewController.m */,
 				01D47DFD1A45D00600A45013 /* PhotosAccessViewController.h */,
 				01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */,
 				B985EA951B4184B1000D2AFD /* OverlayView.h */,
@@ -1079,6 +1089,7 @@
 				B985EA781B387715000D2AFD /* UIWebView+AFNetworking.m in Sources */,
 				B9A9EDA61ABF9223000ECE24 /* ProfileViewHeaderView.m in Sources */,
 				2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */,
+				01C78A2C1C359FCD00FE41D0 /* FinalUploadViewController.m in Sources */,
 				4A5C4F981BFEDE7B0075BE2B /* TermsViewController.m in Sources */,
 				B9E7093E1ACE2FC00054DE2C /* SettingsTableViewController.m in Sources */,
 				B9EBBCAB1A918622008FA719 /* StreamUpperSuppViewController.m in Sources */,
@@ -1098,6 +1109,7 @@
 				B9BC13361A8843A700659591 /* DetailStreamViewController.m in Sources */,
 				B959B9811AF9C0EE0000B65F /* InitialSegueViewController.m in Sources */,
 				B938DCB61A6AF2EE0073D91F /* StreamCollectionViewCell.m in Sources */,
+				01C78A7A1C3ADDA200FE41D0 /* ReadWriteBlobsManager.m in Sources */,
 				B9EAF9FF1AEC2DB800C99D29 /* DefaultViewController.m in Sources */,
 				B9E709481AD042E50054DE2C /* IntroPageContentViewController.m in Sources */,
 				B938DCBC1A6F59000073D91F /* ProfileViewController.m in Sources */,
