@@ -345,10 +345,10 @@ void reportAvailableMemoryForGPUImage(NSString *tag)
 - (UIImage *)imageFromCurrentFramebufferWithOrientation:(UIImageOrientation)imageOrientation;
 {
     CGImageRef cgImageFromBytes = [self newCGImageFromCurrentlyProcessedOutput];
-    UIImage *finalImage = [UIImage imageWithCGImage:cgImageFromBytes scale:1.0 orientation:imageOrientation];
+    UIImage *endImage = [UIImage imageWithCGImage:cgImageFromBytes scale:1.0 orientation:imageOrientation];
     CGImageRelease(cgImageFromBytes);
     
-    return finalImage;
+    return endImage;
 }
 
 - (UIImage *)imageByFilteringImage:(UIImage *)imageToFilter;

@@ -13,6 +13,7 @@
     UICollectionView *_collectionView;
 }
 
-- (void)setCollectionViewDataSourceTo:(NSMutableArray *)imageArray;
+- (void)setCollectionViewDataSourceFromThisArray:(NSArray *)filterList;
+- (IBAction)uploadButtonPressed:(id)sender;
 
 @end

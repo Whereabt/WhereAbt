@@ -15,12 +15,13 @@
 		012996F81A354E5300C89D09 /* Whereabout_2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 012996F71A354E5300C89D09 /* Whereabout_2Tests.m */; };
 		012997081A38FA9800C89D09 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 012997071A38FA9800C89D09 /* WelcomeViewController.m */; };
 		01C78A191C33451200FE41D0 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01C78A181C33451200FE41D0 /* libPods.a */; };
-		01C78A1C1C3350BA00FE41D0 /* CamCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C78A1B1C3350BA00FE41D0 /* CamCaptureViewController.m */; };
 		01C78A2C1C359FCD00FE41D0 /* FinalUploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C78A2B1C359FCD00FE41D0 /* FinalUploadViewController.m */; };
 		01C78A7A1C3ADDA200FE41D0 /* ReadWriteBlobsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C78A791C3ADDA200FE41D0 /* ReadWriteBlobsManager.m */; };
 		01D47DFF1A45D00600A45013 /* PhotosAccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */; };
 		01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E091A560BCD00A45013 /* StreamViewController.m */; };
 		01D47E161A583B9D00A45013 /* ImageDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E151A583B9D00A45013 /* ImageDataObject.m */; };
+		01E8C2061C3C526500819A55 /* FilterCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C2051C3C526500819A55 /* FilterCameraViewController.m */; };
+		01E8C20D1C3DB17700819A55 /* StreamBlobTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C20C1C3DB17700819A55 /* StreamBlobTestViewController.m */; };
 		2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */; };
 		2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E421A5C5B4100EDD980 /* Foundation.framework */; };
 		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -183,8 +184,6 @@
 		012997061A38FA9800C89D09 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		012997071A38FA9800C89D09 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		01C78A181C33451200FE41D0 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "/Users/nicolasisaza/Desktop/WhereAbt-Repo/Pods/../build/Debug-iphoneos/libPods.a"; sourceTree = "<absolute>"; };
-		01C78A1A1C3350BA00FE41D0 /* CamCaptureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamCaptureViewController.h; sourceTree = "<group>"; };
-		01C78A1B1C3350BA00FE41D0 /* CamCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamCaptureViewController.m; sourceTree = "<group>"; };
 		01C78A2A1C359FCD00FE41D0 /* FinalUploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FinalUploadViewController.h; path = ../FinalUploadViewController.h; sourceTree = "<group>"; };
 		01C78A2B1C359FCD00FE41D0 /* FinalUploadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FinalUploadViewController.m; path = ../FinalUploadViewController.m; sourceTree = "<group>"; };
 		01C78A781C3ADDA200FE41D0 /* ReadWriteBlobsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReadWriteBlobsManager.h; path = ../../ReadWriteBlobsManager.h; sourceTree = "<group>"; };
@@ -195,6 +194,10 @@
 		01D47E091A560BCD00A45013 /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamViewController.m; path = ../StreamViewController.m; sourceTree = "<group>"; };
 		01D47E141A583B9D00A45013 /* ImageDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDataObject.h; sourceTree = "<group>"; };
 		01D47E151A583B9D00A45013 /* ImageDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDataObject.m; sourceTree = "<group>"; };
+		01E8C2041C3C526500819A55 /* FilterCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterCameraViewController.h; path = ../../Pods/FilterCameraViewController.h; sourceTree = "<group>"; };
+		01E8C2051C3C526500819A55 /* FilterCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterCameraViewController.m; path = ../../Pods/FilterCameraViewController.m; sourceTree = "<group>"; };
+		01E8C20B1C3DB17700819A55 /* StreamBlobTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBlobTestViewController.h; sourceTree = "<group>"; };
+		01E8C20C1C3DB17700819A55 /* StreamBlobTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamBlobTestViewController.m; sourceTree = "<group>"; };
 		1C7F58B3B077B59E66A13082 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2D6A0E421A5C5B4100EDD980 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -530,6 +533,8 @@
 		B90B2A541ABF64930087A483 /* Stream */ = {
 			isa = PBXGroup;
 			children = (
+				01E8C20B1C3DB17700819A55 /* StreamBlobTestViewController.h */,
+				01E8C20C1C3DB17700819A55 /* StreamBlobTestViewController.m */,
 				4AB0BE461BEEB561006AD8E1 /* ReportViewController.h */,
 				4AB0BE471BEEB561006AD8E1 /* ReportViewController.m */,
 				B9E709391AC888C10054DE2C /* StreamEnlarge&SaveViewController.h */,
@@ -557,8 +562,8 @@
 		B90B2A551ABF64D30087A483 /* Photo Upload */ = {
 			isa = PBXGroup;
 			children = (
-				01C78A1A1C3350BA00FE41D0 /* CamCaptureViewController.h */,
-				01C78A1B1C3350BA00FE41D0 /* CamCaptureViewController.m */,
+				01E8C2041C3C526500819A55 /* FilterCameraViewController.h */,
+				01E8C2051C3C526500819A55 /* FilterCameraViewController.m */,
 				01C78A2A1C359FCD00FE41D0 /* FinalUploadViewController.h */,
 				01C78A2B1C359FCD00FE41D0 /* FinalUploadViewController.m */,
 				01D47DFD1A45D00600A45013 /* PhotosAccessViewController.h */,
@@ -1061,6 +1066,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01E8C2061C3C526500819A55 /* FilterCameraViewController.m in Sources */,
 				B985EA971B4184B1000D2AFD /* OverlayView.m in Sources */,
 				B98B88861A900E4D00309EA7 /* TabBarAppViewController.m in Sources */,
 				B985EA771B387715000D2AFD /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -1068,7 +1074,6 @@
 				B938DCBF1A71F8140073D91F /* KeychainItemWrapper.m in Sources */,
 				B985EA701B387715000D2AFD /* AFURLSessionManager.m in Sources */,
 				B985EA6A1B387715000D2AFD /* AFHTTPSessionManager.m in Sources */,
-				01C78A1C1C3350BA00FE41D0 /* CamCaptureViewController.m in Sources */,
 				B9E709451AD03CFC0054DE2C /* PageViewController.m in Sources */,
 				012997081A38FA9800C89D09 /* WelcomeViewController.m in Sources */,
 				012996DE1A354E5300C89D09 /* AppDelegate.m in Sources */,
@@ -1112,6 +1117,7 @@
 				01C78A7A1C3ADDA200FE41D0 /* ReadWriteBlobsManager.m in Sources */,
 				B9EAF9FF1AEC2DB800C99D29 /* DefaultViewController.m in Sources */,
 				B9E709481AD042E50054DE2C /* IntroPageContentViewController.m in Sources */,
+				01E8C20D1C3DB17700819A55 /* StreamBlobTestViewController.m in Sources */,
 				B938DCBC1A6F59000073D91F /* ProfileViewController.m in Sources */,
 				B985EA6B1B387715000D2AFD /* AFNetworkReachabilityManager.m in Sources */,
 				B985EA731B387715000D2AFD /* UIAlertView+AFNetworking.m in Sources */,

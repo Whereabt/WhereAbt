@@ -359,10 +359,9 @@ PhotosAccessViewController *photoVC;
             NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
             PhotoUrlString = [DwnldUrl absoluteString];
         }
-    
+
         [cell.cellImage setImageWithURL:[NSURL URLWithString:PhotoUrlString]    placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
     
-
         cell.backgroundColor = [UIColor whiteColor];
         //[cell.cellImage setFrame:cell.frame];
     

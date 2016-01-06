@@ -59,19 +59,17 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Y40-uf-RJb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
-                    <connections>
-                        <segue destination="O5A-ZJ-rty" kind="relationship" relationship="rootViewController" id="2gP-Vw-MVs"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RvX-Vk-lVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1789" y="3480"/>
         </scene>
-        <!--Cam Capture View Controller-->
+        <!--CAMERA-->
         <scene sceneID="8Z3-Cm-Pvl">
             <objects>
-                <viewController id="O5A-ZJ-rty" customClass="CamCaptureViewController" sceneMemberID="viewController">
+                <viewController id="O5A-ZJ-rty" customClass="FilterCameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JLF-9e-Jhg"/>
                         <viewControllerLayoutGuide type="bottom" id="IrJ-OZ-LQj"/>
@@ -96,17 +94,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="dbe-hv-gbi"/>
+                    <navigationItem key="navigationItem" title="CAMERA" id="Urz-LV-3vd">
+                        <barButtonItem key="backBarButtonItem" title="CAMERA" id="A0u-ot-9i8"/>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="takePhotoButton" destination="5tp-Wm-N7I" id="cOI-FE-Am3"/>
                         <segue destination="1bi-5W-lpc" kind="show" identifier="segueToFinalUpload" id="SpP-5n-deT"/>
+                        <segue destination="tuy-1P-hvs" kind="show" id="3Vh-T4-7D1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jre-WG-D4P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1401" y="3480"/>
+            <point key="canvasLocation" x="-1383" y="3480"/>
         </scene>
-        <!--Final Upload View Controller-->
+        <!--FILTER-->
         <scene sceneID="5Kb-Kw-Vca">
             <objects>
                 <viewController id="1bi-5W-lpc" customClass="FinalUploadViewController" sceneMemberID="viewController">
@@ -117,19 +119,17 @@
                     <view key="view" contentMode="scaleToFill" id="6lb-Ag-tto">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W5j-CZ-amq">
-                                <rect key="frame" x="0.0" y="114" width="320" height="165"/>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="W5j-CZ-amq" secondAttribute="trailing" id="798-jZ-zxJ"/>
-                            <constraint firstItem="W5j-CZ-amq" firstAttribute="top" secondItem="Qrw-Pk-GjM" secondAttribute="bottom" id="ECY-2I-4Ky"/>
-                            <constraint firstItem="Sqt-YH-wPk" firstAttribute="top" secondItem="W5j-CZ-amq" secondAttribute="bottom" constant="260" id="Ne7-5F-8SK"/>
-                            <constraint firstItem="W5j-CZ-amq" firstAttribute="leading" secondItem="6lb-Ag-tto" secondAttribute="leading" id="UeO-ei-CtU"/>
-                        </constraints>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="FILTER" id="Xpn-j3-CGE">
+                        <barButtonItem key="rightBarButtonItem" title="Upload" style="plain" id="LSn-TE-lhp">
+                            <connections>
+                                <action selector="uploadButtonPressed:" destination="1bi-5W-lpc" id="igm-at-VBt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QOz-Qz-PRZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -190,6 +190,7 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="camera" id="OUk-L0-0wX">
                             <connections>
                                 <action selector="cameraButtonCalled:" destination="KSJ-Z5-4od" id="Yjv-ZG-hF4"/>
+                                <segue destination="O5A-ZJ-rty" kind="show" id="0bw-Dw-akN"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="organize" id="jr1-kq-j7o">
@@ -206,7 +207,6 @@
                     </refreshControl>
                     <connections>
                         <outlet property="tableActivityIndicator" destination="QhA-FJ-z9c" id="14S-jJ-lMg"/>
-                        <segue destination="wbz-RM-KNk" kind="show" identifier="segueToImageCapture" id="JHC-2k-1v8"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4y-nN-jVD" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1083,6 +1083,34 @@ KeychainItemWrapper. This software is subject to the following license and notic
             </objects>
             <point key="canvasLocation" x="-1383" y="1375"/>
         </scene>
+        <!--Item-->
+        <scene sceneID="Wcq-oF-bQd">
+            <objects>
+                <viewController id="UBn-TO-zzJ" customClass="StreamBlobTestViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lUu-zK-0au"/>
+                        <viewControllerLayoutGuide type="bottom" id="DgV-us-s6q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jxv-bn-KNo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IHD-XB-Kle">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="8KZ-Ti-2R2"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="photo" destination="IHD-XB-Kle" id="Gvj-oT-M7b"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kkw-H8-BO6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-914" y="399"/>
+        </scene>
         <!--Tab Bar App View Controller-->
         <scene sceneID="1fp-6a-v1l">
             <objects>
@@ -1102,6 +1130,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                         <segue destination="WdU-fD-rpn" kind="relationship" relationship="viewControllers" id="3Zw-Gj-EwB"/>
                         <segue destination="InE-IW-0kN" kind="relationship" relationship="viewControllers" id="yJe-JY-Vrq"/>
                         <segue destination="IcK-U5-uzO" kind="relationship" relationship="viewControllers" id="ZCz-Hm-UGM"/>
+                        <segue destination="UBn-TO-zzJ" kind="relationship" relationship="viewControllers" id="EQc-MM-icC"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7fu-A1-HHk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1721,6 +1750,61 @@ KeychainItemWrapper. This software is subject to the following license and notic
             </objects>
             <point key="canvasLocation" x="73" y="1940"/>
         </scene>
+        <!--Filter Select View Controller-->
+        <scene sceneID="8NJ-iw-7QT">
+            <objects>
+                <viewController id="tuy-1P-hvs" customClass="FilterSelectViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8Yq-I5-xW6"/>
+                        <viewControllerLayoutGuide type="bottom" id="IGn-y1-y6C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PPh-WA-niu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9IO-W4-Bdp">
+                                <rect key="frame" x="0.0" y="64" width="320" height="407"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="je5-9Q-lIJ">
+                                <rect key="frame" x="-162" y="198" width="154" height="102"/>
+                            </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LLK-5V-AYO">
+                                <rect key="frame" x="0.0" y="475" width="320" height="44"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wzd-66-N4Y">
+                                    <size key="itemSize" width="90" height="36"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="mwC-Z6-8zy">
+                                        <rect key="frame" x="0.0" y="4" width="90" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="90" height="36"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OWb-RV-Da6">
+                                                    <rect key="frame" x="0.0" y="6" width="90" height="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JGv-O3-ieW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1042" y="4240"/>
+        </scene>
     </scenes>
     <resources>
         <image name="iphone 6 plus-App icon 1024x1024 REV.png" width="1024" height="1024"/>
@@ -1728,7 +1812,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
     <inferredMetricsTieBreakers>
         <segue reference="Jwd-Le-3JH"/>
         <segue reference="cut-J9-wnp"/>
-        <segue reference="IEe-xo-XNR"/>
+        <segue reference="1g1-9h-IHv"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.68132159979999996" blue="0.1911690533" alpha="1" colorSpace="calibratedRGB"/>
 </document>

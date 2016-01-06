@@ -30,7 +30,7 @@
     }];
 }
 
--(void)uploadBlobToContainerWithPhotoDict:(NSMutableDictionary *)blobInfo {
+-(void)uploadBlobToContainerWithPhotoDict:(NSMutableDictionary *)blobInfo WithCompletion:(void (^)(NSError *cbError))callBack{
     // Create a storage account object from a connection string.
     AZSCloudStorageAccount *account = [AZSCloudStorageAccount accountFromConnectionString:@"DefaultEndpointsProtocol=https;AccountName=whereaboutcloud;AccountKey=iOZUM4RA1UfOKje24cz/VgkoQnSUR6UBg9ZpEFwOCnX8rJRjpCJuV3kpBybaGiLyfnGHBQqs4eN9bsAAOAm7SA=="];
     
@@ -39,6 +39,10 @@
     
     // Create a local container object.
     AZSCloudBlobContainer *blobContainer = [blobClient containerReferenceFromName:blobInfo[@"UserID"]];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:blobInfo[@"UserID"] forKey:@"containerName"];
+    [defaults setObject:blobInfo[@"PhotoID"] forKey:@"blobName"];
     
     [blobContainer createContainerIfNotExistsWithAccessType:AZSContainerPublicAccessTypeContainer requestOptions:nil operationContext:nil completionHandler:^(NSError *error, BOOL exists)
      {
@@ -51,15 +55,29 @@
              
              // Upload blob to Storage
              [blockBlob uploadFromText:blobInfo[@"Data-String"] completionHandler:^(NSError *error) {
-                 if (error){
-                     NSLog(@"Error in creating blob.");
-                 }
-                 else {
-                     NSLog(@"Success on creating blob");
-                 }
+                 callBack(error);
              }];
          }
      }];
+}
+
+-(void)downloadBlob:(NSString *)blobName fromContainer:(NSString *)containerName ToStringWithCompletion:(void (^)(NSString *dataString, NSError *cbError))callBack{
+    // Create a storage account object from a connection string.
+    AZSCloudStorageAccount *account = [AZSCloudStorageAccount accountFromConnectionString:@"DefaultEndpointsProtocol=https;AccountName=whereaboutcloud;AccountKey=iOZUM4RA1UfOKje24cz/VgkoQnSUR6UBg9ZpEFwOCnX8rJRjpCJuV3kpBybaGiLyfnGHBQqs4eN9bsAAOAm7SA=="];
+    
+    // Create a blob service client object.
+    AZSCloudBlobClient *blobClient = [account getBlobClient];
+    
+    // Create a local container object.
+    AZSCloudBlobContainer *blobContainer = [blobClient containerReferenceFromName:containerName];
+    
+    // Create a local blob object
+    AZSCloudBlockBlob *blockBlob = [blobContainer blockBlobReferenceFromName:blobName];
+    
+    // Download blob
+    [blockBlob downloadToTextWithCompletionHandler:^(NSError *error, NSString *text) {
+        callBack(text, error);
+    }];
 }
 
 @end
