@@ -152,7 +152,8 @@ NSString *filterName;
         
         filterArray[6] = photoInfo;
         filterArray[7] = processedImage;
-        
+        [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
+
         [finalUploadVC setCollectionViewDataSourceFromThisArray:filterArray];
         
         
@@ -175,6 +176,8 @@ NSString *filterName;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
+
 }
 
 /*

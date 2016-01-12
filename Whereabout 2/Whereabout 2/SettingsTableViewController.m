@@ -28,26 +28,7 @@
         [self.saveSwitch setOn:YES];
     }
     
-    NSLog(@"Default radius: %f", [preferences floatForKey:@"Radius Slider"]);
     
-    if ([preferences floatForKey:@"Radius Slider"] == 0) {
-        [preferences setFloat:self.radiusSlider.value forKey:@"Radius Slider"];
-        
-        //set label
-        float foo = self.radiusSlider.value * 10;
-        [self.radiusLabel setText:[NSString stringWithFormat:@"%f Miles", foo]];
-    }
-    
-    else {
-        [self.radiusSlider setValue:[preferences floatForKey:@"Radius Slider"]];
-        
-        //set label
-        float x = self.radiusSlider.value * 10;
-        [self.radiusLabel setText:[NSString stringWithFormat:@"Stream Radius: %f Miles", x]];
-
-    }
-    
-
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -111,18 +92,6 @@
     }
     
     [preferences setObject:autoSave forKey:@"autoSave"];
-}
-
-- (IBAction)sliderChange:(id)sender {
-    //change default
-    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    [preferences setFloat:self.radiusSlider.value forKey:@"Radius Slider"];
-    
-    //change label text
-    
-    float y = self.radiusSlider.value * 10;
-    [self.radiusLabel setText:[NSString stringWithFormat:@"Stream Radius: %f Miles", y]];
-    
 }
 
 

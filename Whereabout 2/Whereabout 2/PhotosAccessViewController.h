@@ -24,4 +24,6 @@
 - (void)switchCamera;
 - (void)selectFromCameraRoll;
 - (void)setSourceTypeToWantsCamera:(BOOL) wantsCameraBool;
+- (void)PUTonNewPhotophpWithLocation:(CLLocation *)location andTime:(NSDate *)timeStamp WithImageURLsLarge:(NSString *)largeImage andUploadTime:(NSTimeInterval *) uploadTime andPhotoId:(NSString *)imageID andMapping:(NSString *)mapping;
+
 @end

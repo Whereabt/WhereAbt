@@ -179,8 +179,9 @@ UIImagePickerController *imagePicker;
             NSString *escapedString = [unencodedShareURLstring stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
             escapedString = [escapedString stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
             
-            [self PUTonNewPhotophpWithImageURLsLarge:escapedString andSmall:@"NONE"];
+            NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
 
+            //[self PUTonNewPhotophpFromCamera:NO WithImageURLsLarge:escapedString andSmall:@"NONE" andPhotoId:processedName];
         }
     }];
     
@@ -632,29 +633,13 @@ UIImagePickerController *imagePicker;
 
 
 
-- (void)PUTonNewPhotophpWithImageURLsLarge:(NSString *)largeImage andSmall:(NSString *) smallImage{
-    if (_metaLong != nil & _metaLat != nil) {
-        
-        if (!_metaTimeStamp) {
-            _metaTimeStamp = [NSDate date];
-            NSLog(@"Today's date, as string: %@", _metaTimeStamp);
-        }
-
-        //recording upload time
-        NSTimeInterval uploadTimeInterval = [startUploadDate timeIntervalSinceNow];
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-        
-        NSString *dateString = [dateFormatter stringFromDate: _metaTimeStamp];
-        
-        //Photo's unique ID for db
-        NSString *processedName = [[NSProcessInfo processInfo]globallyUniqueString];
-        if (!self.mappingString) {
-            self.mappingString = @"FALSE";
-        }
-        
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphotoTestFile.php?UserID=%@&PhotoID=%@&UserName=%@&Mapping=%@&Latitude=%@&Longitude=%@&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, processedName, [WelcomeViewController sharedController].userName, _mappingString, _metaLat, _metaLong, largeImage, @"UNAVAILABLE", dateString, uploadTimeInterval];
+- (void)PUTonNewPhotophpWithLocation:(CLLocation *)location andTime:(NSDate *)timeStamp WithImageURLsLarge:(NSString *)largeImage andUploadTime:(NSTimeInterval *) uploadTime andPhotoId:(NSString *)imageID andMapping:(NSString *)mapping {
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate: timeStamp];
+    
+        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphotoTestFile.php?UserID=%@&PhotoID=%@&UserName=%@&Mapping=%@&Latitude=%f&Longitude=%f&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, imageID, [WelcomeViewController sharedController].userName, mapping, location.coordinate.latitude, location.coordinate.longitude, largeImage, @"UNAVAILABLE", dateString, uploadTime];
         NSLog(@"PUT URL String: %@", _PUTUrlString);
     
     NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];
@@ -683,12 +668,6 @@ UIImagePickerController *imagePicker;
                                                        
                 }];
     [dataRequestTask resume];
-        
-    }
-    else{
-        UIAlertView *PhotoLocationAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"We were unable to find the photo's location." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [PhotoLocationAlert show];
-    }
 }
 
 - (UIImage *)fixOrientationOfImage: (UIImage *)distortedImage {

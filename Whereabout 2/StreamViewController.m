@@ -17,6 +17,8 @@
 #import "StreamTVCell.h"
 #import "PhotosAccessViewController.h"
 #import "MapVCViewController.h"
+#import "ImageCache.h"
+#import "UIImageView+ImgViewCat.h"
 
 @interface StreamViewController ()
 
@@ -26,6 +28,7 @@
 @end
 
 
+
 @implementation StreamViewController
 
 UILabel *connFailLabel;
@@ -33,6 +36,8 @@ UILabel *uploadLabel;
 UIActivityIndicatorView *StreamActivityView;
 bool isUploadingPhoto;
 PhotosAccessViewController *photoVC;
+
+
 
 - (void)viewDidLoad {
      [super viewDidLoad];
@@ -260,7 +265,7 @@ PhotosAccessViewController *photoVC;
 - (IBAction)savedPhotoAlbumButtonCalled:(id)sender {
     PhotosAccessViewController *photoController = [[PhotosAccessViewController alloc] init];
     [photoController setSourceTypeToWantsCamera:NO];
-    [self presentViewController:photoController animated:YES completion:nil];
+    //[self presentViewController:photoController animated:YES completion:nil];
 }
 
 - (IBAction)cameraButtonCalled:(id)sender {
@@ -357,13 +362,42 @@ PhotosAccessViewController *photoVC;
         
             NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
             NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
-            PhotoUrlString = [DwnldUrl absoluteString];
+            
+            //set image
+            [cell.cellImage setImageWithURL:DwnldUrl    placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
+
+        }
+    
+        else if ([PhotoUrlString  isEqual: @"BLOB"]) {
+            PhotoUrlString = [NSString stringWithFormat:@"https://whereaboutcloud.blob.core.windows.net/%@", self.streamItems[indexPath.row][@"PhotoID"]];
+            
+            if ([[ImageCache sharedImageCache] DoesExist:PhotoUrlString] == true)
+            {
+                cell.cellImage.image = [[ImageCache sharedImageCache] GetImage:PhotoUrlString];
+            }
+            
+            else
+            {
+                cell.cellImage.image = [UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"];
+                
+                
+                [cell.cellImage downloadImageFromLink:PhotoUrlString andContentMode:UIViewContentModeScaleAspectFit withCompletionHandler:^{
+                    NSLog(@"IMAGE HEIGHT:%f", cell.cellImage.frame.size.height);
+                    [[ImageCache sharedImageCache] AddImage:PhotoUrlString WithImage:cell.cellImage.image];
+                }];
+                
+            }
+            
+            NSLog(@"URL TO BLOB: %@", PhotoUrlString);
+            
+        }
+    
+        else {
+            NSLog(@"URL WAS NEITHER BLOB NOR FROM ONEDRIVE SHARES");
         }
 
-        [cell.cellImage setImageWithURL:[NSURL URLWithString:PhotoUrlString]    placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
     
         cell.backgroundColor = [UIColor whiteColor];
-        //[cell.cellImage setFrame:cell.frame];
     
     return cell;
 }

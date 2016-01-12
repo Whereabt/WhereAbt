@@ -18,25 +18,28 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.photo.contentMode = UIViewContentModeScaleAspectFit;
     ReadWriteBlobsManager *blobDownloadManager = [[ReadWriteBlobsManager alloc] init];
     
     NSUserDefaults *test = [NSUserDefaults standardUserDefaults];
     
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.center.x, self.view.center.y, 30, 30)];
+    [self.photo addSubview:activityIndicator];
+    [activityIndicator startAnimating];
     
     [blobDownloadManager downloadBlob:[test objectForKey:@"blobName"] fromContainer:[test objectForKey:@"containerName"] ToStringWithCompletion:^(NSString *dataString, NSError *cbError) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            NSData *data = [[NSData alloc]initWithBase64EncodedString:dataString
+                                                              options:NSDataBase64DecodingIgnoreUnknownCharacters];
+            UIImage *img = [UIImage imageWithData:data];
+            [activityIndicator removeFromSuperview];
+            [self.photo setImage:img];
+            
+        });
         
-        NSData *theData = [NSData dataWithBytes:(__bridge const void * _Nullable)(dataString)
-                                         length:[dataString length]+1];
-        
-        
-        const char *utfDataString = [dataString UTF8String];
-        unsigned char *firstBuffer, secondBuffer[20];
         
         /* initialize data1, data2, and secondBuffer... */
-        NSMutableData *imgData = [NSMutableData dataWithBytes:utfDataString length:strlen(utfDataString)+1];
-        
-        UIImage *img = [UIImage imageWithData:theData];
-        [self.photo setImage:img];
     }];
     
 }

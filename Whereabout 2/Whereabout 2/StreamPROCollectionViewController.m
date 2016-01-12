@@ -13,7 +13,8 @@
 #import "StreamPROEnlargedViewController.h"
 #import "NSNetworkConnection.h"
 #import "UIImageView+AFNetworking.h"
-
+#import "ImageCache.h"
+#import "UIImageView+ImgViewCat.h"
 
 @interface StreamPROCollectionViewController ()
 
@@ -214,6 +215,7 @@ UILabel *internetFailLabel;
     cell.backgroundView.frame = cell.frame;
     cell.proCVImage.contentMode = UIViewContentModeScaleAspectFit;
     
+    
     NSString *PhotoUrlString = self.allProfileItems[indexPath.row][@"PhotoURL"];
     
     if ([self string:PhotoUrlString containsString:@"https://onedrive.live.com/redir?"]) {
@@ -233,12 +235,38 @@ UILabel *internetFailLabel;
         
         NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
         NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
-        PhotoUrlString = [DwnldUrl absoluteString];
+        
+        //set image
+        [cell.proCVImage setImageWithURL:DwnldUrl    placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
+        
     }
-
     
-    [cell.proCVImage setImageWithURL:[NSURL URLWithString: PhotoUrlString] placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
-
+    else if ([PhotoUrlString  isEqual: @"BLOB"]) {
+        PhotoUrlString = [NSString stringWithFormat:@"https://whereaboutcloud.blob.core.windows.net/%@", self.allProfileItems[indexPath.row][@"PhotoID"]];
+        
+        if ([[ImageCache sharedImageCache] DoesExist:PhotoUrlString] == true)
+        {
+            cell.proCVImage.image = [[ImageCache sharedImageCache] GetImage:PhotoUrlString];
+        }
+        
+        else
+        {
+            cell.proCVImage.image = [UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"];
+            
+            
+            [cell.proCVImage downloadImageFromLink:PhotoUrlString andContentMode:UIViewContentModeScaleAspectFit withCompletionHandler:^{
+                [[ImageCache sharedImageCache] AddImage:PhotoUrlString WithImage:cell.proCVImage.image];
+            }];
+            
+        }
+        
+        NSLog(@"URL TO BLOB: %@", PhotoUrlString);
+        
+    }
+    
+    else {
+        NSLog(@"URL WAS NEITHER BLOB NOR FROM ONEDRIVE SHARES");
+    }
     return cell;
 }
 

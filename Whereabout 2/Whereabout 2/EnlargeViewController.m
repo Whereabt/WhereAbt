@@ -24,7 +24,7 @@ UIImage *EnlargedImage;
     self.userNameLabel.text = Username;
     self.distanceLabel.text = [NSString stringWithFormat:@"%@ Miles", Distance];
     self.enlargedPhoto.image = EnlargedImage;
-    self.enlargedPhoto.contentMode = UIViewContentModeScaleToFill;
+    self.enlargedPhoto.contentMode = UIViewContentModeScaleAspectFit;
     self.enlargedPhoto.userInteractionEnabled = YES;
     [super viewDidLoad];
     

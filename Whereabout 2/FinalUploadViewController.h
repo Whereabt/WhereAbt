@@ -12,8 +12,10 @@
 {
     UICollectionView *_collectionView;
 }
+- (IBAction)uploadButtonPress:(id)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *uploadButtonItem;
+
 
 - (void)setCollectionViewDataSourceFromThisArray:(NSArray *)filterList;
-- (IBAction)uploadButtonPressed:(id)sender;
 
 @end

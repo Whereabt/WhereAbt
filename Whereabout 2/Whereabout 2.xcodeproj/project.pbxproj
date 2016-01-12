@@ -22,6 +22,10 @@
 		01D47E161A583B9D00A45013 /* ImageDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E151A583B9D00A45013 /* ImageDataObject.m */; };
 		01E8C2061C3C526500819A55 /* FilterCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C2051C3C526500819A55 /* FilterCameraViewController.m */; };
 		01E8C20D1C3DB17700819A55 /* StreamBlobTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C20C1C3DB17700819A55 /* StreamBlobTestViewController.m */; };
+		01E8C2101C4017C300819A55 /* CamRollCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C20F1C4017C300819A55 /* CamRollCollectionViewCell.m */; };
+		01E8C2131C40188A00819A55 /* CamRollCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C2121C40188A00819A55 /* CamRollCollectionViewController.m */; };
+		01E8C2161C42F20300819A55 /* ImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C2151C42F20300819A55 /* ImageCache.m */; };
+		01E8C21D1C43F88E00819A55 /* UIImageView+ImgViewCat.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C21C1C43F88E00819A55 /* UIImageView+ImgViewCat.m */; };
 		2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */; };
 		2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E421A5C5B4100EDD980 /* Foundation.framework */; };
 		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -198,6 +202,15 @@
 		01E8C2051C3C526500819A55 /* FilterCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterCameraViewController.m; path = ../../Pods/FilterCameraViewController.m; sourceTree = "<group>"; };
 		01E8C20B1C3DB17700819A55 /* StreamBlobTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBlobTestViewController.h; sourceTree = "<group>"; };
 		01E8C20C1C3DB17700819A55 /* StreamBlobTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamBlobTestViewController.m; sourceTree = "<group>"; };
+		01E8C20E1C4017C300819A55 /* CamRollCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamRollCollectionViewCell.h; sourceTree = "<group>"; };
+		01E8C20F1C4017C300819A55 /* CamRollCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamRollCollectionViewCell.m; sourceTree = "<group>"; };
+		01E8C2111C40188A00819A55 /* CamRollCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamRollCollectionViewController.h; sourceTree = "<group>"; };
+		01E8C2121C40188A00819A55 /* CamRollCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamRollCollectionViewController.m; sourceTree = "<group>"; };
+		01E8C2141C42F20300819A55 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
+		01E8C2151C42F20300819A55 /* ImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCache.m; sourceTree = "<group>"; };
+		01E8C2181C43F53100819A55 /* Whereabout-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Whereabout-Bridging-Header.h"; sourceTree = "<group>"; };
+		01E8C21B1C43F88E00819A55 /* UIImageView+ImgViewCat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+ImgViewCat.h"; sourceTree = "<group>"; };
+		01E8C21C1C43F88E00819A55 /* UIImageView+ImgViewCat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+ImgViewCat.m"; sourceTree = "<group>"; };
 		1C7F58B3B077B59E66A13082 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2D6A0E421A5C5B4100EDD980 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -463,6 +476,8 @@
 				B98B88851A900E4D00309EA7 /* TabBarAppViewController.m */,
 				01C78A781C3ADDA200FE41D0 /* ReadWriteBlobsManager.h */,
 				01C78A791C3ADDA200FE41D0 /* ReadWriteBlobsManager.m */,
+				01E8C2141C42F20300819A55 /* ImageCache.h */,
+				01E8C2151C42F20300819A55 /* ImageCache.m */,
 				B985EA7E1B39A1E8000D2AFD /* AFNetworking Files */,
 				B9EAFA001AEC2DC900C99D29 /* Intro Page View */,
 				B9E7093F1ACE2FE40054DE2C /* Settings */,
@@ -553,8 +568,11 @@
 				B985EA7C1B38B5F0000D2AFD /* StreamTVCell.m */,
 				01D47E081A560BCD00A45013 /* StreamViewController.h */,
 				01D47E091A560BCD00A45013 /* StreamViewController.m */,
+				01E8C21B1C43F88E00819A55 /* UIImageView+ImgViewCat.h */,
+				01E8C21C1C43F88E00819A55 /* UIImageView+ImgViewCat.m */,
 				B938DCAE1A641E560073D91F /* StreamController.h */,
 				B938DCAF1A641E560073D91F /* StreamController.m */,
+				01E8C2181C43F53100819A55 /* Whereabout-Bridging-Header.h */,
 			);
 			name = Stream;
 			sourceTree = "<group>";
@@ -562,6 +580,10 @@
 		B90B2A551ABF64D30087A483 /* Photo Upload */ = {
 			isa = PBXGroup;
 			children = (
+				01E8C20E1C4017C300819A55 /* CamRollCollectionViewCell.h */,
+				01E8C20F1C4017C300819A55 /* CamRollCollectionViewCell.m */,
+				01E8C2111C40188A00819A55 /* CamRollCollectionViewController.h */,
+				01E8C2121C40188A00819A55 /* CamRollCollectionViewController.m */,
 				01E8C2041C3C526500819A55 /* FilterCameraViewController.h */,
 				01E8C2051C3C526500819A55 /* FilterCameraViewController.m */,
 				01C78A2A1C359FCD00FE41D0 /* FinalUploadViewController.h */,
@@ -886,6 +908,7 @@
 		012996CD1A354E5300C89D09 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Nicolas Isaza";
 				TargetAttributes = {
@@ -1093,14 +1116,18 @@
 				B9A9EDB31AC376B4000ECE24 /* StreamPROCollectionHeaderView.m in Sources */,
 				B985EA781B387715000D2AFD /* UIWebView+AFNetworking.m in Sources */,
 				B9A9EDA61ABF9223000ECE24 /* ProfileViewHeaderView.m in Sources */,
+				01E8C21D1C43F88E00819A55 /* UIImageView+ImgViewCat.m in Sources */,
 				2D6A0E4F1A5F75CE00EDD980 /* LocationController.m in Sources */,
 				01C78A2C1C359FCD00FE41D0 /* FinalUploadViewController.m in Sources */,
 				4A5C4F981BFEDE7B0075BE2B /* TermsViewController.m in Sources */,
+				01E8C2161C42F20300819A55 /* ImageCache.m in Sources */,
 				B9E7093E1ACE2FC00054DE2C /* SettingsTableViewController.m in Sources */,
 				B9EBBCAB1A918622008FA719 /* StreamUpperSuppViewController.m in Sources */,
 				B98C66861B88DB4000A9C810 /* MapAnnotation.m in Sources */,
 				B9EBBCA81A917D2D008FA719 /* ProfileCollectionViewController.m in Sources */,
 				B98C66831B88D17500A9C810 /* MapVCViewController.m in Sources */,
+				01E8C2131C40188A00819A55 /* CamRollCollectionViewController.m in Sources */,
+				01E8C2101C4017C300819A55 /* CamRollCollectionViewCell.m in Sources */,
 				01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */,
 				012996DB1A354E5300C89D09 /* main.m in Sources */,
 				B985EA931B409B47000D2AFD /* CamOverlayViewController.m in Sources */,
@@ -1249,6 +1276,7 @@
 			baseConfigurationReference = 77F1A66FF8985FBB2D8DDA25 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
@@ -1262,6 +1290,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Whereabout;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Whereabout 2/Whereabout-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TREAT_MISSING_BASELINES_AS_TEST_FAILURES = NO;
 			};
 			name = Debug;
@@ -1271,6 +1301,7 @@
 			baseConfigurationReference = 6FC2A26AF400AF77735F63E9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
@@ -1284,6 +1315,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Whereabout;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Whereabout 2/Whereabout-Bridging-Header.h";
 				TREAT_MISSING_BASELINES_AS_TEST_FAILURES = NO;
 			};
 			name = Release;
