@@ -18,6 +18,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "ImageCache.h"
 #import "UIImageView+ImgViewCat.h"
+#import <GoogleSignIn/GoogleSignIn.h>
+
 
 @interface ProfileCollectionViewController ()
 
@@ -35,6 +37,9 @@ BOOL shouldRefreshProfileOnAppear;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.userProfileActivityIndicator.hidesWhenStopped = YES;
+    self.collectionView.dataSource = self;
+    self.collectionView.alwaysBounceVertical = YES;
+    self.collectionView.delegate = self;
     [self refreshProfile];
      
     // Do any additional setup after loading the view.
@@ -54,10 +59,6 @@ BOOL shouldRefreshProfileOnAppear;
     
     if ([NetworkManager doesUserHaveInternetConnection]){
         
-    self.collectionView.dataSource = self;
-    self.collectionView.alwaysBounceVertical = YES;
-    self.collectionView.delegate = self;
-        
     self.userProfileActivityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     self.userProfileActivityIndicator.color = [UIColor orangeColor];
     [self.userProfileActivityIndicator startAnimating];
@@ -70,18 +71,22 @@ BOOL shouldRefreshProfileOnAppear;
     // Register cell classes
     [self.collectionView registerClass:[ProfileCVCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
+        /*
     UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
     [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
     //[self.collectionView setCollectionViewLayout:flow];
     
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
-    collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0);
+    collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0); 
+         */
     
     NSLog(@"User id: %@",[WelcomeViewController sharedController].userID);
     
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
     //get the profile items (images)
     ProfileController *profileController = [[ProfileController alloc] init];
-        [profileController requestProfileItemsFromUser:[WelcomeViewController sharedController].userID AndIsCurrentUser:YES WithCompletion:^(NSMutableArray *Items, NSError *error) {
+        [profileController requestProfileItemsFromUser:[defaults objectForKey:@"UserID"] AndIsCurrentUser:YES WithCompletion:^(NSMutableArray *Items, NSError *error) {
         
         self.profileItems = [Items mutableCopy];
         if (!error) {
@@ -255,9 +260,10 @@ BOOL shouldRefreshProfileOnAppear;
      */
     cell.backgroundColor = [UIColor whiteColor];
     
-    cell.backgroundView.frame = cell.frame;
+    //cell.backgroundView.frame = cell.frame;
     //cell.backgroundView = cellView;
-    cell.cvImage.contentMode = UIViewContentModeScaleAspectFit;
+    cell.cvImage.contentMode = UIViewContentModeScaleAspectFill;
+    cell.cvImage.clipsToBounds = YES;
     
     
     NSString *PhotoUrlString = self.profileItems[indexPath.row][@"PhotoURL"];
@@ -298,7 +304,7 @@ BOOL shouldRefreshProfileOnAppear;
             cell.cvImage.image = [UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"];
             
             
-            [cell.cvImage downloadImageFromLink:PhotoUrlString andContentMode:UIViewContentModeScaleAspectFit withCompletionHandler:^{
+            [cell.cvImage downloadImageFromLink:PhotoUrlString andContentMode:UIViewContentModeScaleAspectFill withCompletionHandler:^{
                 [[ImageCache sharedImageCache] AddImage:PhotoUrlString WithImage:cell.cvImage.image];
             }];
             
@@ -311,16 +317,18 @@ BOOL shouldRefreshProfileOnAppear;
     else {
         NSLog(@"URL WAS NEITHER BLOB NOR FROM ONEDRIVE SHARES");
     }
-
+    cell.backgroundColor = [UIColor redColor];
     return cell;
 }
+
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     //3 per row; 4 per column = about 3.5 and 5.7 (divide by)
-    return CGSizeMake(self.view.window.frame.size.width / 3.2, self.view.window.frame.size.height / 5.0);
+    //return CGSizeMake(self.view.window.frame.size.width / 3.2, self.view.window.frame.size.height / 5.0);
+    return CGSizeMake(100, 100);
 }
-
+/*
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     
     return 2.0;
@@ -330,6 +338,7 @@ BOOL shouldRefreshProfileOnAppear;
     
     return 2.0;
 }
+ */
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     
@@ -339,8 +348,10 @@ BOOL shouldRefreshProfileOnAppear;
         [reusableHeader sizeToFit];
     }
     
-    NSString *nameString = [WelcomeViewController sharedController].userName;
-    NSArray *firstLastName = [nameString componentsSeparatedByString:@"_"];
+    NSArray *firstLastName;
+    if ([GIDSignIn sharedInstance].currentUser) {
+    firstLastName = [[GIDSignIn sharedInstance].currentUser.profile.name componentsSeparatedByString:@" "];
+    }
     
     reusableHeader.firstNameLabel.text = firstLastName[0];
     reusableHeader.lastNameLabel.text = firstLastName[1];
@@ -392,6 +403,23 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     //[self performSegueWithIdentifier:@"segueToEnlarge" sender:self];
 }
 
+- (NSArray *) layoutAttributesForElementsInRect:(CGRect)rect {
+    NSArray *answer = [self.collectionViewLayout layoutAttributesForElementsInRect:rect];
+    
+    for(int i = 1; i < [answer count]; ++i) {
+        UICollectionViewLayoutAttributes *currentLayoutAttributes = answer[i];
+        UICollectionViewLayoutAttributes *prevLayoutAttributes = answer[i - 1];
+        NSInteger maximumSpacing = 0.1;
+        NSInteger origin = CGRectGetMaxX(prevLayoutAttributes.frame);
+        
+        if(origin + maximumSpacing + currentLayoutAttributes.frame.size.width < self.collectionViewLayout.collectionViewContentSize.width) {
+            CGRect frame = currentLayoutAttributes.frame;
+            frame.origin.x = origin + maximumSpacing;
+            currentLayoutAttributes.frame = frame;
+        }
+    }
+    return answer;
+}
 
 /*
 // Uncomment this method to specify if the specified item should be highlighted during tracking

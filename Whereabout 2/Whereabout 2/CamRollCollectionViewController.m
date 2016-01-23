@@ -14,8 +14,9 @@
 
 @interface CamRollCollectionViewController ()
 {
-    NSArray *thumbnailArray;
-    NSArray *assetGroupArray;
+    NSMutableArray *thumbnailCacheArray;
+    NSMutableArray *assetGroupArray;
+    PHFetchResult *FetchResult;
 }
 
 @end
@@ -30,12 +31,11 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
     self.collectionView.alwaysBounceVertical = YES;
-    
-    
-    [self getImageArrayFromCameraRollWithCompletion:^(NSArray *cameraRollImages) {
-        thumbnailArray = cameraRollImages;
-        [self.collectionView reloadData];
-    }];
+    thumbnailCacheArray = [[NSMutableArray alloc]init];
+
+    [self getAssetArrayFromCameraRoll];
+        //thumbnailCacheArray = cameraRollImages;
+    [self.collectionView reloadData];
     
     // Uncomment the following line to preserve selection between presentations
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -46,13 +46,14 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    if (!thumbnailArray) {
-        [self getImageArrayFromCameraRollWithCompletion:^(NSArray *cameraRollImages) {
-            thumbnailArray = cameraRollImages;
+    if (!FetchResult) {
+        [self getAssetArrayFromCameraRoll];
+        
+           // thumbnailArray = cameraRollImages;
             [self.collectionView reloadData];
             //[self scrollToBottom];
-        }];
     }
+    
 }
 
 
@@ -63,56 +64,36 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
     [self.collectionView setContentOffset:bottomOffset animated:YES];
 }
 
-- (void)getImageArrayFromCameraRollWithCompletion:(void(^)(NSArray *cameraRollImages))completionHandler {
-    thumbnailArray = [[NSArray alloc] init];
-    
-    /*
-    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
-    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        NSInteger numberOfAssets = [group numberOfAssets];
-        if (numberOfAssets > 0) {
-            NSLog(@"numberOfPictures: %ld",(long)numberOfAssets);
-            for (int i = 0; i < numberOfAssets; i++)  {
-                [group enumerateAssetsAtIndexes:[NSIndexSet indexSetWithIndex:i] options:0 usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                    UIImage *img = [UIImage imageWithCGImage:[result thumbnail]];
-                    if (img) {
-                        [thumbnailSet addObject:img];
-                    }
-                }];
-            }
-        }
-        completionHandler(thumbnailSet);
-    } failureBlock:^(NSError *error) {
-        NSLog(@"error: %@", error);
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to access your camera roll." message:@"You can give us access to your camera roll in Settings." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [alert show];
-    }];
-    */
-    
+- (void)getAssetArrayFromCameraRoll {
+    thumbnailCacheArray = [[NSMutableArray alloc] init];
     
     PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
     fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
-    PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
+    FetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
     
-    NSMutableArray *thumbnailSet = [[NSMutableArray alloc] init];
+    //NSMutableArray *thumbnailSet = [[NSMutableArray alloc] init];
+    /*
     for (int i = 0; i < fetchResult.count; i++) {
         [[PHImageManager defaultManager] requestImageForAsset:fetchResult[i]
                                                    targetSize:CGSizeMake(90, 90)
                                                   contentMode:PHImageContentModeAspectFit
                                                       options:PHImageRequestOptionsVersionCurrent
                                                 resultHandler:^(UIImage *result, NSDictionary *info) {
-                                                    if (result) {
+                                                    PHAsset *asset = fetchResult[i];
+                                                    if (result && asset.location) {
                                                         [thumbnailSet addObject:result];
                                                     }
                                                     if (i == fetchResult.count - 1) {
                                                         completionHandler(thumbnailSet);
                                                     }
                                                 }];
-    }
+    }*/
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    thumbnailCacheArray = nil;
+    
     // Dispose of any resources that can be recreated.
 }
 
@@ -134,20 +115,44 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return thumbnailArray.count;
+    return FetchResult.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     CamRollCollectionViewCell *cell = (CamRollCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    //placeholder
     
-    //[cell.imageView setImage: thumbnailArray[indexPath.row]];
-    //NSLog(@"IMAGE: %@", thumbnailArray[indexPath.row]);
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:thumbnailArray[indexPath.row]];
+        UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
+        if (thumbnailCacheArray.count > indexPath.row && thumbnailCacheArray.count != 0) {
+            [imgView setImage:thumbnailCacheArray[indexPath.row]];
+        }
     
-    imgView.contentMode = UIViewContentModeScaleAspectFit;
-    cell.backgroundView = imgView;
-    // Configure the cell
-    cell.backgroundColor = [UIColor blackColor];
+        else {
+    
+            [[PHImageManager defaultManager] requestImageForAsset:FetchResult[indexPath.row]
+                                                   targetSize:CGSizeMake(100, 100)
+                                                  contentMode:PHImageContentModeAspectFit
+                                                      options:PHImageRequestOptionsVersionCurrent
+                                                resultHandler:^(UIImage *result, NSDictionary *info) {
+                                                    
+                                                    if (result) {
+                                                        [thumbnailCacheArray addObject:result];
+                                                        [imgView setImage:result];
+                                                    }
+                                                
+                                                }];
+            }
+        //[cell.imageView setImage: thumbnailArray[indexPath.row]];
+        //NSLog(@"IMAGE: %@", thumbnailArray[indexPath.row]);
+    
+        imgView.contentMode = UIViewContentModeScaleAspectFill;
+        imgView.clipsToBounds = YES;
+        cell.backgroundView = imgView;
+        // Configure the cell
+    
+    
+        cell.backgroundColor = [UIColor blackColor];
     
     return cell;
 }
@@ -162,10 +167,9 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    thumbnailArray = nil;
-    [self.collectionView reloadData];
-    
-    
+    //thumbnailCacheArray = nil;
+    //FetchResult = nil;
+    //[self.collectionView reloadData];
     
     PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
     fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
@@ -180,11 +184,10 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                                                 NSMutableDictionary *photoInfo = [[NSMutableDictionary alloc] init];
                                                 photoInfo[@"Name"] = @"NONE";
                                                 NSLog(@"RESULT SIZE:  %lu KB",(UIImageJPEGRepresentation(result, 1.0).length/1024));
-                                                if (UIImageJPEGRepresentation(result, 1.0).length/1024 > 100) {
+                                                 PHAsset *asset = fetchResult[indexPath.row];
+                                                if (UIImageJPEGRepresentation(result, 1.0).length/1024 > 50) {
                                                     photoInfo[@"Image"] = result;
-                                                    PHAsset *imageAsset = [[PHAsset alloc]init];
-                                                    imageAsset = fetchResult[indexPath.row];
-                                                    photoInfo[@"Asset"] = imageAsset;
+                                                    photoInfo[@"Asset"] = asset;
                                                     NSMutableArray *filterArray = [[NSMutableArray alloc] initWithCapacity:8];
                                                     filterArray[0] = @"AMATORKA";
                                                     filterArray[1] = @"GRAYSCALE";
@@ -244,6 +247,24 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     }];
      */
     
+}
+
+- (NSArray *) layoutAttributesForElementsInRect:(CGRect)rect {
+    NSArray *answer = [self.collectionViewLayout layoutAttributesForElementsInRect:rect];
+    
+    for(int i = 1; i < [answer count]; ++i) {
+        UICollectionViewLayoutAttributes *currentLayoutAttributes = answer[i];
+        UICollectionViewLayoutAttributes *prevLayoutAttributes = answer[i - 1];
+        NSInteger maximumSpacing = 1;
+        NSInteger origin = CGRectGetMaxX(prevLayoutAttributes.frame);
+        
+        if(origin + maximumSpacing + currentLayoutAttributes.frame.size.width < self.collectionViewLayout.collectionViewContentSize.width) {
+            CGRect frame = currentLayoutAttributes.frame;
+            frame.origin.x = origin + maximumSpacing;
+            currentLayoutAttributes.frame = frame;
+        }
+    }
+    return answer;
 }
 
 #pragma mark <UICollectionViewDelegate>

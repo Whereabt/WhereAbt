@@ -7,10 +7,10 @@
 //
 
 #import "SettingsTableViewController.h"
-#import "KeychainItemWrapper.h"
 #import "WelcomeViewController.h"
 #import <OneDriveSDK/OneDriveSDK.h>
-
+#import <GoogleSignIn/GoogleSignIn.h>
+#import <JNKeychain/JNKeychain.h>
 
 @interface SettingsTableViewController ()
 
@@ -28,7 +28,9 @@
         [self.saveSwitch setOn:YES];
     }
     
-    
+    if ([[preferences objectForKey:@"mapping"] isEqualToString:@"TRUE"]) {
+        [self.mappingSwitch setOn:YES];
+    }
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -45,17 +47,36 @@
 
 - (IBAction)logoutPressed:(id)sender {
     [self.logoutActivityIndicator startAnimating];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    [[ODClient loadCurrentClient] signOutWithCompletion:^(NSError *erro) {
-        if (erro) {
-            UIAlertView *logoutFailAlert = [[UIAlertView alloc] initWithTitle:@"Logout Failed" message:@"An error occurred" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [logoutFailAlert show];
+    if ([[defaults objectForKey:@"AuthType"]  isEqual: @"instagram"]) {
+        [JNKeychain deleteValueForKey:@"igAuthCode"];
+        NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        for (NSHTTPCookie *each in [cookieStorage cookiesForURL:[NSURL URLWithString:@"https://api.instagram.com"]]) {
+            [cookieStorage deleteCookie:each];
         }
-        else {
-            [self.logoutActivityIndicator stopAnimating];
-            [self performSegueWithIdentifier:@"segueToLogout" sender:self];
-        }
-    }];
+        [self.logoutActivityIndicator stopAnimating];
+        [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+    }
+    
+    else if ([[defaults objectForKey:@"AuthType"]  isEqual: @"onedrive"]) {
+        [[ODClient loadCurrentClient] signOutWithCompletion:^(NSError *erro) {
+            if (erro) {
+                UIAlertView *logoutFailAlert = [[UIAlertView alloc] initWithTitle:@"Logout Failed" message:@"An error occurred" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [logoutFailAlert show];
+            }
+            else {
+                [self.logoutActivityIndicator stopAnimating];
+                [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+            }
+        }];
+    }
+    
+    else if ([[defaults objectForKey:@"AuthType"]  isEqual: @"google"]) {
+        [[GIDSignIn sharedInstance] signOut];
+        [self.logoutActivityIndicator stopAnimating];
+        [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+    }
     
     /* ---> OLD WAY
     KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
@@ -92,6 +113,19 @@
     }
     
     [preferences setObject:autoSave forKey:@"autoSave"];
+}
+
+- (IBAction)mappingSwitchChange:(id)sender {
+    
+    NSString *mappingPreference;
+    if ([self.mappingSwitch isOn]) {
+        mappingPreference = @"TRUE";
+    }
+    else {
+        mappingPreference = @"FALSE";
+    }
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+    [preferences setObject:mappingPreference forKey:@"mapping"];
 }
 
 

@@ -9,6 +9,8 @@
 #import "StreamController.h"
 #import "LocationController.h"
 #import "StreamViewController.h"
+#import <InstagramSimpleOAuth/InstagramSimpleOAuth.h>
+
 
 /*
 static NSString *const userIdIndex = @"UserID";
@@ -168,5 +170,74 @@ static NSString *const distanceFrom = @"MilesAway";
     
 }
 
+- (void)getFeedFromAzureCloudFileWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack {
+    
+        //make request
+        NSString *urlAsString = [NSString stringWithFormat:@"https://whereaboutcloud.file.core.windows.net/feed/feed.php?Latitude=%f&Longitude=%f&Radius=%f", [LocationController sharedController].currentLocation.coordinate.latitude, [LocationController sharedController].currentLocation.coordinate.longitude, radius];
+        
+        NSURL *url = [[NSURL alloc] initWithString:urlAsString];
+        NSLog(@"%@", urlAsString);
+        
+        NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:url
+                                                                cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                            timeoutInterval:60.0];
+        
+        NSDate *currentDate = [[NSDate alloc] init];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+        NSString *localDateString = [dateFormatter stringFromDate:currentDate];
+
+        [theRequest setHTTPMethod:@"GET"];
+        
+        [theRequest setValue:localDateString forHTTPHeaderField:@"x-ms-date"];
+        
+        //passing key as a http header request
+        [theRequest addValue:@"SharedKey whereaboutcloud:iOZUM4RA1UfOKje24cz/VgkoQnSUR6UBg9ZpEFwOCnX8rJRjpCJuV3kpBybaGiLyfnGHBQqs4eN9bsAAOAm7SA==" forHTTPHeaderField:@"Authorization"];
+        
+        [theRequest addValue:@"2015-04-05" forHTTPHeaderField:@"x-ms-version"];
+        
+        
+        NSURLSession *session = [NSURLSession sharedSession];
+        
+        NSURLSessionDataTask *downloadTask = [session dataTaskWithRequest:theRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            
+            NSError *jsonError = nil;
+            NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
+            if (error == nil) {
+                error = jsonError;
+            }
+            else {
+                //this means the session data task error will be passed as parameter.
+            }
+            _itemCollection = [immutable mutableCopy];
+            
+            if (self.itemCollection == nil) {
+                NSLog(@"Problem occurred, no array from json. The error: %@", jsonError);
+            }
+            
+            else {
+                
+                NSLog(@"%@", _itemCollection);
+                
+            }
+            
+            for (int i = 0; i < self.itemCollection.count; i++) {
+                if ([_itemCollection[i][@"Viewable"]  isEqual: @"FALSE"]) {
+                    [_itemCollection removeObjectAtIndex:i];
+                }
+            }
+            
+            callBack(_itemCollection, error);
+
+        }];
+        
+        [downloadTask resume];
+        
+}
+
+
+
 
 @end
+

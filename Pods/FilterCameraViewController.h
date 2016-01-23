@@ -12,5 +12,9 @@
 - (IBAction)takePhotoPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *takePhotoButton;
 
+- (void)takePhotoButtonPressed;
+
+- (IBAction)filterItemPressed:(id)sender;
+- (IBAction)switchItemPressed:(id)sender;
 
 @end

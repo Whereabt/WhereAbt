@@ -183,6 +183,7 @@ UIImagePickerController *imagePicker;
 
             //[self PUTonNewPhotophpFromCamera:NO WithImageURLsLarge:escapedString andSmall:@"NONE" andPhotoId:processedName];
         }
+        theCallback(error);
     }];
     
 }
@@ -582,7 +583,7 @@ UIImagePickerController *imagePicker;
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)createPhotoUploadTaskUsingImageName:(NSString *)imageName andImageData:(NSData *)imageData {
+- (void)createPhotoUploadTaskUsingImageName:(NSString *)imageName andImageData:(NSData *)imageData andCompletion:(void(^)())completionHandler {
     //recording upload time
     startUploadDate = [NSDate date];
     
@@ -619,6 +620,8 @@ UIImagePickerController *imagePicker;
                     StreamViewController *streamController = [[StreamViewController alloc] init];
                     [streamController stopRefreshControlOnPhotoUpload];
                 }
+                completionHandler();
+
             }];
             
         }
@@ -627,47 +630,10 @@ UIImagePickerController *imagePicker;
 
 - (void)constructTaskWithImageName:(NSString*)name andData:(NSData*)data {
 
-    [self createPhotoUploadTaskUsingImageName:name andImageData:data];
+    [self createPhotoUploadTaskUsingImageName:name andImageData:data andCompletion:^{
+        //nothing
+    }];
 
-}
-
-
-
-- (void)PUTonNewPhotophpWithLocation:(CLLocation *)location andTime:(NSDate *)timeStamp WithImageURLsLarge:(NSString *)largeImage andUploadTime:(NSTimeInterval *) uploadTime andPhotoId:(NSString *)imageID andMapping:(NSString *)mapping {
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-    NSString *dateString = [dateFormatter stringFromDate: timeStamp];
-    
-        _PUTUrlString = [NSString stringWithFormat:@"https://n46.org/whereabt/newphotoTestFile.php?UserID=%@&PhotoID=%@&UserName=%@&Mapping=%@&Latitude=%f&Longitude=%f&PhotoURL=%@&ThumbnailURL=%@&TimeStamp=%@&UploadTime=%f", [WelcomeViewController sharedController].userID, imageID, [WelcomeViewController sharedController].userName, mapping, location.coordinate.latitude, location.coordinate.longitude, largeImage, @"UNAVAILABLE", dateString, uploadTime];
-        NSLog(@"PUT URL String: %@", _PUTUrlString);
-    
-    NSURL *url = [[NSURL alloc]initWithString:_PUTUrlString];
-    NSLog(@"%@", url);
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
-                                                   completionHandler:^(NSData *data,
-                                                                       NSURLResponse *response,
-                                                                       NSError *error){
-                                                       
-                                                                                                    dispatch_async(dispatch_get_main_queue(), ^{
-                                                        StreamViewController *streamController = [[StreamViewController alloc] init];
-                                                        [streamController stopRefreshControlOnPhotoUpload];
-                                                                        
-                                                       });
-                                                       
-                                                       if (error) {
-                                                           NSLog(@"ERROR: %@", error);
-                                                           UIAlertView *PhotoPUTAlert = [[UIAlertView alloc]initWithTitle:@"Sorry" message:@"An error occurred, please try again later." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                                                           [PhotoPUTAlert show];
-
-                                                       }
-                                                       else{
-                                                           NSLog(@"PUT to newPhoto.php completed");
-                                                       }
-                                                       
-                }];
-    [dataRequestTask resume];
 }
 
 - (UIImage *)fixOrientationOfImage: (UIImage *)distortedImage {

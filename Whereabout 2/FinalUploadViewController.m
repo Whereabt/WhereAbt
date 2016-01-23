@@ -12,6 +12,11 @@
 #import "WelcomeViewController.h"
 #import "PhotosAccessViewController.h"
 #import "LocationController.h"
+#import "n46UploadManager.h"
+#import <GoogleSignIn/GoogleSignIn.h>
+#import <OneDriveSDK/OneDriveSDK.h>
+
+
 @import Photos;
 
 @interface FinalUploadViewController ()
@@ -71,6 +76,14 @@ NSMutableDictionary *imageSetDict;
 }
 
 - (IBAction)uploadButtonPress:(id)sender {
+    UIActivityIndicatorView *uploadActivityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.center.x - 20, self.view.center.y - 20, 40, 40)];
+    uploadActivityIndicator.color = [UIColor colorWithRed:0.0f/255.0f green:153.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+    [selectedImageView addSubview:uploadActivityIndicator];
+    [uploadActivityIndicator startAnimating];
+    
+    
+    UIBarButtonItem *activityIndicatorItem = [[UIBarButtonItem alloc] initWithCustomView:uploadActivityIndicator];
+    [self.navigationController.navigationBar.topItem setRightBarButtonItem:activityIndicatorItem];
     
     PHAsset *asset = infoArray[6][@"Asset"];
     if (fromCameraRoll) {
@@ -78,6 +91,11 @@ NSMutableDictionary *imageSetDict;
             [self uploadPhotoWithLocation:asset.location andTime:asset.creationDate];
         }
         else {
+            UIBarButtonItem *navBarButt = [[UIBarButtonItem alloc]initWithTitle:@"Upload" style:UIBarButtonItemStylePlain target:self action:@selector(uploadButtonPress:)];
+            
+            [self.navigationController.navigationBar.topItem setRightBarButtonItem:navBarButt];
+            
+
             UIAlertController *metadataLocationAlert = [UIAlertController alertControllerWithTitle:@"No stored location" message:@"This photo cannot be uploaded since it doesn't have a location stored in its metadata." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [metadataLocationAlert dismissViewControllerAnimated:YES completion:nil];
@@ -90,7 +108,12 @@ NSMutableDictionary *imageSetDict;
     
     else {
         if (![LocationController sharedController].currentLocation) {
-            UIAlertController *LocationAlert = [UIAlertController alertControllerWithTitle:@"Could not retrieve your current location" message:@"Please check your settings to make sure that we can get your location." preferredStyle:UIAlertControllerStyleAlert];
+            UIBarButtonItem *navBarButt = [[UIBarButtonItem alloc]initWithTitle:@"Upload" style:UIBarButtonItemStylePlain target:self action:@selector(uploadButtonPress:)];
+            
+            [self.navigationController.navigationBar.topItem setRightBarButtonItem:navBarButt];
+            
+
+            UIAlertController *LocationAlert = [UIAlertController alertControllerWithTitle:@"Could not retrieve your current location" message:@"Please make sure that we have access to your location in Settings." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [LocationAlert dismissViewControllerAnimated:YES completion:nil];
             }];
@@ -99,21 +122,25 @@ NSMutableDictionary *imageSetDict;
             [self presentViewController:LocationAlert animated:YES completion:nil];
 
         }
-        [self uploadPhotoWithLocation:<#(CLLocation *)#> andTime:<#(NSDate *)#>]
+        else {
+            //check defults
+            NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+            if ([[preferences objectForKey:@"autoSave"]  isEqual: @"YES"]) {
+                UIImageWriteToSavedPhotosAlbum(selectedImageView.image, nil, nil, nil);
+            }
+            
+        [self uploadPhotoWithLocation:[LocationController sharedController].currentLocation andTime:[NSDate date]];
+        }
     }
     
 }
 
 - (void)uploadPhotoWithLocation:(CLLocation *)locationTag andTime:(NSDate *) dateStamp {
-    UIActivityIndicatorView *uploadActivityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.center.x - 20, self.view.center.y - 20, 40, 40)];
-    uploadActivityIndicator.color = [UIColor colorWithRed:0.0f/255.0f green:153.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
-    [selectedImageView addSubview:uploadActivityIndicator];
-    [uploadActivityIndicator startAnimating];
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
     
+    n46UploadManager *putManager = [[n46UploadManager alloc] init];
     
-    UIBarButtonItem *activityIndicatorItem = [[UIBarButtonItem alloc] initWithCustomView:uploadActivityIndicator];
-    [self.navigationController.navigationBar.topItem setRightBarButtonItem:activityIndicatorItem];
-    
+    NSDate *uploadStartTime = [NSDate date];
     ReadWriteBlobsManager *blobManager = [[ReadWriteBlobsManager alloc] init];
     
     NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] init];
@@ -125,21 +152,100 @@ NSMutableDictionary *imageSetDict;
     NSString *stringImage = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     
     paramDict[@"Data-String"] = stringImage;
-    paramDict[@"UserID"] = [WelcomeViewController sharedController].userID;
     
     paramDict[@"PhotoID"] = [[NSProcessInfo processInfo] globallyUniqueString];
+    paramDict[@"UserID"] = [preferences objectForKey:@"UserID"];
     
-    [blobManager uploadBlobToContainerWithPhotoDict:paramDict WithCompletion:^(NSError *cbError) {
-        if (cbError) {
-            NSLog(@"ERROR UPLOADING BLOB: %@", cbError);
-        }
-        else {
-            NSLog(@"SUCCESS UPLOADING BLOB");
-            PhotosAccessViewController *photoAccessManager = [[PhotosAccessViewController alloc] init];
-            [photoAccessManager PUTonNewPhotophpFromCamera:YES WithImageURLsLarge:@"BLOB" andSmall:@"NONE" andPhotoId:[NSString stringWithFormat:@"%@/%@", paramDict[@"UserID"], paramDict[@"PhotoID"]]];
+    NSString *mappingPreference = [[NSString alloc]init];
+    if ([[preferences objectForKey:@"mapping"]  isEqual: @"TRUE"]) {
+        mappingPreference = @"TRUE";
+    }
+    else {
+        mappingPreference = @"FALSE";
+    }
+    NSString *ImageHeight = [NSString stringWithFormat:@"%f", selectedImageView.image.size.height];
+    NSLog(@"IMAGE HEIGHT: %@", ImageHeight);
+    
+    if (selectedImageView.image.size.height > 500) {
+        ImageHeight = @"400.00";
+    }
+    
+    //if has onedrive account, don't use blob storage
+    if ([[preferences objectForKey:@"AuthType"]  isEqual: @"onedrive"]) {
+        [putManager createPhotoUploadTaskUsingImageName:paramDict[@"PhotoID"] andImageData:imageData andCompletion:^(NSString *odUrl) {
+            [putManager PUTonNewPhotophpWithLocation:locationTag andTime:dateStamp WithImageURLsLarge:odUrl andUploadTime:[NSString stringWithFormat:@"%f", uploadStartTime.timeIntervalSinceNow] andPhotoId:paramDict[@"PhotoID"] Mapping:mappingPreference ImageSize:ImageHeight andCompletion:^(NSError *putError) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.navigationController.navigationBar.topItem.rightBarButtonItem = nil;
+                    
+                    // upldButtonItem = [[UIBarButtonItem alloc] initWithCustomView:uploadButton];
+                    UIBarButtonItem *navBarButt = [[UIBarButtonItem alloc]initWithTitle:@"Upload" style:UIBarButtonItemStylePlain target:self action:@selector(uploadButtonPress:)];
+                    
+                    [self.navigationController.navigationBar.topItem setRightBarButtonItem:navBarButt];
+                    
+                });
+                
+                if (putError) {
+                    NSLog(@"Error on n46 PUT");
+                    
+                    UIAlertController *putAlert = [UIAlertController alertControllerWithTitle:@"Could not connect to the server." message:@"Please check your network connection and try again." preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [putAlert dismissViewControllerAnimated:YES completion:nil];
+                    }];
+                    
+                    [putAlert addAction:okAction];
+                    [self presentViewController:putAlert animated:YES completion:nil];
+                    
+                }
+                else {
+                    NSLog(@"Success on n46 PUT");
+                }
+
+            }];
+        }];
+    }
+    
+    else {
+        [blobManager uploadBlobToContainerWithPhotoDict:paramDict WithCompletion:^(NSError *cbError) {
+            if (cbError) {
+                NSLog(@"ERROR UPLOADING BLOB: %@", cbError);
+            }
+            else {
+                NSLog(@"SUCCESS UPLOADING BLOB");
             
-            NSLog(@"PHOTO ID: %@", paramDict[@"PhotoID"]);
-        }
+                    NSString *intervalsString = [NSString stringWithFormat:@"%f", uploadStartTime.timeIntervalSinceNow];
+            
+                    [putManager PUTonNewPhotophpWithLocation:locationTag andTime:dateStamp WithImageURLsLarge:@"BLOB" andUploadTime:intervalsString andPhotoId:paramDict[@"PhotoID"] Mapping:mappingPreference ImageSize:ImageHeight andCompletion:^(NSError *putError) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.navigationController.navigationBar.topItem.rightBarButtonItem = nil;
+                        
+                        // upldButtonItem = [[UIBarButtonItem alloc] initWithCustomView:uploadButton];
+                            UIBarButtonItem *navBarButt = [[UIBarButtonItem alloc]initWithTitle:@"Upload" style:UIBarButtonItemStylePlain target:self action:@selector(uploadButtonPress:)];
+                        
+                            [self.navigationController.navigationBar.topItem setRightBarButtonItem:navBarButt];
+                        
+                        });
+                    
+                        if (putError) {
+                            NSLog(@"Error on n46 PUT");
+                        
+                            UIAlertController *putAlert = [UIAlertController alertControllerWithTitle:@"Could not connect to the server." message:@"Please check your network connection and try again." preferredStyle:UIAlertControllerStyleAlert];
+                            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            [putAlert dismissViewControllerAnimated:YES completion:nil];
+                            }];
+                        
+                            [putAlert addAction:okAction];
+                            [self presentViewController:putAlert animated:YES completion:nil];
+                        
+                        }
+                        else {
+                            NSLog(@"Success on n46 PUT");
+                        }
+                    }];
+            
+            
+                NSLog(@"PHOTO ID: %@", paramDict[@"PhotoID"]);
+            }
+        /*
         dispatch_async(dispatch_get_main_queue(), ^{
             self.navigationController.navigationBar.topItem.rightBarButtonItem = nil;
             
@@ -147,10 +253,10 @@ NSMutableDictionary *imageSetDict;
             UIBarButtonItem *navBarButt = [[UIBarButtonItem alloc]initWithTitle:@"Upload" style:UIBarButtonItemStylePlain target:self action:@selector(uploadButtonPress:)];
             
             [self.navigationController.navigationBar.topItem setRightBarButtonItem:navBarButt];
-            
-            //[uploadActivityIndicator stopAnimating];
-        });
-    }];
+         
+        }); */
+        }];
+    }
 
 }
 

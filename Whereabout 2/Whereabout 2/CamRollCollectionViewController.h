@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CamRollCollectionViewController : UICollectionViewController
+@interface CamRollCollectionViewController : UICollectionViewController 
 
 @end

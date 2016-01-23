@@ -10,9 +10,11 @@
 
 @interface SettingsTableViewController : UITableViewController
 @property (strong, nonatomic) IBOutlet UISwitch *saveSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *mappingSwitch;
 @property (strong, nonatomic) IBOutlet UIButton *logoutButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *logoutActivityIndicator;
 - (IBAction)logoutPressed:(id)sender;
 - (IBAction)switchChange:(id)sender;
+- (IBAction)mappingSwitchChange:(id)sender;
 
 @end

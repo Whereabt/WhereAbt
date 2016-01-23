@@ -14,6 +14,8 @@
 #include <math.h>
 #include <QuartzCore/QuartzCore.h>
 #import "UIImageView+AFNetworking.h"
+//#import <AFNetworking/AFNetworking.h>
+#import <InstagramSimpleOAuth/InstagramSimpleOAuth.h>
 #import "StreamTVCell.h"
 #import "PhotosAccessViewController.h"
 #import "MapVCViewController.h"
@@ -60,7 +62,9 @@ PhotosAccessViewController *photoVC;
 
 - (void)viewDidAppear:(BOOL)animated {
     if (self.hasLoadedStream == NO) {
+        //[self refreshStream];
         [self refreshStream];
+        
         self.hasLoadedStream = YES;
     }
     else {
@@ -105,20 +109,10 @@ PhotosAccessViewController *photoVC;
         //create object to deal with network requests
         StreamController *networkRequester = [[StreamController alloc] init];
         
-        //get default radius
-        float f;
-        NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-        if ([preferences floatForKey:@"Radius Slider"] * 10 == 0) {
-            f = 1.5;
-        }
-        else {
-            f = [preferences floatForKey:@"Radius Slider"] * 10;
-        }
         
-        NSLog(@"Radius: %f", f);
         
         //USE f FOR RADIUS PARAM
-        [networkRequester getFeedWithRadius:f andCompletion:^(NSMutableArray *items, NSError *error) {
+        [networkRequester getFeedWithRadius:4000 andCompletion:^(NSMutableArray *items, NSError *error) {
             if (!error) {
                 self.streamItems = items;
                 
@@ -208,6 +202,14 @@ PhotosAccessViewController *photoVC;
             [uploadLabel removeFromSuperview];
         }
     }
+}
+
+
+- (void)updateStream {
+    StreamController *streamCont = [[StreamController alloc] init];
+    [streamCont getFeedFromAzureCloudFileWithRadius:4000 andCompletion:^(NSMutableArray *items, NSError *error) {
+        self.streamItems = items;
+    }];
 }
 
 - (BOOL)uploadingPhoto{
@@ -388,7 +390,7 @@ PhotosAccessViewController *photoVC;
                 
             }
             
-            NSLog(@"URL TO BLOB: %@", PhotoUrlString);
+            //NSLog(@"URL TO BLOB: %@", PhotoUrlString);
             
         }
     
@@ -442,7 +444,15 @@ PhotosAccessViewController *photoVC;
 }
 
 
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (![self.streamItems[indexPath.row][@"ThumbnailURL"]  isEqual: @"UNAVAILABLE"]) {
+        return [self.streamItems[indexPath.row][@"ThumbnailURL"] floatValue];
+    }
+    else {
+        return 273;
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.

@@ -11,6 +11,9 @@
 #import "WelcomeViewController.h"
 #import "KeychainItemWrapper.h"
 #import "InitialViewController.h"
+#import <GoogleSignIn/GoogleSignIn.h>
+#import "TabBarAppViewController.h"
+#import "AllLoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,7 +23,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-
+    
+    //Add the necessary permissions
+    
+    
+    //google auth
+    /*
+    NSError* configureError;
+    [[GGLContext sharedInstance] configureWithError: &configureError];
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    [GIDSignIn sharedInstance].delegate = self;
+    */
     
     //WelcomeViewController *welcomeController = [[WelcomeViewController alloc] init];
     
@@ -42,6 +55,45 @@
     return YES;
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options {
+    return [[GIDSignIn sharedInstance] handleURL:url
+                               sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
+                                      annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+}
+
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    NSDictionary *options = @{UIApplicationOpenURLOptionsSourceApplicationKey: sourceApplication,
+                              UIApplicationOpenURLOptionsAnnotationKey: annotation};
+    return [self application:application
+                     openURL:url
+                     options:options];
+}
+
+- (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user
+     withError:(NSError *)error {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"google" forKey:@"AuthType"];
+    [defaults setObject:[GIDSignIn sharedInstance].currentUser.userID forKey:@"UserID"];
+    [defaults setObject:[GIDSignIn sharedInstance].currentUser.profile.name forKey:@"UserName"];
+    
+    //TabBarAppViewController *tabBarVC = [[TabBarAppViewController alloc] init];
+    [self.window setRootViewController:[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarVC"]];
+
+    // Perform any operations on signed in user here.
+
+    // ...
+}
+
+- (void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error {
+    // Perform any operations when the user disconnects from app here.
+    // ...
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -56,9 +108,6 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

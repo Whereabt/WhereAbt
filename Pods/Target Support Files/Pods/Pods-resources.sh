@@ -65,6 +65,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
   install_resource "GPUImage/framework/Resources/lookup_soft_elegance_1.png"
   install_resource "GPUImage/framework/Resources/lookup_soft_elegance_2.png"
+  install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
+  install_resource "InstagramSimpleOAuth/InstagramSimpleOAuth/Source/InstagramSimpleOAuthViewController.xib"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "ADALiOS/ADALiOS/ADALiOS/ADAL_iPad_Storyboard.storyboard"
@@ -74,6 +76,8 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "GPUImage/framework/Resources/lookup_miss_etikate.png"
   install_resource "GPUImage/framework/Resources/lookup_soft_elegance_1.png"
   install_resource "GPUImage/framework/Resources/lookup_soft_elegance_2.png"
+  install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
+  install_resource "InstagramSimpleOAuth/InstagramSimpleOAuth/Source/InstagramSimpleOAuthViewController.xib"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

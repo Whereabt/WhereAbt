@@ -8,11 +8,12 @@
 
 #import "InitialViewController.h"
 #import "WelcomeViewController.h"
-#import "KeychainItemWrapper.h"
 #import <CoreLocation/CoreLocation.h>
 #import "LocationController.h"
 #import <OneDriveSDK/OneDriveSDK.h>
 #import "ProfileController.h"
+#import <GoogleSignIn/GoogleSignIn.h>
+#import <JNKeychain/JNKeychain.h>
 
 @interface InitialViewController ()
 
@@ -25,7 +26,6 @@
     [LocationController sharedController];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
 }
 
 
@@ -33,9 +33,66 @@
     
     NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
     
+    //[standardDefaults setBool:NO forKey:@"has launched"];
+    if (![standardDefaults boolForKey:@"has launched"]) {
+        [JNKeychain saveValue:@"" forKey:@"igAuthCode"];
+        [self performSegueWithIdentifier:@"segueToWalkthrough" sender:self];
+        [standardDefaults  setBool:YES forKey:@"has launched"];
+    }
+    else {
+        //test[self performSegueWithIdentifier:@"segueToLogin" sender:self];
+
+        if ([[GIDSignIn sharedInstance] hasAuthInKeychain]) {
+            [[GIDSignIn sharedInstance] signInSilently];
+            NSUserDefaults *authInfo = [NSUserDefaults standardUserDefaults];
+            BOOL silent = YES;
+            [authInfo setBool:silent forKey:@"wasSilent"];
+        }
+        
+        else if ([JNKeychain loadValueForKey:@"igAuthCode"]) {
+            [self performSegueWithIdentifier:@"fakeSegue" sender:self];
+        }
+        
+        else if ([[standardDefaults objectForKey:@"AuthType"]  isEqual: @"onedrive"]) {
+            NSArray *scopeArray = [[NSArray alloc] initWithObjects:@"wl.offline_access", @"onedrive.readwrite", nil];
+            [ODClient setMicrosoftAccountAppId:@"000000004C13496E" scopes:scopeArray];
+            [ODClient clientWithCompletion:^(ODClient *client, NSError *error){
+                if (!error){
+                    NSLog(@"Account ID: %@", client.accountId);
+                    [[[[ODClient loadCurrentClient] drive] request] getWithCompletion:^(ODDrive *response, NSError *error) {
+                        if (error) {
+                            UIAlertView *usernameAlert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"Please check your internet connection, you may have to restart the app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                            [usernameAlert show];
+                        }
+                        
+                        else{
+                            [WelcomeViewController sharedController].userName = [response.owner.user.displayName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                            
+                            [WelcomeViewController sharedController].userID = client.accountId;
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self performSegueWithIdentifier:@"fakeSegue" sender:self];
+                            });
+                        }
+                    }];
+                    
+                }
+                else {
+                    UIAlertView *odAuthErrorAlert = [[UIAlertView alloc] initWithTitle:@"Error signing in to OneDrive" message:@"Please try again" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    [odAuthErrorAlert show];
+                }
+            }];
+        }
+        
+        else {
+            [self performSegueWithIdentifier:@"segueToLogin" sender:self];
+        }
+        
+    }
+    
     //DELETE
     //[standardDefaults setBool:NO forKey:@"has launched"];
     
+    /*
     if (![standardDefaults boolForKey:@"has launched"]) {
         [self performSegueWithIdentifier:@"segueToWalkthrough" sender:self];
         [standardDefaults  setBool:YES forKey:@"has launched"];
@@ -74,7 +131,7 @@
             }
         }]; //auth completion ends here
          
-    }
+    } */
     
 }
 

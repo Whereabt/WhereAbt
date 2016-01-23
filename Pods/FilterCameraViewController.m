@@ -16,7 +16,7 @@
     GPUImageOutput<GPUImageInput> *filter;
 }
 @end
-#define ROUND_BUTTON_WIDTH_HEIGHT 80
+#define ROUND_BUTTON_WIDTH_HEIGHT 50
 
 @implementation FilterCameraViewController
 NSString *filterName;
@@ -24,16 +24,15 @@ NSString *filterName;
 - (void)viewDidLoad {
     [super viewDidLoad];
     //make filter button
-    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc] initWithTitle:@"Filter" style:UIBarButtonItemStylePlain target:self action:@selector(applyImageFilter:)];
-    self.navigationItem.rightBarButtonItem = filterButton;
     
     UIButton *circleCamButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [circleCamButton addTarget:self action:@selector(takePhotoButtonPressed:) forControlEvents:UIControlEventAllEvents];
     
     //overlayImage.png for orange
     [circleCamButton setImage:[UIImage imageNamed:@"OverlayImage.png"] forState:UIControlStateNormal];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
-    CGFloat screenHeight = screenRect.size.height;
 
     
     //430 y, -138
@@ -45,33 +44,38 @@ NSString *filterName;
                                                green:153.0f/255.0f
                                                 blue:255.0f/255.0f
                                                alpha:1.0f].CGColor;
+    //self.takePhotoButton.image = [UIImage imageNamed:@"OverlayImage.png"];
+    
+   // self.takePhotoButton.customView = circleCamButton;
     
     //self.takePhotoButton = [[UIBarButtonItem alloc]initWithCustomView:circleCamButton];
     
+    /*
+    UIButton *switchCameraButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 120, 50, 50)];
+    [switchCameraButton.titleLabel setText:@"Switch"];
+    
+    [switchCameraButton.titleLabel setTextColor:[UIColor redColor]];
+    [switchCameraButton addTarget:self action:@selector(switchCameraDirection) forControlEvents:UIControlEventAllEvents];
+    */
     // Setup initial camera filter
+    
     filter = [[GPUImageFilter alloc] init];
     //[filter prepareForImageCapture];
+
     GPUImageView *filterView = (GPUImageView *)self.view;
+    //[filterView addSubview:switchCameraButton];
+
     [filter addTarget:filterView];
     
     // Create custom GPUImage camera
-    stillCamera = [[GPUImageStillCamera alloc] init];
+    stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
+    stillCamera.horizontallyMirrorFrontFacingCamera = YES;
     stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
     [stillCamera addTarget:filter];
     filterName = @"None";
     // Begin showing video camera stream
     [stillCamera startCameraCapture];
-}
 
-- (IBAction)applyImageFilter:(id)sender
-{
-    UIActionSheet *filterActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Filter"
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"Cancel"
-                                                     destructiveButtonTitle:nil
-                                                          otherButtonTitles:@"Amatorka", @"Grayscale", @"Sepia Tone", @"Etikate", @"Elegance", @"None", nil];
-    
-    [filterActionSheet showFromBarButtonItem:sender animated:YES];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -123,8 +127,61 @@ NSString *filterName;
     
 }
 
+- (void)takePhotoButtonPressed {
+    //use default brightness (no effect)
+    GPUImageBrightnessFilter *noFilter = [[GPUImageBrightnessFilter alloc] init];
+    [stillCamera addTarget:noFilter];
+    //use 'filter' for selected filter, use brightnessFilter for original photo (unfiltered)
+    
+    
+    [stillCamera capturePhotoAsImageProcessedUpToFilter:noFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+        
+        FinalUploadViewController *finalUploadVC = [[FinalUploadViewController alloc] init];
+        NSLog(@"PROCESSED IMAGE: %@", processedImage);
+        //must be done before initiating segue
+        
+        NSMutableArray *filterArray = [[NSMutableArray alloc] init];
+        filterArray[0] = @"AMATORKA";
+        filterArray[1] = @"GRAYSCALE";
+        filterArray[2] = @"SEPIA TONE";
+        filterArray[3] = @"ETIKATE";
+        filterArray[4] = @"ELEGANCE";
+        filterArray[5] = @"NONE";
+        UIImage *filteredImage = [filter imageByFilteringImage:processedImage];
+        
+        
+        NSMutableDictionary *photoInfo = [[NSMutableDictionary alloc] init];
+        photoInfo[@"Name"] = filterName;
+        photoInfo[@"Image"] = filteredImage;
+        
+        filterArray[6] = photoInfo;
+        filterArray[7] = processedImage;
+        [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
+        
+        [finalUploadVC setCollectionViewDataSourceFromThisArray:filterArray];
+        
+        
+        //NSMutableDictionary *photoInfo = [[NSMutableDictionary alloc] init];
+        //photoInfo[@"UserID"] = [WelcomeViewController sharedController].userID;
+        //photoInfo[@"PhotoID"] = [[NSProcessInfo processInfo]globallyUniqueString];
+        
+        //get data
+        /*NSData *data = UIImagePNGRepresentation(processedImage);
+         NSString *dataString = [NSString stringWithFormat:@"%@", data];
+         photoInfo[@"Data-String"] = dataString;
+         
+         ReadWriteBlobsManager *blobManager = [[ReadWriteBlobsManager alloc] init];
+         [blobManager uploadBlobToContainerWithPhotoDict:photoInfo];
+         */
+        [self performSegueWithIdentifier:@"segueToFinalUpload" sender:self];
+    }];
+
+}
+
 - (IBAction)takePhotoPressed:(id)sender {
     //use default brightness (no effect)
+    
+    self.takePhotoButton.enabled = NO;
     GPUImageBrightnessFilter *noFilter = [[GPUImageBrightnessFilter alloc] init];
     [stillCamera addTarget:noFilter];
     //use 'filter' for selected filter, use brightnessFilter for original photo (unfiltered)
@@ -169,6 +226,7 @@ NSString *filterName;
          ReadWriteBlobsManager *blobManager = [[ReadWriteBlobsManager alloc] init];
          [blobManager uploadBlobToContainerWithPhotoDict:photoInfo];
          */
+        self.takePhotoButton.enabled = YES;
         [self performSegueWithIdentifier:@"segueToFinalUpload" sender:self];
     }];
 }
@@ -190,4 +248,19 @@ NSString *filterName;
 }
 */
 
+
+- (IBAction)filterItemPressed:(id)sender {
+    UIActionSheet *filterActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Filter"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"Cancel"
+                                                     destructiveButtonTitle:nil
+                                                          otherButtonTitles:@"Amatorka", @"Grayscale", @"Sepia Tone", @"Etikate", @"Elegance", @"None", nil];
+    
+    [filterActionSheet showFromBarButtonItem:sender animated:YES];
+}
+
+- (IBAction)switchItemPressed:(id)sender {
+    
+    [stillCamera rotateCamera];
+}
 @end
