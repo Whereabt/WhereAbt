@@ -347,10 +347,17 @@ BOOL shouldRefreshProfileOnAppear;
         reusableHeader = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
         [reusableHeader sizeToFit];
     }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSArray *firstLastName;
-    if ([GIDSignIn sharedInstance].currentUser) {
+    if ([[defaults objectForKey:@"AuthType"]  isEqual: @"google"]) {
     firstLastName = [[GIDSignIn sharedInstance].currentUser.profile.name componentsSeparatedByString:@" "];
+    }
+    else if ([[defaults objectForKey:@"AuthType"]  isEqual: @"instagram"]) {
+        firstLastName = [[defaults objectForKey:@"UserName"] componentsSeparatedByString:@" "];
+    }
+    else if ([[defaults objectForKey:@"AuthType"] isEqualToString:@"onedrive"]) {
+        firstLastName = [[defaults objectForKey:@"UserName"] componentsSeparatedByString:@" "];
     }
     
     reusableHeader.firstNameLabel.text = firstLastName[0];

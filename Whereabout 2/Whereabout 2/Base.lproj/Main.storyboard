@@ -504,6 +504,7 @@
                     </collectionView>
                     <tabBarItem key="tabBarItem" systemItem="recents" id="JMa-UK-TAP"/>
                     <navigationItem key="navigationItem" title="MY PROFILE" id="xrO-eO-we7">
+                        <barButtonItem key="backBarButtonItem" title="Me" id="VMQ-d9-gyE"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="fQ3-d1-TNY">
                             <connections>
                                 <action selector="profileRefreshButtonPress:" destination="JS9-F1-rD3" id="n3h-og-Xe9"/>

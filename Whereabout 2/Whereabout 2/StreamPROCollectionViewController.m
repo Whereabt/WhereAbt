@@ -31,6 +31,9 @@ UILabel *internetFailLabel;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.profileActivityIndicator.hidesWhenStopped = YES;
+    self.collectionView.alwaysBounceVertical = YES;
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
     [self refreshStreamProfile];
 }
 
@@ -44,10 +47,6 @@ UILabel *internetFailLabel;
         [self.profileActivityIndicator startAnimating];
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     
-        self.collectionView.alwaysBounceVertical = YES;
-        self.collectionView.delegate = self;
-        self.collectionView.dataSource = self;
-    
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -55,13 +54,14 @@ UILabel *internetFailLabel;
         [self.collectionView registerClass:[StreamPROCollectionViewCell class]    forCellWithReuseIdentifier:reuseIdentifier];
     
         // Do any additional setup after loading the view.
+        /*
         UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
         [flow setScrollDirection:UICollectionViewScrollDirectionVertical];
         //[self.collectionView setCollectionViewLayout:flow];
     
         UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
         collectionViewLayout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0);
-    
+    */
         //get the profile items (images)
         ProfileController *profileController = [[ProfileController alloc] init];
         [profileController requestProfileItemsFromUser:UserID AndIsCurrentUser:NO WithCompletion:^(NSMutableArray *Items, NSError *error) {
@@ -213,7 +213,7 @@ UILabel *internetFailLabel;
     cell.backgroundColor = [UIColor whiteColor];
     
     cell.backgroundView.frame = cell.frame;
-    cell.proCVImage.contentMode = UIViewContentModeScaleAspectFit;
+    cell.proCVImage.contentMode = UIViewContentModeScaleAspectFill;
     
     
     NSString *PhotoUrlString = self.allProfileItems[indexPath.row][@"PhotoURL"];
@@ -272,10 +272,10 @@ UILabel *internetFailLabel;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    //3 per row; 4 per column = about 3.5 and 5.7 (divide by)
-    return CGSizeMake(self.view.window.frame.size.width / 3.2, self.view.window.frame.size.height / 5.0);
+    return CGSizeMake(100, 100);
 }
 
+/*
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     
     return 2.0;
@@ -285,7 +285,7 @@ UILabel *internetFailLabel;
     
     return 2.0;
 }
-
+*/
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     
     StreamPROCollectionHeaderView *reusableHeader = nil;

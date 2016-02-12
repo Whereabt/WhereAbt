@@ -12,6 +12,7 @@
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <JNKeychain/JNKeychain.h>
 
+
 @interface SettingsTableViewController ()
 
 @end
@@ -47,20 +48,73 @@
 
 - (IBAction)logoutPressed:(id)sender {
     [self.logoutActivityIndicator startAnimating];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    //google always logout
+    [[GIDSignIn sharedInstance] signOut];
+    [[GIDSignIn sharedInstance] disconnect];
+    
+    //ig always logout
+    NSURLSessionDataTask *dataRequestTask = [[NSURLSession sharedSession] dataTaskWithURL: [NSURL URLWithString:@"https://instagram.com/accounts/logout/"]
+                                                                        completionHandler:^(NSData *data,
+                                                                                            NSURLResponse *response,
+                                                                                            NSError *error){
+                                                                            
+                                                                            NSURLSessionDataTask *googleRequestTask = [[NSURLSession sharedSession] dataTaskWithURL: [NSURL URLWithString:@"https://accounts.google.com/logout"]
+                                                                                                                                                completionHandler:^(NSData *data,
+                                                                                                                                                                    NSURLResponse *response,
+                                                                                                                                                                    NSError *error) {
+                                                                                                                                                    NSURLSessionDataTask *odRequestTask = [[NSURLSession sharedSession] dataTaskWithURL: [NSURL URLWithString:@"https://login.live.com/oauth20_logout.srf"]
+                                                                                                                                                                                                                          completionHandler:^(NSData *data,
+                                                                                                                                                                                                                                              NSURLResponse *response,
+                                                                                                                                                                                                                                              NSError *error) {
+                                                                                                                                                                                                                              
+                                                                                                                                                                                                                              [JNKeychain deleteValueForKey:@"AuthenticationMethod"];
+                                                                                                                                                                                                                              [self.logoutActivityIndicator stopAnimating];
+                                                                                                                                                                                                                              [self performSegueWithIdentifier:@"segueToLogout" sender:self];                                                                                                           }];
+                                                                                                                                                    [odRequestTask resume];                                          //od conditional logout
+                                                                                                             /*                                       if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"]  isEqual: @"OneDriveAuthentication"]) {
+                                                                                                                                                        [[ODClient loadCurrentClient] signOutWithCompletion:^(NSError *erro) {
+                                                                                                                                                            [self.logoutActivityIndicator stopAnimating];
+                                                                                                                                                            [JNKeychain deleteValueForKey:@"AuthenticationMethod"];                                         if (erro) {
+                                                                                                                                                                UIAlertView *logoutFailAlert = [[UIAlertView alloc] initWithTitle:@"Logout Failed" message:@"An error occurred" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                                                                                                                                                                [logoutFailAlert show];
+                                                                                                                                                            }
+                                                                                                                                                            else {
+                                                                                                                                                                                                                 [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+                                                                                                                                                            }
+                                                                                                                                                       }];
+                                                                                                                                                    }
+                                                                                                                                                    
+                                                                                                                                                    else {
+                                                                                                             [JNKeychain deleteValueForKey:@"AuthenticationMethod"];
+                                                                                                                                                        [self.logoutActivityIndicator stopAnimating];
+                                                                                                                                                        [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+                                                                                                                                                    }
+                                        */
+                                                                                                                                                }];
+                                                                                                                       [googleRequestTask resume];
+
+                                                                                                                                                }];
+    [dataRequestTask resume];
+    
+
+    /*
     if ([[defaults objectForKey:@"AuthType"]  isEqual: @"instagram"]) {
-        [JNKeychain deleteValueForKey:@"igAuthCode"];
-        NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-        for (NSHTTPCookie *each in [cookieStorage cookiesForURL:[NSURL URLWithString:@"https://api.instagram.com"]]) {
-            [cookieStorage deleteCookie:each];
-        }
-        [self.logoutActivityIndicator stopAnimating];
-        [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+        [JNKeychain deleteValueForKey:@"igAccessToken"];
+        NSURLSessionDataTask *dataRequestTask = [[NSURLSession sharedSession] dataTaskWithURL: [NSURL URLWithString:@"https://instagram.com/accounts/logout/"]
+                                                       completionHandler:^(NSData *data,
+                                                                           NSURLResponse *response,
+                                                                           NSError *error){
+                                                           [defaults setObject:@"" forKey:@"AuthType"];
+                                                           [self.logoutActivityIndicator stopAnimating];
+                                                           [self performSegueWithIdentifier:@"segueToLogout" sender:self];
+                                                       }];
+        [dataRequestTask resume];
     }
     
     else if ([[defaults objectForKey:@"AuthType"]  isEqual: @"onedrive"]) {
         [[ODClient loadCurrentClient] signOutWithCompletion:^(NSError *erro) {
+            [defaults setObject:@"" forKey:@"AuthType"];
             if (erro) {
                 UIAlertView *logoutFailAlert = [[UIAlertView alloc] initWithTitle:@"Logout Failed" message:@"An error occurred" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                 [logoutFailAlert show];
@@ -73,10 +127,11 @@
     }
     
     else if ([[defaults objectForKey:@"AuthType"]  isEqual: @"google"]) {
+        [defaults setObject:@"" forKey:@"AuthType"];
         [[GIDSignIn sharedInstance] signOut];
         [self.logoutActivityIndicator stopAnimating];
         [self performSegueWithIdentifier:@"segueToLogout" sender:self];
-    }
+    } */
     
     /* ---> OLD WAY
     KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];

@@ -14,13 +14,17 @@
 #import "ProfileController.h"
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <JNKeychain/JNKeychain.h>
+#import <InstagramSimpleOAuth/InstagramSimpleOAuth.h>
+
+NSString *const InstagramCons = @"InstagramAuthentication";
+NSString *const GoogleCons = @"GoogleAuthentication";
+NSString *const OneDriveCons = @"OneDriveAuthentication";
 
 @interface InitialViewController ()
 
 @end
 
 @implementation InitialViewController
-
 
 - (void)viewDidLoad {
     [LocationController sharedController];
@@ -35,25 +39,22 @@
     
     //[standardDefaults setBool:NO forKey:@"has launched"];
     if (![standardDefaults boolForKey:@"has launched"]) {
-        [JNKeychain saveValue:@"" forKey:@"igAuthCode"];
         [self performSegueWithIdentifier:@"segueToWalkthrough" sender:self];
         [standardDefaults  setBool:YES forKey:@"has launched"];
     }
     else {
         //test[self performSegueWithIdentifier:@"segueToLogin" sender:self];
 
-        if ([[GIDSignIn sharedInstance] hasAuthInKeychain]) {
+        if ([JNKeychain loadValueForKey:@"AuthenticationMethod"] == GoogleCons) {
             [[GIDSignIn sharedInstance] signInSilently];
-            NSUserDefaults *authInfo = [NSUserDefaults standardUserDefaults];
-            BOOL silent = YES;
-            [authInfo setBool:silent forKey:@"wasSilent"];
-        }
-        
-        else if ([JNKeychain loadValueForKey:@"igAuthCode"]) {
             [self performSegueWithIdentifier:@"fakeSegue" sender:self];
         }
         
-        else if ([[standardDefaults objectForKey:@"AuthType"]  isEqual: @"onedrive"]) {
+        else if ([JNKeychain loadValueForKey:@"AuthenticationMethod"] == InstagramCons) {
+            [self performSegueWithIdentifier:@"fakeSegue" sender:self];
+        }
+        
+        else if ([JNKeychain loadValueForKey:@"AuthenticationMethod"] == OneDriveCons) {
             NSArray *scopeArray = [[NSArray alloc] initWithObjects:@"wl.offline_access", @"onedrive.readwrite", nil];
             [ODClient setMicrosoftAccountAppId:@"000000004C13496E" scopes:scopeArray];
             [ODClient clientWithCompletion:^(ODClient *client, NSError *error){
@@ -66,9 +67,9 @@
                         }
                         
                         else{
-                            [WelcomeViewController sharedController].userName = [response.owner.user.displayName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                            [standardDefaults setObject:response.owner.user.displayName  forKey:@"UserName"];
+                            [standardDefaults setObject:client.accountId forKey:@"UserID"];
                             
-                            [WelcomeViewController sharedController].userID = client.accountId;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self performSegueWithIdentifier:@"fakeSegue" sender:self];
                             });

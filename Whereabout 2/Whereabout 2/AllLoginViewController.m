@@ -14,6 +14,10 @@
 #import <JNKeychain/JNKeychain.h>
 
 
+NSString *const InstagramConstant = @"InstagramAuthentication";
+NSString *const GoogleConstant = @"GoogleAuthentication";
+NSString *const OneDriveConstant = @"OneDriveAuthentication";
+
 @interface AllLoginViewController ()
 {
     BOOL loginCompleted;
@@ -39,7 +43,7 @@
     
 }
 
--(void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     if (loginCompleted) {
         [self performSegueWithIdentifier:@"segueToInitial" sender:self];
     }
@@ -65,10 +69,9 @@
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user
      withError:(NSError *)error {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"google" forKey:@"AuthType"];
     [defaults setObject:[GIDSignIn sharedInstance].currentUser.userID forKey:@"UserID"];
     [defaults setObject:[GIDSignIn sharedInstance].currentUser.profile.name forKey:@"UserName"];
-    
+    [JNKeychain saveValue:GoogleConstant forKey:@"AuthorizationMethod"];
     [self performSegueWithIdentifier:@"segueToInitial" sender:self];
 
     //TabBarAppViewController *tabBarVC = [[TabBarAppViewController alloc] init];
@@ -92,13 +95,12 @@
                                                                       clientSecret:@"331413fc7963419e8bb405854066e684"
                                                                        callbackURL:[NSURL URLWithString:@"https://n46.org/whereabt"]
                                                                         completion:^(InstagramLoginResponse *response, NSError *error) {
-                                                                            [JNKeychain saveValue:response.authorizationCode forKey:@"igAuthCode"];
+                                                                            [JNKeychain saveValue:InstagramConstant forKey:@"AuthorizationMethod"];
                                                                             
-                                                                            NSLog(@"My Username is: %@", response.user.username);
+                                                                            NSLog(@"My fullname is: %@", response.user.fullName);
                                                                             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                                             [defaults setObject:response.user.userID forKey:@"UserID"];
                                                                             [defaults setObject:response.user.fullName forKey:@"UserName"];
-                                                                            [defaults setObject:@"instagram" forKey:@"AuthType"];
                                                                             loginCompleted = YES;
                                                                             NSLog(@"IG ACCESS TOKEN:%@", response.accessToken);
                                                                         }];
@@ -113,8 +115,7 @@
     
     [ODClient setMicrosoftAccountAppId:@"000000004C13496E" scopes:scopeArray];
     
-    [ODClient clientWithCompletion:^(ODClient *client, NSError *error) {
-        
+    [ODClient authenticatedClientWithCompletion:^(ODClient *client, NSError *error) {
         if (!error) {
             [[[[ODClient loadCurrentClient] drive] request] getWithCompletion:^(ODDrive *response, NSError *error) {
                 if (error) {
@@ -127,9 +128,9 @@
                     NSLog(@"User id = %@", client.accountId);
                     [defaults setObject:client.accountId forKey:@"UserID"];
                     [defaults setObject:response.owner.user.displayName forKey:@"UserName"];
-                    [defaults setObject:@"onedrive" forKey:@"AuthType"];
+                    [JNKeychain saveValue:OneDriveConstant forKey:@"AuthorizationMethod"];
                     [self performSegueWithIdentifier:@"segueToInitial" sender:self];
-                    loginCompleted = YES;
+                    //loginCompleted = YES;
                 }
             }];
             
