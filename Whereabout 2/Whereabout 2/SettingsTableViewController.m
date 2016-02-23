@@ -71,26 +71,7 @@
                                                                                                                                                                                                                               [JNKeychain deleteValueForKey:@"AuthenticationMethod"];
                                                                                                                                                                                                                               [self.logoutActivityIndicator stopAnimating];
                                                                                                                                                                                                                               [self performSegueWithIdentifier:@"segueToLogout" sender:self];                                                                                                           }];
-                                                                                                                                                    [odRequestTask resume];                                          //od conditional logout
-                                                                                                             /*                                       if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"]  isEqual: @"OneDriveAuthentication"]) {
-                                                                                                                                                        [[ODClient loadCurrentClient] signOutWithCompletion:^(NSError *erro) {
-                                                                                                                                                            [self.logoutActivityIndicator stopAnimating];
-                                                                                                                                                            [JNKeychain deleteValueForKey:@"AuthenticationMethod"];                                         if (erro) {
-                                                                                                                                                                UIAlertView *logoutFailAlert = [[UIAlertView alloc] initWithTitle:@"Logout Failed" message:@"An error occurred" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                                                                                                                                                                [logoutFailAlert show];
-                                                                                                                                                            }
-                                                                                                                                                            else {
-                                                                                                                                                                                                                 [self performSegueWithIdentifier:@"segueToLogout" sender:self];
-                                                                                                                                                            }
-                                                                                                                                                       }];
-                                                                                                                                                    }
-                                                                                                                                                    
-                                                                                                                                                    else {
-                                                                                                             [JNKeychain deleteValueForKey:@"AuthenticationMethod"];
-                                                                                                                                                        [self.logoutActivityIndicator stopAnimating];
-                                                                                                                                                        [self performSegueWithIdentifier:@"segueToLogout" sender:self];
-                                                                                                                                                    }
-                                        */
+                                                                                                                                                    [odRequestTask resume];
                                                                                                                                                 }];
                                                                                                                        [googleRequestTask resume];
 
@@ -98,61 +79,6 @@
     [dataRequestTask resume];
     
 
-    /*
-    if ([[defaults objectForKey:@"AuthType"]  isEqual: @"instagram"]) {
-        [JNKeychain deleteValueForKey:@"igAccessToken"];
-        NSURLSessionDataTask *dataRequestTask = [[NSURLSession sharedSession] dataTaskWithURL: [NSURL URLWithString:@"https://instagram.com/accounts/logout/"]
-                                                       completionHandler:^(NSData *data,
-                                                                           NSURLResponse *response,
-                                                                           NSError *error){
-                                                           [defaults setObject:@"" forKey:@"AuthType"];
-                                                           [self.logoutActivityIndicator stopAnimating];
-                                                           [self performSegueWithIdentifier:@"segueToLogout" sender:self];
-                                                       }];
-        [dataRequestTask resume];
-    }
-    
-    else if ([[defaults objectForKey:@"AuthType"]  isEqual: @"onedrive"]) {
-        [[ODClient loadCurrentClient] signOutWithCompletion:^(NSError *erro) {
-            [defaults setObject:@"" forKey:@"AuthType"];
-            if (erro) {
-                UIAlertView *logoutFailAlert = [[UIAlertView alloc] initWithTitle:@"Logout Failed" message:@"An error occurred" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-                [logoutFailAlert show];
-            }
-            else {
-                [self.logoutActivityIndicator stopAnimating];
-                [self performSegueWithIdentifier:@"segueToLogout" sender:self];
-            }
-        }];
-    }
-    
-    else if ([[defaults objectForKey:@"AuthType"]  isEqual: @"google"]) {
-        [defaults setObject:@"" forKey:@"AuthType"];
-        [[GIDSignIn sharedInstance] signOut];
-        [self.logoutActivityIndicator stopAnimating];
-        [self performSegueWithIdentifier:@"segueToLogout" sender:self];
-    } */
-    
-    /* ---> OLD WAY
-    KeychainItemWrapper *keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"Login" accessGroup:nil];
-    
-    //set nil for the refresh token, user will have to log back in
-    [WelcomeViewController sharedController].refreshToken = @"";
-    
-    [keychain setObject:[WelcomeViewController sharedController].refreshToken forKey:(__bridge id)kSecValueData];
-    NSURL *url = [NSURL URLWithString:@"https://login.live.com/oauth20_logout.srf?client_id=000000004C13496E&redirect_uri=https://n46.org/whereabt/redirect.html"];
-    
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        //completion
-        NSLog(@"Response from logout: %@", response);
-        [self.logoutActivityIndicator stopAnimating];
-        [self performSegueWithIdentifier:@"segueToLogout" sender:self];
-    }];
-    
-    [dataRequestTask resume];
-    */
-    
 }
 
 - (IBAction)switchChange:(id)sender {

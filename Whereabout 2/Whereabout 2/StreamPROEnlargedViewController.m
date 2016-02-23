@@ -10,6 +10,7 @@
 #import "WelcomeViewController.h"
 #import "LocationController.h"
 #import <OneDriveSDK/OneDriveSDK.h>
+#import <JNKeychain/JNKeychain.h>
 
 @interface StreamPROEnlargedViewController ()
 
@@ -123,7 +124,7 @@ NSDictionary *enlargeItems;
 
 - (IBAction)longPressButtonPressed:(id)sender {
     //create the alert
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Save Image" message:@"Where would you like to save this image?" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Save Image" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     //action for save
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save to Camera Roll", "Save Action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -135,8 +136,8 @@ NSDictionary *enlargeItems;
     }];
     
     [alertController addAction:yesAction];
-    
-    UIAlertAction *odSaveAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save to Private OneDrive", "OneDrive Save Action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"] isEqual: @"OneDriveAuthentication"]) {
+        UIAlertAction *odSaveAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save to Private OneDrive", "OneDrive Save Action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         NSData *dataFromImage = UIImagePNGRepresentation(self.photoView.image);
         
@@ -169,7 +170,8 @@ NSDictionary *enlargeItems;
     }];
 
     [alertController addAction: odSaveAction];
-    
+   }
+
     //cancel action
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", "Cancel Action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         if (self.presentingViewController == alertController) {

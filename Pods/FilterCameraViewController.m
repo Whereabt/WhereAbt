@@ -59,10 +59,12 @@ NSString *filterName;
     */
     // Setup initial camera filter
     
+    /* OG
     filter = [[GPUImageFilter alloc] init];
     //[filter prepareForImageCapture];
 
     GPUImageView *filterView = (GPUImageView *)self.view;
+    
     //[filterView addSubview:switchCameraButton];
 
     [filter addTarget:filterView];
@@ -73,9 +75,27 @@ NSString *filterName;
     stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
     [stillCamera addTarget:filter];
     filterName = @"None";
-    // Begin showing video camera stream
     [stillCamera startCameraCapture];
+     */
+}
 
+- (void) viewDidAppear:(BOOL)animated {
+    filter = [[GPUImageFilter alloc] init];
+    //[filter prepareForImageCapture];
+    
+    GPUImageView *filterView = (GPUImageView *)self.view;
+    
+    //[filterView addSubview:switchCameraButton];
+    
+    [filter addTarget:filterView];
+    
+    // Create custom GPUImage camera
+    stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
+    stillCamera.horizontallyMirrorFrontFacingCamera = YES;
+    stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
+    [stillCamera addTarget:filter];
+    filterName = @"None";
+    [stillCamera startCameraCapture];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -124,7 +144,6 @@ NSString *filterName;
     GPUImageView *filterView = (GPUImageView *)self.view;
     [filter addTarget:filterView];
     [stillCamera addTarget:filter];
-    
 }
 
 - (void)takePhotoButtonPressed {
@@ -132,10 +151,12 @@ NSString *filterName;
     GPUImageBrightnessFilter *noFilter = [[GPUImageBrightnessFilter alloc] init];
     [stillCamera addTarget:noFilter];
     //use 'filter' for selected filter, use brightnessFilter for original photo (unfiltered)
-    
-    
+    //WRONG
     [stillCamera capturePhotoAsImageProcessedUpToFilter:noFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         
+        UIView *blackView = (UIView *)self.view;
+        blackView.backgroundColor = [UIColor blackColor];
+
         FinalUploadViewController *finalUploadVC = [[FinalUploadViewController alloc] init];
         NSLog(@"PROCESSED IMAGE: %@", processedImage);
         //must be done before initiating segue
@@ -160,20 +181,10 @@ NSString *filterName;
         
         [finalUploadVC setCollectionViewDataSourceFromThisArray:filterArray];
         
-        
-        //NSMutableDictionary *photoInfo = [[NSMutableDictionary alloc] init];
-        //photoInfo[@"UserID"] = [WelcomeViewController sharedController].userID;
-        //photoInfo[@"PhotoID"] = [[NSProcessInfo processInfo]globallyUniqueString];
-        
-        //get data
-        /*NSData *data = UIImagePNGRepresentation(processedImage);
-         NSString *dataString = [NSString stringWithFormat:@"%@", data];
-         photoInfo[@"Data-String"] = dataString;
-         
-         ReadWriteBlobsManager *blobManager = [[ReadWriteBlobsManager alloc] init];
-         [blobManager uploadBlobToContainerWithPhotoDict:photoInfo];
-         */
-        [self performSegueWithIdentifier:@"segueToFinalUpload" sender:self];
+        [self presentViewController:finalUploadVC animated:NO completion:^{
+            //completion
+        }];
+        //[self performSegueWithIdentifier:@"segueToFinalUpload" sender:self];
     }];
 
 }
@@ -183,11 +194,33 @@ NSString *filterName;
     
     self.takePhotoButton.enabled = NO;
     GPUImageBrightnessFilter *noFilter = [[GPUImageBrightnessFilter alloc] init];
+    //[noFilter forceProcessingAtSize:CGSizeMake(300, 300)];
     [stillCamera addTarget:noFilter];
     //use 'filter' for selected filter, use brightnessFilter for original photo (unfiltered)
     
-  
+    //test
+   // [stillCamera useNextFrameForImageCapture];
+    /*
+    NSURL *inputImageURL = [[NSBundle mainBundle] URLForResource:@"Lambeau" withExtension:@"jpg"];
+    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithURL:inputImageURL];
+    
+    GPUImageSepiaFilter *stillImageFilter = [[GPUImageSepiaFilter alloc] init];
+    GPUImageVignetteFilter *vignetteImageFilter = [[GPUImageVignetteFilter alloc] init];
+    vignetteImageFilter.vignetteEnd = 0.6;
+    vignetteImageFilter.vignetteStart = 0.4;
+    
+    [stillImageSource addTarget:stillImageFilter];
+    [stillImageFilter addTarget:vignetteImageFilter];
+    
+    [vignetteImageFilter useNextFrameForImageCapture];
+    [stillImageSource processImage];
+    */
+
     [stillCamera capturePhotoAsImageProcessedUpToFilter:noFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+        //[stillCamera stopCameraCapture];
+        UIView *blackView = [[UIView alloc]initWithFrame:self.view.frame];
+        blackView.backgroundColor = [UIColor blackColor];
+        [self setView:blackView];
         
         FinalUploadViewController *finalUploadVC = [[FinalUploadViewController alloc] init];
         NSLog(@"PROCESSED IMAGE: %@", processedImage);
@@ -202,7 +235,6 @@ NSString *filterName;
         filterArray[5] = @"NONE";
         UIImage *filteredImage = [filter imageByFilteringImage:processedImage];
 
-
         NSMutableDictionary *photoInfo = [[NSMutableDictionary alloc] init];
         photoInfo[@"Name"] = filterName;
         photoInfo[@"Image"] = filteredImage;
@@ -214,21 +246,9 @@ NSString *filterName;
         [finalUploadVC setCollectionViewDataSourceFromThisArray:filterArray];
         
         
-        //NSMutableDictionary *photoInfo = [[NSMutableDictionary alloc] init];
-        //photoInfo[@"UserID"] = [WelcomeViewController sharedController].userID;
-        //photoInfo[@"PhotoID"] = [[NSProcessInfo processInfo]globallyUniqueString];
-        
-        //get data
-        /*NSData *data = UIImagePNGRepresentation(processedImage);
-         NSString *dataString = [NSString stringWithFormat:@"%@", data];
-         photoInfo[@"Data-String"] = dataString;
-         
-         ReadWriteBlobsManager *blobManager = [[ReadWriteBlobsManager alloc] init];
-         [blobManager uploadBlobToContainerWithPhotoDict:photoInfo];
-         */
         self.takePhotoButton.enabled = YES;
         [self performSegueWithIdentifier:@"segueToFinalUpload" sender:self];
-    }];
+    }]; 
 }
 
 - (void)didReceiveMemoryWarning {

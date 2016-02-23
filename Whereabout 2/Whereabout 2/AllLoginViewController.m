@@ -9,7 +9,6 @@
 #import "AllLoginViewController.h"
 #import <InstagramSimpleOAuth/InstagramSimpleOAuth.h>
 #import <OneDriveSDK/OneDriveSDK.h>
-//#import "KeychainItemWrapper.h"
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <JNKeychain/JNKeychain.h>
 
@@ -29,7 +28,6 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 - (void)viewDidLoad {
     [super viewDidLoad];
     loginCompleted = NO;
-    // Do any additional setup after loading the view.
     NSUserDefaults *authInfo = [NSUserDefaults standardUserDefaults];
     BOOL silent = NO;
     [authInfo setBool:silent forKey:@"wasSilent"];
@@ -39,13 +37,14 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     [GIDSignIn sharedInstance].delegate = self;
     
     [GIDSignIn sharedInstance].uiDelegate = self;
-    
+    self.activityIndicator.hidesWhenStopped = YES;
     
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     if (loginCompleted) {
         [self performSegueWithIdentifier:@"segueToInitial" sender:self];
+        [self.activityIndicator stopAnimating];
     }
 }
 
@@ -71,37 +70,38 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[GIDSignIn sharedInstance].currentUser.userID forKey:@"UserID"];
     [defaults setObject:[GIDSignIn sharedInstance].currentUser.profile.name forKey:@"UserName"];
-    [JNKeychain saveValue:GoogleConstant forKey:@"AuthorizationMethod"];
+    [JNKeychain saveValue:GoogleConstant forKey:@"AuthenticationMethod"];
+    self.googleLogin.enabled = YES;
+    self.igLogin.enabled = YES;
+    self.odLogin.enabled = YES;
     [self performSegueWithIdentifier:@"segueToInitial" sender:self];
-
-    //TabBarAppViewController *tabBarVC = [[TabBarAppViewController alloc] init];
-    //[self.window setRootViewController:[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarVC"]];
-    
-    // Perform any operations on signed in user here.
-    
-    // ...
 }
 
 - (void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error {
-    // Perform any operations when the user disconnects from app here.
-    // ...
+
 }
 
 
 - (IBAction)instagramButtonPress:(id)sender {
-    
+    self.googleLogin.enabled = NO;
+    self.igLogin.enabled = NO;
+    self.odLogin.enabled = NO;
+    [self.activityIndicator startAnimating];
     InstagramSimpleOAuthViewController
     *igVController = [[InstagramSimpleOAuthViewController alloc] initWithClientID:@"a79d700aa5254341b7a1bf04de3b047b"
                                                                       clientSecret:@"331413fc7963419e8bb405854066e684"
                                                                        callbackURL:[NSURL URLWithString:@"https://n46.org/whereabt"]
                                                                         completion:^(InstagramLoginResponse *response, NSError *error) {
-                                                                            [JNKeychain saveValue:InstagramConstant forKey:@"AuthorizationMethod"];
+                                                                            [JNKeychain saveValue:InstagramConstant forKey:@"AuthenticationMethod"];
                                                                             
                                                                             NSLog(@"My fullname is: %@", response.user.fullName);
                                                                             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                                             [defaults setObject:response.user.userID forKey:@"UserID"];
                                                                             [defaults setObject:response.user.fullName forKey:@"UserName"];
                                                                             loginCompleted = YES;
+                                                                            self.googleLogin.enabled = YES;
+                                                                            self.igLogin.enabled = YES;
+                                                                            self.odLogin.enabled = YES;
                                                                             NSLog(@"IG ACCESS TOKEN:%@", response.accessToken);
                                                                         }];
     igVController.shouldShowErrorAlert = YES;
@@ -111,13 +111,19 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 }
 
 - (IBAction)microsoftButtonPress:(id)sender {
+    self.googleLogin.enabled = NO;
+    self.igLogin.enabled = NO;
+    self.odLogin.enabled = NO;
+    
     NSArray *scopeArray = [[NSArray alloc] initWithObjects:@"wl.offline_access", @"onedrive.readwrite", nil];
-    
     [ODClient setMicrosoftAccountAppId:@"000000004C13496E" scopes:scopeArray];
-    
+    [self.activityIndicator startAnimating];
     [ODClient authenticatedClientWithCompletion:^(ODClient *client, NSError *error) {
         if (!error) {
             [[[[ODClient loadCurrentClient] drive] request] getWithCompletion:^(ODDrive *response, NSError *error) {
+                self.googleLogin.enabled = YES;
+                self.igLogin.enabled = YES;
+                self.odLogin.enabled = YES;
                 if (error) {
                     UIAlertView *usernameAlert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"A problem occurred while logging in, you may have to restart the app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     [usernameAlert show];
@@ -128,7 +134,7 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
                     NSLog(@"User id = %@", client.accountId);
                     [defaults setObject:client.accountId forKey:@"UserID"];
                     [defaults setObject:response.owner.user.displayName forKey:@"UserName"];
-                    [JNKeychain saveValue:OneDriveConstant forKey:@"AuthorizationMethod"];
+                    [JNKeychain saveValue:OneDriveConstant forKey:@"AuthenticationMethod"];
                     [self performSegueWithIdentifier:@"segueToInitial" sender:self];
                     //loginCompleted = YES;
                 }
@@ -146,6 +152,10 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 }
 
 - (IBAction)googleButtonPress:(id)sender {
+    self.googleLogin.enabled = NO;
+    self.igLogin.enabled = NO;
+    self.odLogin.enabled = NO;
+    [self.activityIndicator startAnimating];
     [[GIDSignIn sharedInstance] signIn];
 }
 

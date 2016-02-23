@@ -430,8 +430,6 @@
 			children = (
 				012996DC1A354E5300C89D09 /* AppDelegate.h */,
 				012996DD1A354E5300C89D09 /* AppDelegate.m */,
-				B9E709401ACF5FB50054DE2C /* InitialViewController.h */,
-				B9E709411ACF5FB50054DE2C /* InitialViewController.m */,
 				B959B97F1AF9C0EE0000B65F /* InitialSegueViewController.h */,
 				B959B9801AF9C0EE0000B65F /* InitialSegueViewController.m */,
 				B927F11F1B1239D1007D5D05 /* NSNetworkConnection.h */,
@@ -573,6 +571,8 @@
 			children = (
 				B938DCBD1A71F8140073D91F /* KeychainItemWrapper.h */,
 				B938DCBE1A71F8140073D91F /* KeychainItemWrapper.m */,
+				B9E709401ACF5FB50054DE2C /* InitialViewController.h */,
+				B9E709411ACF5FB50054DE2C /* InitialViewController.m */,
 				012997061A38FA9800C89D09 /* WelcomeViewController.h */,
 				012997071A38FA9800C89D09 /* WelcomeViewController.m */,
 				0115CA6A1C4958DE00A48B40 /* AllLoginViewController.h */,

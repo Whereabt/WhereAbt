@@ -343,7 +343,6 @@ PhotosAccessViewController *photoVC;
     
     cell.cellImage.contentMode = UIViewContentModeScaleAspectFit;
     
- 
     
         NSString *PhotoUrlString = self.streamItems[indexPath.row][@"PhotoURL"];
     
@@ -355,7 +354,9 @@ PhotosAccessViewController *photoVC;
                                                                                                     NULL,
                                                                                                     (CFStringRef)@"!*'();:@&=+$,/?%#[]",
                                                                                                     kCFStringEncodingUTF8 ));
-        
+            if ([self.streamItems[indexPath.row][@"TimeStamp"]  isEqual: @"2016-02-18T22:57:06"]) {
+                //nothing
+            }
         
             //make request
             NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
@@ -369,6 +370,9 @@ PhotosAccessViewController *photoVC;
             [cell.cellImage setImageWithURL:DwnldUrl    placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
 
         }
+    /*
+    https://onedrive.live.com/redir?resid=97F18E29597D2251!1123&authkey=!ALhELhz6Lk5tw6s
+    https://onedrive.live.com/redir?resid=61F9F6D60F0FE04B!252&authkey=!AOXbMIA_bBLXw4o */
     
         else if ([PhotoUrlString  isEqual: @"BLOB"]) {
             PhotoUrlString = [NSString stringWithFormat:@"https://whereaboutcloud.blob.core.windows.net/%@", self.streamItems[indexPath.row][@"PhotoID"]];

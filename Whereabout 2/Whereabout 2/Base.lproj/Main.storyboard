@@ -92,7 +92,7 @@
                                 <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="CAMERA" id="Urz-LV-3vd">
                         <barButtonItem key="backBarButtonItem" title="Camera" id="A0u-ot-9i8"/>
@@ -1263,7 +1263,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                     <constraint firstAttribute="height" constant="21" id="Wkw-00-OUA"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neS-1H-eC2">
@@ -1273,7 +1273,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Instagram">
-                                    <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="instagramButtonPress:" destination="az3-do-Sfs" eventType="touchUpInside" id="xCo-N4-HnW"/>
@@ -1292,7 +1292,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Google">
-                                    <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="googleButtonPress:" destination="az3-do-Sfs" eventType="touchUpInside" id="5zh-Uy-pxH"/>
@@ -1305,7 +1305,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                     <constraint firstAttribute="height" constant="21" id="y4F-ny-Qee"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgI-qr-fbw">
@@ -1315,12 +1315,15 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Microsoft OneDrive">
-                                    <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="microsoftButtonPress:" destination="az3-do-Sfs" eventType="touchUpInside" id="ODa-n3-eEV"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="S43-3H-Wbh">
+                                <rect key="frame" x="151" y="90" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                         <accessibility key="accessibilityConfiguration">
@@ -1349,6 +1352,10 @@ KeychainItemWrapper. This software is subject to the following license and notic
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="S43-3H-Wbh" id="pko-mY-Efa"/>
+                        <outlet property="googleLogin" destination="CTf-Op-zl7" id="aeX-Zb-CrZ"/>
+                        <outlet property="igLogin" destination="neS-1H-eC2" id="J3X-p3-M9P"/>
+                        <outlet property="odLogin" destination="kgI-qr-fbw" id="4RZ-pZ-HqM"/>
                         <segue destination="9rA-JX-sA0" kind="show" identifier="segueToInitial" id="63x-xL-boo"/>
                     </connections>
                 </viewController>
@@ -1429,7 +1436,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
             </objects>
             <point key="canvasLocation" x="365" y="2568"/>
         </scene>
-        <!--Photo-->
+        <!--PHOTO-->
         <scene sceneID="ciP-Gc-RhV">
             <objects>
                 <viewController id="Lrt-Zq-cXs" customClass="StreamEnlarge_SaveViewController" sceneMemberID="viewController">
@@ -1519,7 +1526,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                             <constraint firstItem="tqk-l6-E0o" firstAttribute="leading" secondItem="D6O-av-rGH" secondAttribute="leading" id="zOs-FU-cQm"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Photo" id="tZz-rL-gxc">
+                    <navigationItem key="navigationItem" title="PHOTO" id="tZz-rL-gxc">
                         <barButtonItem key="backBarButtonItem" title="Photo" id="rj6-xM-Esy"/>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

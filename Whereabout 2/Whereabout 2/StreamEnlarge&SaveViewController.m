@@ -13,6 +13,7 @@
 #import "MapVCViewController.h"
 #import <OneDriveSDK/OneDriveSDK.h>
 #import "ReportViewController.h"
+#import <JNKeychain/JNKeychain.h>
 
 @interface StreamEnlarge_SaveViewController ()
 
@@ -168,7 +169,7 @@ NSMutableDictionary *UIimageDict;
 - (IBAction)longButtonPress:(id)sender {
     
     //create the alert
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Save Image" message:@"Where would you like to save this image?" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Save Image" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     //action for save
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save to Camera Roll", "Save Action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -181,7 +182,9 @@ NSMutableDictionary *UIimageDict;
     
     [alertController addAction:yesAction];
     
-    UIAlertAction *odSaveAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save to Private OneDrive", "OneDrive Save Action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"] isEqual: @"OneDriveAuthentication"])
+    {
+        UIAlertAction *odSaveAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save to Private OneDrive", "OneDrive Save Action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSData *dataFromImage = UIImagePNGRepresentation(self.theImageView.image);
         
         //unique name for onedrive file
@@ -209,10 +212,11 @@ NSMutableDictionary *UIimageDict;
 
         
         [alertController dismissViewControllerAnimated:YES completion:nil];
-    }];
+        }];
 
     
-    [alertController addAction: odSaveAction];
+        [alertController addAction: odSaveAction];
+    }
     
     //cancel action
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", "Cancel Action") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {

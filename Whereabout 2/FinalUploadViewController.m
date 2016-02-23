@@ -15,7 +15,7 @@
 #import "n46UploadManager.h"
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <OneDriveSDK/OneDriveSDK.h>
-
+#import <JNKeychain/JNKeychain.h>
 
 @import Photos;
 
@@ -34,17 +34,18 @@ NSMutableDictionary *imageSetDict;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    NSLog(@"AUTHENTICATION: %@", [JNKeychain loadValueForKey:@"AuthenticationMethod"]);
+
     //add navigation bar upload button
     fromCameraRoll = NO;
     if (infoArray[6][@"Asset"]) {
         fromCameraRoll = YES;
     }
-
+    
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc]init];
-
+    
     //layout.minimumInteritemSpacing = 10;
     //layout.minimumLineSpacing = 10;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -59,7 +60,7 @@ NSMutableDictionary *imageSetDict;
     [_collectionView setDataSource:self];
     [_collectionView setDelegate:self];
     [_collectionView setContentInset:UIEdgeInsetsMake(-20, 0, 0, 0)];
-
+    
     
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
     [_collectionView setBackgroundColor:[UIColor blackColor]];
@@ -70,10 +71,16 @@ NSMutableDictionary *imageSetDict;
     selectedImageView.contentMode = UIViewContentModeScaleAspectFit;
     [selectedImageView setFrame:CGRectMake(0, 64, 320, 407)];
     [self.view addSubview:selectedImageView];
-    
+
     [_collectionView reloadData];
-    
+
 }
+
+
+- (void)viewDidAppear:(BOOL)animated {
+
+}
+
 
 - (IBAction)uploadButtonPress:(id)sender {
     UIActivityIndicatorView *uploadActivityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.center.x - 20, self.view.center.y - 20, 40, 40)];
@@ -171,7 +178,9 @@ NSMutableDictionary *imageSetDict;
     }
     
     //if has onedrive account, don't use blob storage
-    if ([[preferences objectForKey:@"AuthType"]  isEqual: @"onedrive"]) {
+    NSLog(@"AUTHENTICATION: %@", [JNKeychain loadValueForKey:@"AuthenticationMethod"]);
+    
+    if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"] isEqual: @"OneDriveAuthentication"]) {
         [putManager createPhotoUploadTaskUsingImageName:paramDict[@"PhotoID"] andImageData:imageData andCompletion:^(NSString *odUrl) {
             [putManager PUTonNewPhotophpWithLocation:locationTag andTime:dateStamp WithImageURLsLarge:odUrl andUploadTime:[NSString stringWithFormat:@"%f", uploadStartTime.timeIntervalSinceNow] andPhotoId:paramDict[@"PhotoID"] Mapping:mappingPreference ImageSize:ImageHeight andCompletion:^(NSError *putError) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -340,7 +349,9 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 [selectedImageView setImage:imageSetDict[@"AMATORKA"]];
             }
             else {
-            [selectedImageView setImage:[[[GPUImageAmatorkaFilter alloc]init] imageByFilteringImage:infoArray[7]]];
+                GPUImageAmatorkaFilter *amatorkaFilter = [[GPUImageAmatorkaFilter alloc]init];
+                [amatorkaFilter useNextFrameForImageCapture];
+            [selectedImageView setImage:[amatorkaFilter imageByFilteringImage:infoArray[7]]];
             imageSetDict[@"AMATORKA"] = selectedImageView.image;
                 [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
@@ -350,7 +361,9 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 [selectedImageView setImage:imageSetDict[@"GRAYSCALE"]];
             }
             else {
-                [selectedImageView setImage:[[[GPUImageGrayscaleFilter alloc]init] imageByFilteringImage:infoArray[7]]];
+                GPUImageGrayscaleFilter *grayscaleFilter = [[GPUImageGrayscaleFilter alloc]init];
+                [grayscaleFilter useNextFrameForImageCapture];
+                [selectedImageView setImage:[grayscaleFilter imageByFilteringImage:infoArray[7]]];
                 imageSetDict[@"GRAYSCALE"] = selectedImageView.image;
                 [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
@@ -361,7 +374,8 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 [selectedImageView setImage:imageSetDict[@"SEPIA TONE"]];
             }
             else {
-                [selectedImageView setImage:[[[GPUImageSepiaFilter alloc]init] imageByFilteringImage:infoArray[7]]];
+                GPUImageSepiaFilter *sepiaFilter = [[GPUImageSepiaFilter alloc] init];
+                [selectedImageView setImage:[sepiaFilter imageByFilteringImage:infoArray[7]]];
                 imageSetDict[@"SEPIA TONE"] = selectedImageView.image;
                 [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
@@ -372,7 +386,9 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 [selectedImageView setImage:imageSetDict[@"ETIKATE"]];
             }
             else {
-                [selectedImageView setImage:[[[GPUImageMissEtikateFilter alloc]init] imageByFilteringImage:infoArray[7]]];
+                GPUImageMissEtikateFilter *etikateFilter = [[GPUImageMissEtikateFilter alloc]init];
+                [etikateFilter useNextFrameForImageCapture];
+                [selectedImageView setImage:[etikateFilter imageByFilteringImage:infoArray[7]]];
                 imageSetDict[@"ETIKATE"] = selectedImageView.image;
                 [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
@@ -383,7 +399,9 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 [selectedImageView setImage:imageSetDict[@"ELEGANCE"]];
             }
             else {
-                [selectedImageView setImage:[[[GPUImageSoftEleganceFilter alloc]init] imageByFilteringImage:infoArray[7]]];
+                GPUImageSoftEleganceFilter *eleganceFilter = [[GPUImageSoftEleganceFilter alloc]init];
+                [eleganceFilter useNextFrameForImageCapture];
+                [selectedImageView setImage:[eleganceFilter imageByFilteringImage:infoArray[7]]];
                 imageSetDict[@"ELEGANCE"] = selectedImageView.image;
                 [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
