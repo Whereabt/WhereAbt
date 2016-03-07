@@ -11,7 +11,8 @@
 #import <OneDriveSDK/OneDriveSDK.h>
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <JNKeychain/JNKeychain.h>
-
+#import "StreamNavigationController.h"
+#import "SWRevealViewController.h"
 
 @interface SettingsTableViewController ()
 
@@ -22,16 +23,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //self.tableView.allowsSelection = NO;
+    
+    
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.sidebarButton setTarget: self.revealViewController];
+        [self.sidebarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+
     self.logoutActivityIndicator.hidesWhenStopped = YES;
     
-    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    if ([[preferences objectForKey:@"autoSave"] isEqualToString:@"YES"]) {
-        [self.saveSwitch setOn:YES];
-    }
-    
-    if ([[preferences objectForKey:@"mapping"] isEqualToString:@"TRUE"]) {
-        [self.mappingSwitch setOn:YES];
-    }
+
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -79,34 +83,6 @@
     [dataRequestTask resume];
     
 
-}
-
-- (IBAction)switchChange:(id)sender {
-    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    
-    NSString *autoSave;
-    
-    if (![self.saveSwitch isOn]) {
-         autoSave = @"NO";
-    }
-    else {
-        autoSave = @"YES";
-    }
-    
-    [preferences setObject:autoSave forKey:@"autoSave"];
-}
-
-- (IBAction)mappingSwitchChange:(id)sender {
-    
-    NSString *mappingPreference;
-    if ([self.mappingSwitch isOn]) {
-        mappingPreference = @"TRUE";
-    }
-    else {
-        mappingPreference = @"FALSE";
-    }
-    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    [preferences setObject:mappingPreference forKey:@"mapping"];
 }
 
 

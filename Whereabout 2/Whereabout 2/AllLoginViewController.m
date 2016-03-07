@@ -12,7 +12,6 @@
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <JNKeychain/JNKeychain.h>
 
-
 NSString *const InstagramConstant = @"InstagramAuthentication";
 NSString *const GoogleConstant = @"GoogleAuthentication";
 NSString *const OneDriveConstant = @"OneDriveAuthentication";
@@ -27,6 +26,12 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   /* UIImageView *backgroundImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sesquile.JPG"]];
+    backgroundImgView.frame = self.view.frame;
+    [self.view addSubview:backgroundImgView];
+    [self.view sendSubviewToBack:backgroundImgView]; */
+    
+    self.welcomeLabel.adjustsFontSizeToFitWidth = YES;
     loginCompleted = NO;
     NSUserDefaults *authInfo = [NSUserDefaults standardUserDefaults];
     BOOL silent = NO;
@@ -34,6 +39,7 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     NSError* configureError;
     [[GGLContext sharedInstance] configureWithError: &configureError];
     NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    
     [GIDSignIn sharedInstance].delegate = self;
     
     [GIDSignIn sharedInstance].uiDelegate = self;
@@ -44,6 +50,9 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 - (void)viewDidAppear:(BOOL)animated {
     if (loginCompleted) {
         [self performSegueWithIdentifier:@"segueToInitial" sender:self];
+    }
+    
+    if ([self.activityIndicator isAnimating]) {
         [self.activityIndicator stopAnimating];
     }
 }
@@ -70,6 +79,7 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[GIDSignIn sharedInstance].currentUser.userID forKey:@"UserID"];
     [defaults setObject:[GIDSignIn sharedInstance].currentUser.profile.name forKey:@"UserName"];
+    NSLog(@"USERNAME:%@", [GIDSignIn sharedInstance].currentUser.profile.name);
     [JNKeychain saveValue:GoogleConstant forKey:@"AuthenticationMethod"];
     self.googleLogin.enabled = YES;
     self.igLogin.enabled = YES;
@@ -78,7 +88,7 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 }
 
 - (void)signIn:(GIDSignIn *)signIn didDisconnectWithUser:(GIDGoogleUser *)user withError:(NSError *)error {
-
+    [self.activityIndicator stopAnimating];
 }
 
 
@@ -125,8 +135,9 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
                 self.igLogin.enabled = YES;
                 self.odLogin.enabled = YES;
                 if (error) {
-                    UIAlertView *usernameAlert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"A problem occurred while logging in, you may have to restart the app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                    /*UIAlertView *usernameAlert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"A problem occurred while logging in, you may have to restart the app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
                     [usernameAlert show];
+                     */
                 }
                 
                 else {

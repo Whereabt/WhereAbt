@@ -24,19 +24,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    //Add the necessary permissions
-    
-    
-    //google auth
-    /*
-    NSError* configureError;
-    [[GGLContext sharedInstance] configureWithError: &configureError];
-    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
-    [GIDSignIn sharedInstance].delegate = self;
-    */
-    
-    //WelcomeViewController *welcomeController = [[WelcomeViewController alloc] init];
-    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     [self.window setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"Initial VC"]];

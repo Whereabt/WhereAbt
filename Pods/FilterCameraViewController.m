@@ -9,6 +9,7 @@
 #import "FilterCameraViewController.h"
 #import "GPUImage.h"
 #import "FinalUploadViewController.h"
+#import "SWRevealViewController.h"
 
 @interface FilterCameraViewController ()
 {
@@ -23,7 +24,14 @@ NSString *filterName;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //make filter button
+    
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.sidebarButton setTarget: self.revealViewController];
+        [self.sidebarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
     
     UIButton *circleCamButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
@@ -49,21 +57,15 @@ NSString *filterName;
    // self.takePhotoButton.customView = circleCamButton;
     
     //self.takePhotoButton = [[UIBarButtonItem alloc]initWithCustomView:circleCamButton];
-    
-    /*
-    UIButton *switchCameraButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 120, 50, 50)];
-    [switchCameraButton.titleLabel setText:@"Switch"];
-    
-    [switchCameraButton.titleLabel setTextColor:[UIColor redColor]];
-    [switchCameraButton addTarget:self action:@selector(switchCameraDirection) forControlEvents:UIControlEventAllEvents];
-    */
+
     // Setup initial camera filter
     
-    /* OG
+    
     filter = [[GPUImageFilter alloc] init];
     //[filter prepareForImageCapture];
 
     GPUImageView *filterView = (GPUImageView *)self.view;
+    NSLog(@"Camera Frame W: %f;H: %f; Y: %f; X: %f", filterView.frame.size.width, filterView.frame.size.height, filterView.frame.origin.y, filterView.frame.origin.x);
     
     //[filterView addSubview:switchCameraButton];
 
@@ -76,26 +78,10 @@ NSString *filterName;
     [stillCamera addTarget:filter];
     filterName = @"None";
     [stillCamera startCameraCapture];
-     */
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    filter = [[GPUImageFilter alloc] init];
-    //[filter prepareForImageCapture];
-    
-    GPUImageView *filterView = (GPUImageView *)self.view;
-    
-    //[filterView addSubview:switchCameraButton];
-    
-    [filter addTarget:filterView];
-    
-    // Create custom GPUImage camera
-    stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetPhoto cameraPosition:AVCaptureDevicePositionBack];
-    stillCamera.horizontallyMirrorFrontFacingCamera = YES;
-    stillCamera.outputImageOrientation = UIInterfaceOrientationPortrait;
-    [stillCamera addTarget:filter];
-    filterName = @"None";
-    [stillCamera startCameraCapture];
+
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -146,7 +132,10 @@ NSString *filterName;
     [stillCamera addTarget:filter];
 }
 
+/*
 - (void)takePhotoButtonPressed {
+    //WRONG
+
     //use default brightness (no effect)
     GPUImageBrightnessFilter *noFilter = [[GPUImageBrightnessFilter alloc] init];
     [stillCamera addTarget:noFilter];
@@ -154,8 +143,6 @@ NSString *filterName;
     //WRONG
     [stillCamera capturePhotoAsImageProcessedUpToFilter:noFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         
-        UIView *blackView = (UIView *)self.view;
-        blackView.backgroundColor = [UIColor blackColor];
 
         FinalUploadViewController *finalUploadVC = [[FinalUploadViewController alloc] init];
         NSLog(@"PROCESSED IMAGE: %@", processedImage);
@@ -188,7 +175,7 @@ NSString *filterName;
     }];
 
 }
-
+*/
 - (IBAction)takePhotoPressed:(id)sender {
     //use default brightness (no effect)
     
@@ -199,32 +186,21 @@ NSString *filterName;
     //use 'filter' for selected filter, use brightnessFilter for original photo (unfiltered)
     
     //test
-   // [stillCamera useNextFrameForImageCapture];
-    /*
-    NSURL *inputImageURL = [[NSBundle mainBundle] URLForResource:@"Lambeau" withExtension:@"jpg"];
-    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithURL:inputImageURL];
-    
-    GPUImageSepiaFilter *stillImageFilter = [[GPUImageSepiaFilter alloc] init];
-    GPUImageVignetteFilter *vignetteImageFilter = [[GPUImageVignetteFilter alloc] init];
-    vignetteImageFilter.vignetteEnd = 0.6;
-    vignetteImageFilter.vignetteStart = 0.4;
-    
-    [stillImageSource addTarget:stillImageFilter];
-    [stillImageFilter addTarget:vignetteImageFilter];
-    
-    [vignetteImageFilter useNextFrameForImageCapture];
-    [stillImageSource processImage];
-    */
+    [stillCamera useNextFrameForImageCapture];
 
     [stillCamera capturePhotoAsImageProcessedUpToFilter:noFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         //[stillCamera stopCameraCapture];
         UIView *blackView = [[UIView alloc]initWithFrame:self.view.frame];
         blackView.backgroundColor = [UIColor blackColor];
-        [self setView:blackView];
+        //[self setView:blackView];
         
         FinalUploadViewController *finalUploadVC = [[FinalUploadViewController alloc] init];
         NSLog(@"PROCESSED IMAGE: %@", processedImage);
         //must be done before initiating segue
+        
+        //reduce image size
+        //UIImage *reducedImg = [UIImage imageWithData:UIImageJPEGRepresentation(processedImage, 0.5)];
+        
         
         NSMutableArray *filterArray = [[NSMutableArray alloc] init];
         filterArray[0] = @"AMATORKA";
@@ -245,9 +221,15 @@ NSString *filterName;
 
         [finalUploadVC setCollectionViewDataSourceFromThisArray:filterArray];
         
-        
         self.takePhotoButton.enabled = YES;
-        [self performSegueWithIdentifier:@"segueToFinalUpload" sender:self];
+        
+        if (processedImage) {
+            [self performSegueWithIdentifier:@"segueToFinalUpload" sender:self];
+        }
+        else {
+            
+        }
+        //[self presentViewController:finalUploadVC animated:YES completion:nil];
     }]; 
 }
 

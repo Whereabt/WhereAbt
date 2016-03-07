@@ -21,6 +21,7 @@
 #import "MapVCViewController.h"
 #import "ImageCache.h"
 #import "UIImageView+ImgViewCat.h"
+#import "SWRevealViewController.h"
 
 @interface StreamViewController ()
 
@@ -53,6 +54,14 @@ PhotosAccessViewController *photoVC;
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshStream) forControlEvents:UIControlEventValueChanged];
     
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.sidebarButton setTarget: self.revealViewController];
+        [self.sidebarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -354,9 +363,7 @@ PhotosAccessViewController *photoVC;
                                                                                                     NULL,
                                                                                                     (CFStringRef)@"!*'();:@&=+$,/?%#[]",
                                                                                                     kCFStringEncodingUTF8 ));
-            if ([self.streamItems[indexPath.row][@"TimeStamp"]  isEqual: @"2016-02-18T22:57:06"]) {
-                //nothing
-            }
+
         
             //make request
             NSString *theUrlAsString = @"https://api.onedrive.com/v1.0/shares/";
@@ -365,6 +372,13 @@ PhotosAccessViewController *photoVC;
         
             NSURL *encURL = [firstURL URLByAppendingPathComponent:encString];
             NSURL *DwnldUrl = [encURL URLByAppendingPathComponent:@"/root/thumbnails/0/large/content"];
+            
+            if ([self.streamItems[indexPath.row][@"TimeStamp"]  isEqual: @"2016-02-18T22:57:06"]) {
+                NSLog(@"POSSIBLE ERROR DNLDING: %@", DwnldUrl);
+            }
+            else {
+                NSLog(@"GOOD DWNLD: %@", DwnldUrl);
+            }
             
             //set image
             [cell.cellImage setImageWithURL:DwnldUrl    placeholderImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];

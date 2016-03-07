@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CamRollCollectionViewController : UICollectionViewController 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 @end

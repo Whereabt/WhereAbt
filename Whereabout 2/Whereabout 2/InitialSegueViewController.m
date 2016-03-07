@@ -20,7 +20,10 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self performSegueWithIdentifier:@"fakeSecondSegue" sender:self];
+    //[self performSegueWithIdentifier:@"fakeSecondSegue" sender:self];
+    
+    //TEST
+    [self performSegueWithIdentifier:@"segueToReveal" sender:self];
 }
 
 - (void)didReceiveMemoryWarning {

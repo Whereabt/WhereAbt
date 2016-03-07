@@ -10,6 +10,9 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "CamRollCollectionViewCell.h"
 #import "FinalUploadViewController.h"
+#import "SWRevealViewController.h"
+#import "ImageCache.h"
+
 @import Photos;
 
 @interface CamRollCollectionViewController ()
@@ -27,6 +30,16 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.sidebarButton setTarget: self.revealViewController];
+        [self.sidebarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+
+    
     [self.collectionView registerClass:[CamRollCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -122,16 +135,35 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
     
     CamRollCollectionViewCell *cell = (CamRollCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     //placeholder
-    
         UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Gray Stream Placeholder Image.jpg"]];
-        if (thumbnailCacheArray.count > indexPath.row && thumbnailCacheArray.count != 0) {
+    
+    
+    if ([[ImageCache sharedImageCache] DoesExist:FetchResult[indexPath.row]] == true) {
+        [imgView setImage:[[ImageCache sharedImageCache] GetImage:FetchResult[indexPath.row]]];
+    }
+    else {
+        [[PHImageManager defaultManager] requestImageForAsset:FetchResult[indexPath.row]
+                                                   targetSize:self.view.frame.size
+                                                  contentMode:PHImageContentModeAspectFit
+                                                      options:PHImageRequestOptionsVersionCurrent
+                                                resultHandler:^(UIImage *result, NSDictionary *info) {
+                                                    if (result) {
+                                                        [[ImageCache sharedImageCache] AddImage:FetchResult[indexPath.row] WithImage:result];
+                                                        [imgView setImage:result];
+                                                    }
+                                                    
+                                                }];
+    }
+
+    
+    /*if (thumbnailCacheArray.count > indexPath.row && thumbnailCacheArray.count != 0) {
             [imgView setImage:thumbnailCacheArray[indexPath.row]];
         }
     
         else {
     
             [[PHImageManager defaultManager] requestImageForAsset:FetchResult[indexPath.row]
-                                                   targetSize:CGSizeMake(100, 100)
+                                                   targetSize:self.view.frame.size
                                                   contentMode:PHImageContentModeAspectFit
                                                       options:PHImageRequestOptionsVersionCurrent
                                                 resultHandler:^(UIImage *result, NSDictionary *info) {
@@ -142,16 +174,14 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
                                                     }
                                                 
                                                 }];
-            }
+            } */
+    
         //[cell.imageView setImage: thumbnailArray[indexPath.row]];
         //NSLog(@"IMAGE: %@", thumbnailArray[indexPath.row]);
     
         imgView.contentMode = UIViewContentModeScaleAspectFill;
         imgView.clipsToBounds = YES;
         cell.backgroundView = imgView;
-        // Configure the cell
-    
-    
         cell.backgroundColor = [UIColor blackColor];
     
     return cell;
@@ -166,12 +196,32 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
 
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSMutableDictionary *photoInfo = [[NSMutableDictionary alloc] init];
+    photoInfo[@"Name"] = @"NONE";
+    UIImage *imgFromCache = [[ImageCache sharedImageCache] GetImage:FetchResult[indexPath.row]];
+    
+    photoInfo[@"Asset"] = @"camera-roll";
+    photoInfo[@"Image"] = imgFromCache;
+    NSMutableArray *filterArray = [[NSMutableArray alloc] initWithCapacity:8];
+    filterArray[0] = @"AMATORKA";
+    filterArray[1] = @"GRAYSCALE";
+    filterArray[2] = @"SEPIA TONE";
+    filterArray[3] = @"ETIKATE";
+    filterArray[4] = @"ELEGANCE";
+    filterArray[5] = @"NONE";
+    filterArray[6] = photoInfo;
+    filterArray[7] = imgFromCache;
+    
+    FinalUploadViewController *finalUploadManager = [[FinalUploadViewController alloc] init];
+    [finalUploadManager setCollectionViewDataSourceFromThisArray:filterArray];
+    [self performSegueWithIdentifier:@"segueToFilter" sender:self];
+    
     
     //thumbnailCacheArray = nil;
     //FetchResult = nil;
     //[self.collectionView reloadData];
     
-    PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
+   /* PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
     fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:NO]];
     PHFetchResult *fetchResult = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:fetchOptions];
     
@@ -180,7 +230,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                                               contentMode:PHImageContentModeAspectFit
                                                   options:PHImageRequestOptionsVersionCurrent
                                             resultHandler:^(UIImage *result, NSDictionary *info) {
-                                                
+    
                                                 NSMutableDictionary *photoInfo = [[NSMutableDictionary alloc] init];
                                                 photoInfo[@"Name"] = @"NONE";
                                                 NSLog(@"RESULT SIZE:  %lu KB",(UIImageJPEGRepresentation(result, 1.0).length/1024));
@@ -204,50 +254,11 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                                                     [self performSegueWithIdentifier:@"segueToFilter" sender:self];
                                                 }
 
-                                            }];
+                                            }];*/
     
-    /*
-    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
-    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        NSInteger numberOfAssets = [group numberOfAssets];
-        if (numberOfAssets > 0) {
-            NSLog(@"numberOfPictures: %ld",(long)numberOfAssets);
-                [group enumerateAssetsAtIndexes:[NSIndexSet indexSetWithIndex:indexPath.row] options:0 usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                    
-                    NSMutableDictionary *photoInfo = [[NSMutableDictionary alloc] init];
-                    photoInfo[@"Name"] = @"NONE";
-                    
-                    ALAssetRepresentation *defaultRep = [result defaultRepresentation];
-                    UIImage *fullImg = [UIImage imageWithCGImage:[defaultRep fullScreenImage] scale:[defaultRep scale] orientation:0];
-                    
-                    if (fullImg) {
-                        photoInfo[@"Image"] = fullImg;
-                        NSMutableArray *filterArray = [[NSMutableArray alloc] initWithCapacity:8];
-                        filterArray[0] = @"AMATORKA";
-                        filterArray[1] = @"GRAYSCALE";
-                        filterArray[2] = @"SEPIA TONE";
-                        filterArray[3] = @"ETIKATE";
-                        filterArray[4] = @"ELEGANCE";
-                        filterArray[5] = @"NONE";
-                        filterArray[6] = photoInfo;
-                        filterArray[7] = fullImg;
-                        
-                        FinalUploadViewController *finalUploadManager = [[FinalUploadViewController alloc] init];
-                        [finalUploadManager setCollectionViewDataSourceFromThisArray:filterArray];
-                        [self performSegueWithIdentifier:@"segueToFilter" sender:self];
-
-                    }
-
-                }];
-        }
-    } failureBlock:^(NSError *error) {
-        NSLog(@"error: %@", error);
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Unable to access your camera roll." message:@"You can give us access to your camera roll in Settings." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [alert show];
-    }];
-     */
     
-}
+    
+   }
 
 - (NSArray *) layoutAttributesForElementsInRect:(CGRect)rect {
     NSArray *answer = [self.collectionViewLayout layoutAttributesForElementsInRect:rect];

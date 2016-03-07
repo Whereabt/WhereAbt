@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ProfileCollectionViewController : UICollectionViewController
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *userProfileActivityIndicator;
 

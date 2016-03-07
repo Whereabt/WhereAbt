@@ -19,7 +19,7 @@
 #import "ImageCache.h"
 #import "UIImageView+ImgViewCat.h"
 #import <GoogleSignIn/GoogleSignIn.h>
-
+#import "SWRevealViewController.h"
 
 @interface ProfileCollectionViewController ()
 
@@ -36,10 +36,20 @@ BOOL shouldRefreshProfileOnAppear;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.sidebarButton setTarget: self.revealViewController];
+        [self.sidebarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+    
     self.userProfileActivityIndicator.hidesWhenStopped = YES;
     self.collectionView.dataSource = self;
     self.collectionView.alwaysBounceVertical = YES;
     self.collectionView.delegate = self;
+        
     [self refreshProfile];
      
     // Do any additional setup after loading the view.
@@ -52,6 +62,8 @@ BOOL shouldRefreshProfileOnAppear;
         shouldRefreshProfileOnAppear = NO;
     }
 }
+
+
 
 - (void)refreshProfile {
     
@@ -349,7 +361,7 @@ BOOL shouldRefreshProfileOnAppear;
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    NSArray *firstLastName;
+    /*NSArray *firstLastName;
     if ([[defaults objectForKey:@"AuthType"]  isEqual: @"google"]) {
     firstLastName = [[GIDSignIn sharedInstance].currentUser.profile.name componentsSeparatedByString:@" "];
     }
@@ -359,9 +371,12 @@ BOOL shouldRefreshProfileOnAppear;
     else if ([[defaults objectForKey:@"AuthType"] isEqualToString:@"onedrive"]) {
         firstLastName = [[defaults objectForKey:@"UserName"] componentsSeparatedByString:@" "];
     }
+   */
     
-    reusableHeader.firstNameLabel.text = firstLastName[0];
-    reusableHeader.lastNameLabel.text = firstLastName[1];
+   NSArray *firstLast = [[defaults objectForKey:@"UserName"] componentsSeparatedByString:@" "];
+    
+    reusableHeader.firstNameLabel.text = firstLast[0];
+    reusableHeader.lastNameLabel.text = firstLast[1];
     reusableHeader.totalPostsLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.profileItems.count];
     
     return reusableHeader;

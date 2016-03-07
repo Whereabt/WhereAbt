@@ -6,5 +6,6 @@ pod 'Google/SignIn'
 pod 'InstagramSimpleOAuth', :git => 'https://github.com/Nicolas-Isaza/InstagramSimpleOAuth.git'
 pod 'AFNetworking'
 pod "JNKeychain"
+pod ‘SWRevealViewController’
 
 xcodeproj ‘Whereabout 2/Whereabout 2.xcodeproj'

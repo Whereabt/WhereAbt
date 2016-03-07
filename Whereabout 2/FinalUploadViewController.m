@@ -35,14 +35,14 @@ NSMutableDictionary *imageSetDict;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     NSLog(@"AUTHENTICATION: %@", [JNKeychain loadValueForKey:@"AuthenticationMethod"]);
-
+    //self.view.backgroundColor = [UIColor whiteColor];
     //add navigation bar upload button
     fromCameraRoll = NO;
     if (infoArray[6][@"Asset"]) {
         fromCameraRoll = YES;
     }
     
-    self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    //self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc]init];
     
@@ -52,8 +52,8 @@ NSMutableDictionary *imageSetDict;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     //104 height works
-    //415 y
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 475, 320, 44) collectionViewLayout:layout];
+    //415 y 44h
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 533, 320, 37) collectionViewLayout:layout];
     _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.showsVerticalScrollIndicator = NO;
     
@@ -67,9 +67,11 @@ NSMutableDictionary *imageSetDict;
     _collectionView.scrollEnabled = YES;
     [self.view addSubview:_collectionView];
     
-    selectedImageView = [[UIImageView alloc] initWithImage:infoArray[6][@"Image"]];
+    selectedImageView = [[UIImageView alloc] init];
+
+    [selectedImageView setImage: infoArray[6][@"Image"]];
     selectedImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [selectedImageView setFrame:CGRectMake(0, 64, 320, 407)];
+    [selectedImageView setFrame:CGRectMake(0, 46, 320, 475)];
     [self.view addSubview:selectedImageView];
 
     [_collectionView reloadData];
@@ -180,6 +182,7 @@ NSMutableDictionary *imageSetDict;
     //if has onedrive account, don't use blob storage
     NSLog(@"AUTHENTICATION: %@", [JNKeychain loadValueForKey:@"AuthenticationMethod"]);
     
+    /*
     if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"] isEqual: @"OneDriveAuthentication"]) {
         [putManager createPhotoUploadTaskUsingImageName:paramDict[@"PhotoID"] andImageData:imageData andCompletion:^(NSString *odUrl) {
             [putManager PUTonNewPhotophpWithLocation:locationTag andTime:dateStamp WithImageURLsLarge:odUrl andUploadTime:[NSString stringWithFormat:@"%f", uploadStartTime.timeIntervalSinceNow] andPhotoId:paramDict[@"PhotoID"] Mapping:mappingPreference ImageSize:ImageHeight andCompletion:^(NSError *putError) {
@@ -211,9 +214,8 @@ NSMutableDictionary *imageSetDict;
 
             }];
         }];
-    }
+    } */
     
-    else {
         [blobManager uploadBlobToContainerWithPhotoDict:paramDict WithCompletion:^(NSError *cbError) {
             if (cbError) {
                 NSLog(@"ERROR UPLOADING BLOB: %@", cbError);
@@ -254,28 +256,12 @@ NSMutableDictionary *imageSetDict;
             
                 NSLog(@"PHOTO ID: %@", paramDict[@"PhotoID"]);
             }
-        /*
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.navigationController.navigationBar.topItem.rightBarButtonItem = nil;
-            
-            // upldButtonItem = [[UIBarButtonItem alloc] initWithCustomView:uploadButton];
-            UIBarButtonItem *navBarButt = [[UIBarButtonItem alloc]initWithTitle:@"Upload" style:UIBarButtonItemStylePlain target:self action:@selector(uploadButtonPress:)];
-            
-            [self.navigationController.navigationBar.topItem setRightBarButtonItem:navBarButt];
-         
-        }); */
         }];
-    }
-
 }
 
 - (void)setCollectionViewDataSourceFromThisArray:(NSMutableArray *)filterList {
     infoArray = [[NSMutableArray alloc] initWithArray:filterList];
 }
-
-
-
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
@@ -353,7 +339,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 [amatorkaFilter useNextFrameForImageCapture];
             [selectedImageView setImage:[amatorkaFilter imageByFilteringImage:infoArray[7]]];
             imageSetDict[@"AMATORKA"] = selectedImageView.image;
-                [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
             break;
         case 1:
@@ -365,7 +350,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 [grayscaleFilter useNextFrameForImageCapture];
                 [selectedImageView setImage:[grayscaleFilter imageByFilteringImage:infoArray[7]]];
                 imageSetDict[@"GRAYSCALE"] = selectedImageView.image;
-                [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
 
             break;
@@ -377,7 +361,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 GPUImageSepiaFilter *sepiaFilter = [[GPUImageSepiaFilter alloc] init];
                 [selectedImageView setImage:[sepiaFilter imageByFilteringImage:infoArray[7]]];
                 imageSetDict[@"SEPIA TONE"] = selectedImageView.image;
-                [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
 
             break;
@@ -390,7 +373,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 [etikateFilter useNextFrameForImageCapture];
                 [selectedImageView setImage:[etikateFilter imageByFilteringImage:infoArray[7]]];
                 imageSetDict[@"ETIKATE"] = selectedImageView.image;
-                [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
 
             break;
@@ -403,7 +385,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
                 [eleganceFilter useNextFrameForImageCapture];
                 [selectedImageView setImage:[eleganceFilter imageByFilteringImage:infoArray[7]]];
                 imageSetDict[@"ELEGANCE"] = selectedImageView.image;
-                [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
             }
 
             break;
@@ -412,6 +393,10 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
             break;
         default:
             break;
+        }
+        
+        if (imageSetDict.count > 1) {
+            [[GPUImageContext sharedFramebufferCache] purgeAllUnassignedFramebuffers];
         }
     infoArray[6][@"Name"] = infoArray[indexPath.row];
     infoArray[6][@"Image"] = selectedImageView.image;

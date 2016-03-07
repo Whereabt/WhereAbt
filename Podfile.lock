@@ -73,6 +73,7 @@ PODS:
     - OneDriveSDK/Common
   - SimpleOAuth2 (0.0.3):
     - AFNetworking (~> 2.0)
+  - SWRevealViewController (2.3.0)
 
 DEPENDENCIES:
   - AFNetworking
@@ -82,6 +83,7 @@ DEPENDENCIES:
   - InstagramSimpleOAuth (from `https://github.com/Nicolas-Isaza/InstagramSimpleOAuth.git`)
   - JNKeychain
   - OneDriveSDK
+  - SWRevealViewController
 
 EXTERNAL SOURCES:
   InstagramSimpleOAuth:
@@ -110,5 +112,6 @@ SPEC CHECKSUMS:
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   OneDriveSDK: 2ba8787756deef12e787ee5dae6cb60e9dc7a6a9
   SimpleOAuth2: 650ae997858c9d2f97773fc55c76e534ac3747da
+  SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
 
 COCOAPODS: 0.39.0

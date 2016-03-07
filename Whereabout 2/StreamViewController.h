@@ -11,6 +11,8 @@
 
 @interface StreamViewController : UITableViewController <CLLocationManagerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
+
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *tableActivityIndicator;
 
 - (IBAction)savedPhotoAlbumButtonCalled:(id)sender;

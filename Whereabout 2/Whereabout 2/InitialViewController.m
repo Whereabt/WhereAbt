@@ -36,6 +36,7 @@ NSString *const OneDriveCons = @"OneDriveAuthentication";
 - (void)viewDidAppear:(BOOL)animated {
     
     NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"USERNAME: %@", [standardDefaults objectForKey:@"UserID"]);
     
     //[standardDefaults setBool:NO forKey:@"has launched"];
     if (![standardDefaults boolForKey:@"has launched"]) {
@@ -47,18 +48,18 @@ NSString *const OneDriveCons = @"OneDriveAuthentication";
         //[JNKeychain deleteValueForKey:@"AuthenticationMethod"];
         NSLog(@"AUTHENTICATION: %@", [JNKeychain loadValueForKey:@"AuthenticationMethod"]);
 
-        if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"]  isEqual: GoogleCons] && [standardDefaults objectForKey:@"UserID"]) {
+        if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"]  isEqual: GoogleCons] && [standardDefaults objectForKey:@"UserID"] && [standardDefaults objectForKey:@"UserName"]) {
             NSLog(@"stored USERID: %@", [standardDefaults objectForKey:@"UserID"]);
             [GIDSignIn sharedInstance].clientID = [standardDefaults objectForKey:@"UserID"];
             [[GIDSignIn sharedInstance] signInSilently];
             [self performSegueWithIdentifier:@"fakeSegue" sender:self];
         }
         
-        else if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"]  isEqual: InstagramCons] && [standardDefaults objectForKey:@"UserID"]) {
+        else if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"]  isEqual: InstagramCons] && [standardDefaults objectForKey:@"UserID"] && [standardDefaults objectForKey:@"UserName"]) {
             [self performSegueWithIdentifier:@"fakeSegue" sender:self];
         }
         
-        else if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"]  isEqual: OneDriveCons]) {
+        else if ([[JNKeychain loadValueForKey:@"AuthenticationMethod"]  isEqual: OneDriveCons] && [standardDefaults objectForKey:@"UserID"] && [standardDefaults objectForKey:@"UserName"]) {
             NSArray *scopeArray = [[NSArray alloc] initWithObjects:@"wl.offline_access", @"onedrive.readwrite", nil];
             [ODClient setMicrosoftAccountAppId:@"000000004C13496E" scopes:scopeArray];
             [ODClient clientWithCompletion:^(ODClient *client, NSError *error){
