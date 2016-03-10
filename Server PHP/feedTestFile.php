@@ -1,3 +1,4 @@
+
 <?php
     
     //This page inserts new photo information from the client into the database
@@ -86,5 +87,7 @@
     
     mysql_close($db_server);
     
-?>
+    ?>
+
+
 

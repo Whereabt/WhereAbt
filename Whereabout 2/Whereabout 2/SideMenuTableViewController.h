@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SideMenuTableViewController : UITableViewController
-@property (weak, nonatomic) IBOutlet UISwitch *autoSaveSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *mappingSwitch;
-- (IBAction)mapChange:(id)sender;
-- (IBAction)saveChange:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastNameLabel;
 

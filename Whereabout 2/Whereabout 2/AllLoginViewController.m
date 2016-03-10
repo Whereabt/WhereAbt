@@ -26,10 +26,11 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   /* UIImageView *backgroundImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sesquile.JPG"]];
-    backgroundImgView.frame = self.view.frame;
+    UIImageView *backgroundImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sesquile.JPG"]];
+    backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
+    backgroundImgView.alpha = 0.50;
     [self.view addSubview:backgroundImgView];
-    [self.view sendSubviewToBack:backgroundImgView]; */
+    [self.view sendSubviewToBack:backgroundImgView];
     
     self.welcomeLabel.adjustsFontSizeToFitWidth = YES;
     loginCompleted = NO;

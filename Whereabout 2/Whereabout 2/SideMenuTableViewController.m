@@ -9,6 +9,7 @@
 #import "SideMenuTableViewController.h"
 #import "SWRevealViewController.h"
 #import "SettingsTableViewController.h"
+#import "StreamViewController.h"
 
 @interface SideMenuTableViewController ()
 
@@ -39,43 +40,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
-    if ([[standards objectForKey:@"autoSave"] isEqualToString:@"YES"]) {
-        [self.autoSaveSwitch setOn:YES];
-    }
-    
-    if ([[standards objectForKey:@"mapping"] isEqualToString:@"TRUE"]) {
-        [self.mappingSwitch setOn:YES];
-    }
-    
 
-}
-
-
-- (IBAction)mapChange:(id)sender {
-    NSString *mappingPreference;
-    if ([self.mappingSwitch isOn]) {
-        mappingPreference = @"TRUE";
-    }
-    else {
-        mappingPreference = @"FALSE";
-    }
-    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    [preferences setObject:mappingPreference forKey:@"mapping"];
-}
-
-- (IBAction)saveChange:(id)sender {
-    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
-    
-    NSString *autoSave;
-    
-    if (![self.autoSaveSwitch isOn]) {
-        autoSave = @"NO";
-    }
-    else {
-        autoSave = @"YES";
-    }
-    
-    [preferences setObject:autoSave forKey:@"autoSave"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,7 +50,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    // Set the title of navigation bar by using the menu items
+ /*   // Set the title of navigation bar by using the menu items
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     UINavigationController *destViewController = (UINavigationController*)segue.destinationViewController;
     destViewController.title = [[menuItems objectAtIndex:indexPath.row] capitalizedString];
@@ -93,7 +58,14 @@
     // Set the photo if it navigates to the PhotoView
     if ([segue.identifier isEqualToString:@"showSettings"]) {
         UINavigationController *navController = segue.destinationViewController;
-        SettingsTableViewController *settingsVC = [navController childViewControllers].firstObject;
+    }
+  */
+    StreamViewController *streamVC = [[StreamViewController alloc] init];
+    if ([segue.identifier  isEqual: @"showRecent"]) {
+        [streamVC setSortTypeTo:@"time"];
+    }
+    else if ([segue.identifier  isEqual: @"showStream"]) {
+        [streamVC setSortTypeTo:@"distance"];
     }
 }
 

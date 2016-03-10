@@ -10,19 +10,13 @@
 #import "LocationController.h"
 #import "StreamViewController.h"
 #import <InstagramSimpleOAuth/InstagramSimpleOAuth.h>
-
-
-/*
-static NSString *const userIdIndex = @"UserID";
-static NSString *const photoURLIndex = @"PhotoURL";
-static NSString *const photoIndex = @"Photo";
-static NSString *const distanceFrom = @"MilesAway";
-*/
  
 @implementation StreamController
+{
+    //NSString *sortType;
+}
 
-
-- (void)getFeedWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
+- (void)getFeedWithSort:(NSString *)sort andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
     //get location
     //CLLocation *location = [LocationController sharedController].currentLocation;
     
@@ -33,7 +27,16 @@ static NSString *const distanceFrom = @"MilesAway";
     //check to see if location working
     if (locationController.locationManager.location) {
         //make request
-        NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTestFile.php?Latitude=%f&Longitude=%f&Radius=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
+        
+        NSString *urlAsString;
+        if ([sort isEqual: @"time"]) {
+            //radius of 10 miles
+            urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=%f&Longitude=%f&Radius=10&Sort=time", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude];
+        }
+        else {
+            //period used returns content within 7 days
+             urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=%f&Longitude=%f&Sort=distance&Period=604800", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude];
+        }
         
         //NSString *urlAsString = @"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3.000000";
         //eventually, include radius in last parameter 'Radius='

@@ -31,7 +31,6 @@
 @end
 
 
-
 @implementation StreamViewController
 
 UILabel *connFailLabel;
@@ -39,8 +38,7 @@ UILabel *uploadLabel;
 UIActivityIndicatorView *StreamActivityView;
 bool isUploadingPhoto;
 PhotosAccessViewController *photoVC;
-
-
+NSString *sortType;
 
 - (void)viewDidLoad {
      [super viewDidLoad];
@@ -83,6 +81,11 @@ PhotosAccessViewController *photoVC;
     }
 }
 
+- (void)setSortTypeTo:(NSString *)sortIdentifier {
+    sortType = [[NSString alloc] init];
+    sortType = sortIdentifier;
+}
+
 - (void)refreshStream
 {
     NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
@@ -121,7 +124,7 @@ PhotosAccessViewController *photoVC;
         
         
         //USE f FOR RADIUS PARAM
-        [networkRequester getFeedWithRadius:4000 andCompletion:^(NSMutableArray *items, NSError *error) {
+        [networkRequester getFeedWithSort:sortType andCompletion:^(NSMutableArray *items, NSError *error) {
             if (!error) {
                 self.streamItems = items;
                 

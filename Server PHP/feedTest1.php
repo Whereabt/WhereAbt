@@ -17,7 +17,6 @@
     if (!$result) die("Database access failed: " . mysql_error());
     $rows = mysql_num_rows($result);
     
-    
     //Step 2 - We'll need the distance function to calculate distance between the user and each entry
     
     function distance($lat1, $lon1, $lat2, $lon2, $unit) {
@@ -48,13 +47,18 @@
                                   $_GET['Latitude'],
                                   $_GET['Longitude'], "M");
             
+            /*
             //get time interval since
             $date = mysql_result($result,$j,'TimeStamp');
-            
             //in seconds
             $interval = strtotime($date);
+             */
+            $now = new DateTime('now');
+            $old = new DateTime(mysql_result($result,$j,'TimeStamp'));
+            $diff = $old->getTimestamp() - $now->getTimestamp();
+            $diff = -1*$diff;
             
-            if ($interval < $_GET['Period']){
+            if ($diff < $_GET['Period']){
                 //Each row of the database is read one at a time into innerarray
                 $innerarray =
                 array('MilesAway' => $MilesAway,
@@ -78,7 +82,6 @@
     }
     
     elseif ($_GET['Sort'] == "time") {
-        //BUGBUG: FOR loop can be done more efficiently, see PHP guide, example 10-6
         for ($j = 0; $j < $rows; ++$j)
         {
             $MilesAway = distance(mysql_result($result,$j,'Latitude'),
@@ -87,13 +90,16 @@
                                   $_GET['Longitude'], "M");
             
             //get time interval since
-            $date = mysql_result($result,$j,'TimeStamp');
-            $interval = strtotime($date);
+            $now = new DateTime('now');
+            $old = new DateTime(mysql_result($result,$j,'TimeStamp'));
+            $diff = $old->getTimestamp() - $now->getTimestamp();
+            $diff = -1*$diff;
             
             if ($MilesAway < $_GET['Radius']){
                 //Each row of the database is read one at a time into innerarray
                 $innerarray =
-                array('Time' => $time,
+                array('Time' => $diff,
+                      'MilesAway' => $MilesAway,
                       'PhotoID' => mysql_result($result,$j,'PhotoID') ,
                       'UserID' => mysql_result($result,$j,'UserID') ,
                       'Mapping' => mysql_result($result,$j,'Mapping') ,
@@ -145,9 +151,6 @@
     //Sort will apply to the 'MilesAway' value or 'Time' value since that one is the first in each sub-array
     sort($outerarray);
     
-    if ($_GET['Period']) {
-        
-    }
     
     //Use stripslashes to avoid backslashes in URLs like 'http:\/\/foo.com\/'
     
@@ -156,4 +159,3 @@
     mysql_close($db_server);
     
     ?>
-

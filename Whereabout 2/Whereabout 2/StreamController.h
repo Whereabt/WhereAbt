@@ -16,11 +16,13 @@
 @property (nonatomic, retain) NSMutableArray *itemCollection;
 @property (strong, nonatomic) NSData *imageData;
 @property (strong, nonatomic) NSMutableDictionary *indexDict;
+@property (nonatomic, retain) NSString *sortType;
 
 - (void)imageFromURLString:(NSString *)urlString atIndex:(NSInteger)index OfArray:(NSArray*)jsonArray isThumbnail:(BOOL) isThumbnail;
 
-- (void)getFeedWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack;
+- (void)getFeedWithSort:(NSString *)sort andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack;
 
 - (void)reportPhotoWithUserID: (NSString *)userId andPhotoID: (NSString *)photoId andReason: (NSString *)reasonID withCompletion:(void (^)(NSError *error))completionHandler;
 - (void)getFeedFromAzureCloudFileWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack;
+
 @end

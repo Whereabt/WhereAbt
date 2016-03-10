@@ -78,12 +78,6 @@ NSMutableDictionary *imageSetDict;
 
 }
 
-
-- (void)viewDidAppear:(BOOL)animated {
-
-}
-
-
 - (IBAction)uploadButtonPress:(id)sender {
     UIActivityIndicatorView *uploadActivityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.center.x - 20, self.view.center.y - 20, 40, 40)];
     uploadActivityIndicator.color = [UIColor colorWithRed:0.0f/255.0f green:153.0f/255.0f blue:255.0f/255.0f alpha:1.0f];

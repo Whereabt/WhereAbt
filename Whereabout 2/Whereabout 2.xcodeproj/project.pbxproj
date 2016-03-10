@@ -54,6 +54,8 @@
 		01EC52A01C86AC7800201C18 /* Avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC529E1C86AC7800201C18 /* Avatar.png */; };
 		01EC52A11C86AC7800201C18 /* Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC529F1C86AC7800201C18 /* Camera.png */; };
 		01EC52A31C86AD1700201C18 /* Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52A21C86AD1700201C18 /* Folder.png */; };
+		01EC52A51C9107EC00201C18 /* Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52A41C9107EB00201C18 /* Clock.png */; };
+		01EC52A71C91442A00201C18 /* House (1)_res.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52A61C91442A00201C18 /* House (1)_res.png */; };
 		2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */; };
 		2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E421A5C5B4100EDD980 /* Foundation.framework */; };
 		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -92,7 +94,6 @@
 		4AB8EF071BD0743800D233DA /* Flag.php in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EF061BD0743800D233DA /* Flag.php */; };
 		B927F1211B1239D1007D5D05 /* NSNetworkConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = B927F1201B1239D1007D5D05 /* NSNetworkConnection.m */; };
 		B938DCB01A641E560073D91F /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCAF1A641E560073D91F /* StreamController.m */; };
-		B938DCB31A68BF000073D91F /* StreamCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */; };
 		B938DCB61A6AF2EE0073D91F /* StreamCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB51A6AF2EE0073D91F /* StreamCollectionViewCell.m */; };
 		B938DCB91A6F4F2C0073D91F /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCB81A6F4F2C0073D91F /* ProfileController.m */; };
 		B938DCBC1A6F59000073D91F /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCBB1A6F59000073D91F /* ProfileViewController.m */; };
@@ -254,6 +255,8 @@
 		01EC529E1C86AC7800201C18 /* Avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Avatar.png; sourceTree = "<group>"; };
 		01EC529F1C86AC7800201C18 /* Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Camera.png; sourceTree = "<group>"; };
 		01EC52A21C86AD1700201C18 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
+		01EC52A41C9107EB00201C18 /* Clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Clock.png; sourceTree = "<group>"; };
+		01EC52A61C91442A00201C18 /* House (1)_res.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "House (1)_res.png"; sourceTree = "<group>"; };
 		1C7F58B3B077B59E66A13082 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2D6A0E421A5C5B4100EDD980 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -300,8 +303,6 @@
 		B927F1201B1239D1007D5D05 /* NSNetworkConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNetworkConnection.m; sourceTree = "<group>"; };
 		B938DCAE1A641E560073D91F /* StreamController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamController.h; sourceTree = "<group>"; };
 		B938DCAF1A641E560073D91F /* StreamController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamController.m; sourceTree = "<group>"; };
-		B938DCB11A68BF000073D91F /* StreamCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamCollectionViewController.h; sourceTree = "<group>"; };
-		B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamCollectionViewController.m; sourceTree = "<group>"; };
 		B938DCB41A6AF2EE0073D91F /* StreamCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamCollectionViewCell.h; sourceTree = "<group>"; };
 		B938DCB51A6AF2EE0073D91F /* StreamCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamCollectionViewCell.m; sourceTree = "<group>"; };
 		B938DCB71A6F4F2C0073D91F /* ProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileController.h; sourceTree = "<group>"; };
@@ -556,11 +557,13 @@
 				01EC52891C86ABE200201C18 /* Book.png */,
 				01EC528A1C86ABE200201C18 /* Calender.png */,
 				01EC528B1C86ABE200201C18 /* Card.png */,
+				01EC52A41C9107EB00201C18 /* Clock.png */,
 				01EC52A21C86AD1700201C18 /* Folder.png */,
 				01EC528C1C86ABE200201C18 /* Chat.png */,
 				01EC528D1C86ABE200201C18 /* Document.png */,
 				01EC528E1C86ABE200201C18 /* Email.png */,
 				01EC528F1C86ABE200201C18 /* House (1).png */,
+				01EC52A61C91442A00201C18 /* House (1)_res.png */,
 				01EC52901C86ABE200201C18 /* Key.png */,
 				01EC52911C86ABE200201C18 /* Map-Pin.png */,
 				01EC52921C86ABE200201C18 /* Refresh-Reload.png */,
@@ -608,8 +611,6 @@
 				B9BC13351A8843A700659591 /* DetailStreamViewController.m */,
 				B938DCB41A6AF2EE0073D91F /* StreamCollectionViewCell.h */,
 				B938DCB51A6AF2EE0073D91F /* StreamCollectionViewCell.m */,
-				B938DCB11A68BF000073D91F /* StreamCollectionViewController.h */,
-				B938DCB21A68BF000073D91F /* StreamCollectionViewController.m */,
 				B9EBBCA91A918622008FA719 /* StreamUpperSuppViewController.h */,
 				B9EBBCAA1A918622008FA719 /* StreamUpperSuppViewController.m */,
 				B938DCC31A73EE0B0073D91F /* EnlargeViewController.h */,
@@ -993,8 +994,10 @@
 				B9EAF9E81AE30D2E00C99D29 /* Upload GRAY 50x50.png in Resources */,
 				B938DCFE1A75B6F10073D91F /* Orange Camera Roll Button.png in Resources */,
 				B9EAF9F21AE30D8300C99D29 /* Feed 50x50.png in Resources */,
+				01EC52A51C9107EC00201C18 /* Clock.png in Resources */,
 				B938DCFB1A75B6F10073D91F /* Orange Camera Button.png in Resources */,
 				4AB8EF001BC5D97200D233DA /* SettingsPreview.PNG in Resources */,
+				01EC52A71C91442A00201C18 /* House (1)_res.png in Resources */,
 				01EC4EB81C81773B00201C18 /* Maintenance.png in Resources */,
 				B985EA8B1B3AFE31000D2AFD /* Page 4.1.PNG in Resources */,
 				4AB8EEFB1BC5D97200D233DA /* CRUploadPreview.PNG in Resources */,
@@ -1120,7 +1123,6 @@
 				B9E7093B1AC888C10054DE2C /* StreamEnlarge&SaveViewController.m in Sources */,
 				01EC4ECA1C82C5D000201C18 /* SideMenuTableViewController.m in Sources */,
 				B985EA7D1B38B5F0000D2AFD /* StreamTVCell.m in Sources */,
-				B938DCB31A68BF000073D91F /* StreamCollectionViewController.m in Sources */,
 				B9A9EDB61AC37B1A000ECE24 /* StreamPROEnlargedViewController.m in Sources */,
 				B927F1211B1239D1007D5D05 /* NSNetworkConnection.m in Sources */,
 				B9A9EDB01AC36CAD000ECE24 /* StreamPROCollectionViewController.m in Sources */,

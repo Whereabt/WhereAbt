@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingsTableViewController : UITableViewController
-@property (strong, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *logoutActivityIndicator;
-- (IBAction)logoutPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UISwitch *mappingSwitch;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *logoutActInd;
+@property (weak, nonatomic) IBOutlet UISwitch *saveSwitch;
+- (IBAction)saveSwitchChange:(id)sender;
+- (IBAction)mappSwitchChange:(id)sender;
+- (IBAction)logoutPress:(id)sender;
 
 @end

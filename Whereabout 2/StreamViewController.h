@@ -18,7 +18,7 @@
 - (IBAction)savedPhotoAlbumButtonCalled:(id)sender;
 - (IBAction)cameraButtonCalled:(id)sender;
 - (void)closePhotoVCWithCompletion:(void (^)(void))completionBlock;
-
+- (void)setSortTypeTo:(NSString *)sortIdentifier;
 - (void)stopRefreshControlOnPhotoUpload;
 - (void)startRefreshControlOnPhotoUpload;
 - (void)setUploadingPhotoVarTo:(BOOL) boolean;

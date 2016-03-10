@@ -24,7 +24,6 @@
     [super viewDidLoad];
     //self.tableView.allowsSelection = NO;
     
-    
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {
@@ -33,9 +32,16 @@
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
 
-    self.logoutActivityIndicator.hidesWhenStopped = YES;
+    self.logoutActInd.hidesWhenStopped = YES;
     
-
+    NSUserDefaults *standards = [NSUserDefaults standardUserDefaults];
+    if ([[standards objectForKey:@"autoSave"] isEqualToString:@"YES"]) {
+        [self.saveSwitch setOn:YES];
+    }
+    
+    if ([[standards objectForKey:@"mapping"] isEqualToString:@"TRUE"]) {
+        [self.mappingSwitch setOn:YES];
+    }
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -50,8 +56,8 @@
 }
 
 
-- (IBAction)logoutPressed:(id)sender {
-    [self.logoutActivityIndicator startAnimating];
+- (IBAction)logoutPress:(id)sender {
+    [self.logoutActInd startAnimating];
     
     //google always logout
     [[GIDSignIn sharedInstance] signOut];
@@ -73,7 +79,7 @@
                                                                                                                                                                                                                                               NSError *error) {
                                                                                                                                                                                                                               
                                                                                                                                                                                                                               [JNKeychain deleteValueForKey:@"AuthenticationMethod"];
-                                                                                                                                                                                                                              [self.logoutActivityIndicator stopAnimating];
+                                                                                                                                                                                                                              [self.logoutActInd stopAnimating];
                                                                                                                                                                                                                               [self performSegueWithIdentifier:@"segueToLogout" sender:self];                                                                                                           }];
                                                                                                                                                     [odRequestTask resume];
                                                                                                                                                 }];
@@ -83,6 +89,44 @@
     [dataRequestTask resume];
     
 
+}
+
+- (IBAction)saveSwitchChange:(id)sender {
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+    
+    NSString *autoSave;
+    
+    if (![self.saveSwitch isOn]) {
+        autoSave = @"NO";
+    }
+    else {
+        autoSave = @"YES";
+    }
+    
+    [preferences setObject:autoSave forKey:@"autoSave"];
+}
+
+- (IBAction)mappSwitchChange:(id)sender {
+    NSUserDefaults *preferences = [NSUserDefaults standardUserDefaults];
+    NSString *mappingPreference;
+    if ([self.mappingSwitch isOn]) {
+        mappingPreference = @"TRUE";
+    }
+    else {
+        mappingPreference = @"FALSE";
+    }
+    
+    [preferences setObject:mappingPreference forKey:@"mapping"];
+
+    if (![preferences objectForKey:@"First Map Switch"]) {
+        UIAlertController *alertCont = [UIAlertController alertControllerWithTitle:@"Just know..." message:@"Enabling this allows other users to view the exact location of new uploads." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alertCont dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [alertCont addAction:okAction];
+        [preferences setObject:@"done" forKey:@"First Map Switch"];
+        [self presentViewController:alertCont animated:YES completion:nil];
+    }
 }
 
 
