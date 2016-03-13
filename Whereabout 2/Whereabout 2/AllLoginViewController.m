@@ -26,13 +26,12 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIImageView *backgroundImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sesquile.JPG"]];
-    backgroundImgView.contentMode = UIViewContentModeScaleAspectFill;
-    backgroundImgView.alpha = 0.50;
-    [self.view addSubview:backgroundImgView];
-    [self.view sendSubviewToBack:backgroundImgView];
+    self.backgroundImageView.image = [UIImage imageNamed:@"sesquile.JPG"];
+    self.backgroundImageView.alpha = 0.5;
+    self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     self.welcomeLabel.adjustsFontSizeToFitWidth = YES;
+    [self.welcomeLabel setText:@"Welcome to Whereabout"];
     loginCompleted = NO;
     NSUserDefaults *authInfo = [NSUserDefaults standardUserDefaults];
     BOOL silent = NO;
@@ -49,6 +48,7 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    self.backgroundImageView.image = [UIImage imageNamed:@"sesquile.JPG"];
     if (loginCompleted) {
         [self performSegueWithIdentifier:@"segueToInitial" sender:self];
     }

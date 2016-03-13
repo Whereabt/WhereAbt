@@ -200,7 +200,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     photoInfo[@"Name"] = @"NONE";
     UIImage *imgFromCache = [[ImageCache sharedImageCache] GetImage:FetchResult[indexPath.row]];
     
-    photoInfo[@"Asset"] = @"camera-roll";
+    photoInfo[@"Asset"] = FetchResult[indexPath.row];
     photoInfo[@"Image"] = imgFromCache;
     NSMutableArray *filterArray = [[NSMutableArray alloc] initWithCapacity:8];
     filterArray[0] = @"AMATORKA";

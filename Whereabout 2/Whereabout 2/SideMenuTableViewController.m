@@ -27,8 +27,35 @@
     self.tableView.backgroundColor = [UIColor colorWithRed:31.0f/255.0f
                                                      green:33.0f/255.0f
                                                       blue:36.0f/255.0f
-                                                     alpha:1.0f];
+                                                     alpha:0.5f];
     NSUserDefaults *standards = [NSUserDefaults standardUserDefaults];
+    if ([standards floatForKey:@"stream time filter"]) {
+        float t = [standards floatForKey:@"stream time filter"];
+        [self.timeSlider setValue:t];
+        [self.timeLabel setText:[NSString stringWithFormat:@"%.f day(s)", t]];
+    }
+    
+    if ([standards floatForKey:@"stream distance filter"]) {
+        float d = [standards floatForKey:@"stream distance filter"];
+        [self.distanceSlider setValue:d];
+        [self.distanceLabel setText:[NSString stringWithFormat:@"%.f mile(s)", d]];
+    }
+    
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sesquile.JPG"]];
+
+    if (!UIAccessibilityIsReduceTransparencyEnabled()) {
+        self.view.backgroundColor = [UIColor clearColor];
+        
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+        UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        blurEffectView.frame = self.view.bounds;
+        blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.tableView.backgroundView addSubview:blurEffectView];
+    }
+    else {
+        self.tableView.backgroundColor = [UIColor blackColor];
+    }
+    
     
     NSArray *namesArray = [[standards objectForKey:@"UserName"] componentsSeparatedByString:@" "];
     [self.usernameLabel setText:namesArray[0]];
@@ -48,18 +75,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (IBAction)timeSlideChange:(id)sender {
+    NSUserDefaults *standards = [NSUserDefaults standardUserDefaults];
+    [standards setFloat:self.timeSlider.value forKey:@"stream time filter"];
+    [self.timeLabel setText:[NSString stringWithFormat:@"%.f day(s)", self.timeSlider.value]];
+}
+
+- (IBAction)distanceSlideChange:(id)sender {
+    NSUserDefaults *standards = [NSUserDefaults standardUserDefaults];
+    [standards setFloat:self.distanceSlider.value forKey:@"stream distance filter"];
+    [self.distanceLabel setText:[NSString stringWithFormat:@"%.f mile(s)", self.distanceSlider.value]];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
- /*   // Set the title of navigation bar by using the menu items
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    UINavigationController *destViewController = (UINavigationController*)segue.destinationViewController;
-    destViewController.title = [[menuItems objectAtIndex:indexPath.row] capitalizedString];
-    
-    // Set the photo if it navigates to the PhotoView
-    if ([segue.identifier isEqualToString:@"showSettings"]) {
-        UINavigationController *navController = segue.destinationViewController;
-    }
-  */
     StreamViewController *streamVC = [[StreamViewController alloc] init];
     if ([segue.identifier  isEqual: @"showRecent"]) {
         [streamVC setSortTypeTo:@"time"];
@@ -161,5 +191,4 @@
     // Pass the selected object to the new view controller.
 }
 */
-
 @end

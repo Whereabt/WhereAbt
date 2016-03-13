@@ -19,5 +19,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *googleLogin;
 @property (weak, nonatomic) IBOutlet UIButton *odLogin;
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 @end

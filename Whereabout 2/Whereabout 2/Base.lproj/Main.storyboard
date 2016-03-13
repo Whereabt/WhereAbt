@@ -60,6 +60,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="O5A-ZJ-rty" kind="relationship" relationship="rootViewController" id="Jc7-Om-i1P"/>
@@ -118,9 +121,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="CAMERA" id="Urz-LV-3vd">
-                        <barButtonItem key="backBarButtonItem" title="Camera" id="A0u-ot-9i8"/>
+                        <barButtonItem key="backBarButtonItem" title="Camera" id="A0u-ot-9i8">
+                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                         <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" id="kPe-wC-V1f">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -149,7 +154,9 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="FILTER" id="Xpn-j3-CGE">
-                        <barButtonItem key="backBarButtonItem" title="Filter" id="Uxv-7L-zXL"/>
+                        <barButtonItem key="backBarButtonItem" title="Filter" id="Uxv-7L-zXL">
+                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Upload" id="j0Q-pa-d5k">
                             <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -197,9 +204,11 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="CAMERA ROLL" id="Yrz-Zc-5L6">
-                        <barButtonItem key="backBarButtonItem" title="Camera Roll" id="N28-UR-Czw"/>
+                        <barButtonItem key="backBarButtonItem" title="Camera Roll" id="N28-UR-Czw">
+                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
                         <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" id="Hcp-eT-Pri">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -221,6 +230,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="0t0-rV-9tZ" kind="relationship" relationship="rootViewController" id="wQI-rj-0WC"/>
@@ -282,7 +294,7 @@
                     <navigationItem key="navigationItem" title="Whereabout" id="QWr-HB-Z8P">
                         <barButtonItem key="backBarButtonItem" title="Stream" id="Ntg-Ko-Yeo"/>
                         <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" style="plain" id="e3a-0d-kuq">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
@@ -548,7 +560,7 @@
                     <navigationItem key="navigationItem" title="MY PROFILE" id="xrO-eO-we7">
                         <barButtonItem key="backBarButtonItem" title="Me" id="VMQ-d9-gyE"/>
                         <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" style="plain" id="B3h-Fm-UKS">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="fQ3-d1-TNY">
                             <connections>
@@ -805,7 +817,7 @@
                     <navigationItem key="navigationItem" title="SETTINGS" id="8PI-AG-yrj">
                         <barButtonItem key="backBarButtonItem" title="Settings" id="FsZ-2w-RUp"/>
                         <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" id="hMw-yd-9Wo">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -1154,7 +1166,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                         <sections>
                             <tableViewSection id="hp5-P5-u0f">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="79" id="onP-mX-zwu">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="79" id="onP-mX-zwu">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="onP-mX-zwu" id="JxM-hX-JuS">
@@ -1167,17 +1179,15 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                         <constraint firstAttribute="width" constant="200" id="9Ah-Ny-wqx"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QVy-jZ-2yq">
                                                     <rect key="frame" x="8" y="44" width="200" height="28"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="TYV-Ff-XJL" firstAttribute="trailing" secondItem="QVy-jZ-2yq" secondAttribute="trailing" id="0gq-3j-yeM"/>
                                                 <constraint firstItem="QVy-jZ-2yq" firstAttribute="top" secondItem="JxM-hX-JuS" secondAttribute="topMargin" constant="36" id="Ana-T5-JaS"/>
@@ -1188,52 +1198,75 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                 <constraint firstAttribute="bottomMargin" secondItem="TYV-Ff-XJL" secondAttribute="bottom" constant="25" id="vwG-lb-qpd"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="stream" rowHeight="44" id="zi7-qD-1jC">
-                                        <rect key="frame" x="0.0" y="79" width="320" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="stream" rowHeight="117" id="zi7-qD-1jC">
+                                        <rect key="frame" x="0.0" y="79" width="320" height="117"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.75" contentMode="center" tableViewCell="zi7-qD-1jC" id="dgl-mb-irD">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zi7-qD-1jC" id="dgl-mb-irD">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="117"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Map-Pin.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sx3-MU-yS4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="55" id="klj-W4-KGS"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance Sort" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yoO-5k-YNY">
                                                     <rect key="frame" x="63" y="17" width="104" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Map-Pin.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sx3-MU-yS4">
+                                                    <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="55" id="Uwc-XY-av5"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="7" minValue="1" maxValue="14" translatesAutoresizingMaskIntoConstraints="NO" id="KMN-Cu-jop">
+                                                    <rect key="frame" x="49" y="73" width="144" height="31"/>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="timeSlideChange:" destination="0kn-N6-a1f" eventType="valueChanged" id="5E3-09-Ey3"/>
+                                                    </connections>
+                                                </slider>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Boundary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cm7-o1-lQe">
+                                                    <rect key="frame" x="63" y="50" width="116" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="116" id="wH4-QL-gEC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="yoO-5k-YNY" secondAttribute="bottom" constant="-2" id="4Vz-yP-SgA"/>
-                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="leading" secondItem="dgl-mb-irD" secondAttribute="leading" id="BEL-S3-zpz"/>
-                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="top" secondItem="dgl-mb-irD" secondAttribute="top" id="EVZ-YB-pCq"/>
-                                                <constraint firstItem="yoO-5k-YNY" firstAttribute="leading" secondItem="Sx3-MU-yS4" secondAttribute="trailing" constant="8" symbolic="YES" id="bnm-i0-V3D"/>
-                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="centerY" secondItem="yoO-5k-YNY" secondAttribute="centerY" id="hLy-An-6ZB"/>
-                                                <constraint firstItem="yoO-5k-YNY" firstAttribute="top" secondItem="dgl-mb-irD" secondAttribute="topMargin" constant="9" id="wAR-1S-oc5"/>
+                                                <constraint firstItem="KMN-Cu-jop" firstAttribute="top" secondItem="cm7-o1-lQe" secondAttribute="bottom" constant="2" id="B1r-R2-AoE"/>
+                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="top" secondItem="dgl-mb-irD" secondAttribute="top" id="CVd-8y-o25"/>
+                                                <constraint firstItem="yoO-5k-YNY" firstAttribute="leading" secondItem="Sx3-MU-yS4" secondAttribute="trailing" constant="8" symbolic="YES" id="DtB-7p-aNU"/>
+                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="leading" secondItem="dgl-mb-irD" secondAttribute="leading" id="VFP-n6-iAP"/>
+                                                <constraint firstItem="yoO-5k-YNY" firstAttribute="leading" secondItem="cm7-o1-lQe" secondAttribute="leading" id="VHs-qV-Obn"/>
+                                                <constraint firstItem="KMN-Cu-jop" firstAttribute="top" secondItem="Sx3-MU-yS4" secondAttribute="bottom" constant="18" id="bBA-Yg-hyw"/>
+                                                <constraint firstItem="KMN-Cu-jop" firstAttribute="centerX" secondItem="cm7-o1-lQe" secondAttribute="centerX" id="ble-sE-uWE"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="KMN-Cu-jop" secondAttribute="bottom" constant="6" id="ehK-ZY-RQU"/>
+                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="centerY" secondItem="yoO-5k-YNY" secondAttribute="centerY" id="k29-OB-lmK"/>
+                                                <constraint firstItem="KMN-Cu-jop" firstAttribute="leading" secondItem="dgl-mb-irD" secondAttribute="leadingMargin" constant="43" id="o2V-Tr-r9V"/>
+                                                <constraint firstItem="cm7-o1-lQe" firstAttribute="top" secondItem="yoO-5k-YNY" secondAttribute="bottom" constant="12" id="uG3-0l-VIE"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="WdU-fD-rpn" kind="custom" identifier="showStream" customClass="SWRevealViewControllerSeguePushController" id="JhX-Vt-fsg"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="ptL-oS-2fn">
-                                        <rect key="frame" x="0.0" y="123" width="320" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="117" id="ptL-oS-2fn">
+                                        <rect key="frame" x="0.0" y="196" width="320" height="117"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.75" contentMode="center" tableViewCell="ptL-oS-2fn" id="nZH-jH-fWv">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ptL-oS-2fn" id="nZH-jH-fWv">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="117"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Clock.png" translatesAutoresizingMaskIntoConstraints="NO" id="BcQ-gs-yFO">
                                                     <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="55" id="E4o-Pk-ZPF"/>
+                                                        <constraint firstAttribute="width" constant="55" id="5YX-nT-ajW"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Sort" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aA7-W8-ONX">
@@ -1242,24 +1275,47 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                     <color key="textColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance Boundary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yeo-Nv-V6x">
+                                                    <rect key="frame" x="63" y="50" width="116" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="116" id="KFH-Vt-jL7"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="1" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="yXR-it-hbE">
+                                                    <rect key="frame" x="49" y="73" width="144" height="31"/>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <connections>
+                                                        <action selector="distanceSlideChange:" destination="0kn-N6-a1f" eventType="valueChanged" id="NLE-1r-Kl1"/>
+                                                    </connections>
+                                                </slider>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="aA7-W8-ONX" secondAttribute="bottom" constant="-2" id="6Wp-Se-hz6"/>
-                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="top" secondItem="nZH-jH-fWv" secondAttribute="topMargin" constant="9" id="8Qa-SC-hVj"/>
-                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="leading" secondItem="BcQ-gs-yFO" secondAttribute="trailing" constant="8" symbolic="YES" id="L5q-Fe-9NQ"/>
-                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="top" secondItem="nZH-jH-fWv" secondAttribute="top" id="UnU-4U-X6R"/>
-                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="centerY" secondItem="BcQ-gs-yFO" secondAttribute="centerY" id="fRB-CR-sC0"/>
-                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="leading" secondItem="nZH-jH-fWv" secondAttribute="leading" id="nXm-Z8-p1o"/>
+                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="centerY" secondItem="BcQ-gs-yFO" secondAttribute="centerY" id="5tJ-fQ-ie8"/>
+                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="top" secondItem="nZH-jH-fWv" secondAttribute="top" id="B9c-ZA-MF9"/>
+                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="leading" secondItem="BcQ-gs-yFO" secondAttribute="trailing" constant="8" symbolic="YES" id="GAQ-cE-536"/>
+                                                <constraint firstItem="yXR-it-hbE" firstAttribute="top" secondItem="yeo-Nv-V6x" secondAttribute="bottom" constant="2" id="TYW-xg-idq"/>
+                                                <constraint firstItem="yXR-it-hbE" firstAttribute="leading" secondItem="nZH-jH-fWv" secondAttribute="leadingMargin" constant="43" id="gka-MH-OH6"/>
+                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="leading" secondItem="yeo-Nv-V6x" secondAttribute="leading" id="kfe-je-A69"/>
+                                                <constraint firstItem="yXR-it-hbE" firstAttribute="centerX" secondItem="yeo-Nv-V6x" secondAttribute="centerX" id="lKI-c7-xoF"/>
+                                                <constraint firstItem="yeo-Nv-V6x" firstAttribute="top" secondItem="aA7-W8-ONX" secondAttribute="bottom" constant="12" id="o3p-YD-OVL"/>
+                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="leading" secondItem="nZH-jH-fWv" secondAttribute="leading" id="pMY-oe-REx"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="yXR-it-hbE" secondAttribute="bottom" constant="6" id="sgm-vg-Rii"/>
+                                                <constraint firstItem="yXR-it-hbE" firstAttribute="top" secondItem="BcQ-gs-yFO" secondAttribute="bottom" constant="18" id="wyd-hX-ieS"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="WdU-fD-rpn" kind="custom" identifier="showRecent" customClass="SWRevealViewControllerSeguePushController" id="fBW-eY-gnt"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="camera" id="hZz-J9-RTY">
-                                        <rect key="frame" x="0.0" y="167" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="313" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.75" contentMode="center" tableViewCell="hZz-J9-RTY" id="e2I-Hk-Bv6">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hZz-J9-RTY" id="e2I-Hk-Bv6">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -1276,6 +1332,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="ZVU-SB-XPE" firstAttribute="top" secondItem="e2I-Hk-Bv6" secondAttribute="topMargin" constant="9" id="4bi-f7-udL"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="ZVU-SB-XPE" secondAttribute="bottom" constant="-2" id="4cT-Tn-LuL"/>
@@ -1285,15 +1342,15 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                 <constraint firstItem="ZVU-SB-XPE" firstAttribute="leading" secondItem="yTH-y4-Tr5" secondAttribute="trailing" constant="8" symbolic="YES" id="rtx-MC-7U4"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="k2Z-x7-iEV" kind="custom" identifier="showCamera" customClass="SWRevealViewControllerSeguePushController" id="RuF-I3-R5f"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="camera roll" rowHeight="44" id="vKM-4c-zaD">
-                                        <rect key="frame" x="0.0" y="211" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="357" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.75" contentMode="center" tableViewCell="vKM-4c-zaD" id="sG3-8e-mMA">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vKM-4c-zaD" id="sG3-8e-mMA">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -1310,6 +1367,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="NrV-uw-Ye1" firstAttribute="centerY" secondItem="Xjn-4v-4io" secondAttribute="centerY" id="Bg6-OY-WJM"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Xjn-4v-4io" secondAttribute="bottom" constant="-2" id="QCO-cf-LbD"/>
@@ -1319,15 +1377,15 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                 <constraint firstItem="Xjn-4v-4io" firstAttribute="leading" secondItem="NrV-uw-Ye1" secondAttribute="trailing" constant="8" symbolic="YES" id="zvc-m2-6Fd"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="ABf-jU-QJn" kind="custom" identifier="showPhotos" customClass="SWRevealViewControllerSeguePushController" id="UFW-Ep-OUN"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="profile" id="To0-ZL-R0c">
-                                        <rect key="frame" x="0.0" y="255" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="401" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.75" contentMode="center" tableViewCell="To0-ZL-R0c" id="Xcs-le-9Ii">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="To0-ZL-R0c" id="Xcs-le-9Ii">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -1347,6 +1405,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                     <rect key="frame" x="8" y="7" width="25" height="25"/>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="NYl-t7-7fo" firstAttribute="top" secondItem="Xcs-le-9Ii" secondAttribute="topMargin" constant="9" id="HY6-X0-cQ5"/>
                                                 <constraint firstItem="Rmq-66-VuJ" firstAttribute="top" secondItem="Xcs-le-9Ii" secondAttribute="top" id="Wtc-zo-pJD"/>
@@ -1361,31 +1420,32 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="InE-IW-0kN" kind="custom" identifier="showProfile" customClass="SWRevealViewControllerSeguePushController" id="j6I-Od-3bY"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="settings" rowHeight="43" id="85K-Mu-9xg">
-                                        <rect key="frame" x="0.0" y="299" width="320" height="43"/>
+                                    <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="settings" rowHeight="48" id="85K-Mu-9xg">
+                                        <rect key="frame" x="0.0" y="445" width="320" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.75" contentMode="center" tableViewCell="85K-Mu-9xg" id="C9e-f5-mgv">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="85K-Mu-9xg" id="C9e-f5-mgv">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Key.png" translatesAutoresizingMaskIntoConstraints="NO" id="S6C-fB-YjL">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Key.png" translatesAutoresizingMaskIntoConstraints="NO" id="S6C-fB-YjL">
                                                     <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="55" id="hUb-r1-aEY"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4I3-Ps-HRF">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4I3-Ps-HRF">
                                                     <rect key="frame" x="63" y="17" width="64" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="4I3-Ps-HRF" firstAttribute="top" secondItem="C9e-f5-mgv" secondAttribute="topMargin" constant="9" id="1m5-FX-qbs"/>
                                                 <constraint firstItem="S6C-fB-YjL" firstAttribute="centerY" secondItem="4I3-Ps-HRF" secondAttribute="centerY" id="PgH-Tk-gXY"/>
@@ -1395,32 +1455,10 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                                 <constraint firstAttribute="bottomMargin" secondItem="4I3-Ps-HRF" secondAttribute="bottom" constant="-3" id="e5g-Cj-AQZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <segue destination="IcK-U5-uzO" kind="custom" identifier="showSettings" customClass="SWRevealViewControllerSeguePushController" id="41P-Kq-pRm"/>
                                         </connections>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="30" id="m4g-jv-Jxc">
-                                        <rect key="frame" x="0.0" y="342" width="320" height="30"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m4g-jv-Jxc" id="Tm8-vI-0Ac">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="__________________________________________________________" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRa-We-yKh">
-                                                    <rect key="frame" x="-99" y="13" width="419" height="19"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="FRa-We-yKh" firstAttribute="top" secondItem="Tm8-vI-0Ac" secondAttribute="topMargin" constant="5" id="AJt-J7-zgV"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="FRa-We-yKh" secondAttribute="bottom" constant="-10" id="RsK-03-3jL"/>
-                                                <constraint firstAttribute="trailing" secondItem="FRa-We-yKh" secondAttribute="trailing" id="hAo-vX-Hdg"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -1432,7 +1470,12 @@ KeychainItemWrapper. This software is subject to the following license and notic
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="distanceLabel" destination="yeo-Nv-V6x" id="jf0-fk-jZh"/>
+                        <outlet property="distanceSlider" destination="yXR-it-hbE" id="WuO-0S-Fxm"/>
                         <outlet property="lastNameLabel" destination="QVy-jZ-2yq" id="L1Q-8Q-IMF"/>
+                        <outlet property="tableView" destination="1Rd-zn-JUB" id="xU8-2F-ucg"/>
+                        <outlet property="timeLabel" destination="cm7-o1-lQe" id="k5v-MN-pTj"/>
+                        <outlet property="timeSlider" destination="KMN-Cu-jop" id="1hn-Ga-iAh"/>
                         <outlet property="usernameLabel" destination="TYV-Ff-XJL" id="0PC-RT-SLZ"/>
                     </connections>
                 </tableViewController>
@@ -1597,7 +1640,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sesquile.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="a8m-Hy-Bly">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a8m-Hy-Bly">
                                 <rect key="frame" x="0.0" y="1" width="320" height="567"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neS-1H-eC2">
@@ -1689,6 +1732,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="activityIndicator" destination="S43-3H-Wbh" id="pko-mY-Efa"/>
+                        <outlet property="backgroundImageView" destination="a8m-Hy-Bly" id="ZQx-by-Xvq"/>
                         <outlet property="googleLogin" destination="CTf-Op-zl7" id="aeX-Zb-CrZ"/>
                         <outlet property="igLogin" destination="neS-1H-eC2" id="J3X-p3-M9P"/>
                         <outlet property="odLogin" destination="kgI-qr-fbw" id="4RZ-pZ-HqM"/>
@@ -2151,7 +2195,6 @@ KeychainItemWrapper. This software is subject to the following license and notic
         <image name="Key.png" width="180" height="180"/>
         <image name="Map-Pin.png" width="180" height="180"/>
         <image name="iphone 6 plus-App icon 1024x1024 REV.png" width="1024" height="1024"/>
-        <image name="sesquile.JPG" width="2448" height="3264"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="JhX-Vt-fsg"/>

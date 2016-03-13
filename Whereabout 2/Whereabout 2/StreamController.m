@@ -27,15 +27,22 @@
     //check to see if location working
     if (locationController.locationManager.location) {
         //make request
+        NSUserDefaults *standards = [NSUserDefaults standardUserDefaults];
         
         NSString *urlAsString;
         if ([sort isEqual: @"time"]) {
-            //radius of 10 miles
-            urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=%f&Longitude=%f&Radius=10&Sort=time", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude];
+            float radius = [standards floatForKey:@"stream distance filter"];
+            if (!radius) {
+                radius = 5.00;
+            }
+            urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=%f&Longitude=%f&Radius=%f&Sort=time", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
         }
         else {
-            //period used returns content within 7 days
-             urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=%f&Longitude=%f&Sort=distance&Period=604800", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude];
+            float seconds = [standards floatForKey:@"stream time filter"] * 86400.00;
+            if (!seconds) {
+                seconds = 604800.00;
+            }
+             urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=%f&Longitude=%f&Sort=distance&Period=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, seconds];
         }
         
         //NSString *urlAsString = @"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3.000000";
