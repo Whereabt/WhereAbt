@@ -13,6 +13,7 @@
 #import <JNKeychain/JNKeychain.h>
 #import "StreamNavigationController.h"
 #import "SWRevealViewController.h"
+#import <Google/Analytics.h>
 
 @interface SettingsTableViewController ()
 
@@ -55,6 +56,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Camera VC"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 - (IBAction)logoutPress:(id)sender {
     [self.logoutActInd startAnimating];

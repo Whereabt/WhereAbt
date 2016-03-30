@@ -14,6 +14,7 @@
 #import <OneDriveSDK/OneDriveSDK.h>
 #import "ReportViewController.h"
 #import <JNKeychain/JNKeychain.h>
+#import <Google/Analytics.h>
 
 @interface StreamEnlarge_SaveViewController ()
 
@@ -128,6 +129,13 @@ NSMutableDictionary *UIimageDict;
     
     ReportViewController *reportVC = [[ReportViewController alloc]init];
     [reportVC getPhotoIdToReportVC:UIimageDict[@"PhotoID"]];
+}
+
+
+-(void)viewWillAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Stream Enlarge VC"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

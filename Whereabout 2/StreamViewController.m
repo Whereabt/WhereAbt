@@ -14,7 +14,6 @@
 #include <math.h>
 #include <QuartzCore/QuartzCore.h>
 #import "UIImageView+AFNetworking.h"
-//#import <AFNetworking/AFNetworking.h>
 #import <InstagramSimpleOAuth/InstagramSimpleOAuth.h>
 #import "StreamTVCell.h"
 #import "PhotosAccessViewController.h"
@@ -22,6 +21,7 @@
 #import "ImageCache.h"
 #import "UIImageView+ImgViewCat.h"
 #import "SWRevealViewController.h"
+#import <Google/Analytics.h>
 
 @interface StreamViewController ()
 
@@ -67,11 +67,23 @@ NSString *sortType;
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    if ([sortType  isEqual: @"time"]) {
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker set:kGAIScreenName value:[NSString stringWithFormat:@"%@ sort", sortType]];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    }
+    else {
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker set:kGAIScreenName value:@"distance sort"];
+        [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     if (self.hasLoadedStream == NO) {
         //[self refreshStream];
         [self refreshStream];
-        
         self.hasLoadedStream = YES;
     }
     else {

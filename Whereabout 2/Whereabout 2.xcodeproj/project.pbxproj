@@ -56,6 +56,7 @@
 		01EC52A31C86AD1700201C18 /* Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52A21C86AD1700201C18 /* Folder.png */; };
 		01EC52A51C9107EC00201C18 /* Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52A41C9107EB00201C18 /* Clock.png */; };
 		01EC52A71C91442A00201C18 /* House (1)_res.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52A61C91442A00201C18 /* House (1)_res.png */; };
+		01EC52AC1CAC83F400201C18 /* GoogleService-Info (1).plist in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52AB1CAC83F300201C18 /* GoogleService-Info (1).plist */; };
 		2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */; };
 		2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E421A5C5B4100EDD980 /* Foundation.framework */; };
 		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -257,6 +258,7 @@
 		01EC52A21C86AD1700201C18 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
 		01EC52A41C9107EB00201C18 /* Clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Clock.png; sourceTree = "<group>"; };
 		01EC52A61C91442A00201C18 /* House (1)_res.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "House (1)_res.png"; sourceTree = "<group>"; };
+		01EC52AB1CAC83F300201C18 /* GoogleService-Info (1).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info (1).plist"; sourceTree = "<group>"; };
 		1C7F58B3B077B59E66A13082 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2D6A0E421A5C5B4100EDD980 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -448,6 +450,7 @@
 			isa = PBXGroup;
 			children = (
 				0115CA6D1C49778200A48B40 /* GoogleService-Info.plist */,
+				01EC52AB1CAC83F300201C18 /* GoogleService-Info (1).plist */,
 				4AB8EF061BD0743800D233DA /* Flag.php */,
 				4AB8EEE01BC4C58D00D233DA /* Media.xcassets */,
 				B98C667F1B88D0C500A9C810 /* MapKit.framework */,
@@ -1025,6 +1028,7 @@
 				01EC52A31C86AD1700201C18 /* Folder.png in Resources */,
 				01EC52961C86ABE200201C18 /* Card.png in Resources */,
 				B985EA9B1B418B19000D2AFD /* Camera Overlay (1).png in Resources */,
+				01EC52AC1CAC83F400201C18 /* GoogleService-Info (1).plist in Resources */,
 				B985EA8D1B3D9D00000D2AFD /* Page 1.0.PNG in Resources */,
 				B9EAFA0F1AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png in Resources */,
 				4AB8EED71BC4B82500D233DA /* Whereabout-feed-tab-BLUE-10-06-2015.png in Resources */,

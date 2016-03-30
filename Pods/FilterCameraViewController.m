@@ -10,6 +10,7 @@
 #import "GPUImage.h"
 #import "FinalUploadViewController.h"
 #import "SWRevealViewController.h"
+#import <Google/Analytics.h>
 
 @interface FilterCameraViewController ()
 {
@@ -80,8 +81,10 @@ NSString *filterName;
     [stillCamera startCameraCapture];
 }
 
-- (void) viewDidAppear:(BOOL)animated {
-
+- (void) viewWillAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Camera VC"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {

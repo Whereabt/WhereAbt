@@ -20,6 +20,7 @@
 #import "UIImageView+ImgViewCat.h"
 #import <GoogleSignIn/GoogleSignIn.h>
 #import "SWRevealViewController.h"
+#import <Google/Analytics.h>
 
 @interface ProfileCollectionViewController ()
 
@@ -63,10 +64,13 @@ BOOL shouldRefreshProfileOnAppear;
     }
 }
 
-
+- (void) viewWillAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Profile VC"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 - (void)refreshProfile {
-    
     NSNetworkConnection *NetworkManager = [[NSNetworkConnection alloc] init];
     
     if ([NetworkManager doesUserHaveInternetConnection]){

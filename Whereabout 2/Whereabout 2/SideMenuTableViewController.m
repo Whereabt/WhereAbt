@@ -17,6 +17,7 @@
 
 @implementation SideMenuTableViewController {
     NSArray *menuItems;
+    NSString *selectedCell;
 }
 
 - (void)viewDidLoad {
@@ -66,13 +67,42 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
-
+    
+    selectedCell = @"showStream";
+    //self.distanceCell.backgroundColor = [UIColor colorWithRed:127.0f/255.0f green:127.0f/255.0f blue:127.0f/255.0f alpha:0.32f];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.distanceCell setBackgroundColor:[UIColor clearColor]];
+    [self.timeCell setBackgroundColor:[UIColor clearColor]];
+    [self.camCell setBackgroundColor:[UIColor clearColor]];
+    [self.camRollCell setBackgroundColor:[UIColor clearColor]];
+    [self.profCell setBackgroundColor:[UIColor clearColor]];
+    [self.settingsCell setBackgroundColor:[UIColor clearColor]];
+
+    if ([selectedCell  isEqual: @"showRecent"]) {
+        [self.timeCell setBackgroundColor:[UIColor colorWithRed:127.0f/255.0f green:127.0f/255.0f blue:127.0f/255.0f alpha:0.32f]];
+    }
+    else if ([selectedCell  isEqual: @"showStream"]){
+        [self.distanceCell setBackgroundColor:[UIColor colorWithRed:127.0f/255.0f green:127.0f/255.0f blue:127.0f/255.0f alpha:0.32f]];
+    }
+    else if ([selectedCell  isEqual: @"showCamera"]){
+        [self.camCell setBackgroundColor:[UIColor colorWithRed:127.0f/255.0f green:127.0f/255.0f blue:127.0f/255.0f alpha:0.32f]];
+    }
+    else if ([selectedCell  isEqual: @"showPhotos"]){
+        [self.camRollCell setBackgroundColor:[UIColor colorWithRed:127.0f/255.0f green:127.0f/255.0f blue:127.0f/255.0f alpha:0.32f]];
+    }
+    else if ([selectedCell  isEqual: @"showProfile"]){
+        [self.profCell setBackgroundColor:[UIColor colorWithRed:127.0f/255.0f green:127.0f/255.0f blue:127.0f/255.0f alpha:0.32f]];
+    }
+    else if ([selectedCell  isEqual: @"showSettings"]){
+        [self.settingsCell setBackgroundColor:[UIColor colorWithRed:127.0f/255.0f green:127.0f/255.0f blue:127.0f/255.0f alpha:0.32f]];
+    }
 }
 
 
@@ -89,10 +119,11 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+    selectedCell = segue.identifier;
     StreamViewController *streamVC = [[StreamViewController alloc] init];
     if ([segue.identifier  isEqual: @"showRecent"]) {
         [streamVC setSortTypeTo:@"time"];
+        //[self.timeCell setBackgroundColor:[UIColor colorWithRed:127.0f/255.0f green:127.0f/255.0f blue:127.0f/255.0f alpha:0.32f]];
     }
     else if ([segue.identifier  isEqual: @"showStream"]) {
         [streamVC setSortTypeTo:@"distance"];

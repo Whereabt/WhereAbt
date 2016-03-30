@@ -16,6 +16,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UISlider *timeSlider;
 @property (weak, nonatomic) IBOutlet UISlider *distanceSlider;
+@property (weak, nonatomic) IBOutlet UITableViewCell *distanceCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *timeCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *camCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *camRollCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *profCell;
+@property (weak, nonatomic) IBOutlet UITableViewCell *settingsCell;
 
 - (IBAction)timeSlideChange:(id)sender;
 - (IBAction)distanceSlideChange:(id)sender;

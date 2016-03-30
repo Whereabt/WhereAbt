@@ -212,7 +212,7 @@ UILabel *internetFailLabel;
                                            alpha:1.0f]; */
     cell.backgroundColor = [UIColor whiteColor];
     
-    cell.backgroundView.frame = cell.frame;
+    //cell.backgroundView.frame = cell.frame;
     cell.proCVImage.contentMode = UIViewContentModeScaleAspectFill;
     
     
@@ -347,6 +347,24 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     
     //go to the enlarged view
     //[self performSegueWithIdentifier:@"segueEnlargedImage" sender:self];
+}
+
+- (NSArray *) layoutAttributesForElementsInRect:(CGRect)rect {
+    NSArray *answer = [self.collectionViewLayout layoutAttributesForElementsInRect:rect];
+    
+    for(int i = 1; i < [answer count]; ++i) {
+        UICollectionViewLayoutAttributes *currentLayoutAttributes = answer[i];
+        UICollectionViewLayoutAttributes *prevLayoutAttributes = answer[i - 1];
+        NSInteger maximumSpacing = 0.1;
+        NSInteger origin = CGRectGetMaxX(prevLayoutAttributes.frame);
+        
+        if(origin + maximumSpacing + currentLayoutAttributes.frame.size.width < self.collectionViewLayout.collectionViewContentSize.width) {
+            CGRect frame = currentLayoutAttributes.frame;
+            frame.origin.x = origin + maximumSpacing;
+            currentLayoutAttributes.frame = frame;
+        }
+    }
+    return answer;
 }
 
 

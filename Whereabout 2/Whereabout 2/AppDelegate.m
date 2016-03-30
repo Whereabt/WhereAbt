@@ -12,8 +12,11 @@
 #import "KeychainItemWrapper.h"
 #import "InitialViewController.h"
 #import <GoogleSignIn/GoogleSignIn.h>
+#import <Google/Analytics.h>
 #import "TabBarAppViewController.h"
 #import "AllLoginViewController.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface AppDelegate ()
 
@@ -39,6 +42,12 @@
                                                    blue:36.0f/255.0f
                                                   alpha:1.0f];
     
+    NSError *configureError;
+    [[GGLContext sharedInstance] configureWithError:&configureError];
+    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+    GAI *gai = [GAI sharedInstance];
+    gai.trackUncaughtExceptions = YES;
+    gai.logger.logLevel = kGAILogLevelVerbose; //REMOVE BEFORE APP RELEASE
     return YES;
 }
 
@@ -56,10 +65,21 @@
     
     NSDictionary *options = @{UIApplicationOpenURLOptionsSourceApplicationKey: sourceApplication,
                               UIApplicationOpenURLOptionsAnnotationKey: annotation};
+    
+    if ([url.scheme  isEqual: @"fb978681645542197"]) {
+        return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                              openURL:url
+                                                    sourceApplication:sourceApplication
+                                                           annotation:annotation];
+    }
+    
+    else {
     return [self application:application
                      openURL:url
                      options:options];
+    }
 }
+
 
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user
      withError:(NSError *)error {

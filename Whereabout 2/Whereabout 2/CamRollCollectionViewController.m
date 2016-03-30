@@ -12,6 +12,7 @@
 #import "FinalUploadViewController.h"
 #import "SWRevealViewController.h"
 #import "ImageCache.h"
+#import <Google/Analytics.h>
 
 @import Photos;
 
@@ -69,7 +70,11 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
     
 }
 
-
+- (void) viewWillAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"camera roll vc"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+}
 
 -(void)scrollToBottom {
     //Scrolls to bottom of scroller
@@ -154,30 +159,6 @@ static NSString * const reuseIdentifier = @"CamRollCVCell";
                                                     
                                                 }];
     }
-
-    
-    /*if (thumbnailCacheArray.count > indexPath.row && thumbnailCacheArray.count != 0) {
-            [imgView setImage:thumbnailCacheArray[indexPath.row]];
-        }
-    
-        else {
-    
-            [[PHImageManager defaultManager] requestImageForAsset:FetchResult[indexPath.row]
-                                                   targetSize:self.view.frame.size
-                                                  contentMode:PHImageContentModeAspectFit
-                                                      options:PHImageRequestOptionsVersionCurrent
-                                                resultHandler:^(UIImage *result, NSDictionary *info) {
-                                                    
-                                                    if (result) {
-                                                        [thumbnailCacheArray addObject:result];
-                                                        [imgView setImage:result];
-                                                    }
-                                                
-                                                }];
-            } */
-    
-        //[cell.imageView setImage: thumbnailArray[indexPath.row]];
-        //NSLog(@"IMAGE: %@", thumbnailArray[indexPath.row]);
     
         imgView.contentMode = UIViewContentModeScaleAspectFill;
         imgView.clipsToBounds = YES;

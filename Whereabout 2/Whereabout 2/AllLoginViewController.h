@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <Google/SignIn.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
+@interface AllLoginViewController : UIViewController <GIDSignInUIDelegate, GIDSignInDelegate, FBSDKLoginButtonDelegate>
 
-@interface AllLoginViewController : UIViewController <GIDSignInUIDelegate, GIDSignInDelegate>
-- (IBAction)instagramButtonPress:(id)sender;
 - (IBAction)microsoftButtonPress:(id)sender;
 - (IBAction)googleButtonPress:(id)sender;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UIButton *igLogin;
 @property (weak, nonatomic) IBOutlet UIButton *googleLogin;
 @property (weak, nonatomic) IBOutlet UIButton *odLogin;
 @property (weak, nonatomic) IBOutlet UILabel *welcomeLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet UIButton *fbLogin;
 
 @end

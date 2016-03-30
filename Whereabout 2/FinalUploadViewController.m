@@ -16,6 +16,7 @@
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <OneDriveSDK/OneDriveSDK.h>
 #import <JNKeychain/JNKeychain.h>
+#import "NSNetworkConnection.h"
 
 @import Photos;
 
@@ -63,7 +64,8 @@ NSMutableDictionary *imageSetDict;
     
     
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
-    [_collectionView setBackgroundColor:[UIColor blackColor]];
+    [_collectionView setBackgroundColor:[UIColor colorWithRed:31.0f/255.0f green:33.0f/255.0f blue:36.0f/255.0f alpha:1.0f]
+];
     _collectionView.scrollEnabled = YES;
     [self.view addSubview:_collectionView];
     
@@ -116,7 +118,7 @@ NSMutableDictionary *imageSetDict;
             [self.navigationController.navigationBar.topItem setRightBarButtonItem:navBarButt];
             
 
-            UIAlertController *LocationAlert = [UIAlertController alertControllerWithTitle:@"Could not retrieve your current location" message:@"Please make sure that we have access to your location in Settings." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *LocationAlert = [UIAlertController alertControllerWithTitle:@"Location Error" message:@"Please make sure that we have access to your location in Settings." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [LocationAlert dismissViewControllerAnimated:YES completion:nil];
             }];
@@ -131,8 +133,23 @@ NSMutableDictionary *imageSetDict;
             if ([[preferences objectForKey:@"autoSave"]  isEqual: @"YES"]) {
                 UIImageWriteToSavedPhotosAlbum(selectedImageView.image, nil, nil, nil);
             }
+            NSNetworkConnection *networkManager = [[NSNetworkConnection alloc] init];
+            if ([networkManager doesUserHaveInternetConnection]) {
+                [self uploadPhotoWithLocation:[LocationController sharedController].currentLocation andTime:[NSDate date]];
+            }
+            else {
+                UIBarButtonItem *navBarButt = [[UIBarButtonItem alloc]initWithTitle:@"Upload" style:UIBarButtonItemStylePlain target:self action:@selector(uploadButtonPress:)];
+                
+                [self.navigationController.navigationBar.topItem setRightBarButtonItem:navBarButt];
+                UIAlertController *networkAlert = [UIAlertController alertControllerWithTitle:@"Location Error" message:@"Please make sure that we have access to your location in Settings." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [networkAlert dismissViewControllerAnimated:YES completion:nil];
+                }];
+                [networkAlert addAction:dismissAction];
+                
+                [self presentViewController:networkAlert animated:YES completion:nil];
+            }
             
-        [self uploadPhotoWithLocation:[LocationController sharedController].currentLocation andTime:[NSDate date]];
         }
     }
     
@@ -307,7 +324,7 @@ NSMutableDictionary *imageSetDict;
     
     cell.backgroundView = filterLabel;
     //[cell.backgroundView addSubview:filterLabel];
-    cell.backgroundColor = [UIColor blackColor];
+    cell.backgroundColor = [UIColor colorWithRed:31.0f/255.0f green:33.0f/255.0f blue:36.0f/255.0f alpha:1.0f];
     return cell;
 }
 

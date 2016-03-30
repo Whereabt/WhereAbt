@@ -11,6 +11,9 @@
 #import <OneDriveSDK/OneDriveSDK.h>
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <JNKeychain/JNKeychain.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
 
 NSString *const InstagramConstant = @"InstagramAuthentication";
 NSString *const GoogleConstant = @"GoogleAuthentication";
@@ -19,15 +22,19 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 @interface AllLoginViewController ()
 {
     BOOL loginCompleted;
+    UIImage *sesquile;
 }
+
 @end
 
 @implementation AllLoginViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.backgroundImageView.image = [UIImage imageNamed:@"sesquile.JPG"];
-    self.backgroundImageView.alpha = 0.5;
+    sesquile = [[UIImage alloc] init];
+    sesquile = [UIImage imageNamed:@"sesquile.JPG"];
+    self.backgroundImageView.image = sesquile;
+    self.backgroundImageView.alpha = 0.4;
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     self.welcomeLabel.adjustsFontSizeToFitWidth = YES;
@@ -45,10 +52,27 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     [GIDSignIn sharedInstance].uiDelegate = self;
     self.activityIndicator.hidesWhenStopped = YES;
     
+    
+    FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
+    loginButton.delegate = self;
+    loginButton.center = CGPointMake(self.odLogin.center.x, self.odLogin.center.y + 40);
+    //loginButton.readPermissions = @[@"public_profile", @"email"];
+    [self.view addSubview:loginButton];
+    
+    [FBSDKSettings setAppID:@"978681645542197"];
+    
+   [self.fbLogin
+     addTarget:self
+     action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+
+- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    self.backgroundImageView.image = [UIImage imageNamed:@"sesquile.JPG"];
+    self.backgroundImageView.image = sesquile;
     if (loginCompleted) {
         [self performSegueWithIdentifier:@"segueToInitial" sender:self];
     }
@@ -75,6 +99,42 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 }
 */
 
+-(void)loginButtonClicked
+{
+    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+    [login logOut];
+    login.loginBehavior = FBSDKLoginBehaviorSystemAccount;
+    [login
+     logInWithReadPermissions: @[@"public_profile", @"email"]
+     fromViewController:self
+     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+         if (error) {
+             NSLog(@"Process error");
+         } else if (result.isCancelled) {
+             NSLog(@"Cancelled");
+         } else {
+             [self performSegueWithIdentifier:@"segueToInitial" sender:self];
+             NSLog(@"%@", result);
+         }
+     }];
+}
+
+
+- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
+              error:(NSError *)error {
+    if (!error) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[GIDSignIn sharedInstance].currentUser.userID forKey:@"UserID"];
+        [defaults setObject:[GIDSignIn sharedInstance].currentUser.profile.name forKey:@"UserName"];
+        NSLog(@"USERNAME:%@", [GIDSignIn sharedInstance].currentUser.profile.name);
+        [JNKeychain saveValue:GoogleConstant forKey:@"AuthenticationMethod"];
+        self.googleLogin.enabled = YES;
+        self.odLogin.enabled = YES;
+        [self performSegueWithIdentifier:@"segueToInitial" sender:self];
+    }
+}
+
+
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user
      withError:(NSError *)error {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -83,7 +143,6 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     NSLog(@"USERNAME:%@", [GIDSignIn sharedInstance].currentUser.profile.name);
     [JNKeychain saveValue:GoogleConstant forKey:@"AuthenticationMethod"];
     self.googleLogin.enabled = YES;
-    self.igLogin.enabled = YES;
     self.odLogin.enabled = YES;
     [self performSegueWithIdentifier:@"segueToInitial" sender:self];
 }
@@ -92,7 +151,7 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     [self.activityIndicator stopAnimating];
 }
 
-
+/*
 - (IBAction)instagramButtonPress:(id)sender {
     self.googleLogin.enabled = NO;
     self.igLogin.enabled = NO;
@@ -120,10 +179,9 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     
     [self presentViewController:igVController animated:YES completion:nil];
 }
-
+*/
 - (IBAction)microsoftButtonPress:(id)sender {
     self.googleLogin.enabled = NO;
-    self.igLogin.enabled = NO;
     self.odLogin.enabled = NO;
     
     NSArray *scopeArray = [[NSArray alloc] initWithObjects:@"wl.offline_access", @"onedrive.readwrite", nil];
@@ -133,7 +191,6 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
         if (!error) {
             [[[[ODClient loadCurrentClient] drive] request] getWithCompletion:^(ODDrive *response, NSError *error) {
                 self.googleLogin.enabled = YES;
-                self.igLogin.enabled = YES;
                 self.odLogin.enabled = YES;
                 if (error) {
                     /*UIAlertView *usernameAlert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:@"A problem occurred while logging in, you may have to restart the app." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
@@ -165,7 +222,6 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 
 - (IBAction)googleButtonPress:(id)sender {
     self.googleLogin.enabled = NO;
-    self.igLogin.enabled = NO;
     self.odLogin.enabled = NO;
     [self.activityIndicator startAnimating];
     [[GIDSignIn sharedInstance] signIn];

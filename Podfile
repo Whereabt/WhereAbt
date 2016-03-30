@@ -7,5 +7,9 @@ pod 'InstagramSimpleOAuth', :git => 'https://github.com/Nicolas-Isaza/InstagramS
 pod 'AFNetworking'
 pod "JNKeychain"
 pod ‘SWRevealViewController’
+pod 'FBSDKCoreKit'
+pod 'FBSDKShareKit'
+pod 'FBSDKLoginKit'
+pod 'Google/Analytics'
 
 xcodeproj ‘Whereabout 2/Whereabout 2.xcodeproj'
