@@ -27,7 +27,6 @@ UIImage *EnlargedImage;
     self.enlargedPhoto.contentMode = UIViewContentModeScaleAspectFit;
     self.enlargedPhoto.userInteractionEnabled = YES;
     [super viewDidLoad];
-    
 }
 
 

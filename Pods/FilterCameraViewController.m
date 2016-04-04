@@ -34,7 +34,7 @@ NSString *filterName;
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
-    UIButton *circleCamButton = [UIButton buttonWithType:UIButtonTypeCustom];
+ /*   UIButton *circleCamButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     [circleCamButton addTarget:self action:@selector(takePhotoButtonPressed:) forControlEvents:UIControlEventAllEvents];
     
@@ -52,7 +52,8 @@ NSString *filterName;
     circleCamButton.layer.borderColor = [UIColor colorWithRed:0.0f/255.0f
                                                green:153.0f/255.0f
                                                 blue:255.0f/255.0f
-                                               alpha:1.0f].CGColor;
+                                               alpha:1.0f].CGColor; */
+    
     //self.takePhotoButton.image = [UIImage imageNamed:@"OverlayImage.png"];
     
    // self.takePhotoButton.customView = circleCamButton;

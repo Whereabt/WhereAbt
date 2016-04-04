@@ -41,13 +41,15 @@
                                                   green:33.0f/255.0f
                                                    blue:36.0f/255.0f
                                                   alpha:1.0f];
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
     
     NSError *configureError;
     [[GGLContext sharedInstance] configureWithError:&configureError];
     NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
     GAI *gai = [GAI sharedInstance];
     gai.trackUncaughtExceptions = YES;
-    gai.logger.logLevel = kGAILogLevelVerbose; //REMOVE BEFORE APP RELEASE
+   // gai.logger.logLevel = kGAILogLevelVerbose; //REMOVE BEFORE APP RELEASE
     return YES;
 }
 
@@ -61,12 +63,13 @@
 }
 
 
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     
     NSDictionary *options = @{UIApplicationOpenURLOptionsSourceApplicationKey: sourceApplication,
                               UIApplicationOpenURLOptionsAnnotationKey: annotation};
-    
-    if ([url.scheme  isEqual: @"fb978681645542197"]) {
+    /*
+    if ([url.scheme  isEqual: @"fb207507326288396"]) {
         return [[FBSDKApplicationDelegate sharedInstance] application:application
                                                               openURL:url
                                                     sourceApplication:sourceApplication
@@ -74,10 +77,13 @@
     }
     
     else {
-    return [self application:application
+        return [self application:application
                      openURL:url
                      options:options];
     }
+    */
+    return [[GIDSignIn sharedInstance] handleURL:url sourceApplication:sourceApplication annotation:annotation] || [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation ];
+
 }
 
 

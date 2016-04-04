@@ -9,19 +9,15 @@
 #import "StreamController.h"
 #import "LocationController.h"
 #import "StreamViewController.h"
-#import <InstagramSimpleOAuth/InstagramSimpleOAuth.h>
- 
-@implementation StreamController
-{
-    //NSString *sortType;
-}
+#import <Google/Analytics.h>
 
-- (void)getFeedWithSort:(NSString *)sort andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
+@implementation StreamController
+
+- (void)getFeedWithType:(NSString *)streamType andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack{
     //get location
     //CLLocation *location = [LocationController sharedController].currentLocation;
     
     [LocationController sharedController];
-    
     LocationController *locationController = [[LocationController alloc]init];
     
     //check to see if location working
@@ -30,11 +26,18 @@
         NSUserDefaults *standards = [NSUserDefaults standardUserDefaults];
         
         NSString *urlAsString;
-        if ([sort isEqual: @"time"]) {
+        if ([streamType isEqual: @"time"]) {
             float radius = [standards floatForKey:@"stream distance filter"];
             if (!radius) {
                 radius = 5.00;
             }
+            
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Time Sort Load"
+                                                                  action:@"Radius"
+                                                                   label:[NSString stringWithFormat:@"%f miles", radius]
+                                                                   value:nil] build]];
+            
             urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=%f&Longitude=%f&Radius=%f&Sort=time", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, radius];
         }
         else {
@@ -42,12 +45,13 @@
             if (!seconds) {
                 seconds = 604800.00;
             }
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Distance Sort Load"
+                                                                  action:@"Period"
+                                                                   label:[NSString stringWithFormat:@"%f seconds", seconds]
+                                                                   value:nil] build]];
              urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=%f&Longitude=%f&Sort=distance&Period=%f", locationController.locationManager.location.coordinate.latitude, locationController.locationManager.location.coordinate.longitude, seconds];
         }
-        
-        //NSString *urlAsString = @"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3.000000";
-        //eventually, include radius in last parameter 'Radius='
-        
         NSURL *url = [[NSURL alloc] initWithString:urlAsString];
         NSLog(@"%@", urlAsString);
         NSURLSession *session = [NSURLSession sharedSession];
@@ -177,7 +181,6 @@
         completionHandler (error);
     }];
     [postDataTask resume];
-    
 }
 
 - (void)getFeedFromAzureCloudFileWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack {
@@ -206,8 +209,7 @@
         [theRequest addValue:@"SharedKey whereaboutcloud:iOZUM4RA1UfOKje24cz/VgkoQnSUR6UBg9ZpEFwOCnX8rJRjpCJuV3kpBybaGiLyfnGHBQqs4eN9bsAAOAm7SA==" forHTTPHeaderField:@"Authorization"];
         
         [theRequest addValue:@"2015-04-05" forHTTPHeaderField:@"x-ms-version"];
-        
-        
+    
         NSURLSession *session = [NSURLSession sharedSession];
         
         NSURLSessionDataTask *downloadTask = [session dataTaskWithRequest:theRequest completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {

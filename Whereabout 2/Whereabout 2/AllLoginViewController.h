@@ -10,7 +10,7 @@
 #import <Google/SignIn.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-@interface AllLoginViewController : UIViewController <GIDSignInUIDelegate, GIDSignInDelegate, FBSDKLoginButtonDelegate>
+@interface AllLoginViewController : UIViewController <GIDSignInUIDelegate, GIDSignInDelegate>
 
 - (IBAction)microsoftButtonPress:(id)sender;
 - (IBAction)googleButtonPress:(id)sender;

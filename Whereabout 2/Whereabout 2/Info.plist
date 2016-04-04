@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.NicolasIsazaLLC.Whereabout</string>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -23,7 +23,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb978681645542197</string>
+				<string>fb207507326288396</string>
 			</array>
 		</dict>
 		<dict>
@@ -41,12 +41,16 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.205534547533-vmdjq6pdunqpjcccfk0ehnrrf36obl30</string>
+				<string>com.googleusercontent.apps.768319522466-e11dpivg5c3ecqtjm149shbhvvgaplj5</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>FacebookAppID</key>
+	<string>207507326288396</string>
+	<key>FacebookDisplayName</key>
+	<string>Whereabout</string>
 	<key>InstagramAppClientId</key>
 	<string>a79d700aa5254341b7a1bf04de3b047b</string>
 	<key>InstagramAppRedirectURL</key>

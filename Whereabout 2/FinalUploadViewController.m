@@ -17,6 +17,7 @@
 #import <OneDriveSDK/OneDriveSDK.h>
 #import <JNKeychain/JNKeychain.h>
 #import "NSNetworkConnection.h"
+#import <Google/Analytics.h>
 
 @import Photos;
 
@@ -86,10 +87,15 @@ NSMutableDictionary *imageSetDict;
     [selectedImageView addSubview:uploadActivityIndicator];
     [uploadActivityIndicator startAnimating];
     
-    
     UIBarButtonItem *activityIndicatorItem = [[UIBarButtonItem alloc] initWithCustomView:uploadActivityIndicator];
     [self.navigationController.navigationBar.topItem setRightBarButtonItem:activityIndicatorItem];
     
+    
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Photo Upload"
+                                                          action:infoArray[6][@"Name"]
+                                                           label:@"Filter Used"
+                                                           value:nil] build]];
     PHAsset *asset = infoArray[6][@"Asset"];
     if (fromCameraRoll) {
         if (asset.location) {
@@ -275,7 +281,6 @@ NSMutableDictionary *imageSetDict;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
     return 6;
 }
 

@@ -14,8 +14,6 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-
-NSString *const InstagramConstant = @"InstagramAuthentication";
 NSString *const GoogleConstant = @"GoogleAuthentication";
 NSString *const OneDriveConstant = @"OneDriveAuthentication";
 
@@ -48,28 +46,29 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
     
     [GIDSignIn sharedInstance].delegate = self;
-    
     [GIDSignIn sharedInstance].uiDelegate = self;
     self.activityIndicator.hidesWhenStopped = YES;
     
     
-    FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
+    /*FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
     loginButton.delegate = self;
     loginButton.center = CGPointMake(self.odLogin.center.x, self.odLogin.center.y + 40);
-    //loginButton.readPermissions = @[@"public_profile", @"email"];
+    loginButton.readPermissions = @[@"public_profile", @"email"];
     [self.view addSubview:loginButton];
     
-    [FBSDKSettings setAppID:@"978681645542197"];
+    [FBSDKSettings setAppID:@"207507326288396"];
     
-   [self.fbLogin
+    [self.fbLogin
      addTarget:self
      action:@selector(loginButtonClicked) forControlEvents:UIControlEventTouchUpInside];
-    
+     */
 }
 
+/*
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
     
 }
+ */
 
 - (void)viewDidAppear:(BOOL)animated {
     self.backgroundImageView.image = sesquile;
@@ -99,25 +98,49 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 }
 */
 
+/*
 -(void)loginButtonClicked
 {
-    FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
-    [login logOut];
-    login.loginBehavior = FBSDKLoginBehaviorSystemAccount;
-    [login
-     logInWithReadPermissions: @[@"public_profile", @"email"]
-     fromViewController:self
-     handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-         if (error) {
-             NSLog(@"Process error");
-         } else if (result.isCancelled) {
-             NSLog(@"Cancelled");
-         } else {
-             [self performSegueWithIdentifier:@"segueToInitial" sender:self];
-             NSLog(@"%@", result);
-         }
-     }];
-}
+    if ([FBSDKAccessToken currentAccessToken])
+    {
+        [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+         startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id user, NSError *error)
+         {
+             if (!error)
+             {
+                 //  NSDictionary *dictUser = (NSDictionary *)user;
+                 // This dictionary contain user Information which is possible to get from Facebook account.
+             }
+         }];
+    }
+
+    else {
+        FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
+        [login
+         logInWithReadPermissions: @[@"public_profile"]
+         fromViewController:self
+         handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+             
+             [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+              startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id user, NSError *error)
+              {
+                  if (!error)
+                  {
+                      //  NSDictionary *dictUser = (NSDictionary *)user;
+                      // This dictionary contain user Information which is possible to get from Facebook account.
+                  }
+              }];
+             
+             if (error) {
+                 NSLog(@"Process error");
+             } else if (result.isCancelled) {
+                 NSLog(@"Cancelled");
+             } else {
+                 NSLog(@"Logged in");
+             }
+         }];
+    }
+} */
 
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result
@@ -151,35 +174,7 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
     [self.activityIndicator stopAnimating];
 }
 
-/*
-- (IBAction)instagramButtonPress:(id)sender {
-    self.googleLogin.enabled = NO;
-    self.igLogin.enabled = NO;
-    self.odLogin.enabled = NO;
-    [self.activityIndicator startAnimating];
-    InstagramSimpleOAuthViewController
-    *igVController = [[InstagramSimpleOAuthViewController alloc] initWithClientID:@"a79d700aa5254341b7a1bf04de3b047b"
-                                                                      clientSecret:@"331413fc7963419e8bb405854066e684"
-                                                                       callbackURL:[NSURL URLWithString:@"https://n46.org/whereabt"]
-                                                                        completion:^(InstagramLoginResponse *response, NSError *error) {
-                                                                            [JNKeychain saveValue:InstagramConstant forKey:@"AuthenticationMethod"];
-                                                                            
-                                                                            NSLog(@"My fullname is: %@", response.user.fullName);
-                                                                            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                                                            [defaults setObject:response.user.userID forKey:@"UserID"];
-                                                                            [defaults setObject:response.user.fullName forKey:@"UserName"];
-                                                                            loginCompleted = YES;
-                                                                            self.googleLogin.enabled = YES;
-                                                                            self.igLogin.enabled = YES;
-                                                                            self.odLogin.enabled = YES;
-                                                                            NSLog(@"IG ACCESS TOKEN:%@", response.accessToken);
-                                                                        }];
-    igVController.shouldShowErrorAlert = YES;
-    igVController.permissionScope = @[@"public_content"];
-    
-    [self presentViewController:igVController animated:YES completion:nil];
-}
-*/
+
 - (IBAction)microsoftButtonPress:(id)sender {
     self.googleLogin.enabled = NO;
     self.odLogin.enabled = NO;

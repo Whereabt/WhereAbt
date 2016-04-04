@@ -38,7 +38,8 @@ NSString *const OneDriveCons = @"OneDriveAuthentication";
     NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"USERNAME: %@", [standardDefaults objectForKey:@"UserID"]);
     
-    //[standardDefaults setBool:NO forKey:@"has launched"];
+    //DELETE
+    [standardDefaults setBool:NO forKey:@"has launched"];
     if (![standardDefaults boolForKey:@"has launched"]) {
         [self performSegueWithIdentifier:@"segueToWalkthrough" sender:self];
         [standardDefaults  setBool:YES forKey:@"has launched"];

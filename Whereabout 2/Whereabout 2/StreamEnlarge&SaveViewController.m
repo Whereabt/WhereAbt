@@ -149,7 +149,6 @@ NSMutableDictionary *UIimageDict;
             NSString *updatedLabelString = [NSString stringWithFormat: @"%@, %@", locationName, UIimageDict[@"Distance"]];
             [self.locationButton setTitle:updatedLabelString forState:UIControlStateNormal];
             [self.locationButton setNeedsLayout];
-            
         }];
 
     }
@@ -181,6 +180,12 @@ NSMutableDictionary *UIimageDict;
     
     //action for save
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Save to Camera Roll", "Save Action") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
+        id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+        [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Save to CR"
+                                                              action:@"Stream Enlarge Save"
+                                                               label:@"Long press gesture"
+                                                               value:nil] build]];
         
         UIImageWriteToSavedPhotosAlbum(self.theImageView.image, nil, nil, nil);
         if (self.presentingViewController == alertController) {

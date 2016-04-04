@@ -133,23 +133,14 @@ NSString *sortType;
         //create object to deal with network requests
         StreamController *networkRequester = [[StreamController alloc] init];
         
+        NSString *streamType = @"time";
+        if ([sortType  isEqual: @"time"]) {
+            streamType = @"distance";
+        }
         
-        
-        //USE f FOR RADIUS PARAM
-        [networkRequester getFeedWithSort:sortType andCompletion:^(NSMutableArray *items, NSError *error) {
+        [networkRequester getFeedWithType:streamType andCompletion:^(NSMutableArray *items, NSError *error) {
             if (!error) {
                 self.streamItems = items;
-                
-                /*
-                 //loop through the stream array and make sure images are not nil
-                 for (int i = 0; i < self.streamItems.count; i++) {
-                 if ((self.streamItems[i][@"ThumbnailPhoto"] == nil) || (self.streamItems[i][@"LargePhoto"] == nil)) {
-                 [self.streamItems removeObjectAtIndex:i];
-                 }
-                 } */
-                
-                //[self.collectionView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-                
                 [self.tableView reloadData];
                 
                 NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

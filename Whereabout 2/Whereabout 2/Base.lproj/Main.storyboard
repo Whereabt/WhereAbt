@@ -124,8 +124,8 @@
                         <barButtonItem key="backBarButtonItem" title="Camera" id="A0u-ot-9i8">
                             <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" id="kPe-wC-V1f">
-                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="leftBarButtonItem" image="TheHamburger.png" id="kPe-wC-V1f">
+                            <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -208,8 +208,8 @@
                         <barButtonItem key="backBarButtonItem" title="Camera Roll" id="N28-UR-Czw">
                             <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
-                        <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" id="Hcp-eT-Pri">
-                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="leftBarButtonItem" image="TheHamburger.png" id="Hcp-eT-Pri">
+                            <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -294,8 +294,8 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Whereabout" id="QWr-HB-Z8P">
                         <barButtonItem key="backBarButtonItem" title="Stream" id="Ntg-Ko-Yeo"/>
-                        <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" style="plain" id="e3a-0d-kuq">
-                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="leftBarButtonItem" image="TheHamburger.png" style="plain" id="e3a-0d-kuq">
+                            <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
@@ -560,8 +560,8 @@
                     <tabBarItem key="tabBarItem" systemItem="recents" id="JMa-UK-TAP"/>
                     <navigationItem key="navigationItem" title="MY PROFILE" id="xrO-eO-we7">
                         <barButtonItem key="backBarButtonItem" title="Me" id="VMQ-d9-gyE"/>
-                        <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" style="plain" id="B3h-Fm-UKS">
-                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="leftBarButtonItem" image="TheHamburger.png" style="plain" id="B3h-Fm-UKS">
+                            <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="fQ3-d1-TNY">
                             <connections>
@@ -617,7 +617,7 @@
                         <sections>
                             <tableViewSection id="six-ey-ht1">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="157" id="eCn-tG-2Cp">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="157" id="eCn-tG-2Cp">
                                         <rect key="frame" x="0.0" y="64" width="320" height="157"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eCn-tG-2Cp" id="JHx-YJ-bBL">
@@ -698,15 +698,15 @@
                                                     </connections>
                                                 </button>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0mz-Nq-Ek6">
-                                                    <rect key="frame" x="108" y="12" width="20" height="20"/>
+                                                    <rect key="frame" x="192" y="12" width="20" height="20"/>
                                                     <color key="color" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="0mz-Nq-Ek6" firstAttribute="centerY" secondItem="BBI-lp-5ev" secondAttribute="centerY" id="8dT-9M-Nq9"/>
-                                                <constraint firstItem="RNj-Od-UTa" firstAttribute="leading" secondItem="0mz-Nq-Ek6" secondAttribute="trailing" constant="8" symbolic="YES" id="HPF-Gr-70K"/>
-                                                <constraint firstItem="RNj-Od-UTa" firstAttribute="centerX" secondItem="BBI-lp-5ev" secondAttribute="centerX" id="YxD-EV-Eiy"/>
-                                                <constraint firstItem="RNj-Od-UTa" firstAttribute="centerY" secondItem="0mz-Nq-Ek6" secondAttribute="centerY" id="jMy-kx-5Xg"/>
+                                                <constraint firstItem="RNj-Od-UTa" firstAttribute="centerX" secondItem="BBI-lp-5ev" secondAttribute="centerX" id="9zK-PM-bDZ"/>
+                                                <constraint firstItem="0mz-Nq-Ek6" firstAttribute="leading" secondItem="RNj-Od-UTa" secondAttribute="trailing" constant="8" symbolic="YES" id="aYj-Ly-19y"/>
+                                                <constraint firstItem="RNj-Od-UTa" firstAttribute="centerY" secondItem="BBI-lp-5ev" secondAttribute="centerY" id="acK-E8-VRQ"/>
+                                                <constraint firstItem="0mz-Nq-Ek6" firstAttribute="centerY" secondItem="RNj-Od-UTa" secondAttribute="centerY" id="x3k-ki-VI2"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -817,8 +817,8 @@
                     <tabBarItem key="tabBarItem" title="" systemItem="contacts" id="7tp-z5-Wgy"/>
                     <navigationItem key="navigationItem" title="SETTINGS" id="8PI-AG-yrj">
                         <barButtonItem key="backBarButtonItem" title="Settings" id="FsZ-2w-RUp"/>
-                        <barButtonItem key="leftBarButtonItem" image="House (1)_res.png" id="hMw-yd-9Wo">
-                            <color key="tintColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="leftBarButtonItem" image="TheHamburger.png" id="hMw-yd-9Wo">
+                            <color key="tintColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -987,7 +987,7 @@ Contact Us
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XE6-Z0-8jw">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                                <string key="text">THE FOLLOWING SETS FORTH ATTRIBUTION NOTICES FOR THIRD PARTY SOFTWARE THAT MAY BE INCLUDED IN PORTIONS OF WHEREABOUT.                                 
+                                <mutableString key="text">THE FOLLOWING SETS FORTH ATTRIBUTION NOTICES FOR THIRD PARTY SOFTWARE THAT MAY BE INCLUDED IN PORTIONS OF WHEREABOUT.                                 
 
 
 --------                                 
@@ -1088,7 +1088,59 @@ KeychainItemWrapper. This software is subject to the following license and notic
  POSSIBILITY OF SUCH DAMAGE.
  
  Copyright (C) 2010 Apple Inc. All Rights Reserved.
- </string>
+ --------
+Copyright (c) 2012, Brad Larson, Ben Cochran, Hugues Lismonde, Keitaroh Kobayashi, Alaric Cole,
+
+Matthew Clark, Jacob Gundersen, Chris Williams.
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+Neither the name of the GPUImage framework nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+--------
+
+The following software may be included in this product: 
+JNKeychain. This software is subject to the following license and notice:
+
+The MIT License (MIT)
+Copyright (c) 2013 Jeremias Nunez
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+
+--------
+
+The following software may be included in this product: 
+SWRevealViewController. This software is subject to the following license and notice:
+Copyright (c) 2013 Joan Lluch &lt;joan.lluch@sweetwilliamsl.com&gt;
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is furnished
+ to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+</mutableString>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -1208,14 +1260,14 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Clock.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sx3-MU-yS4">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Map-Pin.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sx3-MU-yS4">
                                                     <rect key="frame" x="0.0" y="-5" width="55" height="55"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="55" id="6IA-Ez-VF4"/>
+                                                        <constraint firstAttribute="width" constant="55" id="N3C-A3-xal"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yoO-5k-YNY">
-                                                    <rect key="frame" x="63" y="12" width="38" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yoO-5k-YNY">
+                                                    <rect key="frame" x="63" y="12" width="67" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1223,11 +1275,11 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="yoO-5k-YNY" firstAttribute="leading" secondItem="Sx3-MU-yS4" secondAttribute="trailing" constant="8" symbolic="YES" id="Uxf-tv-cvZ"/>
-                                                <constraint firstItem="yoO-5k-YNY" firstAttribute="centerY" secondItem="dgl-mb-irD" secondAttribute="centerY" id="cXy-FV-9tq"/>
-                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="centerY" secondItem="yoO-5k-YNY" secondAttribute="centerY" id="clK-OG-hoI"/>
-                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="leading" secondItem="dgl-mb-irD" secondAttribute="leading" id="gCN-IB-djz"/>
-                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="top" secondItem="dgl-mb-irD" secondAttribute="topMargin" constant="-13" id="zHa-Mw-MzT"/>
+                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="top" secondItem="dgl-mb-irD" secondAttribute="topMargin" constant="-13" id="4ek-W8-Sbd"/>
+                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="leading" secondItem="dgl-mb-irD" secondAttribute="leading" id="Z6S-22-ZK5"/>
+                                                <constraint firstItem="yoO-5k-YNY" firstAttribute="leading" secondItem="Sx3-MU-yS4" secondAttribute="trailing" constant="8" symbolic="YES" id="g8Y-ao-70M"/>
+                                                <constraint firstItem="Sx3-MU-yS4" firstAttribute="centerY" secondItem="dgl-mb-irD" secondAttribute="centerY" id="hw9-79-36n"/>
+                                                <constraint firstItem="yoO-5k-YNY" firstAttribute="centerY" secondItem="Sx3-MU-yS4" secondAttribute="centerY" id="zUR-Sz-xnw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1242,14 +1294,14 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Map-Pin.png" translatesAutoresizingMaskIntoConstraints="NO" id="BcQ-gs-yFO">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Clock.png" translatesAutoresizingMaskIntoConstraints="NO" id="BcQ-gs-yFO">
                                                     <rect key="frame" x="0.0" y="-5" width="55" height="55"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="55" id="TmQ-lu-cXu"/>
+                                                        <constraint firstAttribute="width" constant="55" id="sWz-VM-F4B"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aA7-W8-ONX">
-                                                    <rect key="frame" x="63" y="12" width="67" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aA7-W8-ONX">
+                                                    <rect key="frame" x="63" y="12" width="38" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1257,11 +1309,11 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="leading" secondItem="nZH-jH-fWv" secondAttribute="leading" id="EwA-z3-5Xr"/>
-                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="centerY" secondItem="nZH-jH-fWv" secondAttribute="centerY" id="UUD-Og-FHk"/>
-                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="top" secondItem="nZH-jH-fWv" secondAttribute="topMargin" constant="-13" id="elF-g0-4t1"/>
-                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="leading" secondItem="BcQ-gs-yFO" secondAttribute="trailing" constant="8" symbolic="YES" id="kAU-Tk-Psc"/>
-                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="centerY" secondItem="aA7-W8-ONX" secondAttribute="centerY" id="qex-nL-zYp"/>
+                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="leading" secondItem="BcQ-gs-yFO" secondAttribute="trailing" constant="8" symbolic="YES" id="P9f-fG-KHg"/>
+                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="leading" secondItem="nZH-jH-fWv" secondAttribute="leading" id="YLr-vS-6by"/>
+                                                <constraint firstItem="BcQ-gs-yFO" firstAttribute="top" secondItem="nZH-jH-fWv" secondAttribute="topMargin" constant="-13" id="cNH-hi-S7B"/>
+                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="centerY" secondItem="nZH-jH-fWv" secondAttribute="centerY" id="h5W-Kx-rim"/>
+                                                <constraint firstItem="aA7-W8-ONX" firstAttribute="centerY" secondItem="BcQ-gs-yFO" secondAttribute="centerY" id="xkd-2e-ITD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1685,9 +1737,9 @@ KeychainItemWrapper. This software is subject to the following license and notic
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTf-Op-zl7">
-                                <rect key="frame" x="106" y="157" width="107" height="30"/>
+                                <rect key="frame" x="107" y="164" width="107" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="aUc-zr-uZw"/>
+                                    <constraint firstAttribute="height" constant="30" id="4mU-ZG-zsf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Google">
@@ -1703,25 +1755,15 @@ KeychainItemWrapper. This software is subject to the following license and notic
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SIGN IN:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jMW-l3-SCr">
                                 <rect key="frame" x="117" y="128" width="86" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="86" id="6qR-J7-7v8"/>
-                                    <constraint firstAttribute="height" constant="21" id="T5l-98-Udf"/>
+                                    <constraint firstAttribute="width" constant="86" id="6Xg-VI-tkl"/>
+                                    <constraint firstAttribute="height" constant="21" id="pxm-0K-Dua"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c77-MJ-kqf">
-                                <rect key="frame" x="105" y="195" width="108" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="tvR-tz-RmF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Facebook">
-                                    <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kgI-qr-fbw">
-                                <rect key="frame" x="59" y="230" width="205" height="36"/>
+                                <rect key="frame" x="59" y="202" width="205" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="OneDrive">
                                     <color key="titleColor" red="0.0" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1736,33 +1778,29 @@ KeychainItemWrapper. This software is subject to the following license and notic
                             <accessibilityTraits key="traits" image="YES"/>
                         </accessibility>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="a8m-Hy-Bly" secondAttribute="trailing" id="2Zx-0l-V0p"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="x6s-YR-dW4" secondAttribute="trailing" constant="12" id="6jh-d4-ogl"/>
-                            <constraint firstItem="jMW-l3-SCr" firstAttribute="centerX" secondItem="a8m-Hy-Bly" secondAttribute="centerX" id="87U-0i-5jb"/>
-                            <constraint firstItem="S43-3H-Wbh" firstAttribute="centerX" secondItem="x6s-YR-dW4" secondAttribute="centerX" id="CXK-Bo-lL6"/>
-                            <constraint firstItem="x6s-YR-dW4" firstAttribute="top" secondItem="KaG-BA-Kg6" secondAttribute="bottom" constant="28" id="I4U-Pn-u3t"/>
-                            <constraint firstItem="a8m-Hy-Bly" firstAttribute="bottom" secondItem="r0i-DG-lad" secondAttribute="top" id="JmC-bY-Hec"/>
-                            <constraint firstItem="jMW-l3-SCr" firstAttribute="top" secondItem="S43-3H-Wbh" secondAttribute="bottom" constant="18" id="RUw-IC-7wx"/>
-                            <constraint firstItem="CTf-Op-zl7" firstAttribute="centerX" secondItem="jMW-l3-SCr" secondAttribute="centerX" id="Va3-Bl-9eV"/>
-                            <constraint firstItem="x6s-YR-dW4" firstAttribute="leading" secondItem="yRT-De-pVB" secondAttribute="leadingMargin" constant="14" id="Wz0-0v-pue"/>
-                            <constraint firstItem="a8m-Hy-Bly" firstAttribute="leading" secondItem="yRT-De-pVB" secondAttribute="leading" id="Xfe-LU-Z6h"/>
-                            <constraint firstItem="c77-MJ-kqf" firstAttribute="trailing" secondItem="CTf-Op-zl7" secondAttribute="trailing" id="YeH-hz-GNX"/>
-                            <constraint firstItem="CTf-Op-zl7" firstAttribute="top" secondItem="jMW-l3-SCr" secondAttribute="bottom" constant="8" symbolic="YES" id="aG6-rk-2nE"/>
-                            <constraint firstItem="kgI-qr-fbw" firstAttribute="centerX" secondItem="S43-3H-Wbh" secondAttribute="centerX" id="b6z-KT-KSH"/>
-                            <constraint firstItem="c77-MJ-kqf" firstAttribute="leading" secondItem="yRT-De-pVB" secondAttribute="leadingMargin" constant="89" id="dj4-Pj-8jf"/>
-                            <constraint firstItem="c77-MJ-kqf" firstAttribute="centerX" secondItem="CTf-Op-zl7" secondAttribute="centerX" id="eL9-yG-OLs"/>
-                            <constraint firstItem="c77-MJ-kqf" firstAttribute="top" secondItem="CTf-Op-zl7" secondAttribute="bottom" constant="8" symbolic="YES" id="iFY-PV-YDd"/>
-                            <constraint firstItem="S43-3H-Wbh" firstAttribute="top" secondItem="x6s-YR-dW4" secondAttribute="bottom" constant="8" symbolic="YES" id="tCX-bp-RIl"/>
-                            <constraint firstItem="kgI-qr-fbw" firstAttribute="top" secondItem="c77-MJ-kqf" secondAttribute="bottom" constant="5" id="u0b-o7-NUt"/>
-                            <constraint firstItem="a8m-Hy-Bly" firstAttribute="centerY" secondItem="yRT-De-pVB" secondAttribute="centerY" id="upf-cY-gJQ"/>
-                            <constraint firstItem="kgI-qr-fbw" firstAttribute="leading" secondItem="yRT-De-pVB" secondAttribute="leadingMargin" constant="43" id="w6D-l1-kYH"/>
+                            <constraint firstItem="a8m-Hy-Bly" firstAttribute="leading" secondItem="yRT-De-pVB" secondAttribute="leading" id="A4b-tQ-d2c"/>
+                            <constraint firstItem="a8m-Hy-Bly" firstAttribute="centerX" secondItem="CTf-Op-zl7" secondAttribute="centerX" id="ByV-qH-qE7"/>
+                            <constraint firstItem="jMW-l3-SCr" firstAttribute="top" secondItem="S43-3H-Wbh" secondAttribute="bottom" constant="18" id="DaQ-4D-a4v"/>
+                            <constraint firstItem="kgI-qr-fbw" firstAttribute="top" secondItem="CTf-Op-zl7" secondAttribute="bottom" constant="8" symbolic="YES" id="FV1-o2-Ate"/>
+                            <constraint firstItem="a8m-Hy-Bly" firstAttribute="centerY" secondItem="yRT-De-pVB" secondAttribute="centerY" id="HfS-4w-oUC"/>
+                            <constraint firstAttribute="trailing" secondItem="a8m-Hy-Bly" secondAttribute="trailing" id="ImU-UA-ih2"/>
+                            <constraint firstItem="S43-3H-Wbh" firstAttribute="centerX" secondItem="x6s-YR-dW4" secondAttribute="centerX" id="JKi-eM-Rx2"/>
+                            <constraint firstItem="kgI-qr-fbw" firstAttribute="leading" secondItem="yRT-De-pVB" secondAttribute="leadingMargin" constant="43" id="L1Q-e8-Apc"/>
+                            <constraint firstItem="S43-3H-Wbh" firstAttribute="centerX" secondItem="CTf-Op-zl7" secondAttribute="centerX" id="Osd-l9-PRy"/>
+                            <constraint firstItem="kgI-qr-fbw" firstAttribute="centerX" secondItem="S43-3H-Wbh" secondAttribute="centerX" id="T57-yf-W2o"/>
+                            <constraint firstItem="CTf-Op-zl7" firstAttribute="leading" secondItem="yRT-De-pVB" secondAttribute="leadingMargin" constant="91" id="ZPA-DL-RGQ"/>
+                            <constraint firstItem="CTf-Op-zl7" firstAttribute="top" secondItem="jMW-l3-SCr" secondAttribute="bottom" constant="15" id="cQx-M7-BHo"/>
+                            <constraint firstItem="a8m-Hy-Bly" firstAttribute="bottom" secondItem="r0i-DG-lad" secondAttribute="top" id="dT0-pI-1lc"/>
+                            <constraint firstItem="x6s-YR-dW4" firstAttribute="top" secondItem="KaG-BA-Kg6" secondAttribute="bottom" constant="28" id="gRp-Jz-EPn"/>
+                            <constraint firstItem="x6s-YR-dW4" firstAttribute="leading" secondItem="yRT-De-pVB" secondAttribute="leadingMargin" constant="14" id="gfv-Rp-aJP"/>
+                            <constraint firstItem="CTf-Op-zl7" firstAttribute="centerX" secondItem="jMW-l3-SCr" secondAttribute="centerX" id="otp-wx-7DB"/>
+                            <constraint firstItem="S43-3H-Wbh" firstAttribute="top" secondItem="x6s-YR-dW4" secondAttribute="bottom" constant="8" symbolic="YES" id="voe-zY-6tD"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="activityIndicator" destination="S43-3H-Wbh" id="pko-mY-Efa"/>
                         <outlet property="backgroundImageView" destination="a8m-Hy-Bly" id="ZQx-by-Xvq"/>
-                        <outlet property="fbLogin" destination="c77-MJ-kqf" id="vN8-eK-srg"/>
                         <outlet property="googleLogin" destination="CTf-Op-zl7" id="aeX-Zb-CrZ"/>
                         <outlet property="odLogin" destination="kgI-qr-fbw" id="4RZ-pZ-HqM"/>
                         <outlet property="welcomeLabel" destination="x6s-YR-dW4" id="7O9-16-6vz"/>
@@ -2220,9 +2258,9 @@ KeychainItemWrapper. This software is subject to the following license and notic
         <image name="Camera.png" width="180" height="180"/>
         <image name="Clock.png" width="180" height="180"/>
         <image name="Folder.png" width="180" height="180"/>
-        <image name="House (1)_res.png" width="50" height="50"/>
         <image name="Key.png" width="180" height="180"/>
         <image name="Map-Pin.png" width="180" height="180"/>
+        <image name="TheHamburger.png" width="14" height="12"/>
         <image name="iphone 6 plus-App icon 1024x1024 REV.png" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
@@ -2230,7 +2268,7 @@ KeychainItemWrapper. This software is subject to the following license and notic
         <segue reference="5vp-b2-NEX"/>
         <segue reference="Jwd-Le-3JH"/>
         <segue reference="JhX-Vt-fsg"/>
-        <segue reference="4GH-B5-GcR"/>
+        <segue reference="SpP-5n-deT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="0.68132159979999996" blue="0.1911690533" alpha="1" colorSpace="calibratedRGB"/>
 </document>

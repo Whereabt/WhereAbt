@@ -11,7 +11,6 @@
 		0115CA651C4942D400A48B40 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0115CA641C4942D400A48B40 /* StoreKit.framework */; };
 		0115CA671C4942E100A48B40 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0115CA661C4942E100A48B40 /* AddressBook.framework */; };
 		0115CA6C1C4958DE00A48B40 /* AllLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0115CA6B1C4958DE00A48B40 /* AllLoginViewController.m */; };
-		0115CA6E1C49778200A48B40 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0115CA6D1C49778200A48B40 /* GoogleService-Info.plist */; };
 		012996DB1A354E5300C89D09 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 012996DA1A354E5300C89D09 /* main.m */; };
 		012996DE1A354E5300C89D09 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 012996DD1A354E5300C89D09 /* AppDelegate.m */; };
 		012996E71A354E5300C89D09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 012996E51A354E5300C89D09 /* Main.storyboard */; };
@@ -56,7 +55,14 @@
 		01EC52A31C86AD1700201C18 /* Folder.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52A21C86AD1700201C18 /* Folder.png */; };
 		01EC52A51C9107EC00201C18 /* Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52A41C9107EB00201C18 /* Clock.png */; };
 		01EC52A71C91442A00201C18 /* House (1)_res.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52A61C91442A00201C18 /* House (1)_res.png */; };
-		01EC52AC1CAC83F400201C18 /* GoogleService-Info (1).plist in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52AB1CAC83F300201C18 /* GoogleService-Info (1).plist */; };
+		01EC52AC1CAC83F400201C18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52AB1CAC83F300201C18 /* GoogleService-Info.plist */; };
+		01EC52AE1CB2072B00201C18 /* Hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52AD1CB2072A00201C18 /* Hamburger.png */; };
+		01EC52B01CB2091700201C18 /* rsz_list.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52AF1CB2091600201C18 /* rsz_list.png */; };
+		01EC52B21CB209F100201C18 /* rsz_1list.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52B11CB209F000201C18 /* rsz_1list.png */; };
+		01EC52B41CB20AF500201C18 /* List.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52B31CB20AF500201C18 /* List.png */; };
+		01EC52B61CB20C0D00201C18 /* rsz_hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52B51CB20C0D00201C18 /* rsz_hamburger.png */; };
+		01EC52B81CB20D3A00201C18 /* rsz_1hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52B71CB20D3900201C18 /* rsz_1hamburger.png */; };
+		01EC52BA1CB20E4E00201C18 /* TheHamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = 01EC52B91CB20E4E00201C18 /* TheHamburger.png */; };
 		2D6A0E411A5C5B2300EDD980 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */; };
 		2D6A0E431A5C5B4100EDD980 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E421A5C5B4100EDD980 /* Foundation.framework */; };
 		2D6A0E451A5C5B5800EDD980 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6A0E441A5C5B5800EDD980 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -192,7 +198,6 @@
 		0115CA661C4942E100A48B40 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		0115CA6A1C4958DE00A48B40 /* AllLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllLoginViewController.h; sourceTree = "<group>"; };
 		0115CA6B1C4958DE00A48B40 /* AllLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllLoginViewController.m; sourceTree = "<group>"; };
-		0115CA6D1C49778200A48B40 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "/Users/nicolasisaza/Desktop/WhereAbt-Repo/../../Downloads/GoogleService-Info.plist"; sourceTree = "<absolute>"; };
 		012996D51A354E5300C89D09 /* Whereabout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whereabout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		012996D91A354E5300C89D09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		012996DA1A354E5300C89D09 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -258,7 +263,14 @@
 		01EC52A21C86AD1700201C18 /* Folder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Folder.png; sourceTree = "<group>"; };
 		01EC52A41C9107EB00201C18 /* Clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Clock.png; sourceTree = "<group>"; };
 		01EC52A61C91442A00201C18 /* House (1)_res.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "House (1)_res.png"; sourceTree = "<group>"; };
-		01EC52AB1CAC83F300201C18 /* GoogleService-Info (1).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info (1).plist"; sourceTree = "<group>"; };
+		01EC52AB1CAC83F300201C18 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		01EC52AD1CB2072A00201C18 /* Hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Hamburger.png; sourceTree = "<group>"; };
+		01EC52AF1CB2091600201C18 /* rsz_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rsz_list.png; sourceTree = "<group>"; };
+		01EC52B11CB209F000201C18 /* rsz_1list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rsz_1list.png; sourceTree = "<group>"; };
+		01EC52B31CB20AF500201C18 /* List.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = List.png; sourceTree = "<group>"; };
+		01EC52B51CB20C0D00201C18 /* rsz_hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rsz_hamburger.png; sourceTree = "<group>"; };
+		01EC52B71CB20D3900201C18 /* rsz_1hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rsz_1hamburger.png; sourceTree = "<group>"; };
+		01EC52B91CB20E4E00201C18 /* TheHamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TheHamburger.png; sourceTree = "<group>"; };
 		1C7F58B3B077B59E66A13082 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D6A0E401A5C5B2300EDD980 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2D6A0E421A5C5B4100EDD980 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -449,8 +461,7 @@
 		012996CC1A354E5300C89D09 = {
 			isa = PBXGroup;
 			children = (
-				0115CA6D1C49778200A48B40 /* GoogleService-Info.plist */,
-				01EC52AB1CAC83F300201C18 /* GoogleService-Info (1).plist */,
+				01EC52AB1CAC83F300201C18 /* GoogleService-Info.plist */,
 				4AB8EF061BD0743800D233DA /* Flag.php */,
 				4AB8EEE01BC4C58D00D233DA /* Media.xcassets */,
 				B98C667F1B88D0C500A9C810 /* MapKit.framework */,
@@ -570,6 +581,13 @@
 				01EC52901C86ABE200201C18 /* Key.png */,
 				01EC52911C86ABE200201C18 /* Map-Pin.png */,
 				01EC52921C86ABE200201C18 /* Refresh-Reload.png */,
+				01EC52B91CB20E4E00201C18 /* TheHamburger.png */,
+				01EC52AD1CB2072A00201C18 /* Hamburger.png */,
+				01EC52B51CB20C0D00201C18 /* rsz_hamburger.png */,
+				01EC52B71CB20D3900201C18 /* rsz_1hamburger.png */,
+				01EC52B31CB20AF500201C18 /* List.png */,
+				01EC52AF1CB2091600201C18 /* rsz_list.png */,
+				01EC52B11CB209F000201C18 /* rsz_1list.png */,
 			);
 			name = "Single Line Icons";
 			path = "UIImages/Single Line Icons";
@@ -912,7 +930,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Nicolas Isaza";
 				TargetAttributes = {
 					012996D41A354E5300C89D09 = {
@@ -992,6 +1010,7 @@
 				4A2BE0961BBCE4F30043B207 /* Whereabout-settings-gray-05-11-2015.png in Resources */,
 				4A2BE0921BBCE4F30043B207 /* Whereabout-feed-gray-05-11-2015.png in Resources */,
 				B985EA7A1B38AB0E000D2AFD /* Gray Stream Placeholder Image.jpg in Resources */,
+				01EC52B61CB20C0D00201C18 /* rsz_hamburger.png in Resources */,
 				01EC52981C86ABE200201C18 /* Document.png in Resources */,
 				4AB8EF071BD0743800D233DA /* Flag.php in Resources */,
 				B9EAF9E81AE30D2E00C99D29 /* Upload GRAY 50x50.png in Resources */,
@@ -1024,11 +1043,12 @@
 				4AB8EEF31BC4D31800D233DA /* rsz45_whereabout-settings-gray-05-11-2015.png in Resources */,
 				B938DCF51A757BCB0073D91F /* Photo access Image 350x350.png in Resources */,
 				B9EAF9F41AE30D8300C99D29 /* Feed tab blue negative.png in Resources */,
+				01EC52B21CB209F100201C18 /* rsz_1list.png in Resources */,
 				012996E91A354E5300C89D09 /* Images.xcassets in Resources */,
 				01EC52A31C86AD1700201C18 /* Folder.png in Resources */,
 				01EC52961C86ABE200201C18 /* Card.png in Resources */,
 				B985EA9B1B418B19000D2AFD /* Camera Overlay (1).png in Resources */,
-				01EC52AC1CAC83F400201C18 /* GoogleService-Info (1).plist in Resources */,
+				01EC52AC1CAC83F400201C18 /* GoogleService-Info.plist in Resources */,
 				B985EA8D1B3D9D00000D2AFD /* Page 1.0.PNG in Resources */,
 				B9EAFA0F1AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png in Resources */,
 				4AB8EED71BC4B82500D233DA /* Whereabout-feed-tab-BLUE-10-06-2015.png in Resources */,
@@ -1037,18 +1057,22 @@
 				B985EA941B409B47000D2AFD /* CamOverlayViewController.xib in Resources */,
 				B9EAFA111AEDD39A00C99D29 /* Whereabout-upload-gray-04-25-2015.png in Resources */,
 				B9BC13381A8B10D100659591 /* PhotoView.jpg in Resources */,
-				0115CA6E1C49778200A48B40 /* GoogleService-Info.plist in Resources */,
 				B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */,
 				B9EAF9F71AE30D8300C99D29 /* Profile GRAY 50x50.png in Resources */,
+				01EC52B01CB2091700201C18 /* rsz_list.png in Resources */,
 				4AB8EEFF1BC5D97200D233DA /* ProfilePreview.PNG in Resources */,
 				B9EAF9FA1AE30D8300C99D29 /* Upload 50x50.png in Resources */,
 				4AB8EEFD1BC5D97200D233DA /* LoginPreview.PNG in Resources */,
 				B9EBBCBB1AA56123008FA719 /* icon-Upload-SELECTED 50x50.png in Resources */,
+				01EC52B81CB20D3A00201C18 /* rsz_1hamburger.png in Resources */,
 				B938DCF41A757BCB0073D91F /* Photo access Image 350x350 REV.png in Resources */,
 				01EC529A1C86ABE200201C18 /* House (1).png in Resources */,
 				4AB8EEDD1BC4B84400D233DA /* Whereabout-feed-tab-GRAY-10-06-2015.png in Resources */,
+				01EC52BA1CB20E4E00201C18 /* TheHamburger.png in Resources */,
 				B9EBBCBE1AA56123008FA719 /* icon-Feed GRAY 50x50.png in Resources */,
 				01EC52951C86ABE200201C18 /* Calender.png in Resources */,
+				01EC52AE1CB2072B00201C18 /* Hamburger.png in Resources */,
+				01EC52B41CB20AF500201C18 /* List.png in Resources */,
 				4AB8EF011BC5D97200D233DA /* StreamPreview.PNG in Resources */,
 				B9EAF9F31AE30D8300C99D29 /* Feed GRAY 50x50.png in Resources */,
 			);
@@ -1228,6 +1252,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1302,6 +1327,7 @@
 				INFOPLIST_FILE = "Whereabout 2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.NicolasIsazaLLC.Whereabout;
 				PRODUCT_NAME = Whereabout;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Whereabout 2/Whereabout-Bridging-Header.h";
@@ -1328,6 +1354,7 @@
 				INFOPLIST_FILE = "Whereabout 2/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.NicolasIsazaLLC.Whereabout;
 				PRODUCT_NAME = Whereabout;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Whereabout 2/Whereabout-Bridging-Header.h";
@@ -1349,6 +1376,7 @@
 				);
 				INFOPLIST_FILE = "Whereabout 2Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.isaza.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = WhereaboutTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Whereabout 2.app/Whereabout 2";
 			};
@@ -1364,6 +1392,7 @@
 				);
 				INFOPLIST_FILE = "Whereabout 2Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.isaza.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = WhereaboutTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Whereabout 2.app/Whereabout 2";
 			};

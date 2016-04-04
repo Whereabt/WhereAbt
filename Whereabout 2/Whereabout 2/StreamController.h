@@ -20,8 +20,7 @@
 
 - (void)imageFromURLString:(NSString *)urlString atIndex:(NSInteger)index OfArray:(NSArray*)jsonArray isThumbnail:(BOOL) isThumbnail;
 
-- (void)getFeedWithSort:(NSString *)sort andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack;
-
+- (void)getFeedWithType:(NSString *)streamType andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack;
 - (void)reportPhotoWithUserID: (NSString *)userId andPhotoID: (NSString *)photoId andReason: (NSString *)reasonID withCompletion:(void (^)(NSError *error))completionHandler;
 - (void)getFeedFromAzureCloudFileWithRadius:(float)radius andCompletion:(void (^)(NSMutableArray *items, NSError *error))callBack;
 

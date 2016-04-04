@@ -15,6 +15,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "ImageCache.h"
 #import "UIImageView+ImgViewCat.h"
+#import <Google/Analytics.h>
 
 @interface StreamPROCollectionViewController ()
 
@@ -35,6 +36,12 @@ UILabel *internetFailLabel;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     [self refreshStreamProfile];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"Stream Profile VC"];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (void)refreshStreamProfile {
