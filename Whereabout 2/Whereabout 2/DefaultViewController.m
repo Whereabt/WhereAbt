@@ -17,8 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _pageTitles = @[@"Log in using OneDrive", @"See what's going on nearby", @"Upload new or existing photos", @"Save any photo"];
-    _pageImages = @[@"LoginPreview.PNG", @"StreamPreview.PNG", @"UploadPreview.PNG", @"EnlargeSavePreview.PNG"];
+    _pageTitles = @[@"See what's going on nearby", @"Take amazing photos", @"View your posts", @"See every photo's location"];
+    _pageImages = @[@"DistanceStreamPreview.PNG", @"CameraPreview.PNG", @"MyProfilePreview.PNG", @"StreamEnlargePreview.PNG"];
     
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"PageViewController"];
     self.pageViewController.dataSource = self;

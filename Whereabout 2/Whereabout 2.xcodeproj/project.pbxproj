@@ -24,6 +24,10 @@
 		01D47DFF1A45D00600A45013 /* PhotosAccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47DFE1A45D00600A45013 /* PhotosAccessViewController.m */; };
 		01D47E0A1A560BCD00A45013 /* StreamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E091A560BCD00A45013 /* StreamViewController.m */; };
 		01D47E161A583B9D00A45013 /* ImageDataObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D47E151A583B9D00A45013 /* ImageDataObject.m */; };
+		01E4368D1CBB4E4800794894 /* CameraPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01E436891CBB4E4800794894 /* CameraPreview.PNG */; };
+		01E4368E1CBB4E4800794894 /* DistanceStreamPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01E4368A1CBB4E4800794894 /* DistanceStreamPreview.PNG */; };
+		01E4368F1CBB4E4800794894 /* MyProfilePreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01E4368B1CBB4E4800794894 /* MyProfilePreview.PNG */; };
+		01E436901CBB4E4800794894 /* StreamEnlargePreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01E4368C1CBB4E4800794894 /* StreamEnlargePreview.PNG */; };
 		01E8C2061C3C526500819A55 /* FilterCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C2051C3C526500819A55 /* FilterCameraViewController.m */; };
 		01E8C20D1C3DB17700819A55 /* StreamBlobTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C20C1C3DB17700819A55 /* StreamBlobTestViewController.m */; };
 		01E8C2101C4017C300819A55 /* CamRollCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E8C20F1C4017C300819A55 /* CamRollCollectionViewCell.m */; };
@@ -90,14 +94,6 @@
 		4AB8EEF11BC4D31800D233DA /* rsz_1whereabout_profile_tab-09-20-2015_gray.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEEE1BC4D31800D233DA /* rsz_1whereabout_profile_tab-09-20-2015_gray.png */; };
 		4AB8EEF21BC4D31800D233DA /* rsz_45whereabout-feed-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEEF1BC4D31800D233DA /* rsz_45whereabout-feed-gray-05-11-2015.png */; };
 		4AB8EEF31BC4D31800D233DA /* rsz45_whereabout-settings-gray-05-11-2015.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF01BC4D31800D233DA /* rsz45_whereabout-settings-gray-05-11-2015.png */; };
-		4AB8EEFB1BC5D97200D233DA /* CRUploadPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF41BC5D97200D233DA /* CRUploadPreview.PNG */; };
-		4AB8EEFC1BC5D97200D233DA /* EnlargeSavePreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF51BC5D97200D233DA /* EnlargeSavePreview.PNG */; };
-		4AB8EEFD1BC5D97200D233DA /* LoginPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF61BC5D97200D233DA /* LoginPreview.PNG */; };
-		4AB8EEFE1BC5D97200D233DA /* ProEnlargePreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF71BC5D97200D233DA /* ProEnlargePreview.PNG */; };
-		4AB8EEFF1BC5D97200D233DA /* ProfilePreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF81BC5D97200D233DA /* ProfilePreview.PNG */; };
-		4AB8EF001BC5D97200D233DA /* SettingsPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEF91BC5D97200D233DA /* SettingsPreview.PNG */; };
-		4AB8EF011BC5D97200D233DA /* StreamPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EEFA1BC5D97200D233DA /* StreamPreview.PNG */; };
-		4AB8EF031BC5DCA900D233DA /* UploadPreview.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EF021BC5DCA900D233DA /* UploadPreview.PNG */; };
 		4AB8EF071BD0743800D233DA /* Flag.php in Resources */ = {isa = PBXBuildFile; fileRef = 4AB8EF061BD0743800D233DA /* Flag.php */; };
 		B927F1211B1239D1007D5D05 /* NSNetworkConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = B927F1201B1239D1007D5D05 /* NSNetworkConnection.m */; };
 		B938DCB01A641E560073D91F /* StreamController.m in Sources */ = {isa = PBXBuildFile; fileRef = B938DCAF1A641E560073D91F /* StreamController.m */; };
@@ -118,11 +114,6 @@
 		B959B9811AF9C0EE0000B65F /* InitialSegueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B959B9801AF9C0EE0000B65F /* InitialSegueViewController.m */; };
 		B985EA7A1B38AB0E000D2AFD /* Gray Stream Placeholder Image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B985EA791B38AB0E000D2AFD /* Gray Stream Placeholder Image.jpg */; };
 		B985EA7D1B38B5F0000D2AFD /* StreamTVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B985EA7C1B38B5F0000D2AFD /* StreamTVCell.m */; };
-		B985EA831B39A4E9000D2AFD /* Page 1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B985EA7F1B39A4E9000D2AFD /* Page 1.PNG */; };
-		B985EA841B39A4E9000D2AFD /* Page 2.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B985EA801B39A4E9000D2AFD /* Page 2.PNG */; };
-		B985EA861B39A4E9000D2AFD /* Page 4.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B985EA821B39A4E9000D2AFD /* Page 4.PNG */; };
-		B985EA8B1B3AFE31000D2AFD /* Page 4.1.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B985EA8A1B3AFE31000D2AFD /* Page 4.1.PNG */; };
-		B985EA8D1B3D9D00000D2AFD /* Page 1.0.PNG in Resources */ = {isa = PBXBuildFile; fileRef = B985EA8C1B3D9D00000D2AFD /* Page 1.0.PNG */; };
 		B985EA931B409B47000D2AFD /* CamOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B985EA911B409B47000D2AFD /* CamOverlayViewController.m */; };
 		B985EA941B409B47000D2AFD /* CamOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B985EA921B409B47000D2AFD /* CamOverlayViewController.xib */; };
 		B985EA971B4184B1000D2AFD /* OverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B985EA961B4184B1000D2AFD /* OverlayView.m */; };
@@ -222,6 +213,10 @@
 		01D47E091A560BCD00A45013 /* StreamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StreamViewController.m; path = ../StreamViewController.m; sourceTree = "<group>"; };
 		01D47E141A583B9D00A45013 /* ImageDataObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDataObject.h; sourceTree = "<group>"; };
 		01D47E151A583B9D00A45013 /* ImageDataObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDataObject.m; sourceTree = "<group>"; };
+		01E436891CBB4E4800794894 /* CameraPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CameraPreview.PNG; sourceTree = "<group>"; };
+		01E4368A1CBB4E4800794894 /* DistanceStreamPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DistanceStreamPreview.PNG; sourceTree = "<group>"; };
+		01E4368B1CBB4E4800794894 /* MyProfilePreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MyProfilePreview.PNG; sourceTree = "<group>"; };
+		01E4368C1CBB4E4800794894 /* StreamEnlargePreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StreamEnlargePreview.PNG; sourceTree = "<group>"; };
 		01E8C2041C3C526500819A55 /* FilterCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterCameraViewController.h; path = ../../Pods/FilterCameraViewController.h; sourceTree = "<group>"; };
 		01E8C2051C3C526500819A55 /* FilterCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterCameraViewController.m; path = ../../Pods/FilterCameraViewController.m; sourceTree = "<group>"; };
 		01E8C20B1C3DB17700819A55 /* StreamBlobTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamBlobTestViewController.h; sourceTree = "<group>"; };
@@ -302,14 +297,6 @@
 		4AB8EEEE1BC4D31800D233DA /* rsz_1whereabout_profile_tab-09-20-2015_gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rsz_1whereabout_profile_tab-09-20-2015_gray.png"; path = "Resized Tabs/rsz_1whereabout_profile_tab-09-20-2015_gray.png"; sourceTree = "<group>"; };
 		4AB8EEEF1BC4D31800D233DA /* rsz_45whereabout-feed-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rsz_45whereabout-feed-gray-05-11-2015.png"; path = "Resized Tabs/rsz_45whereabout-feed-gray-05-11-2015.png"; sourceTree = "<group>"; };
 		4AB8EEF01BC4D31800D233DA /* rsz45_whereabout-settings-gray-05-11-2015.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rsz45_whereabout-settings-gray-05-11-2015.png"; path = "Resized Tabs/rsz45_whereabout-settings-gray-05-11-2015.png"; sourceTree = "<group>"; };
-		4AB8EEF41BC5D97200D233DA /* CRUploadPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CRUploadPreview.PNG; path = UIImages/CRUploadPreview.PNG; sourceTree = SOURCE_ROOT; };
-		4AB8EEF51BC5D97200D233DA /* EnlargeSavePreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = EnlargeSavePreview.PNG; path = UIImages/EnlargeSavePreview.PNG; sourceTree = SOURCE_ROOT; };
-		4AB8EEF61BC5D97200D233DA /* LoginPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoginPreview.PNG; path = UIImages/LoginPreview.PNG; sourceTree = SOURCE_ROOT; };
-		4AB8EEF71BC5D97200D233DA /* ProEnlargePreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ProEnlargePreview.PNG; path = UIImages/ProEnlargePreview.PNG; sourceTree = SOURCE_ROOT; };
-		4AB8EEF81BC5D97200D233DA /* ProfilePreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ProfilePreview.PNG; path = UIImages/ProfilePreview.PNG; sourceTree = SOURCE_ROOT; };
-		4AB8EEF91BC5D97200D233DA /* SettingsPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SettingsPreview.PNG; path = UIImages/SettingsPreview.PNG; sourceTree = SOURCE_ROOT; };
-		4AB8EEFA1BC5D97200D233DA /* StreamPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StreamPreview.PNG; path = UIImages/StreamPreview.PNG; sourceTree = SOURCE_ROOT; };
-		4AB8EF021BC5DCA900D233DA /* UploadPreview.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UploadPreview.PNG; path = UIImages/UploadPreview.PNG; sourceTree = SOURCE_ROOT; };
 		4AB8EF061BD0743800D233DA /* Flag.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; name = Flag.php; path = ../Flag.php; sourceTree = "<group>"; };
 		6FC2A26AF400AF77735F63E9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		77F1A66FF8985FBB2D8DDA25 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "../Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -341,11 +328,6 @@
 		B985EA791B38AB0E000D2AFD /* Gray Stream Placeholder Image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Gray Stream Placeholder Image.jpg"; path = "UIImages/Gray Stream Placeholder Image.jpg"; sourceTree = SOURCE_ROOT; };
 		B985EA7B1B38B5F0000D2AFD /* StreamTVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamTVCell.h; sourceTree = "<group>"; };
 		B985EA7C1B38B5F0000D2AFD /* StreamTVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamTVCell.m; sourceTree = "<group>"; };
-		B985EA7F1B39A4E9000D2AFD /* Page 1.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Page 1.PNG"; path = "UIImages/Page 1.PNG"; sourceTree = SOURCE_ROOT; };
-		B985EA801B39A4E9000D2AFD /* Page 2.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Page 2.PNG"; path = "UIImages/Page 2.PNG"; sourceTree = SOURCE_ROOT; };
-		B985EA821B39A4E9000D2AFD /* Page 4.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Page 4.PNG"; path = "UIImages/Page 4.PNG"; sourceTree = SOURCE_ROOT; };
-		B985EA8A1B3AFE31000D2AFD /* Page 4.1.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Page 4.1.PNG"; path = "UIImages/Page 4.1.PNG"; sourceTree = SOURCE_ROOT; };
-		B985EA8C1B3D9D00000D2AFD /* Page 1.0.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Page 1.0.PNG"; path = "UIImages/Page 1.0.PNG"; sourceTree = SOURCE_ROOT; };
 		B985EA901B409B47000D2AFD /* CamOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamOverlayViewController.h; sourceTree = "<group>"; };
 		B985EA911B409B47000D2AFD /* CamOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CamOverlayViewController.m; sourceTree = "<group>"; };
 		B985EA921B409B47000D2AFD /* CamOverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CamOverlayViewController.xib; sourceTree = "<group>"; };
@@ -549,6 +531,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		01E436881CBB4E4800794894 /* Page Preview Images (4:10:2016) */ = {
+			isa = PBXGroup;
+			children = (
+				01E436891CBB4E4800794894 /* CameraPreview.PNG */,
+				01E4368A1CBB4E4800794894 /* DistanceStreamPreview.PNG */,
+				01E4368B1CBB4E4800794894 /* MyProfilePreview.PNG */,
+				01E4368C1CBB4E4800794894 /* StreamEnlargePreview.PNG */,
+			);
+			name = "Page Preview Images (4:10:2016)";
+			path = "UIImages/Page Preview Images (4:10:2016)";
+			sourceTree = SOURCE_ROOT;
+		};
 		01EC4EAE1C81773B00201C18 /* Tab Items 2:27:2016 */ = {
 			isa = PBXGroup;
 			children = (
@@ -737,26 +731,6 @@
 			path = "PNG Files UI Buttons";
 			sourceTree = SOURCE_ROOT;
 		};
-		B985EA871B39A523000D2AFD /* Page VC Intro Images */ = {
-			isa = PBXGroup;
-			children = (
-				4AB8EEF41BC5D97200D233DA /* CRUploadPreview.PNG */,
-				4AB8EEF51BC5D97200D233DA /* EnlargeSavePreview.PNG */,
-				4AB8EEF61BC5D97200D233DA /* LoginPreview.PNG */,
-				4AB8EF021BC5DCA900D233DA /* UploadPreview.PNG */,
-				4AB8EEF71BC5D97200D233DA /* ProEnlargePreview.PNG */,
-				4AB8EEF81BC5D97200D233DA /* ProfilePreview.PNG */,
-				4AB8EEF91BC5D97200D233DA /* SettingsPreview.PNG */,
-				4AB8EEFA1BC5D97200D233DA /* StreamPreview.PNG */,
-				B985EA8A1B3AFE31000D2AFD /* Page 4.1.PNG */,
-				B985EA8C1B3D9D00000D2AFD /* Page 1.0.PNG */,
-				B985EA7F1B39A4E9000D2AFD /* Page 1.PNG */,
-				B985EA801B39A4E9000D2AFD /* Page 2.PNG */,
-				B985EA821B39A4E9000D2AFD /* Page 4.PNG */,
-			);
-			name = "Page VC Intro Images";
-			sourceTree = "<group>";
-		};
 		B9A9EDAA1AC2FF63000ECE24 /* Location Related */ = {
 			isa = PBXGroup;
 			children = (
@@ -861,6 +835,7 @@
 		B9FCFAB61A6331E800AFB63D /* UIImages */ = {
 			isa = PBXGroup;
 			children = (
+				01E436881CBB4E4800794894 /* Page Preview Images (4:10:2016) */,
 				01EC52871C86ABE200201C18 /* Single Line Icons */,
 				01EC4EAE1C81773B00201C18 /* Tab Items 2:27:2016 */,
 				B9EAF9E51AE3097300C99D29 /* Whereabout tabs 03-29-2015  */,
@@ -868,7 +843,6 @@
 				B938DCF61A75B6F10073D91F /* PNG Files UI Buttons */,
 				B938DCED1A757BCB0073D91F /* PNG Photo access Images */,
 				B9BC13371A8B10D100659591 /* PhotoView.jpg */,
-				B985EA871B39A523000D2AFD /* Page VC Intro Images */,
 				B985EA791B38AB0E000D2AFD /* Gray Stream Placeholder Image.jpg */,
 				B985EA981B4185A6000D2AFD /* OverlayImage.png */,
 				B985EA9A1B418B19000D2AFD /* Camera Overlay (1).png */,
@@ -974,18 +948,14 @@
 				B9EBBCC01AA56123008FA719 /* icon-Profile GRAY 50x50.png in Resources */,
 				B985EA9F1B419284000D2AFD /* overlay image (3).jpg in Resources */,
 				B9EBBCBF1AA56123008FA719 /* icon-Upload GRAY 50x50.png in Resources */,
-				4AB8EEFC1BC5D97200D233DA /* EnlargeSavePreview.PNG in Resources */,
 				4AB8EEF11BC4D31800D233DA /* rsz_1whereabout_profile_tab-09-20-2015_gray.png in Resources */,
 				B9EAFA0B1AEDD39A00C99D29 /* Whereabout-feed-gray-04-25-2015.png in Resources */,
 				01EC52A11C86AC7800201C18 /* Camera.png in Resources */,
 				B9BC133A1A8B10E100659591 /* Welcome 380x449 copy.jpg in Resources */,
 				B938DCF21A757BCB0073D91F /* Photo access Image 250x250 REV.png in Resources */,
 				B938DCF31A757BCB0073D91F /* Photo access Image 250x250.png in Resources */,
-				B985EA861B39A4E9000D2AFD /* Page 4.PNG in Resources */,
 				B9EAF9FC1AE30D9500C99D29 /* Upload tab white.png in Resources */,
 				4AB8EEE11BC4C58D00D233DA /* Media.xcassets in Resources */,
-				4AB8EEFE1BC5D97200D233DA /* ProEnlargePreview.PNG in Resources */,
-				4AB8EF031BC5DCA900D233DA /* UploadPreview.PNG in Resources */,
 				B9EBBCC11AA56123008FA719 /* icon-Settings GRAY 50x50.png in Resources */,
 				4A5C4F9E1BFEE43E0075BE2B /* EULA.txt in Resources */,
 				B9EBBCBC1AA56123008FA719 /* icon-Feed-SELECTED 50x50.png in Resources */,
@@ -998,6 +968,7 @@
 				01EC52971C86ABE200201C18 /* Chat.png in Resources */,
 				01EC529C1C86ABE200201C18 /* Map-Pin.png in Resources */,
 				B9EAF9F51AE30D8300C99D29 /* Feed tab white.png in Resources */,
+				01E4368E1CBB4E4800794894 /* DistanceStreamPreview.PNG in Resources */,
 				012996E71A354E5300C89D09 /* Main.storyboard in Resources */,
 				B9EAF9F81AE30D8300C99D29 /* Profile tab blue negative.png in Resources */,
 				01EC529B1C86ABE200201C18 /* Key.png in Resources */,
@@ -1018,23 +989,21 @@
 				B9EAF9F21AE30D8300C99D29 /* Feed 50x50.png in Resources */,
 				01EC52A51C9107EC00201C18 /* Clock.png in Resources */,
 				B938DCFB1A75B6F10073D91F /* Orange Camera Button.png in Resources */,
-				4AB8EF001BC5D97200D233DA /* SettingsPreview.PNG in Resources */,
 				01EC52A71C91442A00201C18 /* House (1)_res.png in Resources */,
 				01EC4EB81C81773B00201C18 /* Maintenance.png in Resources */,
-				B985EA8B1B3AFE31000D2AFD /* Page 4.1.PNG in Resources */,
-				4AB8EEFB1BC5D97200D233DA /* CRUploadPreview.PNG in Resources */,
+				01E4368F1CBB4E4800794894 /* MyProfilePreview.PNG in Resources */,
 				B9EBBCBD1AA56123008FA719 /* icon-Settings-SELECTED 50x50.png in Resources */,
 				B9EAF9F91AE30D8300C99D29 /* Profile tab white.png in Resources */,
 				4AB8EEDF1BC4B84400D233DA /* Whereabout-settings-tab-GRAY-10-06-2015.png in Resources */,
 				B9EAFA121AEDD39A00C99D29 /* Whereabout-upload-orange-04-25-2015.png in Resources */,
 				012996EC1A354E5300C89D09 /* LaunchScreen.xib in Resources */,
 				01EC529D1C86ABE200201C18 /* Refresh-Reload.png in Resources */,
-				B985EA831B39A4E9000D2AFD /* Page 1.PNG in Resources */,
+				01E4368D1CBB4E4800794894 /* CameraPreview.PNG in Resources */,
 				01EC4EB61C81773B00201C18 /* Gender Neutral User.png in Resources */,
 				B9EAF9E61AE3097300C99D29 /* Whereabout tabs 03-29-2015  in Resources */,
-				B985EA841B39A4E9000D2AFD /* Page 2.PNG in Resources */,
 				4AB0BE451BEEB526006AD8E1 /* sesquile.JPG in Resources */,
 				01EC52931C86ABE200201C18 /* Arrow.png in Resources */,
+				01E436901CBB4E4800794894 /* StreamEnlargePreview.PNG in Resources */,
 				B9EAFA0D1AEDD39A00C99D29 /* Whereabout-profile-gray-04-25-2015.png in Resources */,
 				B938DCFC1A75B6F10073D91F /* Blue Camera Button.png in Resources */,
 				B9EAF9F61AE30D8300C99D29 /* Profile 50x50.png in Resources */,
@@ -1049,7 +1018,6 @@
 				01EC52961C86ABE200201C18 /* Card.png in Resources */,
 				B985EA9B1B418B19000D2AFD /* Camera Overlay (1).png in Resources */,
 				01EC52AC1CAC83F400201C18 /* GoogleService-Info.plist in Resources */,
-				B985EA8D1B3D9D00000D2AFD /* Page 1.0.PNG in Resources */,
 				B9EAFA0F1AEDD39A00C99D29 /* Whereabout-settings-gray-04-25-2015.png in Resources */,
 				4AB8EED71BC4B82500D233DA /* Whereabout-feed-tab-BLUE-10-06-2015.png in Resources */,
 				4A2BE0A31BBCE9830043B207 /* Whereabout profile tab-09-20-2015 GRAY.png in Resources */,
@@ -1060,9 +1028,7 @@
 				B938DCFD1A75B6F10073D91F /* Blue Camera Roll Button.png in Resources */,
 				B9EAF9F71AE30D8300C99D29 /* Profile GRAY 50x50.png in Resources */,
 				01EC52B01CB2091700201C18 /* rsz_list.png in Resources */,
-				4AB8EEFF1BC5D97200D233DA /* ProfilePreview.PNG in Resources */,
 				B9EAF9FA1AE30D8300C99D29 /* Upload 50x50.png in Resources */,
-				4AB8EEFD1BC5D97200D233DA /* LoginPreview.PNG in Resources */,
 				B9EBBCBB1AA56123008FA719 /* icon-Upload-SELECTED 50x50.png in Resources */,
 				01EC52B81CB20D3A00201C18 /* rsz_1hamburger.png in Resources */,
 				B938DCF41A757BCB0073D91F /* Photo access Image 350x350 REV.png in Resources */,
@@ -1073,7 +1039,6 @@
 				01EC52951C86ABE200201C18 /* Calender.png in Resources */,
 				01EC52AE1CB2072B00201C18 /* Hamburger.png in Resources */,
 				01EC52B41CB20AF500201C18 /* List.png in Resources */,
-				4AB8EF011BC5D97200D233DA /* StreamPreview.PNG in Resources */,
 				B9EAF9F31AE30D8300C99D29 /* Feed GRAY 50x50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1343,7 +1308,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

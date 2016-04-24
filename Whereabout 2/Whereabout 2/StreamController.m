@@ -95,10 +95,77 @@
     
     else {
        
-        UIAlertView *locationAlert = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"We were unable to get your current location. Instead of presenting nearby photos we're just going to show you some from around the world." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView *locationAlert = [[UIAlertView alloc] initWithTitle:@"Location Error" message:@"Instead of using your location we're just going to use the location currently showing the most activity." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [locationAlert show];
         
-        //make request
+        NSUserDefaults *standards = [NSUserDefaults standardUserDefaults];
+        
+        NSString *urlAsString;
+        if ([streamType isEqual: @"time"]) {
+            float radius = [standards floatForKey:@"stream distance filter"];
+            if (!radius) {
+                radius = 5.00;
+            }
+            
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Time Sort Load"
+                                                                  action:@"Radius"
+                                                                   label:[NSString stringWithFormat:@"%f miles", radius]
+                                                                   value:nil] build]];
+            urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=41.670689&Longitude=-83.643956&Radius=3000.000000&Radius=%f&Sort=time", radius];
+        }
+        else {
+            float seconds = [standards floatForKey:@"stream time filter"] * 86400.00;
+            if (!seconds) {
+                seconds = 604800.00;
+            }
+            id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+            [tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Distance Sort Load"
+                                                                  action:@"Period"
+                                                                   label:[NSString stringWithFormat:@"%f seconds", seconds]
+                                                                   value:nil] build]];
+            urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feedTest1.php?Latitude=41.670689&Longitude=-83.643956&Radius=3000.000000&Sort=distance&Period=%f", seconds];
+        }
+        NSURL *url = [[NSURL alloc] initWithString:urlAsString];
+        NSLog(@"%@", urlAsString);
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSURLSessionDataTask *dataRequestTask = [session dataTaskWithURL: url
+                                                       completionHandler:^(NSData *data,
+                                                                           NSURLResponse *response,
+                                                                           NSError *error){
+                                                           
+                                                           NSError *jsonError = nil;
+                                                           NSArray *immutable = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError]; // handle response
+                                                           if (error == nil) {
+                                                               error = jsonError;
+                                                           }
+                                                           else {
+                                                               //this means the session data task error will be passed as parameter.
+                                                           }
+                                                           _itemCollection = [immutable mutableCopy];
+                                                           
+                                                           if (self.itemCollection == nil) {
+                                                               NSLog(@"Problem occurred, no array from json. The error: %@", jsonError);
+                                                           }
+                                                           
+                                                           else {
+                                                               
+                                                               NSLog(@"%@", _itemCollection);
+                                                               
+                                                           }
+                                                           
+                                                           for (int i = 0; i < self.itemCollection.count; i++) {
+                                                               if ([_itemCollection[i][@"Viewable"]  isEqual: @"FALSE"]) {
+                                                                   [_itemCollection removeObjectAtIndex:i];
+                                                               }
+                                                           }
+                                                           callBack(_itemCollection, error);
+                                                       }
+                                                 ];
+        [dataRequestTask resume];
+
+        
+        /*//make request
         NSString *urlAsString = [NSString stringWithFormat:@"https://n46.org/whereabt/feed3.php?Latitude=41.670689&Longitude=-83.643956&Radius=3000.000000"];
         
         NSURL *url = [[NSURL alloc] initWithString:urlAsString];
@@ -131,7 +198,7 @@
                                                            callBack(_itemCollection, error);
                                                        }
                                                  ];
-        [dataRequestTask resume];
+        [dataRequestTask resume]; */
     }
 }
 

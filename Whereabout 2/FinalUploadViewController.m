@@ -52,10 +52,9 @@ NSMutableDictionary *imageSetDict;
     //layout.minimumLineSpacing = 10;
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
-    //104 height works
-    //415 y 44h
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 533, 320, 37) collectionViewLayout:layout];
+    NSLog(@"Height:%f , Width: %f", [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width);
+    //was 0,533,width,37
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 35, [[UIScreen mainScreen] bounds].size.width, 37) collectionViewLayout:layout];
     _collectionView.showsHorizontalScrollIndicator = NO;
     _collectionView.showsVerticalScrollIndicator = NO;
     
@@ -74,7 +73,8 @@ NSMutableDictionary *imageSetDict;
 
     [selectedImageView setImage: infoArray[6][@"Image"]];
     selectedImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [selectedImageView setFrame:CGRectMake(0, 46, 320, 475)];
+    //was: 0,46,width,475 -----(46/568)*[[UIScreen mainScreen] bounds].size.height
+    [selectedImageView setFrame:CGRectMake(0, 46, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 93)];
     [self.view addSubview:selectedImageView];
 
     [_collectionView reloadData];
@@ -248,8 +248,8 @@ NSMutableDictionary *imageSetDict;
                         
                         // upldButtonItem = [[UIBarButtonItem alloc] initWithCustomView:uploadButton];
                             UIBarButtonItem *navBarButt = [[UIBarButtonItem alloc]initWithTitle:@"Upload" style:UIBarButtonItemStylePlain target:self action:@selector(uploadButtonPress:)];
-                        
                             [self.navigationController.navigationBar.topItem setRightBarButtonItem:navBarButt];
+                        [self.navigationController popViewControllerAnimated:YES];
                         
                         });
                     

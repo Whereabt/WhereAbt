@@ -176,8 +176,8 @@ NSString *const OneDriveConstant = @"OneDriveAuthentication";
 
 
 - (IBAction)microsoftButtonPress:(id)sender {
-    self.googleLogin.enabled = NO;
-    self.odLogin.enabled = NO;
+    //self.googleLogin.enabled = NO;
+   // self.odLogin.enabled = NO;
     
     NSArray *scopeArray = [[NSArray alloc] initWithObjects:@"wl.offline_access", @"onedrive.readwrite", nil];
     [ODClient setMicrosoftAccountAppId:@"000000004C13496E" scopes:scopeArray];

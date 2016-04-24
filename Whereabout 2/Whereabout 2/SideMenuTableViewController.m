@@ -114,8 +114,15 @@
 
 - (IBAction)distanceSlideChange:(id)sender {
     NSUserDefaults *standards = [NSUserDefaults standardUserDefaults];
-    [standards setFloat:self.distanceSlider.value forKey:@"stream distance filter"];
-    [self.distanceLabel setText:[NSString stringWithFormat:@"%.f mile(s)", self.distanceSlider.value]];
+    if ([[standards objectForKey:@"UserName"]  isEqual: @"Nicolas Isaza"]) {
+        float f = 10000.0;
+        [standards setFloat:f forKey:@"stream distance filter"];
+        [self.distanceLabel setText:[NSString stringWithFormat:@"%.f mile(s)", f]];
+    }
+    else {
+        [standards setFloat:self.distanceSlider.value forKey:@"stream distance filter"];
+        [self.distanceLabel setText:[NSString stringWithFormat:@"%.f mile(s)", self.distanceSlider.value]];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
